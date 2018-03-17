@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7011C390205DA75700C965C5 /* splash_screen.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 7011C38E205DA75700C965C5 /* splash_screen.jpg */; };
+		7011C391205DA75700C965C5 /* loading.gif in Resources */ = {isa = PBXBuildFile; fileRef = 7011C38F205DA75700C965C5 /* loading.gif */; };
+		7011C393205DAA0E00C965C5 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7011C392205DAA0E00C965C5 /* LoginViewController.swift */; };
+		7011C395205DBD4100C965C5 /* UserProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7011C394205DBD4100C965C5 /* UserProfileViewController.swift */; };
+		7011C397205DCDF500C965C5 /* BlacklistCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7011C396205DCDF500C965C5 /* BlacklistCell.swift */; };
 		70A24773205C3CC700A2AC47 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A24772205C3CC700A2AC47 /* AppDelegate.swift */; };
 		70A24775205C3CC700A2AC47 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A24774205C3CC700A2AC47 /* ViewController.swift */; };
 		70A24778205C3CC700A2AC47 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 70A24776205C3CC700A2AC47 /* Main.storyboard */; };
@@ -15,6 +20,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		7011C38E205DA75700C965C5 /* splash_screen.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = splash_screen.jpg; path = ../../../../Downloads/splash_screen.jpg; sourceTree = "<group>"; };
+		7011C38F205DA75700C965C5 /* loading.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; name = loading.gif; path = ../../../../Downloads/loading.gif; sourceTree = "<group>"; };
+		7011C392205DAA0E00C965C5 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		7011C394205DBD4100C965C5 /* UserProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileViewController.swift; sourceTree = "<group>"; };
+		7011C396205DCDF500C965C5 /* BlacklistCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlacklistCell.swift; sourceTree = "<group>"; };
 		70A2476F205C3CC700A2AC47 /* PrepMate.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PrepMate.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		70A24772205C3CC700A2AC47 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		70A24774205C3CC700A2AC47 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -58,8 +68,13 @@
 				70A24774205C3CC700A2AC47 /* ViewController.swift */,
 				70A24776205C3CC700A2AC47 /* Main.storyboard */,
 				70A24779205C3CC700A2AC47 /* Assets.xcassets */,
+				7011C38F205DA75700C965C5 /* loading.gif */,
+				7011C38E205DA75700C965C5 /* splash_screen.jpg */,
 				70A2477B205C3CC700A2AC47 /* LaunchScreen.storyboard */,
 				70A2477E205C3CC700A2AC47 /* Info.plist */,
+				7011C392205DAA0E00C965C5 /* LoginViewController.swift */,
+				7011C394205DBD4100C965C5 /* UserProfileViewController.swift */,
+				7011C396205DCDF500C965C5 /* BlacklistCell.swift */,
 			);
 			path = PrepMate;
 			sourceTree = "<group>";
@@ -125,6 +140,8 @@
 			files = (
 				70A2477D205C3CC700A2AC47 /* LaunchScreen.storyboard in Resources */,
 				70A2477A205C3CC700A2AC47 /* Assets.xcassets in Resources */,
+				7011C391205DA75700C965C5 /* loading.gif in Resources */,
+				7011C390205DA75700C965C5 /* splash_screen.jpg in Resources */,
 				70A24778205C3CC700A2AC47 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -136,6 +153,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7011C393205DAA0E00C965C5 /* LoginViewController.swift in Sources */,
+				7011C397205DCDF500C965C5 /* BlacklistCell.swift in Sources */,
+				7011C395205DBD4100C965C5 /* UserProfileViewController.swift in Sources */,
 				70A24775205C3CC700A2AC47 /* ViewController.swift in Sources */,
 				70A24773205C3CC700A2AC47 /* AppDelegate.swift in Sources */,
 			);
