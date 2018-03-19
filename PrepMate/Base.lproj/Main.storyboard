@@ -1014,11 +1014,11 @@
                                                 </attributes>
                                             </fragment>
                                             <fragment>
-                                                <mutableString key="content">
+                                                <string key="content">
 1. This application allows members to submit recipes for review, use, and modification by other end users as well as with the staff managing this application.  
 2. In order for us to allow the user content you contribute available in our application for the purposes listed above, the staff and users of the application also need the rights to make use of said content.  Therefore, by contributing user content to this application you, the user automatically grant grant the staff of this application as well as other users the right to use, review, and modify parts of submitted content as outlined by the application developers.
  
-</mutableString>
+</string>
                                                 <attributes>
                                                     <color key="NSColor" red="0.27059" green="0.27059" blue="0.27059" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <font key="NSFont" size="15" name="HelveticaNeue"/>
@@ -1034,12 +1034,12 @@
                                                 </attributes>
                                             </fragment>
                                             <fragment>
-                                                <mutableString key="content">
+                                                <string key="content">
 1. You the user are responsible for all content which you upload. 
 2. By uploading content you are asserting that this content is either created by you or that you have explicit permission given by the original creator of that content and that you have not uploaded any content which is copyrighted or professionally licensed.  Any copyrights or infringement of intellectual property rights supersedes the intellectual property rights set out by this application. The staff responsible for managing this application therefore reserve the right to remove any content which has been deemed in violation of intellectual property rights as well as carrying out disciplinary action against the user(s) who violated these terms. Disciplinary action may include, but not be limited to: Written warnings, restriction of features or services, temporary bans, or permanent bans.  
 3. Upon being accused of infringement of intellectual property, the managers of this application will defend you to the point upon which you can produce reasonable proof that you were given permission to post the recipe here.  However, for content created by a 3rd party, and protest by said 3rd party either verbal or written will supersede any permission held by the user, pending that the 3rd party can prove that they: a. Are responsible for giving the original permissions. b. Are able to prove that they are the original creator of said content.
 
-</mutableString>
+</string>
                                                 <attributes>
                                                     <color key="NSColor" red="0.27059" green="0.27059" blue="0.27059" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <font key="NSFont" size="15" name="HelveticaNeue"/>
@@ -1055,11 +1055,11 @@
                                                 </attributes>
                                             </fragment>
                                             <fragment>
-                                                <mutableString key="content">
+                                                <string key="content">
 1. All information entered into this application is contained solely in this application. We do not sell or distribute any information such as name, email, username, etc. to any entities outside those responsible for managing this application (i.e. moderators) 
 2. Users are not required to fill out their real name nor are they required to give an email address.   However, while not required, failure to fill out a valid email address may result in disciplinary action for copyright infringement being escalated.
 
-</mutableString>
+</string>
                                                 <attributes>
                                                     <color key="NSColor" red="0.27059" green="0.27059" blue="0.27059" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <font key="NSFont" size="15" name="HelveticaNeue"/>
@@ -1075,9 +1075,9 @@
                                                 </attributes>
                                             </fragment>
                                             <fragment>
-                                                <mutableString key="content">
+                                                <string key="content">
 1. Failure to abide by the copyright guidelines defined above will result in the termination of the user’s account as well as any recipes which that user may have submitted to the site.
- 2. Verbal harassment, solicitations, racist remarks or comments, homophobic remarks or comments, sexist remarks or comments, as well as any speech or comments which make a user or group of users feel unwelcome or uncomfortable will result in disciplinary action which may include but is not limited to: Restriction of services, temporary ban, or permanent ban.</mutableString>
+ 2. Verbal harassment, solicitations, racist remarks or comments, homophobic remarks or comments, sexist remarks or comments, as well as any speech or comments which make a user or group of users feel unwelcome or uncomfortable will result in disciplinary action which may include but is not limited to: Restriction of services, temporary ban, or permanent ban.</string>
                                                 <attributes>
                                                     <color key="NSColor" red="0.27059" green="0.27059" blue="0.27059" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <font key="NSFont" size="15" name="HelveticaNeue"/>
