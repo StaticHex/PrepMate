@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7008073E206035F900F6B52F /* icons8-home-24.png in Resources */ = {isa = PBXBuildFile; fileRef = 7008073C206035F900F6B52F /* icons8-home-24.png */; };
+		7008073F206035F900F6B52F /* icons8-menu-filled-50.png in Resources */ = {isa = PBXBuildFile; fileRef = 7008073D206035F900F6B52F /* icons8-menu-filled-50.png */; };
+		700807412060362400F6B52F /* LegalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 700807402060362400F6B52F /* LegalViewController.swift */; };
 		7011C390205DA75700C965C5 /* splash_screen.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 7011C38E205DA75700C965C5 /* splash_screen.jpg */; };
 		7011C391205DA75700C965C5 /* loading.gif in Resources */ = {isa = PBXBuildFile; fileRef = 7011C38F205DA75700C965C5 /* loading.gif */; };
 		7011C393205DAA0E00C965C5 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7011C392205DAA0E00C965C5 /* LoginViewController.swift */; };
@@ -22,6 +25,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		7008073C206035F900F6B52F /* icons8-home-24.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icons8-home-24.png"; path = "../../../../Downloads/icons8-home-24.png"; sourceTree = "<group>"; };
+		7008073D206035F900F6B52F /* icons8-menu-filled-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icons8-menu-filled-50.png"; path = "../../../../Downloads/icons8-menu-filled-50.png"; sourceTree = "<group>"; };
+		700807402060362400F6B52F /* LegalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegalViewController.swift; sourceTree = "<group>"; };
 		7011C38E205DA75700C965C5 /* splash_screen.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = splash_screen.jpg; path = ../../../../Downloads/splash_screen.jpg; sourceTree = "<group>"; };
 		7011C38F205DA75700C965C5 /* loading.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; name = loading.gif; path = ../../../../Downloads/loading.gif; sourceTree = "<group>"; };
 		7011C392205DAA0E00C965C5 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -68,6 +74,8 @@
 		70A24771205C3CC700A2AC47 /* PrepMate */ = {
 			isa = PBXGroup;
 			children = (
+				7008073C206035F900F6B52F /* icons8-home-24.png */,
+				7008073D206035F900F6B52F /* icons8-menu-filled-50.png */,
 				70A24772205C3CC700A2AC47 /* AppDelegate.swift */,
 				70A24774205C3CC700A2AC47 /* ViewController.swift */,
 				70A24776205C3CC700A2AC47 /* Main.storyboard */,
@@ -81,6 +89,7 @@
 				7011C396205DCDF500C965C5 /* BlacklistCell.swift */,
 				702C9399205F063E005AACE2 /* SettingsViewController.swift */,
 				702C939B205F128C005AACE2 /* CreditsViewController.swift */,
+				700807402060362400F6B52F /* LegalViewController.swift */,
 			);
 			path = PrepMate;
 			sourceTree = "<group>";
@@ -144,6 +153,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7008073E206035F900F6B52F /* icons8-home-24.png in Resources */,
+				7008073F206035F900F6B52F /* icons8-menu-filled-50.png in Resources */,
 				70A2477D205C3CC700A2AC47 /* LaunchScreen.storyboard in Resources */,
 				70A2477A205C3CC700A2AC47 /* Assets.xcassets in Resources */,
 				7011C391205DA75700C965C5 /* loading.gif in Resources */,
@@ -159,6 +170,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				700807412060362400F6B52F /* LegalViewController.swift in Sources */,
 				7011C393205DAA0E00C965C5 /* LoginViewController.swift in Sources */,
 				702C939C205F128C005AACE2 /* CreditsViewController.swift in Sources */,
 				7011C397205DCDF500C965C5 /* BlacklistCell.swift in Sources */,

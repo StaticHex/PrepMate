@@ -149,11 +149,19 @@
                                     <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="V4A-RS-BNc">
                                         <rect key="frame" x="0.0" y="165.5" width="275" height="30"/>
                                         <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="c4L-xh-p1s">
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="c4L-xh-p1s">
                                                 <rect key="frame" x="0.0" y="0.0" width="275" height="30"/>
-                                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
-                                                <state key="normal" title="Forgot Password">
-                                                    <color key="titleColor" red="0.2815209199" green="0.69671842510000004" blue="0.97640058289999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <state key="normal">
+                                                    <attributedString key="attributedTitle">
+                                                        <fragment content="Forgot Password">
+                                                            <attributes>
+                                                                <color key="NSColor" red="0.2815209199" green="0.69671842510000004" blue="0.97640058289999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                <font key="NSFont" size="15" name=".AppleSystemUIFontEmphasizedItalic"/>
+                                                                <font key="NSOriginalFont" size="15" name=".AppleSystemUIFontEmphasizedItalic"/>
+                                                                <integer key="NSUnderline" value="1"/>
+                                                            </attributes>
+                                                        </fragment>
+                                                    </attributedString>
                                                 </state>
                                             </button>
                                         </subviews>
@@ -968,6 +976,137 @@
             </objects>
             <point key="canvasLocation" x="4038" y="116"/>
         </scene>
+        <!--Legal View Controller-->
+        <scene sceneID="SBC-sr-kPs">
+            <objects>
+                <viewController id="TOo-LJ-sTB" customClass="LegalViewController" customModule="PrepMate" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="oi0-hr-ref">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JjW-aA-fwA">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                <items>
+                                    <navigationItem title="Terms &amp; Conditions" id="oko-0Z-aLe">
+                                        <barButtonItem key="rightBarButtonItem" style="done" id="8ke-4R-u3S">
+                                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="7Bv-ZE-0x1">
+                                                <rect key="frame" x="335" y="10" width="24" height="24"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <state key="normal" image="icons8-home-24.png"/>
+                                            </button>
+                                        </barButtonItem>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="ZBO-aF-Hgt">
+                                <rect key="frame" x="10" y="54" width="355" height="603"/>
+                                <subviews>
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" usesAttributedText="YES" translatesAutoresizingMaskIntoConstraints="NO" id="iVm-k1-g2h">
+                                        <rect key="frame" x="0.0" y="0.0" width="355" height="603"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <attributedString key="attributedText">
+                                            <fragment content="Intellectual Property">
+                                                <attributes>
+                                                    <color key="NSColor" red="0.27059" green="0.27059" blue="0.27059" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <font key="NSFont" size="15" name="HelveticaNeue-Bold"/>
+                                                    <font key="NSOriginalFont" size="15" name="HelveticaNeue-Bold"/>
+                                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                </attributes>
+                                            </fragment>
+                                            <fragment>
+                                                <mutableString key="content">
+1. This application allows members to submit recipes for review, use, and modification by other end users as well as with the staff managing this application.  
+2. In order for us to allow the user content you contribute available in our application for the purposes listed above, the staff and users of the application also need the rights to make use of said content.  Therefore, by contributing user content to this application you, the user automatically grant grant the staff of this application as well as other users the right to use, review, and modify parts of submitted content as outlined by the application developers.
+ 
+</mutableString>
+                                                <attributes>
+                                                    <color key="NSColor" red="0.27059" green="0.27059" blue="0.27059" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <font key="NSFont" size="15" name="HelveticaNeue"/>
+                                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                </attributes>
+                                            </fragment>
+                                            <fragment content="Liability">
+                                                <attributes>
+                                                    <color key="NSColor" red="0.27059" green="0.27059" blue="0.27059" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <font key="NSFont" size="15" name="HelveticaNeue-Bold"/>
+                                                    <font key="NSOriginalFont" size="15" name="HelveticaNeue-Bold"/>
+                                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                </attributes>
+                                            </fragment>
+                                            <fragment>
+                                                <mutableString key="content">
+1. You the user are responsible for all content which you upload. 
+2. By uploading content you are asserting that this content is either created by you or that you have explicit permission given by the original creator of that content and that you have not uploaded any content which is copyrighted or professionally licensed.  Any copyrights or infringement of intellectual property rights supersedes the intellectual property rights set out by this application. The staff responsible for managing this application therefore reserve the right to remove any content which has been deemed in violation of intellectual property rights as well as carrying out disciplinary action against the user(s) who violated these terms. Disciplinary action may include, but not be limited to: Written warnings, restriction of features or services, temporary bans, or permanent bans.  
+3. Upon being accused of infringement of intellectual property, the managers of this application will defend you to the point upon which you can produce reasonable proof that you were given permission to post the recipe here.  However, for content created by a 3rd party, and protest by said 3rd party either verbal or written will supersede any permission held by the user, pending that the 3rd party can prove that they: a. Are responsible for giving the original permissions. b. Are able to prove that they are the original creator of said content.
+
+</mutableString>
+                                                <attributes>
+                                                    <color key="NSColor" red="0.27059" green="0.27059" blue="0.27059" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <font key="NSFont" size="15" name="HelveticaNeue"/>
+                                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                </attributes>
+                                            </fragment>
+                                            <fragment content="Privacy">
+                                                <attributes>
+                                                    <color key="NSColor" red="0.27059" green="0.27059" blue="0.27059" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <font key="NSFont" size="15" name="HelveticaNeue-Bold"/>
+                                                    <font key="NSOriginalFont" size="15" name="HelveticaNeue-Bold"/>
+                                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                </attributes>
+                                            </fragment>
+                                            <fragment>
+                                                <mutableString key="content">
+1. All information entered into this application is contained solely in this application. We do not sell or distribute any information such as name, email, username, etc. to any entities outside those responsible for managing this application (i.e. moderators) 
+2. Users are not required to fill out their real name nor are they required to give an email address.   However, while not required, failure to fill out a valid email address may result in disciplinary action for copyright infringement being escalated.
+
+</mutableString>
+                                                <attributes>
+                                                    <color key="NSColor" red="0.27059" green="0.27059" blue="0.27059" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <font key="NSFont" size="15" name="HelveticaNeue"/>
+                                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                </attributes>
+                                            </fragment>
+                                            <fragment content="Acceptable Use">
+                                                <attributes>
+                                                    <color key="NSColor" red="0.27059" green="0.27059" blue="0.27059" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <font key="NSFont" size="15" name="HelveticaNeue-Bold"/>
+                                                    <font key="NSOriginalFont" size="15" name="HelveticaNeue-Bold"/>
+                                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                </attributes>
+                                            </fragment>
+                                            <fragment>
+                                                <mutableString key="content">
+1. Failure to abide by the copyright guidelines defined above will result in the termination of the user’s account as well as any recipes which that user may have submitted to the site.
+ 2. Verbal harassment, solicitations, racist remarks or comments, homophobic remarks or comments, sexist remarks or comments, as well as any speech or comments which make a user or group of users feel unwelcome or uncomfortable will result in disciplinary action which may include but is not limited to: Restriction of services, temporary ban, or permanent ban.</mutableString>
+                                                <attributes>
+                                                    <color key="NSColor" red="0.27059" green="0.27059" blue="0.27059" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <font key="NSFont" size="15" name="HelveticaNeue"/>
+                                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                </attributes>
+                                            </fragment>
+                                        </attributedString>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                    </textView>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="k1u-Oq-j7n" firstAttribute="trailing" secondItem="ZBO-aF-Hgt" secondAttribute="trailing" constant="10" id="6D6-CK-7bB"/>
+                            <constraint firstItem="ZBO-aF-Hgt" firstAttribute="top" secondItem="JjW-aA-fwA" secondAttribute="bottom" constant="10" id="9d9-Pe-oFK"/>
+                            <constraint firstItem="JjW-aA-fwA" firstAttribute="top" secondItem="oi0-hr-ref" secondAttribute="top" id="HRM-K6-AsV"/>
+                            <constraint firstItem="JjW-aA-fwA" firstAttribute="trailing" secondItem="k1u-Oq-j7n" secondAttribute="trailing" id="SX0-SL-VrR"/>
+                            <constraint firstItem="JjW-aA-fwA" firstAttribute="leading" secondItem="k1u-Oq-j7n" secondAttribute="leading" id="Vcm-WQ-2cN"/>
+                            <constraint firstItem="k1u-Oq-j7n" firstAttribute="bottom" secondItem="ZBO-aF-Hgt" secondAttribute="bottom" constant="10" id="ehf-eV-nBR"/>
+                            <constraint firstItem="ZBO-aF-Hgt" firstAttribute="leading" secondItem="k1u-Oq-j7n" secondAttribute="leading" constant="10" id="zAh-EH-qfT"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="k1u-Oq-j7n"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="0vH-62-JXu" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4820" y="111"/>
+        </scene>
         <!--Navigation Controller-->
         <scene sceneID="hF3-BQ-N4K">
             <objects>
@@ -988,6 +1127,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="icons8-home-24.png" width="24" height="24"/>
         <image name="loading.gif" width="108" height="118"/>
         <image name="splash_screen.jpg" width="336" height="598"/>
     </resources>
