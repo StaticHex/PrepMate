@@ -26,6 +26,8 @@
 		A11A57342061639100A7EF31 /* ShoppingListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11A57332061639100A7EF31 /* ShoppingListViewController.swift */; };
 		A11A5736206168CD00A7EF31 /* SearchFilterPopoverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11A5735206168CD00A7EF31 /* SearchFilterPopoverViewController.swift */; };
 		A11A57382061711F00A7EF31 /* PantryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11A57372061711F00A7EF31 /* PantryViewController.swift */; };
+		A1AA0045206195AD00FCDEC4 /* NewListItemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1AA0044206195AD00FCDEC4 /* NewListItemViewController.swift */; };
+		A1AA004720619BBF00FCDEC4 /* CustomUnitPopoverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1AA004620619BBF00FCDEC4 /* CustomUnitPopoverViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -50,6 +52,8 @@
 		A11A57332061639100A7EF31 /* ShoppingListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoppingListViewController.swift; sourceTree = "<group>"; };
 		A11A5735206168CD00A7EF31 /* SearchFilterPopoverViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchFilterPopoverViewController.swift; sourceTree = "<group>"; };
 		A11A57372061711F00A7EF31 /* PantryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PantryViewController.swift; sourceTree = "<group>"; };
+		A1AA0044206195AD00FCDEC4 /* NewListItemViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewListItemViewController.swift; sourceTree = "<group>"; };
+		A1AA004620619BBF00FCDEC4 /* CustomUnitPopoverViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomUnitPopoverViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -92,6 +96,8 @@
 				A11A57332061639100A7EF31 /* ShoppingListViewController.swift */,
 				A11A5735206168CD00A7EF31 /* SearchFilterPopoverViewController.swift */,
 				A11A57372061711F00A7EF31 /* PantryViewController.swift */,
+				A1AA0044206195AD00FCDEC4 /* NewListItemViewController.swift */,
+				A1AA004620619BBF00FCDEC4 /* CustomUnitPopoverViewController.swift */,
 				A11A573120614CC500A7EF31 /* HomePageViewController.swift */,
 				70A24779205C3CC700A2AC47 /* Assets.xcassets */,
 				70A2477B205C3CC700A2AC47 /* LaunchScreen.storyboard */,
@@ -189,8 +195,10 @@
 				702C939C205F128C005AACE2 /* CreditsViewController.swift in Sources */,
 				7011C397205DCDF500C965C5 /* BlacklistCell.swift in Sources */,
 				A11A57382061711F00A7EF31 /* PantryViewController.swift in Sources */,
+				A1AA004720619BBF00FCDEC4 /* CustomUnitPopoverViewController.swift in Sources */,
 				7011C395205DBD4100C965C5 /* UserProfileViewController.swift in Sources */,
 				70A24775205C3CC700A2AC47 /* ViewController.swift in Sources */,
+				A1AA0045206195AD00FCDEC4 /* NewListItemViewController.swift in Sources */,
 				70A24773205C3CC700A2AC47 /* AppDelegate.swift in Sources */,
 				702C939A205F063E005AACE2 /* SettingsViewController.swift in Sources */,
 				A11A5736206168CD00A7EF31 /* SearchFilterPopoverViewController.swift in Sources */,
