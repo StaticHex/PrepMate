@@ -1305,10 +1305,10 @@
             </objects>
             <point key="canvasLocation" x="2010.4000000000001" y="114.69265367316342"/>
         </scene>
-        <!--View Controller-->
+        <!--Home Page View Controller-->
         <scene sceneID="cAl-rf-maV">
             <objects>
-                <viewController id="AhV-FV-rJ3" sceneMemberID="viewController">
+                <viewController id="AhV-FV-rJ3" customClass="HomePageViewController" customModule="PrepMate" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="tPs-dE-TQz">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1498,12 +1498,18 @@
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <textInputTraits key="textInputTraits"/>
                         </textField>
-                        <barButtonItem key="rightBarButtonItem" style="plain" systemItem="search" id="y5b-gc-et1"/>
+                        <barButtonItem key="rightBarButtonItem" style="plain" systemItem="search" id="y5b-gc-et1">
+                            <connections>
+                                <segue destination="ftM-M6-197" kind="popoverPresentation" popoverAnchorBarButtonItem="y5b-gc-et1" id="oB4-D1-Axs">
+                                    <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
+                                </segue>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sKS-36-Vjo" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3016.8000000000002" y="889.20539730134942"/>
+            <point key="canvasLocation" x="2210" y="887"/>
         </scene>
         <!--Pantry-->
         <scene sceneID="js3-oc-aER">
@@ -1673,6 +1679,11 @@
                                                 </constraints>
                                                 <fontDescription key="fontDescription" type="system" pointSize="32"/>
                                                 <state key="normal" title="+"/>
+                                                <connections>
+                                                    <segue destination="rpr-aY-a5p" kind="popoverPresentation" popoverAnchorView="3wT-2J-ekw" id="bAy-D5-29h">
+                                                        <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
+                                                    </segue>
+                                                </connections>
                                             </button>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -1816,7 +1827,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VJL-XA-bwg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1212.8" y="872.56371814092961"/>
+            <point key="canvasLocation" x="2960" y="886"/>
         </scene>
         <!--New List Item View Controller-->
         <scene sceneID="Wd6-KK-a4G">
@@ -1876,6 +1887,11 @@
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="J30-D7-ugB">
                                                         <rect key="frame" x="164" y="0.0" width="36" height="29"/>
                                                         <state key="normal" title="Units"/>
+                                                        <connections>
+                                                            <segue destination="X11-sM-jqT" kind="popoverPresentation" popoverAnchorView="J30-D7-ugB" id="xWp-8w-HNt">
+                                                                <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
+                                                            </segue>
+                                                        </connections>
                                                     </button>
                                                 </subviews>
                                                 <constraints>
@@ -1916,7 +1932,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nE1-KT-is4" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="872" y="1801"/>
+            <point key="canvasLocation" x="5306" y="888"/>
         </scene>
         <!--Recipe Page View Controller-->
         <scene sceneID="bwR-k6-eYC">
@@ -2238,7 +2254,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="H5m-cj-qgf" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="872" y="1309.745127436282"/>
+            <point key="canvasLocation" x="5936" y="888"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="MAF-mZ-00U">
@@ -2256,7 +2272,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zke-se-vyR" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2234.4000000000001" y="888.30584707646187"/>
+            <point key="canvasLocation" x="1449" y="888"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="oOL-nK-RMK">
