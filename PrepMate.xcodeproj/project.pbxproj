@@ -31,6 +31,9 @@
 		A1AA0045206195AD00FCDEC4 /* NewListItemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1AA0044206195AD00FCDEC4 /* NewListItemViewController.swift */; };
 		A1AA004720619BBF00FCDEC4 /* CustomUnitPopoverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1AA004620619BBF00FCDEC4 /* CustomUnitPopoverViewController.swift */; };
 		A1F1932D2062AD4E00AFB5E9 /* HistoryFavoriteSearchResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1F1932C2062AD4E00AFB5E9 /* HistoryFavoriteSearchResultsViewController.swift */; };
+		A24E8AD22062A90B005C8E2B /* RecipePageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A24E8AD12062A90B005C8E2B /* RecipePageViewController.swift */; };
+		A24E8AD42062AA75005C8E2B /* RecipeNutritionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A24E8AD32062AA75005C8E2B /* RecipeNutritionViewController.swift */; };
+		A24E8AD62062AA8C005C8E2B /* RecipeCommentPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A24E8AD52062AA8C005C8E2B /* RecipeCommentPageViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -60,6 +63,9 @@
 		A1AA0044206195AD00FCDEC4 /* NewListItemViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewListItemViewController.swift; sourceTree = "<group>"; };
 		A1AA004620619BBF00FCDEC4 /* CustomUnitPopoverViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomUnitPopoverViewController.swift; sourceTree = "<group>"; };
 		A1F1932C2062AD4E00AFB5E9 /* HistoryFavoriteSearchResultsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryFavoriteSearchResultsViewController.swift; sourceTree = "<group>"; };
+		A24E8AD12062A90B005C8E2B /* RecipePageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipePageViewController.swift; sourceTree = "<group>"; };
+		A24E8AD32062AA75005C8E2B /* RecipeNutritionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeNutritionViewController.swift; sourceTree = "<group>"; };
+		A24E8AD52062AA8C005C8E2B /* RecipeCommentPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeCommentPageViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,6 +105,9 @@
 				70A24772205C3CC700A2AC47 /* AppDelegate.swift */,
 				70A24774205C3CC700A2AC47 /* ViewController.swift */,
 				70A24776205C3CC700A2AC47 /* Main.storyboard */,
+				A24E8AD32062AA75005C8E2B /* RecipeNutritionViewController.swift */,
+				A24E8AD52062AA8C005C8E2B /* RecipeCommentPageViewController.swift */,
+				A24E8AD12062A90B005C8E2B /* RecipePageViewController.swift */,
 				A11A57332061639100A7EF31 /* ShoppingListViewController.swift */,
 				A11A5735206168CD00A7EF31 /* SearchFilterPopoverViewController.swift */,
 				A11A57372061711F00A7EF31 /* PantryViewController.swift */,
@@ -198,6 +207,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				700807412060362400F6B52F /* LegalViewController.swift in Sources */,
+				A24E8AD42062AA75005C8E2B /* RecipeNutritionViewController.swift in Sources */,
 				7011C393205DAA0E00C965C5 /* LoginViewController.swift in Sources */,
 				A11A57342061639100A7EF31 /* ShoppingListViewController.swift in Sources */,
 				A11A573220614CC500A7EF31 /* HomePageViewController.swift in Sources */,
@@ -208,11 +218,13 @@
 				A11A57382061711F00A7EF31 /* PantryViewController.swift in Sources */,
 				A1AA004720619BBF00FCDEC4 /* CustomUnitPopoverViewController.swift in Sources */,
 				7011C395205DBD4100C965C5 /* UserProfileViewController.swift in Sources */,
+				A24E8AD22062A90B005C8E2B /* RecipePageViewController.swift in Sources */,
 				70A24775205C3CC700A2AC47 /* ViewController.swift in Sources */,
 				A1AA0045206195AD00FCDEC4 /* NewListItemViewController.swift in Sources */,
 				A1F1932D2062AD4E00AFB5E9 /* HistoryFavoriteSearchResultsViewController.swift in Sources */,
 				70A24773205C3CC700A2AC47 /* AppDelegate.swift in Sources */,
 				702C939A205F063E005AACE2 /* SettingsViewController.swift in Sources */,
+				A24E8AD62062AA8C005C8E2B /* RecipeCommentPageViewController.swift in Sources */,
 				A11A5736206168CD00A7EF31 /* SearchFilterPopoverViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
