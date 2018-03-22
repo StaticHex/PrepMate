@@ -34,6 +34,14 @@
 		A24E8AD22062A90B005C8E2B /* RecipePageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A24E8AD12062A90B005C8E2B /* RecipePageViewController.swift */; };
 		A24E8AD42062AA75005C8E2B /* RecipeNutritionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A24E8AD32062AA75005C8E2B /* RecipeNutritionViewController.swift */; };
 		A24E8AD62062AA8C005C8E2B /* RecipeCommentPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A24E8AD52062AA8C005C8E2B /* RecipeCommentPageViewController.swift */; };
+		A2526BD020632DBF00C89BCE /* AddRecipeFirstPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2526BCF20632DBF00C89BCE /* AddRecipeFirstPageViewController.swift */; };
+		A2526BD220632DD000C89BCE /* AddRecipeSecondPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2526BD120632DD000C89BCE /* AddRecipeSecondPageViewController.swift */; };
+		A2526BD420632DE400C89BCE /* AddRecipeContainsPopoverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2526BD320632DE400C89BCE /* AddRecipeContainsPopoverViewController.swift */; };
+		A2D3BD7C20633291005BD508 /* AddRecipeDietaryPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2D3BD7B20633291005BD508 /* AddRecipeDietaryPageViewController.swift */; };
+		A2D3BD7E206334DD005BD508 /* AddDirectionPopoverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2D3BD7D206334DD005BD508 /* AddDirectionPopoverViewController.swift */; };
+		A2D3BD80206335FC005BD508 /* AddVitaminPopoverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2D3BD7F206335FC005BD508 /* AddVitaminPopoverViewController.swift */; };
+		A2D3BD82206337E3005BD508 /* NewCommentPopoverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2D3BD81206337E3005BD508 /* NewCommentPopoverViewController.swift */; };
+		A2D3BD8420633803005BD508 /* CommentFilterPopoverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2D3BD8320633803005BD508 /* CommentFilterPopoverViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -66,6 +74,14 @@
 		A24E8AD12062A90B005C8E2B /* RecipePageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipePageViewController.swift; sourceTree = "<group>"; };
 		A24E8AD32062AA75005C8E2B /* RecipeNutritionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeNutritionViewController.swift; sourceTree = "<group>"; };
 		A24E8AD52062AA8C005C8E2B /* RecipeCommentPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeCommentPageViewController.swift; sourceTree = "<group>"; };
+		A2526BCF20632DBF00C89BCE /* AddRecipeFirstPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddRecipeFirstPageViewController.swift; sourceTree = "<group>"; };
+		A2526BD120632DD000C89BCE /* AddRecipeSecondPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddRecipeSecondPageViewController.swift; sourceTree = "<group>"; };
+		A2526BD320632DE400C89BCE /* AddRecipeContainsPopoverViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddRecipeContainsPopoverViewController.swift; sourceTree = "<group>"; };
+		A2D3BD7B20633291005BD508 /* AddRecipeDietaryPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddRecipeDietaryPageViewController.swift; sourceTree = "<group>"; };
+		A2D3BD7D206334DD005BD508 /* AddDirectionPopoverViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddDirectionPopoverViewController.swift; sourceTree = "<group>"; };
+		A2D3BD7F206335FC005BD508 /* AddVitaminPopoverViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddVitaminPopoverViewController.swift; sourceTree = "<group>"; };
+		A2D3BD81206337E3005BD508 /* NewCommentPopoverViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewCommentPopoverViewController.swift; sourceTree = "<group>"; };
+		A2D3BD8320633803005BD508 /* CommentFilterPopoverViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentFilterPopoverViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -105,6 +121,14 @@
 				70A24772205C3CC700A2AC47 /* AppDelegate.swift */,
 				70A24774205C3CC700A2AC47 /* ViewController.swift */,
 				70A24776205C3CC700A2AC47 /* Main.storyboard */,
+				A2D3BD8320633803005BD508 /* CommentFilterPopoverViewController.swift */,
+				A2D3BD81206337E3005BD508 /* NewCommentPopoverViewController.swift */,
+				A2D3BD7F206335FC005BD508 /* AddVitaminPopoverViewController.swift */,
+				A2D3BD7D206334DD005BD508 /* AddDirectionPopoverViewController.swift */,
+				A2D3BD7B20633291005BD508 /* AddRecipeDietaryPageViewController.swift */,
+				A2526BCF20632DBF00C89BCE /* AddRecipeFirstPageViewController.swift */,
+				A2526BD120632DD000C89BCE /* AddRecipeSecondPageViewController.swift */,
+				A2526BD320632DE400C89BCE /* AddRecipeContainsPopoverViewController.swift */,
 				A24E8AD32062AA75005C8E2B /* RecipeNutritionViewController.swift */,
 				A24E8AD52062AA8C005C8E2B /* RecipeCommentPageViewController.swift */,
 				A24E8AD12062A90B005C8E2B /* RecipePageViewController.swift */,
@@ -207,24 +231,32 @@
 			buildActionMask = 2147483647;
 			files = (
 				700807412060362400F6B52F /* LegalViewController.swift in Sources */,
+				A2D3BD82206337E3005BD508 /* NewCommentPopoverViewController.swift in Sources */,
+				A2526BD220632DD000C89BCE /* AddRecipeSecondPageViewController.swift in Sources */,
+				A2D3BD7C20633291005BD508 /* AddRecipeDietaryPageViewController.swift in Sources */,
 				A24E8AD42062AA75005C8E2B /* RecipeNutritionViewController.swift in Sources */,
 				7011C393205DAA0E00C965C5 /* LoginViewController.swift in Sources */,
+				A2526BD020632DBF00C89BCE /* AddRecipeFirstPageViewController.swift in Sources */,
 				A11A57342061639100A7EF31 /* ShoppingListViewController.swift in Sources */,
 				A11A573220614CC500A7EF31 /* HomePageViewController.swift in Sources */,
 				A1A075842062899500C65360 /* MealsPageViewController.swift in Sources */,
+				A2D3BD80206335FC005BD508 /* AddVitaminPopoverViewController.swift in Sources */,
 				702C939C205F128C005AACE2 /* CreditsViewController.swift in Sources */,
 				7011C397205DCDF500C965C5 /* BlacklistCell.swift in Sources */,
 				A1A0758620628E8300C65360 /* RecipeOverviewViewController.swift in Sources */,
+				A2526BD420632DE400C89BCE /* AddRecipeContainsPopoverViewController.swift in Sources */,
 				A11A57382061711F00A7EF31 /* PantryViewController.swift in Sources */,
 				A1AA004720619BBF00FCDEC4 /* CustomUnitPopoverViewController.swift in Sources */,
 				7011C395205DBD4100C965C5 /* UserProfileViewController.swift in Sources */,
 				A24E8AD22062A90B005C8E2B /* RecipePageViewController.swift in Sources */,
 				70A24775205C3CC700A2AC47 /* ViewController.swift in Sources */,
 				A1AA0045206195AD00FCDEC4 /* NewListItemViewController.swift in Sources */,
+				A2D3BD7E206334DD005BD508 /* AddDirectionPopoverViewController.swift in Sources */,
 				A1F1932D2062AD4E00AFB5E9 /* HistoryFavoriteSearchResultsViewController.swift in Sources */,
 				70A24773205C3CC700A2AC47 /* AppDelegate.swift in Sources */,
 				702C939A205F063E005AACE2 /* SettingsViewController.swift in Sources */,
 				A24E8AD62062AA8C005C8E2B /* RecipeCommentPageViewController.swift in Sources */,
+				A2D3BD8420633803005BD508 /* CommentFilterPopoverViewController.swift in Sources */,
 				A11A5736206168CD00A7EF31 /* SearchFilterPopoverViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
