@@ -14,6 +14,7 @@ import UIKit
 class ViewController: UIViewController {
 
     // UI Component outlets
+    @IBOutlet weak var loadIcon: UIImageView!
     @IBOutlet weak var statusMsg: UILabel!
     
     override func viewDidLoad() {

@@ -12,6 +12,15 @@
 import UIKit
 
 class LoginViewController: UIViewController {
+    
+    // UIComponent Outlets
+    @IBOutlet weak var txtUserName: UITextField!
+    @IBOutlet weak var txtPassword: UIStackView!
+    @IBOutlet weak var btnLogin: UIButton!
+    @IBOutlet weak var btnSignUp: UIButton!
+    @IBOutlet weak var swtRemember: UISwitch!
+    @IBOutlet weak var btnForgotPassword: UIButton!
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,4 +44,12 @@ class LoginViewController: UIViewController {
     }
     */
 
+    @IBAction func login(_ sender: Any) {
+    }
+    
+    @IBAction func signUp(_ sender: Any) {
+    }
+    
+    @IBAction func forgotPassword(_ sender: Any) {
+    }
 }

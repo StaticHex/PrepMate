@@ -10,6 +10,21 @@ import UIKit
 
 class UserProfileViewController: UIViewController {
 
+    // UI Component Outlets
+    @IBOutlet weak var imgAvatar: UIImageView!
+    @IBOutlet weak var txtUserName: UITextField!
+    @IBOutlet weak var txtFirstName: UITextField!
+    @IBOutlet weak var txtLastName: UITextField!
+    @IBOutlet weak var txtEmail: UITextField!
+    @IBOutlet weak var txtPassword: UITextField!
+    @IBOutlet weak var txtRetypePassword: UITextField!
+    @IBOutlet weak var tblViewBlist: UITableView!
+    @IBOutlet weak var btnAddBlistItem: UIButton!
+    @IBOutlet weak var btnRmvBlistItem: UIButton!
+    @IBOutlet weak var txtVBio: UITextView!
+    @IBOutlet weak var btnSave: UIButton!
+    @IBOutlet weak var btnCancel: UIButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -32,4 +47,15 @@ class UserProfileViewController: UIViewController {
     }
     */
 
+    @IBAction func addBlistItem(_ sender: Any) {
+    }
+    
+    @IBAction func rmvBlistItem(_ sender: Any) {
+    }
+    
+    @IBAction func saveUser(_ sender: Any) {
+    }
+    
+    @IBAction func cancelChanges(_ sender: Any) {
+    }
 }
