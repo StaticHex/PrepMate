@@ -1399,7 +1399,7 @@
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Gtd-Wb-HPt">
                                 <rect key="frame" x="50" y="320" width="275" height="337"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="150" verticalCompressionResistancePriority="150" image="loading.gif" translatesAutoresizingMaskIntoConstraints="NO" id="Qny-9x-xa1">
+                                    <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="150" verticalCompressionResistancePriority="150" image="frame_00_delay-0.04s.png" translatesAutoresizingMaskIntoConstraints="NO" id="Qny-9x-xa1">
                                         <rect key="frame" x="83.5" y="0.0" width="108" height="168.5"/>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Loading..." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="thu-rn-dpK">
@@ -2562,7 +2562,7 @@
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="Q8B-sB-WLV">
-                                        <rect key="frame" x="0.0" y="0.5" width="150" height="100"/>
+                                        <rect key="frame" x="0.0" y="22.5" width="150" height="100"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
                                             <rect key="frame" x="0.0" y="0.0" width="150" height="100"/>
@@ -4002,8 +4002,8 @@
         </scene>
     </scenes>
     <resources>
+        <image name="frame_00_delay-0.04s.png" width="108" height="118"/>
         <image name="icons8-home-24.png" width="24" height="24"/>
-        <image name="loading.gif" width="108" height="118"/>
         <image name="splash_screen.jpg" width="336" height="598"/>
     </resources>
     <inferredMetricsTieBreakers>
