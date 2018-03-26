@@ -9,10 +9,14 @@
 import UIKit
 
 class HomePageViewController: UIViewController {
+    
+    // UI Outlets
+    @IBOutlet weak var menu: UIView!
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        menu.alpha = 0
         // Do any additional setup after loading the view.
     }
 
@@ -32,4 +36,11 @@ class HomePageViewController: UIViewController {
     }
     */
 
+    @IBAction func onMenuButtonClick(_ sender: Any) {
+        if menu.alpha == 0 {
+            menu.alpha = 1
+        } else {
+            menu.alpha = 0
+        }
+    }
 }

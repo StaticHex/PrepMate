@@ -2498,6 +2498,9 @@
                                                 <state key="normal" title="≡">
                                                     <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 </state>
+                                                <connections>
+                                                    <action selector="onMenuButtonClick:" destination="6UE-ry-ygn" eventType="touchUpInside" id="C2h-5m-K1m"/>
+                                                </connections>
                                             </button>
                                         </barButtonItem>
                                         <textField key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter Search Here" textAlignment="natural" minimumFontSize="17" id="VlJ-cp-yZa">
@@ -2804,6 +2807,9 @@
                         <viewLayoutGuide key="safeArea" id="J63-cy-739"/>
                     </view>
                     <navigationItem key="navigationItem" id="Gzw-uz-Kxy"/>
+                    <connections>
+                        <outlet property="menu" destination="tiI-kv-vnA" id="kTS-et-8kn"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6Uy-Di-Ue0" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
