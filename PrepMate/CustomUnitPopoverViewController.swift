@@ -9,7 +9,11 @@
 import UIKit
 
 class CustomUnitPopoverViewController: UIViewController {
-
+    
+    var dontShowAgain: Bool = false
+    
+    @IBOutlet weak var dontShowAgainButton: UIButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -22,6 +26,15 @@ class CustomUnitPopoverViewController: UIViewController {
     }
     
 
+    @IBAction func dontShowAgain(_ sender: Any) {
+        dontShowAgain = true
+        dontShowAgainButton.setTitle("■", for: .normal)
+    }
+    
+    @IBAction func exit(_ sender: Any) {
+         dismiss(animated:true, completion: nil)
+        performSegue(withIdentifier: "customUnitsSegue", sender: AnyClass.self)
+    }
     /*
     // MARK: - Navigation
 

@@ -1,16 +1,17 @@
 //
-//  ShoppingListViewController.swift
+//  CustomUnitsViewController.swift
 //  PrepMate
 //
-//  Created by Pablo Velasco on 3/20/18.
+//  Created by Pablo Velasco on 3/26/18.
 //  Copyright © 2018 Joseph Bourque. All rights reserved.
 //
 
 import UIKit
 
-class ShoppingListViewController: UIViewController {
+var customUnits = ["quarts", "lbs", "grams", "..."]
+class CustomUnitsViewController: UIViewController {
 
-    @IBOutlet weak var shoppingListTableView: UITableView!
+    @IBOutlet weak var customUnitTableView: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,6 +25,9 @@ class ShoppingListViewController: UIViewController {
     }
     
 
+    // Deselect row -> Dismiss
+    
+    
     /*
     // MARK: - Navigation
 
@@ -34,7 +38,4 @@ class ShoppingListViewController: UIViewController {
     }
     */
 
-    @IBAction func addNewItem(_ sender: Any) {
-        self.performSegue(withIdentifier: "newListItemSegue", sender: AnyClass.self)
-    }
 }

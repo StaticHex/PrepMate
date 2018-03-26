@@ -3,7 +3,7 @@ Joseph Bourque (40%)
 • Created MySQL Backend
   - Created MySQL Table Structure (see included schema in REST API folder
   - Created beginning framework of REST API and prepared it to send json to NSSession
-  - For demo verifying database connetion is successful please visit:
+  - For demo verifying database connection is successful please visit:
     http://www.teragentech.net/prepmate/demo.php
 • Created and designed: 
   - Splash Screen
@@ -42,5 +42,4 @@ Yen Chen Wee (30%)
 
 
 Deviations:
-• The application does not have any recipe data in place. The GUI became most important to the team. We decided to have
-  all the flow and pages created first before displaying data.
+• The application does not have any recipe data in place. The GUI became most important to the team. We decided to have all the flow and pages created first before displaying data.

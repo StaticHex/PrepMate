@@ -10,6 +10,9 @@ import UIKit
 
 class NewListItemViewController: UIViewController {
 
+    @IBOutlet weak var itemNameInput: UITextField!
+    @IBOutlet weak var amountInput: UITextField!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -21,7 +24,12 @@ class NewListItemViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "customUnitWarningSegue" {
+            let vc = segue.destination as? CustomUnitPopoverViewController
+        }
+    }
+    
     /*
     // MARK: - Navigation
 
@@ -31,5 +39,20 @@ class NewListItemViewController: UIViewController {
         // Pass the selected object to the new view controller.
     }
     */
-
+    
+    @IBAction func selectUnits(_ sender: Any) {
+        // if value of don't show is true, go straight to units
+        // else don't show
+        // Protocol method here
+        self.performSegue(withIdentifier: "customUnitWarningSegue", sender: AnyClass.self)
+    }
+    @IBAction func cancel(_ sender: Any) {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    @IBAction func save(_ sender: Any) {
+        // TODO: Save item
+        dismiss(animated: true, completion: nil)
+    }
+    
 }
