@@ -17,6 +17,8 @@ class ViewController: UIViewController {
     @IBOutlet weak var loadIcon: UIImageView!
     @IBOutlet weak var statusMsg: UILabel!
     
+    let segueID = "LoginSegue"
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -31,7 +33,16 @@ class ViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
-
+    
+    // Method used to pass information to the destination view
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if(segue.identifier == segueID) {
+            let _ = segue.destination as? LoginViewController
+            print("WE HIT THIS")
+        }
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        self.performSegue(withIdentifier: segueID, sender: nil)
+    }
 }
-

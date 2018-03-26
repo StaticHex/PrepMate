@@ -15,11 +15,9 @@ class LoginViewController: UIViewController {
     
     // UIComponent Outlets
     @IBOutlet weak var txtUserName: UITextField!
-    @IBOutlet weak var txtPassword: UIStackView!
-    @IBOutlet weak var btnLogin: UIButton!
-    @IBOutlet weak var btnSignUp: UIButton!
-    @IBOutlet weak var swtRemember: UISwitch!
-    @IBOutlet weak var btnForgotPassword: UIButton!
+    @IBOutlet weak var txtPassword: UITextField!
+    @IBOutlet weak var swtRememberMe: UISwitch!
+    
     
 
     override func viewDidLoad() {
@@ -44,12 +42,13 @@ class LoginViewController: UIViewController {
     }
     */
 
-    @IBAction func login(_ sender: Any) {
+    @IBAction func btnLogInClick(_ sender: Any) {
     }
     
-    @IBAction func signUp(_ sender: Any) {
+    @IBAction func btnSignUpClick(_ sender: Any) {
     }
     
-    @IBAction func forgotPassword(_ sender: Any) {
+    @IBAction func btnForgotPasswordClick(_ sender: Any) {
     }
+    
 }
