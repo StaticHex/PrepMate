@@ -381,6 +381,11 @@
                                 <state key="normal" title="+">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <segue destination="x30-u5-yQW" kind="popoverPresentation" identifier="addDirectionPopover" popoverAnchorView="Zd2-H4-5xS" id="Kz8-fx-Yac">
+                                        <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
+                                    </segue>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="b0n-XN-9XF">
                                 <rect key="frame" x="35" y="516" width="20" height="20"/>
@@ -1108,6 +1113,11 @@
                                 <state key="normal" title="+">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <segue destination="FZW-Kb-uTN" kind="popoverPresentation" identifier="addVitaminPopover" popoverAnchorView="FV0-T0-HCc" id="yEt-VQ-ttE">
+                                        <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
+                                    </segue>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9Xj-zH-R3x">
                                 <rect key="frame" x="35" y="522" width="20" height="20"/>
@@ -4010,7 +4020,7 @@
         <image name="splash_screen.jpg" width="336" height="598"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="D9Z-da-3YP"/>
+        <segue reference="u5d-Yd-kQg"/>
         <segue reference="U8w-0m-WUJ"/>
         <segue reference="VwH-We-qxt"/>
         <segue reference="l6S-Y1-uWG"/>
