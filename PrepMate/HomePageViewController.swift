@@ -25,16 +25,11 @@ class HomePageViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+        if(segue.identifier == "logoutToLogin") {
+            // TODO: Destroy user object and set up login
+        }
     }
-    */
 
     @IBAction func onMenuButtonClick(_ sender: Any) {
         if menu.alpha == 0 {
@@ -42,5 +37,17 @@ class HomePageViewController: UIViewController {
         } else {
             menu.alpha = 0
         }
+    }
+    
+    @IBAction func onMenuLogout(_ sender: Any) {
+        performSegue(withIdentifier: "logoutToLogin", sender: sender)
+    }
+    
+    @IBAction func onMenuProfile(_ sender: Any) {
+        performSegue(withIdentifier: "menuToProfile", sender: sender)
+    }
+    
+    @IBAction func onMenuSettings(_ sender: Any) {
+        performSegue(withIdentifier: "menuToSetting", sender: sender)
     }
 }

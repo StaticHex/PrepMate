@@ -36,6 +36,9 @@ class LoginViewController: UIViewController {
         if(segue.identifier == "loginToHomeSegue") {
             let _ = segue.destination as? HomePageViewController
             // TODO: pass user data to home screen
+        } else if(segue.identifier == "loginToUserProfile") {
+            let _ = segue.destination as? UserProfileViewController
+            // TODO: pass "add" operation to user profile screen
         }
     }
 
@@ -45,6 +48,8 @@ class LoginViewController: UIViewController {
     }
     
     @IBAction func btnSignUpClick(_ sender: Any) {
+        segueId = "loginToUserProfile"
+        performSegue(withIdentifier: segueId, sender: sender)
     }
     
     @IBAction func btnForgotPasswordClick(_ sender: Any) {
