@@ -18,7 +18,7 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var txtPassword: UITextField!
     @IBOutlet weak var swtRememberMe: UISwitch!
     
-    
+    var segueId = ""
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,17 +32,16 @@ class LoginViewController: UIViewController {
     }
     
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+        if(segue.identifier == "loginToHomeSegue") {
+            let _ = segue.destination as? HomePageViewController
+            // TODO: pass user data to home screen
+        }
     }
-    */
 
     @IBAction func btnLogInClick(_ sender: Any) {
+        segueId = "loginToHomeSegue"
+        performSegue(withIdentifier: segueId, sender: sender)
     }
     
     @IBAction func btnSignUpClick(_ sender: Any) {
