@@ -18,6 +18,7 @@ class HomePageViewController: UIViewController {
         super.viewDidLoad()
         menu.alpha = 0
         // Do any additional setup after loading the view.
+        navigationController?.isNavigationBarHidden = true
     }
 
     override func didReceiveMemoryWarning() {
@@ -39,15 +40,45 @@ class HomePageViewController: UIViewController {
         }
     }
     
-    @IBAction func onMenuLogout(_ sender: Any) {
-        performSegue(withIdentifier: "logoutToLogin", sender: sender)
-    }
-    
     @IBAction func onMenuProfile(_ sender: Any) {
-        performSegue(withIdentifier: "menuToProfile", sender: sender)
+        performSegue(withIdentifier: "homeToProfile", sender: sender)
     }
     
     @IBAction func onMenuSettings(_ sender: Any) {
-        performSegue(withIdentifier: "menuToSetting", sender: sender)
+        performSegue(withIdentifier: "homeToSettings", sender: sender)
     }
+    @IBAction func onMenuLegalClick(_ sender: Any) {
+        performSegue(withIdentifier: "homeToLegal", sender: sender)
+    }
+    
+    @IBAction func onCreditsClick(_ sender: Any) {
+        performSegue(withIdentifier: "homeToCredits", sender: sender)
+    }
+    
+    @IBAction func onMenuLogout(_ sender: Any) {
+        self.navigationController?.popViewController(animated: true)
+    }
+    
+    @IBAction func onMenuShoppingListClick(_ sender: Any) {
+        performSegue(withIdentifier: "homeToShoppingList", sender: sender)
+    }
+    @IBAction func onMenuPantryClick(_ sender: Any) {
+        performSegue(withIdentifier: "homeToPantry", sender: sender)
+    }
+    @IBAction func onMenuRecipeClick(_ sender: Any) {
+        performSegue(withIdentifier: "homeToRecipeList", sender: sender)
+    }
+    @IBAction func onMenuFavoriteClick(_ sender: Any) {
+        performSegue(withIdentifier: "homeToRecipeList", sender: sender)
+    }
+    @IBAction func onMenuMealsClick(_ sender: Any) {
+        performSegue(withIdentifier: "homeToMeals", sender: sender)
+    }
+    @IBAction func onMenuRemoveRecipeClick(_ sender: Any) {
+        performSegue(withIdentifier: "homeToRecipeList", sender: sender)
+    }
+    @IBAction func onMenuAddRecipeClick(_ sender: Any) {
+        performSegue(withIdentifier: "homeToAddRecipe", sender: sender)
+    }
+    
 }
