@@ -7,9 +7,13 @@
 //
 
 import UIKit
-
 class RecipeCommentPageViewController: UIViewController {
-
+    class RecipeCommentCell: UITableViewCell {
+        @IBOutlet weak var commentTitle: UILabel!
+        @IBOutlet weak var commentPreview: UITextView!
+        @IBOutlet weak var ratingLabel: UIImageView!
+        
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
 

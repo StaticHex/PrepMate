@@ -64,6 +64,7 @@
 		A2177BE3206B00AA0094E89D /* Ingredient.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2177BE2206B00AA0094E89D /* Ingredient.swift */; };
 		A2177BE5206B00C70094E89D /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2177BE4206B00C70094E89D /* Comment.swift */; };
 		A2177BE7206B01F40094E89D /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2177BE6206B01F40094E89D /* User.swift */; };
+		A2177BE9206B0B750094E89D /* CommentDetailsPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2177BE8206B0B750094E89D /* CommentDetailsPageViewController.swift */; };
 		A24E8AD22062A90B005C8E2B /* RecipePageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A24E8AD12062A90B005C8E2B /* RecipePageViewController.swift */; };
 		A24E8AD42062AA75005C8E2B /* RecipeNutritionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A24E8AD32062AA75005C8E2B /* RecipeNutritionViewController.swift */; };
 		A24E8AD62062AA8C005C8E2B /* RecipeCommentPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A24E8AD52062AA8C005C8E2B /* RecipeCommentPageViewController.swift */; };
@@ -137,6 +138,7 @@
 		A2177BE2206B00AA0094E89D /* Ingredient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ingredient.swift; sourceTree = "<group>"; };
 		A2177BE4206B00C70094E89D /* Comment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
 		A2177BE6206B01F40094E89D /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		A2177BE8206B0B750094E89D /* CommentDetailsPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentDetailsPageViewController.swift; sourceTree = "<group>"; };
 		A24E8AD12062A90B005C8E2B /* RecipePageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipePageViewController.swift; sourceTree = "<group>"; };
 		A24E8AD32062AA75005C8E2B /* RecipeNutritionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeNutritionViewController.swift; sourceTree = "<group>"; };
 		A24E8AD52062AA8C005C8E2B /* RecipeCommentPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeCommentPageViewController.swift; sourceTree = "<group>"; };
@@ -213,6 +215,7 @@
 				70A24772205C3CC700A2AC47 /* AppDelegate.swift */,
 				70A24774205C3CC700A2AC47 /* ViewController.swift */,
 				70A24776205C3CC700A2AC47 /* Main.storyboard */,
+				A2177BE8206B0B750094E89D /* CommentDetailsPageViewController.swift */,
 				A2177BDE206AFED00094E89D /* Recipe.swift */,
 				A2177BE0206B009F0094E89D /* Vitamin.swift */,
 				A2177BE2206B00AA0094E89D /* Ingredient.swift */,
@@ -375,6 +378,7 @@
 				A11A57382061711F00A7EF31 /* PantryViewController.swift in Sources */,
 				A1E3702B20695D5E00213631 /* PantryItemCustomTableViewCell.swift in Sources */,
 				A1AA004720619BBF00FCDEC4 /* CustomUnitPopoverViewController.swift in Sources */,
+				A2177BE9206B0B750094E89D /* CommentDetailsPageViewController.swift in Sources */,
 				7011C395205DBD4100C965C5 /* UserProfileViewController.swift in Sources */,
 				A2177BE7206B01F40094E89D /* User.swift in Sources */,
 				A24E8AD22062A90B005C8E2B /* RecipePageViewController.swift in Sources */,

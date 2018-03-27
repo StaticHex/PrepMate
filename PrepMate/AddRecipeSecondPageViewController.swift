@@ -10,6 +10,14 @@ import UIKit
 
 class AddRecipeSecondPageViewController: UIViewController {
 
+    @IBOutlet weak var potassiumField: UITextField!
+    @IBOutlet weak var cholesterolField: UITextField!
+    @IBOutlet weak var carbField: UITextField!
+    @IBOutlet weak var fiberField: UITextField!
+    @IBOutlet weak var fatField: UITextField!
+    @IBOutlet weak var caloriesField: UITextField!
+    @IBOutlet weak var sodiumField: UITextField!
+    @IBOutlet weak var sugarField: UITextField!
     override func viewDidLoad() {
         super.viewDidLoad()
 

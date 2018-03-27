@@ -10,6 +10,11 @@ import UIKit
 
 class AddRecipeFirstPageViewController: UIViewController {
 
+    @IBOutlet weak var recipeNameField: UITextField!
+    @IBOutlet weak var categoryPicker: UIPickerView!
+    @IBOutlet weak var servingsPicker: UIPickerView!
+    @IBOutlet weak var prepTimeField: UITextField!
+    @IBOutlet weak var cookTimeField: UITextField!
     override func viewDidLoad() {
         super.viewDidLoad()
         

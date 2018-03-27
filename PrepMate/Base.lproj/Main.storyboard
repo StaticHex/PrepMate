@@ -38,11 +38,17 @@
                                     <string key="title">☆
 </string>
                                 </state>
+                                <connections>
+                                    <action selector="onFavoritePressed:" destination="XWZ-63-vso" eventType="touchUpInside" id="F79-4i-sIU"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xxI-7l-jHc">
                                 <rect key="frame" x="24" y="21" width="30" height="42"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="25"/>
                                 <state key="normal" title="+"/>
+                                <connections>
+                                    <action selector="onAddPressed:" destination="XWZ-63-vso" eventType="touchUpInside" id="vMb-Ul-fo0"/>
+                                </connections>
                             </button>
                             <stackView opaque="NO" contentMode="scaleToFill" spacing="45" translatesAutoresizingMaskIntoConstraints="NO" id="ad8-mf-4CR">
                                 <rect key="frame" x="55" y="191" width="240" height="12"/>
@@ -185,6 +191,17 @@
                         <viewLayoutGuide key="safeArea" id="Lnz-28-0cZ"/>
                     </view>
                     <navigationItem key="navigationItem" id="2m9-DX-jNc"/>
+                    <connections>
+                        <outlet property="caloriesLabel" destination="frO-W5-0O0" id="stQ-0P-D0R"/>
+                        <outlet property="cooktimeLabel" destination="yF0-1i-hEW" id="ea6-0p-RRy"/>
+                        <outlet property="directionsText" destination="rmy-wq-hhB" id="SM4-1d-K81"/>
+                        <outlet property="fatLabel" destination="Bve-MN-blM" id="Xos-ET-8Zm"/>
+                        <outlet property="ingredientText" destination="267-t0-3mD" id="6wa-Bk-nLY"/>
+                        <outlet property="preptimeLabel" destination="fGS-CS-8fV" id="LXd-eg-L6p"/>
+                        <outlet property="ratingsImage" destination="ZxD-6N-gzp" id="ZLt-2O-8Sr"/>
+                        <outlet property="recipeImage" destination="bPQ-pl-WJO" id="TQS-Mc-j8e"/>
+                        <outlet property="servingsLabel" destination="Rda-Fr-pq2" id="4Dl-qz-HIt"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hhd-wr-G9K" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -407,10 +424,20 @@
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nwg-zJ-TmD">
                                         <rect key="frame" x="0.0" y="0.0" width="74" height="30"/>
                                         <state key="normal" title="Contains..."/>
+                                        <connections>
+                                            <segue destination="kCo-2A-ylB" kind="popoverPresentation" popoverAnchorView="nwg-zJ-TmD" id="2I5-CV-aS1">
+                                                <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
+                                            </segue>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RcK-Uf-YoJ">
                                         <rect key="frame" x="174" y="0.0" width="61" height="30"/>
                                         <state key="normal" title="Dietary..."/>
+                                        <connections>
+                                            <segue destination="rFD-UR-Ri3" kind="popoverPresentation" popoverAnchorView="RcK-Uf-YoJ" id="An3-By-Xlc">
+                                                <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
+                                            </segue>
+                                        </connections>
                                     </button>
                                 </subviews>
                             </stackView>
@@ -475,6 +502,13 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="categoryPicker" destination="BfP-VW-iit" id="71R-cq-Wzv"/>
+                        <outlet property="cookTimeField" destination="Lar-Po-E0C" id="lgf-R4-Kmc"/>
+                        <outlet property="prepTimeField" destination="56P-3l-mnG" id="b1r-yn-BAk"/>
+                        <outlet property="recipeNameField" destination="1aU-xq-xFg" id="iv8-16-0Lc"/>
+                        <outlet property="servingsPicker" destination="ypZ-1l-6Ud" id="Gqb-Gc-Fte"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="c5p-Jf-fWv" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -906,7 +940,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0W9-a5-hFt" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2109" y="2986"/>
+            <point key="canvasLocation" x="-2136" y="3103"/>
         </scene>
         <!--Add Vitamin Popover View Controller-->
         <scene sceneID="9tg-NO-Fk7">
@@ -1167,6 +1201,16 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="XIs-mH-TBE"/>
                     </view>
+                    <connections>
+                        <outlet property="caloriesField" destination="Ieg-4a-V71" id="wl7-kR-z5u"/>
+                        <outlet property="carbField" destination="aQt-t7-NDH" id="oJS-k4-8QO"/>
+                        <outlet property="cholesterolField" destination="gxN-bx-nlv" id="DYB-3K-SIX"/>
+                        <outlet property="fatField" destination="soZ-Jt-FaK" id="IYv-GM-eW6"/>
+                        <outlet property="fiberField" destination="xKg-q7-KSe" id="fWt-9s-PVg"/>
+                        <outlet property="potassiumField" destination="qdh-ft-NNA" id="2bf-br-NAw"/>
+                        <outlet property="sodiumField" destination="ZtU-GE-533" id="NEI-9H-9Ya"/>
+                        <outlet property="sugarField" destination="nob-AG-m7G" id="E4a-Vl-erD"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tfQ-KF-v5P" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -1395,7 +1439,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="s31-cv-csp" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-198" y="2570"/>
+            <point key="canvasLocation" x="186" y="2269"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
@@ -3399,6 +3443,10 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="ApS-aj-jDd"/>
                     </view>
+                    <connections>
+                        <outlet property="basicInfoText" destination="ypN-RE-MpS" id="515-A1-I2P"/>
+                        <outlet property="vitaminInfoText" destination="h0U-km-NB5" id="CFD-f1-RwT"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tGl-g0-IdY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -3422,6 +3470,11 @@
                                 <state key="normal" title="Advanced">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <segue destination="uc0-GA-RnZ" kind="popoverPresentation" popoverAnchorView="LzZ-KM-Uxg" id="fta-rB-JiP">
+                                        <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
+                                    </segue>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1e8-NA-6Pt">
                                 <rect key="frame" x="335" y="527" width="30" height="30"/>
@@ -3434,12 +3487,17 @@
                                 <state key="normal" title="+">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <segue destination="kah-Qu-3W7" kind="popoverPresentation" popoverAnchorView="1e8-NA-6Pt" id="Gn0-2a-d33">
+                                        <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
+                                    </segue>
+                                </connections>
                             </button>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="CD7-f4-ka4">
                                 <rect key="frame" x="0.0" y="17" width="375" height="505"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="recipeCommentCell" rowHeight="78" id="yot-jJ-3hE">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="recipeCommentCell" rowHeight="78" id="yot-jJ-3hE" customClass="RecipeCommentCell">
                                         <rect key="frame" x="0.0" y="28" width="375" height="78"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="yot-jJ-3hE" id="drC-A3-GrW">
@@ -3481,6 +3539,9 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
+                                            <outlet property="commentPreview" destination="gsE-w0-31I" id="ivV-xE-xEX"/>
+                                            <outlet property="commentTitle" destination="jpU-Wf-7vf" id="Nck-bM-hub"/>
+                                            <outlet property="ratingLabel" destination="i51-Nm-4dz" id="VCq-Ft-eKe"/>
                                             <segue destination="t24-by-706" kind="show" id="jin-Lg-zGf"/>
                                         </connections>
                                     </tableViewCell>
@@ -3511,10 +3572,10 @@
             </objects>
             <point key="canvasLocation" x="-1007.2" y="1781.5592203898052"/>
         </scene>
-        <!--View Controller-->
+        <!--Comment Details Page View Controller-->
         <scene sceneID="f7J-00-GEo">
             <objects>
-                <viewController id="t24-by-706" sceneMemberID="viewController">
+                <viewController id="t24-by-706" customClass="CommentDetailsPageViewController" customModule="PrepMate" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="rK9-kL-Jzu">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="567"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -3565,6 +3626,13 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="EJM-PV-pcZ"/>
                     </view>
+                    <connections>
+                        <outlet property="authorLabel" destination="17s-xK-BM2" id="amP-QF-aiv"/>
+                        <outlet property="commentBody" destination="pin-Tv-qXJ" id="744-sl-beh"/>
+                        <outlet property="dateLabel" destination="vVf-HL-DKu" id="v8f-v7-6CD"/>
+                        <outlet property="ratingsLabel" destination="DaW-CJ-8cV" id="4Jq-FT-BRJ"/>
+                        <outlet property="timeLabel" destination="mj5-5P-9Ek" id="npw-Fd-hqj"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MsY-Zm-LLU" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

@@ -1,30 +1,20 @@
 //
-//  RecipeOverviewViewController.swift
+//  CommentDetailsPageViewController.swift
 //  PrepMate
 //
-//  Created by Pablo Velasco on 3/21/18.
+//  Created by Yen Chen Wee on 3/27/18.
 //  Copyright © 2018 Joseph Bourque. All rights reserved.
 //
 
 import UIKit
 
-class RecipeOverviewViewController: UIViewController {
+class CommentDetailsPageViewController: UIViewController {
 
-    /// When Favorite button is pressed
-    @IBAction func onFavoritePressed(_ sender: Any) {
-    
-    }
-    @IBAction func onAddPressed(_ sender: Any) {
-    }
-    @IBOutlet weak var ratingsImage: UIImageView!
-    @IBOutlet weak var recipeImage: UIImageView!
-    @IBOutlet weak var ingredientText: UITextView!
-    @IBOutlet weak var directionsText: UITextView!
-    @IBOutlet weak var caloriesLabel: UILabel!
-    @IBOutlet weak var servingsLabel: UILabel!
-    @IBOutlet weak var fatLabel: UILabel!
-    @IBOutlet weak var preptimeLabel: UILabel!
-    @IBOutlet weak var cooktimeLabel: UILabel!
+    @IBOutlet weak var ratingsLabel: UIImageView!
+    @IBOutlet weak var authorLabel: UILabel!
+    @IBOutlet weak var dateLabel: UILabel!
+    @IBOutlet weak var timeLabel: UILabel!
+    @IBOutlet weak var commentBody: UITextView!
     override func viewDidLoad() {
         super.viewDidLoad()
 
