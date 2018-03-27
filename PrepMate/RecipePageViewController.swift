@@ -10,6 +10,33 @@ import UIKit
 
 class RecipePageViewController: UIViewController {
 
+    @IBOutlet weak var RecipeOverviewView: UIView!
+    @IBOutlet weak var RecipeNutritionView: UIView!
+    @IBOutlet weak var RecipeCommentView: UIView!
+    @IBAction func onSegmentPressed(_ sender: UISegmentedControl) {
+        if(sender.selectedSegmentIndex == 0){
+            // Overview segment selected
+            UIView.animate(withDuration: 0.5, animations: {
+                self.RecipeOverviewView.alpha = 1
+                self.RecipeNutritionView.alpha = 0
+                self.RecipeCommentView.alpha = 0
+            })
+        } else if(sender.selectedSegmentIndex == 1) {
+            // Nutrition info segment selected
+            UIView.animate(withDuration: 0.5, animations: {
+                self.RecipeOverviewView.alpha = 0
+                self.RecipeNutritionView.alpha = 1
+                self.RecipeCommentView.alpha = 0
+            })
+        } else {
+            // Comment segment selected
+            UIView.animate(withDuration: 0.5, animations: {
+                self.RecipeOverviewView.alpha = 0
+                self.RecipeNutritionView.alpha = 0
+                self.RecipeCommentView.alpha = 1
+            })
+        }
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
 
