@@ -266,7 +266,6 @@
                                 <rect key="frame" x="10" y="236" width="71" height="42.5"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="71" id="2ZB-Po-KWv"/>
-                                    <constraint firstAttribute="height" constant="50" id="nY6-Y1-8UM"/>
                                 </constraints>
                             </pickerView>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="56P-3l-mnG">
@@ -3654,7 +3653,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YAO-fE-GxY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="270" y="107"/>
+            <point key="canvasLocation" x="468" y="116"/>
         </scene>
     </scenes>
     <resources>
