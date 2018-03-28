@@ -59,6 +59,7 @@ class ViewController: UIViewController {
             exit(0)
         }))
 
+        // Start spinning
         queue.async {
             // don't go past this screen until we verify connection
             while(con.error) {
