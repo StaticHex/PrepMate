@@ -13,6 +13,7 @@ class HomePageViewController: UIViewController {
     // UI Outlets
     @IBOutlet weak var menu: UIView!
     
+    var appUser = User()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -56,6 +57,7 @@ class HomePageViewController: UIViewController {
     }
     
     @IBAction func onMenuLogout(_ sender: Any) {
+        appUser.clear()
         self.navigationController?.popViewController(animated: true)
     }
     

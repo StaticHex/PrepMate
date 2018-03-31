@@ -38,6 +38,7 @@
 		7035295F206482FA00F88A72 /* frame_07_delay-0.04s.png in Resources */ = {isa = PBXBuildFile; fileRef = 70352947206482FA00F88A72 /* frame_07_delay-0.04s.png */; };
 		70352960206482FA00F88A72 /* frame_12_delay-0.04s.png in Resources */ = {isa = PBXBuildFile; fileRef = 70352948206482FA00F88A72 /* frame_12_delay-0.04s.png */; };
 		70352961206482FA00F88A72 /* frame_15_delay-0.04s.png in Resources */ = {isa = PBXBuildFile; fileRef = 70352949206482FA00F88A72 /* frame_15_delay-0.04s.png */; };
+		707180EE20702675009EA6A8 /* Photo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 707180ED20702675009EA6A8 /* Photo.swift */; };
 		70A24773205C3CC700A2AC47 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A24772205C3CC700A2AC47 /* AppDelegate.swift */; };
 		70A24775205C3CC700A2AC47 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A24774205C3CC700A2AC47 /* ViewController.swift */; };
 		70A24778205C3CC700A2AC47 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 70A24776205C3CC700A2AC47 /* Main.storyboard */; };
@@ -110,6 +111,7 @@
 		70352947206482FA00F88A72 /* frame_07_delay-0.04s.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "frame_07_delay-0.04s.png"; path = "Assets.xcassets/ezgif-4-3898ccaee7-gif-png/frame_07_delay-0.04s.png"; sourceTree = "<group>"; };
 		70352948206482FA00F88A72 /* frame_12_delay-0.04s.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "frame_12_delay-0.04s.png"; path = "Assets.xcassets/ezgif-4-3898ccaee7-gif-png/frame_12_delay-0.04s.png"; sourceTree = "<group>"; };
 		70352949206482FA00F88A72 /* frame_15_delay-0.04s.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "frame_15_delay-0.04s.png"; path = "Assets.xcassets/ezgif-4-3898ccaee7-gif-png/frame_15_delay-0.04s.png"; sourceTree = "<group>"; };
+		707180ED20702675009EA6A8 /* Photo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Photo.swift; sourceTree = "<group>"; };
 		70A2476F205C3CC700A2AC47 /* PrepMate.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PrepMate.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		70A24772205C3CC700A2AC47 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		70A24774205C3CC700A2AC47 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -252,6 +254,7 @@
 				702C939B205F128C005AACE2 /* CreditsViewController.swift */,
 				700807402060362400F6B52F /* LegalViewController.swift */,
 				70DFB84D2063592B009DE826 /* AddBlacklistViewController.swift */,
+				707180ED20702675009EA6A8 /* Photo.swift */,
 			);
 			path = PrepMate;
 			sourceTree = "<group>";
@@ -362,6 +365,7 @@
 				A1E3702920695A8A00213631 /* ShoppingListCustomTableViewCell.swift in Sources */,
 				A2526BD220632DD000C89BCE /* AddRecipeSecondPageViewController.swift in Sources */,
 				A2D3BD7C20633291005BD508 /* AddRecipeDietaryPageViewController.swift in Sources */,
+				707180EE20702675009EA6A8 /* Photo.swift in Sources */,
 				A24E8AD42062AA75005C8E2B /* RecipeNutritionViewController.swift in Sources */,
 				A2177BE5206B00C70094E89D /* Comment.swift in Sources */,
 				7011C393205DAA0E00C965C5 /* LoginViewController.swift in Sources */,

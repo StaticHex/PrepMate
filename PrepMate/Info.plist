@@ -47,7 +47,7 @@
         <true/>
         <key>NSExceptionDomains</key>
         <dict>
-            <key>http://www.teragentech.net/prepmate/CTest.php</key>
+            <key>http://www.teragentech.net</key>
             <dict>
                 <key>NSIncludesSubdomains</key>
                 <true/>
