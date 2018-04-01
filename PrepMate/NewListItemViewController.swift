@@ -16,8 +16,16 @@ class NewListItemViewController: UIViewController, UIPickerViewDelegate, UIPicke
     
     @IBOutlet weak var pickerText: UITextField!
     
-    weak var pDelegate : addShoppingListItem?
-
+    @IBOutlet weak var inputError: UILabel!
+    
+    weak var sDelegate : addShoppingListItem?
+    
+    weak var pDelegate : addPantryListItem?
+    
+    // true if coming from shopping list, false if pantry list
+    var whichController: Bool = true
+    
+    
     var unitPicker = UIPickerView()
     var pickerOptions: [String] = ["Cups", "Quarts", "Lbs", "Custom"]
     
@@ -27,9 +35,10 @@ class NewListItemViewController: UIViewController, UIPickerViewDelegate, UIPicke
         self.unitPicker.dataSource = self
         itemNameInput.text = ""
         amountInput.text = ""
+        inputError.text = ""
         self.pickerText.text = pickerOptions[0]
         pickerText.inputView = unitPicker
-        // Do any additional setup after loading the view.
+
     }
 
     override func didReceiveMemoryWarning() {
@@ -79,13 +88,28 @@ class NewListItemViewController: UIViewController, UIPickerViewDelegate, UIPicke
     }
     
     @IBAction func save(_ sender: Any) {
-        // TODO: Save item
-
-        // Need to check if coming from shopping list or pantry list
-        print(itemNameInput.text!)
-        print(amountInput.text!)
+        
+        if amountInput.text! == "" || itemNameInput.text! == ""
+        {
+            inputError.text = "Fields cannot be empty"
+            return
+        }
+        
+        if Int(amountInput.text!) == nil {
+            amountInput.text! = ""
+            inputError.text = "Amount must be a number"
+            return
+        }
+        
         let item = Ingredient(id: 1, name: itemNameInput.text!, unit: Int(amountInput.text!)!, customLabel: "empty")
-        pDelegate?.addItem(item: item)
+        
+        if whichController {
+            sDelegate?.addSItem(item: item)
+        }
+        else if !whichController {
+            pDelegate?.addPItem(item: item)
+        }
+        
         dismiss(animated: true, completion: nil)
     }
     

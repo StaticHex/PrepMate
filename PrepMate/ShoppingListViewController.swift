@@ -11,7 +11,7 @@ import UIKit
 var shoppingListItems = [Ingredient]()
 
 protocol addShoppingListItem: class {
-    func addItem(item: Ingredient)
+    func addSItem(item: Ingredient)
 }
 
 class ShoppingListViewController: UIViewController, UIPopoverPresentationControllerDelegate, UITableViewDelegate, UITableViewDataSource, addShoppingListItem {
@@ -26,7 +26,6 @@ class ShoppingListViewController: UIViewController, UIPopoverPresentationControl
         shoppingListTableView.dataSource = self
         
     navigationController?.isNavigationBarHidden = false
-    shoppingListItems.append(Ingredient(id: 1, name: "item", unit: 2, customLabel: "none"))
     }
     
     override func didReceiveMemoryWarning() {
@@ -46,8 +45,8 @@ class ShoppingListViewController: UIViewController, UIPopoverPresentationControl
             if controller != nil {
                 controller?.delegate = self
                 controller?.passthroughViews = nil
-                vc?.pDelegate = self
-                
+                vc?.sDelegate = self
+                vc?.whichController = true
             }
         }
     }
@@ -82,9 +81,8 @@ class ShoppingListViewController: UIViewController, UIPopoverPresentationControl
         tableView.deselectRow(at: indexPath, animated: true)
     }
     
-    func addItem(item: Ingredient) {
+    func addSItem(item: Ingredient) {
         shoppingListItems.insert(item, at: 0)
-        print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
         self.shoppingListTableView.beginUpdates()
         self.shoppingListTableView.insertRows(at: [IndexPath.init(row: 0, section: 0)], with: .automatic)
         self.shoppingListTableView.endUpdates()

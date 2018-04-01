@@ -8,12 +8,22 @@
 
 import UIKit
 
-class PantryViewController: UIViewController, UIPopoverPresentationControllerDelegate {
+protocol addPantryListItem : class {
+    func addPItem(item: Ingredient)
+}
 
+var pantryListItems = [Ingredient]()
+
+class PantryViewController: UIViewController, UIPopoverPresentationControllerDelegate, UITableViewDelegate, UITableViewDataSource, addPantryListItem {
+
+    @IBOutlet weak var pantryListTableView: UITableView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Do any additional setup after loading the view.
+        pantryListTableView.delegate = self
+        pantryListTableView.dataSource = self
+        
         navigationController?.isNavigationBarHidden = false
     }
     
@@ -34,6 +44,8 @@ class PantryViewController: UIViewController, UIPopoverPresentationControllerDel
             if controller != nil {
                 controller?.delegate = self
                 controller?.passthroughViews = nil
+                vc?.pDelegate = self
+                vc?.whichController = false
             }
         }
     }
@@ -42,7 +54,32 @@ class PantryViewController: UIViewController, UIPopoverPresentationControllerDel
         return UIModalPresentationStyle.none
     }
 
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return pantryListItems.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        let cell:PantryItemCustomTableViewCell = tableView.dequeueReusableCell(withIdentifier: "pantryListTableCell", for: indexPath as IndexPath) as! PantryItemCustomTableViewCell
+        
+        let row = indexPath.row
+        cell.itemName.text = pantryListItems[row].name
+        cell.itemAmount.text = String(pantryListItems[row].unit)
+        return cell
+    }
+    
     @IBAction func onAddClick(_ sender: Any) {
         self.performSegue(withIdentifier: "newListItemSegue2", sender: AnyClass.self)
+    }
+    
+    func addPItem(item: Ingredient) {
+        pantryListItems.insert(item, at: 0)
+        self.pantryListTableView.beginUpdates()
+        self.pantryListTableView.insertRows(at: [IndexPath.init(row: 0, section: 0)], with: .automatic)
+        self.pantryListTableView.endUpdates()
     }
 }

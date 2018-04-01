@@ -11,9 +11,10 @@ import UIKit
 class PantryItemCustomTableViewCell: UITableViewCell {
 
     @IBOutlet weak var itemName: UILabel!
-    @IBOutlet weak var itemAmount: UILabel!
     
+    @IBOutlet weak var itemAmount: UILabel!
     @IBOutlet weak var selectedItem: UIButton!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
