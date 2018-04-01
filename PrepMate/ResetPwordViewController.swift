@@ -36,7 +36,7 @@ class ResetPwordViewController: UIViewController {
     @IBAction func onResetClick(_ sender: Any) {
         if (txtUname.text! !=  "") {
             // path to our backend script
-            let URL_VERIFY = "http://www.teragentech.net/prepmate/ResetPword.php"
+            let URL_VERIFY = "http://www.teragentech.net/prepmate/PwordReset.php"
             
             // variable which will spin until verification is finished
             var finished : Bool = false
