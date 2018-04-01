@@ -11,7 +11,7 @@
 
 import UIKit
 
-class LoginViewController: UIViewController {
+class LoginViewController: UIViewController, UIPopoverPresentationControllerDelegate {
     
     // UIComponent Outlets
     @IBOutlet weak var txtUserName: UITextField!
@@ -49,7 +49,19 @@ class LoginViewController: UIViewController {
         } else if(segue.identifier == "loginToUserProfile") {
             let _ = segue.destination as? UserProfileViewController
             // TODO: pass "add" operation to user profile screen
+        } else if(segue.identifier == "resetPwordPopover") {
+            let vc = segue.destination as? ResetPwordViewController
+            vc?.isModalInPopover = true
+            let controller = vc?.popoverPresentationController
+            if controller != nil {
+                controller?.delegate = self
+                controller?.passthroughViews = nil
+            }
         }
+    }
+    
+    func adaptivePresentationStyle(for controller: UIPresentationController, traitCollection: UITraitCollection) -> UIModalPresentationStyle {
+        return UIModalPresentationStyle.none
     }
     
     override func viewDidAppear(_ animated: Bool) {

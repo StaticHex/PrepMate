@@ -31,6 +31,14 @@ class User {
         eMsg = ""
     }
     
+    // Verify User Method
+    // @param
+    // - uname: User name to log in with
+    // - pword: unencrpted password to check against database hash
+    // @description
+    // - Pings the REST API with the user's username and password
+    //   and either displays an alert in the event of a mismatch or
+    //   logs the user in and grabs all information from the database
     func verify(uname : String, pword: String) -> Bool {
         // pass in info to class variables in order to set up http request
         self.uname = uname
@@ -117,6 +125,7 @@ class User {
         self.bio = oldUser.bio
         self.eMsg = oldUser.eMsg
     }
+    
     // Clear Method
     // @description
     // - Clears out all loaded data in a user object, use this before logging out to ensure user isn't logged in again

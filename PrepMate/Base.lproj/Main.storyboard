@@ -1604,6 +1604,9 @@
                                         </state>
                                         <connections>
                                             <action selector="btnForgotPasswordClick:" destination="Yc3-xh-1lc" eventType="touchUpInside" id="CaK-ii-29N"/>
+                                            <segue destination="4md-eK-Ur3" kind="popoverPresentation" identifier="resetPwordPopover" popoverAnchorView="eRW-Xz-S0d" id="55X-So-RvH">
+                                                <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
+                                            </segue>
                                         </connections>
                                     </button>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="1oF-80-PEs">
@@ -1638,6 +1641,78 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aBP-3a-NyH" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1962.4000000000001" y="116.49175412293854"/>
+        </scene>
+        <!--Reset Pword View Controller-->
+        <scene sceneID="dri-lW-mgM">
+            <objects>
+                <viewController id="4md-eK-Ur3" customClass="ResetPwordViewController" customModule="PrepMate" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="hfA-VJ-fCu">
+                        <rect key="frame" x="0.0" y="0.0" width="310" height="150"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BNr-oM-70i">
+                                <rect key="frame" x="0.0" y="0.0" width="310" height="44"/>
+                                <items>
+                                    <navigationItem title="Reset Password" id="z1M-rs-QKC">
+                                        <barButtonItem key="leftBarButtonItem" style="done" id="5HI-Xd-B5L">
+                                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="ZPd-zd-1ve">
+                                                <rect key="frame" x="16" y="7" width="66" height="30"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <state key="normal" title="reset"/>
+                                                <connections>
+                                                    <action selector="onResetClick:" destination="4md-eK-Ur3" eventType="touchUpInside" id="CSG-K3-NEm"/>
+                                                </connections>
+                                            </button>
+                                        </barButtonItem>
+                                        <barButtonItem key="rightBarButtonItem" style="done" id="2pL-KA-Oxw">
+                                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="0kG-Xw-lTj">
+                                                <rect key="frame" x="228" y="7" width="66" height="30"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <state key="normal" title="cancel"/>
+                                                <connections>
+                                                    <action selector="onCancelClick:" destination="4md-eK-Ur3" eventType="touchUpInside" id="hSR-Ja-soU"/>
+                                                </connections>
+                                            </button>
+                                        </barButtonItem>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="Enter your username below to reset the password for your account" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="MY6-Kp-Ajt">
+                                <rect key="frame" x="10" y="44" width="290" height="52"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="wOf-jt-hFJ">
+                                <rect key="frame" x="10" y="110" width="290" height="30"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                        </subviews>
+                        <color key="backgroundColor" red="0.90890789189999999" green="0.94381479999999995" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="BNr-oM-70i" firstAttribute="leading" secondItem="nOI-yx-rID" secondAttribute="leading" id="50C-Me-EFi"/>
+                            <constraint firstItem="nOI-yx-rID" firstAttribute="trailing" secondItem="MY6-Kp-Ajt" secondAttribute="trailing" constant="10" id="F4e-sr-O3G"/>
+                            <constraint firstItem="BNr-oM-70i" firstAttribute="top" secondItem="nOI-yx-rID" secondAttribute="top" id="H8I-PF-cpj"/>
+                            <constraint firstItem="wOf-jt-hFJ" firstAttribute="top" secondItem="MY6-Kp-Ajt" secondAttribute="bottom" constant="14" id="MUg-QP-1KH"/>
+                            <constraint firstItem="wOf-jt-hFJ" firstAttribute="leading" secondItem="nOI-yx-rID" secondAttribute="leading" constant="10" id="QXX-tD-GRb"/>
+                            <constraint firstItem="MY6-Kp-Ajt" firstAttribute="leading" secondItem="nOI-yx-rID" secondAttribute="leading" constant="10" id="d9t-Ne-QUL"/>
+                            <constraint firstItem="MY6-Kp-Ajt" firstAttribute="top" secondItem="BNr-oM-70i" secondAttribute="bottom" id="hhn-6m-NOP"/>
+                            <constraint firstItem="BNr-oM-70i" firstAttribute="trailing" secondItem="nOI-yx-rID" secondAttribute="trailing" id="wta-VR-eH3"/>
+                            <constraint firstItem="nOI-yx-rID" firstAttribute="bottom" secondItem="wOf-jt-hFJ" secondAttribute="bottom" constant="10" id="xL4-co-v0r"/>
+                            <constraint firstItem="nOI-yx-rID" firstAttribute="trailing" secondItem="wOf-jt-hFJ" secondAttribute="trailing" constant="10" id="xbp-8n-90Y"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="nOI-yx-rID"/>
+                    </view>
+                    <value key="contentSizeForViewInPopover" type="size" width="310" height="150"/>
+                    <size key="freeformSize" width="310" height="150"/>
+                    <connections>
+                        <outlet property="txtUname" destination="wOf-jt-hFJ" id="x3h-GQ-i1U"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="BMr-oi-4Va" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2139" y="-361"/>
         </scene>
         <!--Add Blacklist View Controller-->
         <scene sceneID="54X-6h-KP1">
