@@ -30,7 +30,12 @@ class ShoppingListCustomTableViewCell: UITableViewCell {
     }
     
     @IBAction func selectItem(_ sender: Any) {
-        selectedItem.setTitle("■", for: .normal)
+        if selectedItem.currentTitle == "■" {
+            selectedItem.setTitle("□", for: .normal)
+        }
+        else {
+            selectedItem.setTitle("■", for: .normal)
+        }
         // Save
         // Protocol function here
     }

@@ -8,7 +8,13 @@
 
 import UIKit
 
-class ShoppingListViewController: UIViewController, UIPopoverPresentationControllerDelegate {
+var shoppingListItems = [Ingredient]()
+
+protocol addShoppingListItem: class {
+    func addItem(item: Ingredient)
+}
+
+class ShoppingListViewController: UIViewController, UIPopoverPresentationControllerDelegate, UITableViewDelegate, UITableViewDataSource, addShoppingListItem {
 
     @IBOutlet weak var shoppingListTableView: UITableView!
     
@@ -16,7 +22,11 @@ class ShoppingListViewController: UIViewController, UIPopoverPresentationControl
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
-        navigationController?.isNavigationBarHidden = false
+        shoppingListTableView.delegate = self
+        shoppingListTableView.dataSource = self
+        
+    navigationController?.isNavigationBarHidden = false
+    shoppingListItems.append(Ingredient(id: 1, name: "item", unit: 2, customLabel: "none"))
     }
     
     override func didReceiveMemoryWarning() {
@@ -36,6 +46,8 @@ class ShoppingListViewController: UIViewController, UIPopoverPresentationControl
             if controller != nil {
                 controller?.delegate = self
                 controller?.passthroughViews = nil
+                vc?.pDelegate = self
+                
             }
         }
     }
@@ -46,5 +58,35 @@ class ShoppingListViewController: UIViewController, UIPopoverPresentationControl
 
     @IBAction func addNewItem(_ sender: Any) {
         self.performSegue(withIdentifier: "newListItemSegue", sender: AnyClass.self)
+    }
+    
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return shoppingListItems.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+
+        let cell:ShoppingListCustomTableViewCell = tableView.dequeueReusableCell(withIdentifier: "shoppingListTableCell", for: indexPath as IndexPath) as! ShoppingListCustomTableViewCell
+        
+        let row = indexPath.row
+        cell.itemName.text = shoppingListItems[row].name
+        cell.itemAmount.text = String(shoppingListItems[row].unit)
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
+    
+    func addItem(item: Ingredient) {
+        shoppingListItems.insert(item, at: 0)
+        print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
+        self.shoppingListTableView.beginUpdates()
+        self.shoppingListTableView.insertRows(at: [IndexPath.init(row: 0, section: 0)], with: .automatic)
+        self.shoppingListTableView.endUpdates()
     }
 }
