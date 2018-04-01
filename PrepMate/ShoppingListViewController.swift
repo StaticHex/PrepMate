@@ -72,8 +72,8 @@ class ShoppingListViewController: UIViewController, UIPopoverPresentationControl
         let cell:ShoppingListCustomTableViewCell = tableView.dequeueReusableCell(withIdentifier: "shoppingListTableCell", for: indexPath as IndexPath) as! ShoppingListCustomTableViewCell
         
         let row = indexPath.row
-        cell.itemName.text = shoppingListItems[row].name
-        cell.itemAmount.text = String(shoppingListItems[row].unit)
+        cell.itemName.text = shoppingListItems[row].getName()
+        cell.itemAmount.text = String(shoppingListItems[row].getUnit())
         return cell
     }
     

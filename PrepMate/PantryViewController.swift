@@ -67,8 +67,8 @@ class PantryViewController: UIViewController, UIPopoverPresentationControllerDel
         let cell:PantryItemCustomTableViewCell = tableView.dequeueReusableCell(withIdentifier: "pantryListTableCell", for: indexPath as IndexPath) as! PantryItemCustomTableViewCell
         
         let row = indexPath.row
-        cell.itemName.text = pantryListItems[row].name
-        cell.itemAmount.text = String(pantryListItems[row].unit)
+        cell.itemName.text = pantryListItems[row].getName()
+        cell.itemAmount.text = String(pantryListItems[row].getUnit())
         return cell
     }
     

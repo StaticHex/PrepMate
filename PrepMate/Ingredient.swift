@@ -8,14 +8,20 @@
 
 import Foundation
 class Ingredient {
-    public var id : Int
-    public var name : String
-    public var unit : Int
-    public var customLabel : String
+    private var id : Int
+    private var name : String
+    private var unit : Int
+    private var customLabel : String
     init(id:Int, name: String, unit: Int, customLabel:String) {
         self.id = id
         self.name = name
         self.unit = unit
         self.customLabel = customLabel
     }
+    
+    func getId() -> Int { return self.id}
+    func getName() -> String { return self.name}
+    //TODO: change this to correctly reflect type of units
+    func getUnit() -> Int { return self.unit}
+    func getCustomLabel() -> String { return self.customLabel}
 }

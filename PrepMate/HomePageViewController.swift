@@ -69,6 +69,7 @@ class HomePageViewController: UIViewController {
     }
     @IBAction func onMenuRecipeClick(_ sender: Any) {
         performSegue(withIdentifier: "homeToRecipeList", sender: sender)
+        menu.alpha = 0
     }
     @IBAction func onMenuFavoriteClick(_ sender: Any) {
         performSegue(withIdentifier: "homeToRecipeList", sender: sender)

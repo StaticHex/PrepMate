@@ -9,10 +9,11 @@
 import UIKit
 
 class RecipePageViewController: UIViewController {
-
+    var recipe = Recipe()
     @IBOutlet weak var RecipeOverviewView: UIView!
     @IBOutlet weak var RecipeNutritionView: UIView!
     @IBOutlet weak var RecipeCommentView: UIView!
+    @IBOutlet weak var navBar: UINavigationItem!
     @IBAction func onSegmentPressed(_ sender: UISegmentedControl) {
         if(sender.selectedSegmentIndex == 0){
             // Overview segment selected
@@ -39,8 +40,8 @@ class RecipePageViewController: UIViewController {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-
         // Do any additional setup after loading the view.
+        navBar.title = self.recipe.getName()
     }
 
     override func didReceiveMemoryWarning() {
@@ -49,14 +50,28 @@ class RecipePageViewController: UIViewController {
     }
     
 
-    /*
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+        // Pass Recipe to each of the container views
+        if  segue.identifier == "recipePageToOverview",
+            let destination = segue.destination as? RecipeOverviewViewController
+        {
+            destination.recipe = self.recipe
+        }
+        else if segue.identifier == "recipePageToNutrition",
+            let destination = segue.destination as? RecipeNutritionViewController
+        {
+            destination.recipe = self.recipe
+        }
+        else if segue.identifier == "recipePageToComments",
+            let destination = segue.destination as? RecipeCommentPageViewController
+        {
+            destination.recipe = self.recipe
+        }
     }
-    */
+    
 
 }

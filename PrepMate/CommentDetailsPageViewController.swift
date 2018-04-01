@@ -9,7 +9,9 @@
 import UIKit
 
 class CommentDetailsPageViewController: UIViewController {
-
+    var comment = Comment()
+    
+    @IBOutlet weak var commentTitle: UINavigationItem!
     @IBOutlet weak var ratingsLabel: UIImageView!
     @IBOutlet weak var authorLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
@@ -17,7 +19,7 @@ class CommentDetailsPageViewController: UIViewController {
     @IBOutlet weak var commentBody: UITextView!
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        self.loadPage()
         // Do any additional setup after loading the view.
     }
 
@@ -25,8 +27,22 @@ class CommentDetailsPageViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
+    private func loadPage() {
+        //TODO: Implement ratings
+        //self.ratingsLabel.image
+        authorLabel.text! = self.comment.getAuthor().getFname() + " " + self.comment.getAuthor().getLname()
+        dateLabel.text! = self.comment.getDate()
+        timeLabel.text! = self.comment.getTime()
+        commentBody.text! = self.comment.getDescription()
+        commentTitle.title = self.comment.getTitle()
 
+    }
+    
+    @IBAction func onBackPressed(_ sender: Any) {
+        //TODO implement back button:w
+        
+    }
+    
     /*
     // MARK: - Navigation
 

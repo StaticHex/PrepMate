@@ -10,7 +10,7 @@ import UIKit
 
 class RecipeNutritionViewController: UIViewController {
     // TODO: Create outlet for collection view that makes up the nutrition overview
-   
+    var recipe = Recipe()
     @IBOutlet weak var basicInfoText: UITextView!
     @IBOutlet weak var vitaminInfoText: UITextView!
     override func viewDidLoad() {
