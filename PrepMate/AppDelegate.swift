@@ -16,6 +16,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        
+        let defaults = UserDefaults.standard
+        if defaults.object(forKey: "titleBarColor") != nil {
+            let decoded  = defaults.object(forKey: "titleBarColor") as! Data
+            let decodedColor = NSKeyedUnarchiver.unarchiveObject(with: decoded) as! UIColor
+            UINavigationBar.appearance().backgroundColor = decodedColor
+        }
+        
+        if defaults.object(forKey: "navBarTextColor") != nil {
+            let decoded  = defaults.object(forKey: "navBarTextColor") as! Data
+            let decodedColor = NSKeyedUnarchiver.unarchiveObject(with: decoded) as! UIColor
+            // Nav Bar Item Colors
+            UINavigationBar.appearance().tintColor = decodedColor
+            // Navigation Bar Text
+            UINavigationBar.appearance().titleTextAttributes = [NSAttributedStringKey.foregroundColor : decodedColor]
+        }
+
         return true
     }
 

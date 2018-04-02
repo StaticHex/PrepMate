@@ -13,11 +13,8 @@ class SettingsViewController: UIViewController {
     @IBOutlet weak var swtManagePantry: UISwitch!
     @IBOutlet weak var swtManageSlist: UISwitch!
     @IBOutlet weak var swtRemember: UISwitch!
-    @IBOutlet weak var swtWarnCustom: UISwitch!
     @IBOutlet weak var btnTitleColor: UIButton!
     @IBOutlet weak var btnFontColor: UIButton!
-    @IBOutlet weak var btnStarColor1: UIButton!
-    @IBOutlet weak var btnStarColor2: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,14 +32,31 @@ class SettingsViewController: UIViewController {
     }
 
     @IBAction func setTitleColor(_ sender: Any) {
+        let defaults = UserDefaults.standard
+        let color = UIColor(red: 100/255.0, green: 100.0/255.0, blue: 255.0/255.0, alpha: 1.0)
+        let encodedData = NSKeyedArchiver.archivedData(withRootObject: color)
+
+        defaults.set(encodedData, forKey: "titleBarColor")
+        UINavigationBar.appearance().backgroundColor = color
+        
+        // Nav Bar Item Colors
+        UINavigationBar.appearance().tintColor = color
+        // Navigation Bar Text
     }
     
     @IBAction func setFontColor(_ sender: Any) {
+        let defaults = UserDefaults.standard
+        let color = UIColor(red: 20.0/255.0, green: 50.0/255.0, blue: 130.0/255.0, alpha: 1.0)
+        let encodedData = NSKeyedArchiver.archivedData(withRootObject: color)
+        
+        defaults.set(encodedData, forKey: "navBarTextColor")
+        
+        // Nav Bar Item Colors
+        UINavigationBar.appearance().tintColor = color
+        
+        // Nav Bar Text
+        UINavigationBar.appearance().titleTextAttributes = [NSAttributedStringKey.foregroundColor : color]
+//        UILabel.appearance().textColor = UIColor.red
     }
-    
-    @IBAction func setStarColor1(_ sender: Any) {
-    }
-    
-    @IBOutlet weak var setStarColor2: UIButton!
     
 }
