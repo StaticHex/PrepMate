@@ -18,9 +18,9 @@ class NewListItemViewController: UIViewController, UIPickerViewDelegate, UIPicke
     
     @IBOutlet weak var inputError: UILabel!
     
-    weak var sDelegate : addShoppingListItem?
+    weak var sDelegate : shoppingListProtocol?
     
-    weak var pDelegate : addPantryListItem?
+    weak var pDelegate : pantryProtocol?
     
     // true if coming from shopping list, false if pantry list
     var whichController: Bool = true

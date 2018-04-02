@@ -15,6 +15,8 @@ class PantryItemCustomTableViewCell: UITableViewCell {
     @IBOutlet weak var itemAmount: UILabel!
     @IBOutlet weak var selectedItem: UIButton!
     
+    weak var pDelegate : pantryProtocol?
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -26,13 +28,18 @@ class PantryItemCustomTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
+
     @IBAction func selectItem(_ sender: Any) {
-        selectedItem.setTitle("■", for: .normal)
+        if selectedItem.currentTitle == "□" {
+            selectedItem.setTitle("■", for: .normal)
+        }
+        else if selectedItem.currentTitle == "■" {
+            selectedItem.setTitle("□", for: .normal)
+        }
     }
 
-    @IBAction func editItem(_ sender: Any) {
-        // Need new screen
-        // Edit Item
+    @IBAction func removePantryItem(_ sender: Any) {
+        pDelegate?.removePItem(cell: self)
     }
-
+    
 }

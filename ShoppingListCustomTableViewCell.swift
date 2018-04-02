@@ -14,6 +14,8 @@ class ShoppingListCustomTableViewCell: UITableViewCell {
     @IBOutlet weak var itemAmount: UILabel!
     @IBOutlet weak var itemName: UILabel!
     
+    weak var sProtocol: shoppingListProtocol?
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -25,8 +27,7 @@ class ShoppingListCustomTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     @IBAction func deleteItem(_ sender: Any) {
-        // Delete
-        // Protocol function here
+        sProtocol?.removeShoppingItem(cell: self)
     }
     
     @IBAction func selectItem(_ sender: Any) {

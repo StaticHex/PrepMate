@@ -10,11 +10,13 @@ import UIKit
 
 var shoppingListItems = [Ingredient]()
 
-protocol addShoppingListItem: class {
+protocol shoppingListProtocol: class {
     func addSItem(item: Ingredient)
+    func removeShoppingItem(cell: ShoppingListCustomTableViewCell)
+
 }
 
-class ShoppingListViewController: UIViewController, UIPopoverPresentationControllerDelegate, UITableViewDelegate, UITableViewDataSource, addShoppingListItem {
+class ShoppingListViewController: UIViewController, UIPopoverPresentationControllerDelegate, UITableViewDelegate, UITableViewDataSource, shoppingListProtocol {
 
     @IBOutlet weak var shoppingListTableView: UITableView!
     
@@ -71,6 +73,8 @@ class ShoppingListViewController: UIViewController, UIPopoverPresentationControl
 
         let cell:ShoppingListCustomTableViewCell = tableView.dequeueReusableCell(withIdentifier: "shoppingListTableCell", for: indexPath as IndexPath) as! ShoppingListCustomTableViewCell
         
+        cell.sProtocol = self
+        
         let row = indexPath.row
         cell.itemName.text = shoppingListItems[row].getName()
         cell.itemAmount.text = String(shoppingListItems[row].getUnit())
@@ -86,5 +90,11 @@ class ShoppingListViewController: UIViewController, UIPopoverPresentationControl
         self.shoppingListTableView.beginUpdates()
         self.shoppingListTableView.insertRows(at: [IndexPath.init(row: 0, section: 0)], with: .automatic)
         self.shoppingListTableView.endUpdates()
+    }
+    
+    func removeShoppingItem(cell: ShoppingListCustomTableViewCell) {
+        let indexPath = self.shoppingListTableView.indexPath(for: cell)
+        shoppingListItems.remove(at: indexPath!.row)
+        self.shoppingListTableView.deleteRows(at: [indexPath!], with: .fade)
     }
 }

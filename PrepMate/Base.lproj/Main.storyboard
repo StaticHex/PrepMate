@@ -2695,11 +2695,17 @@
                                                             <rect key="frame" x="234" y="0.0" width="30" height="44"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="32"/>
                                                             <state key="normal" title="□"/>
+                                                            <connections>
+                                                                <action selector="selectItem:" destination="2lW-DO-7T6" eventType="touchUpInside" id="VAe-xT-34O"/>
+                                                            </connections>
                                                         </button>
                                                         <button opaque="NO" alpha="0.34999999999999998" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="z7t-A6-vGe">
                                                             <rect key="frame" x="334" y="0.0" width="26" height="44"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="32"/>
-                                                            <state key="normal" title="✎"/>
+                                                            <state key="normal" title="X"/>
+                                                            <connections>
+                                                                <action selector="removePantryItem:" destination="2lW-DO-7T6" eventType="touchUpInside" id="274-yB-89O"/>
+                                                            </connections>
                                                         </button>
                                                     </subviews>
                                                 </stackView>
@@ -3315,7 +3321,7 @@
                                 <rect key="frame" x="0.0" y="120" width="375" height="499"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="mealTableCell" id="4kq-6s-CUm">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="mealsTableCell" id="4kq-6s-CUm" customClass="MealsCustomTableViewCell" customModule="PrepMate" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="4kq-6s-CUm" id="QOs-Lf-IvW">
@@ -3342,13 +3348,19 @@
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="33" id="giX-LI-17l"/>
                                                             </constraints>
-                                                            <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <state key="normal" title="☆"/>
+                                                            <connections>
+                                                                <action selector="selectItem:" destination="4kq-6s-CUm" eventType="touchUpInside" id="daO-Lm-VPD"/>
+                                                            </connections>
                                                         </button>
                                                         <button opaque="NO" alpha="0.34999999999999998" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9gR-74-LkB">
                                                             <rect key="frame" x="313.5" y="0.0" width="34.5" height="30"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="25"/>
                                                             <state key="normal" title="X"/>
+                                                            <connections>
+                                                                <action selector="remove:" destination="4kq-6s-CUm" eventType="touchUpInside" id="020-hD-Sgr"/>
+                                                            </connections>
                                                         </button>
                                                     </subviews>
                                                 </stackView>
@@ -3359,6 +3371,13 @@
                                                 <constraint firstAttribute="trailingMargin" secondItem="S3L-M3-Bpl" secondAttribute="trailing" constant="-3" id="v8n-ri-jvo"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="mealName" destination="gbk-Zh-WyA" id="Yiv-me-WV4"/>
+                                            <outlet property="rating" destination="N9N-eV-GoJ" id="XlR-9Q-xup"/>
+                                            <outlet property="removeItem" destination="9gR-74-LkB" id="qNo-t0-1hX"/>
+                                            <outlet property="selectedItem" destination="LXw-8w-cfD" id="sNr-BC-buD"/>
+                                            <segue destination="0dP-6d-owt" kind="show" identifier="mealsToRecipeBoxSegue" id="1hz-tg-fc6"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
@@ -3382,32 +3401,38 @@
                                         <rect key="frame" x="302" y="0.0" width="30" height="51"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="32"/>
                                         <state key="normal" title="+"/>
+                                        <connections>
+                                            <action selector="addMeal:" destination="lxe-Ys-8Vq" eventType="touchUpInside" id="2cn-G6-dvQ"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                             </stackView>
                             <stackView opaque="NO" contentMode="scaleToFill" spacing="210" translatesAutoresizingMaskIntoConstraints="NO" id="XxG-fm-FUx">
                                 <rect key="frame" x="15" y="76" width="345" height="51"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Weekday" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CNZ-3C-OMn">
-                                        <rect key="frame" x="0.0" y="0.0" width="70" height="51"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hOn-mv-j1N">
-                                        <rect key="frame" x="280" y="0.0" width="65" height="51"/>
+                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="hOn-mv-j1N">
+                                        <rect key="frame" x="0.0" y="0.0" width="345" height="51"/>
                                         <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="s3y-cA-xTQ">
-                                                <rect key="frame" x="0.0" y="0.0" width="35" height="51"/>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="s3y-cA-xTQ">
+                                                <rect key="frame" x="0.0" y="0.0" width="300" height="51"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="300" id="OjZ-vt-Tft"/>
+                                                </constraints>
                                                 <state key="normal" title="🛒"/>
+                                                <connections>
+                                                    <action selector="addMealToShoppingList:" destination="lxe-Ys-8Vq" eventType="touchUpInside" id="Edb-Rf-dCD"/>
+                                                </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5Hi-CU-VZM">
-                                                <rect key="frame" x="35" y="0.0" width="30" height="51"/>
+                                                <rect key="frame" x="315" y="0.0" width="30" height="51"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="30" id="EHL-iR-Og3"/>
                                                 </constraints>
                                                 <fontDescription key="fontDescription" type="system" pointSize="32"/>
                                                 <state key="normal" title="+"/>
+                                                <connections>
+                                                    <action selector="addMealOption:" destination="lxe-Ys-8Vq" eventType="touchUpInside" id="JUG-Q1-UMF"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                     </stackView>
@@ -3428,10 +3453,14 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="HQ3-vP-KXw"/>
                     </view>
+                    <connections>
+                        <outlet property="mealsTableView" destination="XYm-j1-hhV" id="wgf-eP-lOo"/>
+                        <segue destination="0dP-6d-owt" kind="show" identifier="addingMealsToRecipeBox" id="ZzU-AX-Knj"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="a6t-2Z-cL7" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="468" y="1289.5052473763119"/>
+            <point key="canvasLocation" x="510" y="1240"/>
         </scene>
         <!--Recipe Nutrition View Controller-->
         <scene sceneID="8PS-hZ-xbG">
@@ -3786,6 +3815,7 @@
         <image name="splash_screen.jpg" width="336" height="598"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="ZzU-AX-Knj"/>
         <segue reference="2ZC-BU-Ttr"/>
     </inferredMetricsTieBreakers>
 </document>

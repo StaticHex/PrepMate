@@ -8,13 +8,14 @@
 
 import UIKit
 
-protocol addPantryListItem : class {
+protocol pantryProtocol : class {
     func addPItem(item: Ingredient)
+    func removePItem(cell: PantryItemCustomTableViewCell)
 }
 
 var pantryListItems = [Ingredient]()
 
-class PantryViewController: UIViewController, UIPopoverPresentationControllerDelegate, UITableViewDelegate, UITableViewDataSource, addPantryListItem {
+class PantryViewController: UIViewController, UIPopoverPresentationControllerDelegate, UITableViewDelegate, UITableViewDataSource, pantryProtocol {
 
     @IBOutlet weak var pantryListTableView: UITableView!
     
@@ -66,6 +67,8 @@ class PantryViewController: UIViewController, UIPopoverPresentationControllerDel
         
         let cell:PantryItemCustomTableViewCell = tableView.dequeueReusableCell(withIdentifier: "pantryListTableCell", for: indexPath as IndexPath) as! PantryItemCustomTableViewCell
         
+        cell.pDelegate = self
+        
         let row = indexPath.row
         cell.itemName.text = pantryListItems[row].getName()
         cell.itemAmount.text = String(pantryListItems[row].getUnit())
@@ -81,5 +84,11 @@ class PantryViewController: UIViewController, UIPopoverPresentationControllerDel
         self.pantryListTableView.beginUpdates()
         self.pantryListTableView.insertRows(at: [IndexPath.init(row: 0, section: 0)], with: .automatic)
         self.pantryListTableView.endUpdates()
+    }
+    
+    func removePItem(cell: PantryItemCustomTableViewCell) {
+        let indexPath = self.pantryListTableView.indexPath(for: cell)
+        pantryListItems.remove(at: indexPath!.row)
+        self.pantryListTableView.deleteRows(at: [indexPath!], with: .fade)
     }
 }
