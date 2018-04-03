@@ -17,6 +17,7 @@ class ColorPickerViewController: UIViewController {
     @IBOutlet weak var sldGreen: UISlider!
     @IBOutlet weak var sldBlue: UISlider!
     @IBOutlet weak var txtHex: UITextField!
+    @IBOutlet weak var btnColor: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,9 +34,15 @@ class ColorPickerViewController: UIViewController {
     }
     
     @IBAction func onCancelClick(_ sender: Any) {
+        self.dismiss(animated: true, completion: nil)
     }
     
     @IBAction func onEditRed(_ sender: Any) {
+        if(txtRed.text! == "") {
+            txtRed.text = "0"
+        }
+        sldRed.setValue(Float(txtRed.text!)!, animated: false)
+        
     }
     @IBAction func onEditGreen(_ sender: Any) {
     }
