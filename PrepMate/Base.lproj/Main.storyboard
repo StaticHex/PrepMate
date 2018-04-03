@@ -2149,20 +2149,20 @@
                                                 <rect key="frame" x="16" y="7" width="30" height="30"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <state key="normal" title="pick"/>
+                                                <connections>
+                                                    <action selector="onPickClick:" destination="QeH-Qb-kLS" eventType="touchUpInside" id="8AO-dS-jBh"/>
+                                                </connections>
                                             </button>
-                                            <connections>
-                                                <action selector="onPickClick:" destination="QeH-Qb-kLS" id="qP7-vW-qiJ"/>
-                                            </connections>
                                         </barButtonItem>
                                         <barButtonItem key="rightBarButtonItem" style="done" id="t8l-pV-nRk">
                                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="2xt-mP-nP5">
                                                 <rect key="frame" x="236" y="7" width="48" height="30"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <state key="normal" title="cancel"/>
+                                                <connections>
+                                                    <action selector="onCancelClick:" destination="QeH-Qb-kLS" eventType="touchUpInside" id="eY3-7P-xpF"/>
+                                                </connections>
                                             </button>
-                                            <connections>
-                                                <action selector="onCancelClick:" destination="QeH-Qb-kLS" id="z07-Ml-otO"/>
-                                            </connections>
                                         </barButtonItem>
                                     </navigationItem>
                                 </items>
@@ -2352,6 +2352,7 @@
                     <value key="contentSizeForViewInPopover" type="size" width="300" height="400"/>
                     <size key="freeformSize" width="300" height="400"/>
                     <connections>
+                        <outlet property="btnColor" destination="PXg-zL-Q2b" id="zLb-sb-8Gv"/>
                         <outlet property="sldBlue" destination="2IS-Sf-lM9" id="ieb-R9-I9u"/>
                         <outlet property="sldGreen" destination="wqp-uL-0Y5" id="fvS-P5-wxg"/>
                         <outlet property="sldRed" destination="XAE-fs-Jfn" id="hfs-xq-Cc1"/>

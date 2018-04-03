@@ -41,14 +41,20 @@ class ColorPickerViewController: UIViewController {
         if(txtRed.text! == "") {
             txtRed.text = "0"
         }
-        sldRed.setValue(Float(txtRed.text!)!, animated: false)
-        
+        let rCol = Float(txtRed.text!)!
+        let gCol = Float(txtGreen.text!)!
+        let bCol = Float(txtBlue.text!)!
+        sldRed.setValue(rCol, animated: false)
+        btnColor.backgroundColor = UIColor(red: CGFloat(rCol / 255.0),
+                                           green: CGFloat(gCol / 255.0),
+                                           blue: CGFloat(bCol / 255.0), alpha: 1.0)
     }
     @IBAction func onEditGreen(_ sender: Any) {
     }
     @IBAction func onEditBlue(_ sender: Any) {
     }
     @IBAction func onRedChanged(_ sender: Any) {
+
     }
     @IBAction func onGreenChanged(_ sender: Any) {
     }
