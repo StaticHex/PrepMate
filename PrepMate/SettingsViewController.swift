@@ -95,7 +95,7 @@ class SettingsViewController: UIViewController, UIPopoverPresentationControllerD
 
             UILabel.appearance().textColor = color
             // Makes all buttons same color (issue: color change when pressed. Possible for all buttons to be fixed at once?
-//            UIButton.appearance().tintColor = color
+            UIButton.appearance().tintColor = color
             
             
             unitsLabel.textColor = color
