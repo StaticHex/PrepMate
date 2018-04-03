@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SettingsViewController: UIViewController {
+class SettingsViewController: UIViewController, UIPopoverPresentationControllerDelegate {
     // UI Component Outlets
     @IBOutlet weak var swtManagePantry: UISwitch!
     @IBOutlet weak var swtManageSlist: UISwitch!
@@ -25,6 +25,23 @@ class SettingsViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if(segue.identifier == "bgColorPopover"
+            || segue.identifier == "fontColorPopover") {
+            let vc = segue.destination as? ColorPickerViewController
+            vc?.isModalInPopover = true
+            let controller = vc?.popoverPresentationController
+            if controller != nil {
+                controller?.delegate = self
+                controller?.passthroughViews = nil
+            }
+        }
+    }
+    
+    func adaptivePresentationStyle(for controller: UIPresentationController, traitCollection: UITraitCollection) -> UIModalPresentationStyle {
+        return UIModalPresentationStyle.none
     }
     
     override func viewWillDisappear(_ animated: Bool) {
