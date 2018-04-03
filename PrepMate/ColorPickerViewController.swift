@@ -30,6 +30,34 @@ class ColorPickerViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        txtRed.text = "0"
+        txtGreen.text = "0"
+        txtBlue.text = "0"
+    }
+        
+    // Called when the user touches on the main view (outside the UITextField).
+    //
+    @IBAction func onRedTouch(_ sender: Any) {
+        txtRed.text = ""
+    }
+    
+    @IBAction func onGreenTouch(_ sender: Any) {
+        txtGreen.text = ""
+    }
+    
+    @IBAction func onBlueTouch(_ sender: Any) {
+        txtBlue.text = ""
+    }
+    
+    @IBAction func onHexTouch(_ sender: Any) {
+        txtHex.text = ""
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    }
+    
     @IBAction func onPickClick(_ sender: Any) {
     }
     
