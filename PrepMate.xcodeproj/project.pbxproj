@@ -77,6 +77,7 @@
 		70A670AD206039E00050FDAE /* splash_screen.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 70A670A9206039DF0050FDAE /* splash_screen.jpg */; };
 		70A670AE206039E00050FDAE /* icons8-menu-filled-50.png in Resources */ = {isa = PBXBuildFile; fileRef = 70A670AA206039E00050FDAE /* icons8-menu-filled-50.png */; };
 		70A670B0206039E00050FDAE /* icons8-home-24.png in Resources */ = {isa = PBXBuildFile; fileRef = 70A670AC206039E00050FDAE /* icons8-home-24.png */; };
+		70D91E9C2073BDD5001B658E /* ColorPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70D91E9B2073BDD5001B658E /* ColorPickerViewController.swift */; };
 		70DFB84E2063592B009DE826 /* AddBlacklistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70DFB84D2063592B009DE826 /* AddBlacklistViewController.swift */; };
 		70ED7517207159A20012CB35 /* ResetPwordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70ED7516207159A20012CB35 /* ResetPwordViewController.swift */; };
 		A11A573220614CC500A7EF31 /* HomePageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11A573120614CC500A7EF31 /* HomePageViewController.swift */; };
@@ -184,6 +185,7 @@
 		70A670A9206039DF0050FDAE /* splash_screen.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = splash_screen.jpg; sourceTree = "<group>"; };
 		70A670AA206039E00050FDAE /* icons8-menu-filled-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icons8-menu-filled-50.png"; sourceTree = "<group>"; };
 		70A670AC206039E00050FDAE /* icons8-home-24.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icons8-home-24.png"; sourceTree = "<group>"; };
+		70D91E9B2073BDD5001B658E /* ColorPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPickerViewController.swift; sourceTree = "<group>"; };
 		70DFB84D2063592B009DE826 /* AddBlacklistViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddBlacklistViewController.swift; sourceTree = "<group>"; };
 		70ED7516207159A20012CB35 /* ResetPwordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPwordViewController.swift; sourceTree = "<group>"; };
 		A11A573120614CC500A7EF31 /* HomePageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePageViewController.swift; sourceTree = "<group>"; };
@@ -383,6 +385,7 @@
 				70DFB84D2063592B009DE826 /* AddBlacklistViewController.swift */,
 				707180ED20702675009EA6A8 /* Photo.swift */,
 				70ED7516207159A20012CB35 /* ResetPwordViewController.swift */,
+				70D91E9B2073BDD5001B658E /* ColorPickerViewController.swift */,
 			);
 			path = PrepMate;
 			sourceTree = "<group>";
@@ -555,6 +558,7 @@
 				70DFB84E2063592B009DE826 /* AddBlacklistViewController.swift in Sources */,
 				702C939A205F063E005AACE2 /* SettingsViewController.swift in Sources */,
 				A24E8AD62062AA8C005C8E2B /* RecipeCommentPageViewController.swift in Sources */,
+				70D91E9C2073BDD5001B658E /* ColorPickerViewController.swift in Sources */,
 				A2D3BD8420633803005BD508 /* CommentFilterPopoverViewController.swift in Sources */,
 				A11A5736206168CD00A7EF31 /* SearchFilterPopoverViewController.swift in Sources */,
 				70ED7517207159A20012CB35 /* ResetPwordViewController.swift in Sources */,
