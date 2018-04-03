@@ -57,6 +57,9 @@ class LoginViewController: UIViewController, UIPopoverPresentationControllerDele
                 controller?.delegate = self
                 controller?.passthroughViews = nil
             }
+        } else if(segue.identifier == "loginToUserProfile") {
+            let dest = segue.destination as? UserProfileViewController
+            dest?.op = 0
         }
     }
     
@@ -103,7 +106,6 @@ class LoginViewController: UIViewController, UIPopoverPresentationControllerDele
     
     @IBAction func btnSignUpClick(_ sender: Any) {
         segueId = "loginToUserProfile"
-        performSegue(withIdentifier: segueId, sender: sender)
     }
     
     @IBAction func btnForgotPasswordClick(_ sender: Any) {

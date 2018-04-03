@@ -9,7 +9,12 @@
 import UIKit
 
 class BlacklistCell: UITableViewCell {
-
+    
+    //UI Component Outlets
+    @IBOutlet weak var title: UILabel!
+    @IBOutlet weak var detail: UILabel!
+    
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -21,4 +26,6 @@ class BlacklistCell: UITableViewCell {
         // Configure the view for the selected state
     }
 
+    @IBAction func onRemoveClick(_ sender: Any) {
+    }
 }
