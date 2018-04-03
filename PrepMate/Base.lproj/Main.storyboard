@@ -2200,6 +2200,7 @@
                                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                                 <textInputTraits key="textInputTraits"/>
                                                                 <connections>
+                                                                    <action selector="onBeginEditRed:" destination="QeH-Qb-kLS" eventType="editingDidBegin" id="gxV-3l-Toe"/>
                                                                     <action selector="onEditRed:" destination="QeH-Qb-kLS" eventType="editingDidEnd" id="xem-Su-W7g"/>
                                                                 </connections>
                                                             </textField>
@@ -2220,6 +2221,7 @@
                                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                                 <textInputTraits key="textInputTraits"/>
                                                                 <connections>
+                                                                    <action selector="onBeginEditGreen:" destination="QeH-Qb-kLS" eventType="editingDidBegin" id="X6Q-rq-ajf"/>
                                                                     <action selector="onEditGreen:" destination="QeH-Qb-kLS" eventType="editingDidEnd" id="GDj-d8-lOd"/>
                                                                 </connections>
                                                             </textField>
@@ -2240,6 +2242,7 @@
                                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                                 <textInputTraits key="textInputTraits"/>
                                                                 <connections>
+                                                                    <action selector="onBeginEditBlue:" destination="QeH-Qb-kLS" eventType="editingDidBegin" id="mLu-FU-SGh"/>
                                                                     <action selector="onEditBlue:" destination="QeH-Qb-kLS" eventType="editingDidEnd" id="om5-Ey-sxt"/>
                                                                 </connections>
                                                             </textField>
@@ -2328,6 +2331,7 @@
                                                         <textInputTraits key="textInputTraits"/>
                                                         <connections>
                                                             <action selector="onEditHex:" destination="QeH-Qb-kLS" eventType="editingDidEnd" id="MHX-Tu-tcq"/>
+                                                            <action selector="onHexEditBegin:" destination="QeH-Qb-kLS" eventType="editingDidBegin" id="AKJ-Dg-vT1"/>
                                                         </connections>
                                                     </textField>
                                                 </subviews>
