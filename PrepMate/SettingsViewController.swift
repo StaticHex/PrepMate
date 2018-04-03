@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SettingsViewController: UIViewController, UIPopoverPresentationControllerDelegate {
+class SettingsViewController: UIViewController, UIPopoverPresentationControllerDelegate, ColorPickProtocol {
     // UI Component Outlets
     @IBOutlet weak var swtManagePantry: UISwitch!
     @IBOutlet weak var swtManageSlist: UISwitch!
@@ -19,6 +19,10 @@ class SettingsViewController: UIViewController, UIPopoverPresentationControllerD
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationController?.isNavigationBarHidden = false
+        btnTitleColor.layer.borderColor = UIColor.black.cgColor
+        btnTitleColor.layer.borderWidth = 1
+        btnFontColor.layer.borderColor = UIColor.black.cgColor
+        btnFontColor.layer.borderWidth = 1
         // Do any additional setup after loading the view.
     }
 
@@ -31,6 +35,12 @@ class SettingsViewController: UIViewController, UIPopoverPresentationControllerD
         if(segue.identifier == "bgColorPopover"
             || segue.identifier == "fontColorPopover") {
             let vc = segue.destination as? ColorPickerViewController
+            if(segue.identifier == "bgColorPopover") {
+                vc?.whichBox = 0
+            } else {
+                vc?.whichBox = 1
+            }
+            vc?.colorDelegate = self
             vc?.isModalInPopover = true
             let controller = vc?.popoverPresentationController
             if controller != nil {
@@ -74,6 +84,14 @@ class SettingsViewController: UIViewController, UIPopoverPresentationControllerD
         // Nav Bar Text
         UINavigationBar.appearance().titleTextAttributes = [NSAttributedStringKey.foregroundColor : color]
 //        UILabel.appearance().textColor = UIColor.red
+    }
+    
+    func updateColor(color : UIColor?, sender : Int) {
+        if (sender == 1) {
+            btnFontColor.backgroundColor = color
+        } else {
+            btnTitleColor.backgroundColor = color
+        }
     }
     
 }
