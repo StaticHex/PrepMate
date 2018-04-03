@@ -14,6 +14,7 @@ protocol ColorPickProtocol : class {
 
 class ColorPickerViewController: UIViewController {
     // UI Component Outlets
+    // whichBox - 1 is font color, 0 is background color
     var whichBox : Int = 0
     weak var colorDelegate : ColorPickProtocol?
     
@@ -69,6 +70,7 @@ class ColorPickerViewController: UIViewController {
     
     @IBAction func onPickClick(_ sender: Any) {
         colorDelegate?.updateColor(color: btnColor.backgroundColor, sender: whichBox)
+        
         self.dismiss(animated: true, completion: nil)
     }
     

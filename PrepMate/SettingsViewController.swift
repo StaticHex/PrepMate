@@ -16,6 +16,14 @@ class SettingsViewController: UIViewController, UIPopoverPresentationControllerD
     @IBOutlet weak var btnTitleColor: UIButton!
     @IBOutlet weak var btnFontColor: UIButton!
     
+    @IBOutlet weak var pantryLabel: UILabel!
+    @IBOutlet weak var shoppingLabel: UILabel!
+    @IBOutlet weak var userLabel: UILabel!
+    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var fontLabel: UILabel!
+    @IBOutlet weak var unitsLabel: UILabel!
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationController?.isNavigationBarHidden = false
@@ -59,39 +67,56 @@ class SettingsViewController: UIViewController, UIPopoverPresentationControllerD
     }
 
     @IBAction func setTitleColor(_ sender: Any) {
-        let defaults = UserDefaults.standard
-        let color = UIColor(red: 100/255.0, green: 100.0/255.0, blue: 255.0/255.0, alpha: 1.0)
-        let encodedData = NSKeyedArchiver.archivedData(withRootObject: color)
-
-        defaults.set(encodedData, forKey: "titleBarColor")
-        UINavigationBar.appearance().backgroundColor = color
-        
-        // Nav Bar Item Colors
-        UINavigationBar.appearance().tintColor = color
-        // Navigation Bar Text
+        // Color picker
     }
     
     @IBAction func setFontColor(_ sender: Any) {
-        let defaults = UserDefaults.standard
-        let color = UIColor(red: 20.0/255.0, green: 50.0/255.0, blue: 130.0/255.0, alpha: 1.0)
-        let encodedData = NSKeyedArchiver.archivedData(withRootObject: color)
-        
-        defaults.set(encodedData, forKey: "navBarTextColor")
-        
-        // Nav Bar Item Colors
-        UINavigationBar.appearance().tintColor = color
-        
-        // Nav Bar Text
-        UINavigationBar.appearance().titleTextAttributes = [NSAttributedStringKey.foregroundColor : color]
-//        UILabel.appearance().textColor = UIColor.red
+        // Color picker
     }
     
     func updateColor(color : UIColor?, sender : Int) {
+        
+        // Should have a default color scheme to set it back to original?
+        
+        let defaults = UserDefaults.standard
         if (sender == 1) {
             btnFontColor.backgroundColor = color
+            let color = btnFontColor.backgroundColor!
+            let encodedData = NSKeyedArchiver.archivedData(withRootObject: color)
+            
+            defaults.set(encodedData, forKey: "navBarTextColor")
+            
+            // Nav Bar Item Colors
+            UINavigationBar.appearance().tintColor = color
+            
+            // Nav Bar Text
+            UINavigationBar.appearance().titleTextAttributes = [NSAttributedStringKey.foregroundColor : color]
+            // UILabel.appearanceWhenContainedInInstancesOfClasses([MyViewController.self, MyotherViewController.self]).textColor = UIColor.red
+
+            UILabel.appearance().textColor = color
+            // Makes all buttons same color (issue: color change when pressed. Possible for all buttons to be fixed at once?
+//            UIButton.appearance().tintColor = color
+            
+            
+            unitsLabel.textColor = color
+            pantryLabel.textColor = color
+            shoppingLabel.textColor = color
+            userLabel.textColor = color
+            titleLabel.textColor = color
+            fontLabel.textColor = color
+            self.navigationController?.navigationBar.tintColor = color
+            
         } else {
             btnTitleColor.backgroundColor = color
+            let color = btnTitleColor.backgroundColor!
+            let encodedData = NSKeyedArchiver.archivedData(withRootObject: color)
+            
+            defaults.set(encodedData, forKey: "titleBarColor")
+            // Nav Bar Color
+            UINavigationBar.appearance().backgroundColor = color
+            // Trying to change nav bar color on change (cannot currently with the right alpha/scheme)
         }
+        
     }
     
 }

@@ -2556,9 +2556,15 @@
                     <connections>
                         <outlet property="btnFontColor" destination="RWE-As-CKR" id="uc8-Cf-gGu"/>
                         <outlet property="btnTitleColor" destination="u7Y-ve-vnf" id="ckj-uH-Rho"/>
+                        <outlet property="fontLabel" destination="wvi-Qj-xzq" id="coB-62-Vb8"/>
+                        <outlet property="pantryLabel" destination="xe9-as-BQL" id="WVn-nf-1HT"/>
+                        <outlet property="shoppingLabel" destination="FOI-eE-3He" id="0XJ-Js-tvG"/>
                         <outlet property="swtManagePantry" destination="5se-lk-vfg" id="p4G-ye-uof"/>
                         <outlet property="swtManageSlist" destination="eGx-la-hUv" id="WGq-LL-0a7"/>
                         <outlet property="swtRemember" destination="xwj-QK-5S4" id="VqH-ih-9G9"/>
+                        <outlet property="titleLabel" destination="N7I-cm-4Yf" id="4b9-zo-Ksw"/>
+                        <outlet property="unitsLabel" destination="6uQ-d1-not" id="5cQ-ZS-tHf"/>
+                        <outlet property="userLabel" destination="Azw-HO-ZOT" id="J1o-7b-THZ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Etb-48-dch" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -4312,9 +4318,9 @@
         <image name="splash_screen.jpg" width="336" height="598"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="ZzU-AX-Knj"/>
+        <segue reference="gfz-p4-kgy"/>
         <segue reference="2ZC-BU-Ttr"/>
         <segue reference="BjC-YD-RDR"/>
-        <segue reference="xxt-hr-eTW"/>
+        <segue reference="rrq-j1-upH"/>
     </inferredMetricsTieBreakers>
 </document>
