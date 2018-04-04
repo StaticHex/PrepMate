@@ -307,7 +307,7 @@
                                     <constraint firstAttribute="height" constant="94" id="Vfw-Rq-alr"/>
                                 </constraints>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="directionTableCell" id="9ae-L2-zaN">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="directionTableCell" id="9ae-L2-zaN" customClass="DirectionTableCell" customModule="PrepMate" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="355" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="9ae-L2-zaN" id="Att-FK-Em4">
@@ -327,6 +327,9 @@
                                                 <constraint firstAttribute="trailing" secondItem="BSi-MI-ZbG" secondAttribute="trailing" constant="10" id="tXh-Pc-eCc"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="directionLabel" destination="BSi-MI-ZbG" id="wHm-Lq-yno"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
@@ -337,7 +340,7 @@
                                     <constraint firstAttribute="height" constant="94" id="cJb-dt-kP6"/>
                                 </constraints>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="ingredientTableCell" id="fJd-FN-DGv">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="ingredientTableCell" id="fJd-FN-DGv" customClass="IngredientTableCell" customModule="PrepMate" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="355" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="fJd-FN-DGv" id="CVm-LG-a3K">
@@ -365,6 +368,10 @@
                                                 <constraint firstItem="RbL-4Z-eCD" firstAttribute="leading" secondItem="CVm-LG-a3K" secondAttribute="leading" constant="10" id="hhV-WZ-NBd"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="amountLabel" destination="45Q-RG-272" id="ySk-2f-Xcm"/>
+                                            <outlet property="ingLabel" destination="RbL-4Z-eCD" id="W68-u3-7bs"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
@@ -506,6 +513,8 @@
                     <connections>
                         <outlet property="categoryPicker" destination="BfP-VW-iit" id="71R-cq-Wzv"/>
                         <outlet property="cookTimeField" destination="Lar-Po-E0C" id="lgf-R4-Kmc"/>
+                        <outlet property="directionTableview" destination="dkh-ID-vyL" id="ixr-Fy-Fg6"/>
+                        <outlet property="ingTableView" destination="i6h-bA-Pda" id="nnM-Qp-Yvt"/>
                         <outlet property="prepTimeField" destination="56P-3l-mnG" id="b1r-yn-BAk"/>
                         <outlet property="recipeNameField" destination="1aU-xq-xFg" id="iv8-16-0Lc"/>
                         <outlet property="servingsPicker" destination="ypZ-1l-6Ud" id="Gqb-Gc-Fte"/>
@@ -513,7 +522,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="c5p-Jf-fWv" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1976.8" y="2455.3223388305851"/>
+            <point key="canvasLocation" x="-1993" y="2434"/>
         </scene>
         <!--Add Recipe Contains Popover View Controller-->
         <scene sceneID="kQe-ts-Iuj">
@@ -3996,7 +4005,7 @@
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="nutritionOverviewCell" id="LUW-sf-YEG">
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="nutritionOverviewCell" id="LUW-sf-YEG" customClass="nutritionOverviewCell" customModule="PrepMate" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
@@ -4014,6 +4023,9 @@
                                             <constraint firstItem="SDE-GL-gzt" firstAttribute="top" secondItem="LUW-sf-YEG" secondAttribute="top" id="ERr-Mw-Rcm"/>
                                             <constraint firstItem="SDE-GL-gzt" firstAttribute="leading" secondItem="LUW-sf-YEG" secondAttribute="leading" id="cGC-ng-Rfr"/>
                                         </constraints>
+                                        <connections>
+                                            <outlet property="nutritionImage" destination="SDE-GL-gzt" id="JXh-2O-fXo"/>
+                                        </connections>
                                     </collectionViewCell>
                                 </cells>
                             </collectionView>
@@ -4088,6 +4100,7 @@
                     </view>
                     <connections>
                         <outlet property="basicInfoText" destination="ypN-RE-MpS" id="515-A1-I2P"/>
+                        <outlet property="nutritionCollectionView" destination="cwA-qC-1Sp" id="nS3-sx-jPa"/>
                         <outlet property="vitaminInfoText" destination="h0U-km-NB5" id="CFD-f1-RwT"/>
                     </connections>
                 </viewController>
