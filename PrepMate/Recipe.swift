@@ -79,6 +79,33 @@ class Recipe {
         self.flags = flags
         self.vitamin = vitamin
     }
+    
+    // Setter functions for class variables
+    public func setId(id: Int) { self.id = id}
+    public func setName(name: String) { self.name = name}
+    public func setPhoto(photo: Photo) { self.photo = photo}
+    public func setCategory(category: Int) { self.category = category}
+    public func setServings(servings: Int) { self.servings = servings}
+    public func setPrepTime(prepTime: Int) { self.prepTime = prepTime}
+    public func setCookTime(cookTime: Int) { self.cookTime = cookTime}
+    public func setCalories(calories: Int) { self.calories = calories}
+    public func setUnsatFat(unsatFat: Int) { self.unsatFat = unsatFat}
+    public func setSatFat(satFat: Int) { self.satFat = satFat}
+    public func setCholesterol(cholesterol: Int) { self.cholesterol = cholesterol}
+    public func setSodium(sodium: Int) { self.sodium = sodium}
+    public func setPotassium(potassium: Int) { self.potassium = potassium}
+    public func setCarbs(carbs : Int) { self.carbs = carbs}
+    public func setFiber(fiber: Int) { self.fiber = fiber}
+    public func setSugar(sugar: Int) { self.sugar = sugar}
+    public func setComments(comments: [Comment]) { self.comments = comments}
+    public func setIngredients(ingredients: [(id:Int,ing:Ingredient, amount:Float)]) { self.ingredients = ingredients}
+    public func setDirections(directions: [String]) { self.directions = directions}
+    public func setRating(rating: Int) { self.rating = rating}
+    public func setFlags(flags: Int) { self.flags = flags}
+    public func setVitamin(vitamin: [Vitamin]) { self.vitamin = vitamin}
+    
+    
+    // Getter functions for class variables
     public func getId() -> Int { return self.id }
     public func getName() -> String { return self.name }
     public func getPhoto() -> UIImage { return self.photo.getImage()}

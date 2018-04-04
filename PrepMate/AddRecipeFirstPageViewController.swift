@@ -16,17 +16,58 @@ class IngredientTableCell: UITableViewCell {
     @IBOutlet weak var ingLabel: UILabel!
     @IBOutlet weak var amountLabel: UILabel!
 }
-class AddRecipeFirstPageViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class AddRecipeFirstPageViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIPickerViewDelegate, UIPickerViewDataSource {
 
     @IBOutlet weak var recipeNameField: UITextField!
-    @IBOutlet weak var categoryPicker: UIPickerView!
-    @IBOutlet weak var servingsPicker: UIPickerView!
     @IBOutlet weak var prepTimeField: UITextField!
     @IBOutlet weak var cookTimeField: UITextField!
     @IBOutlet weak var directionTableview: UITableView!
     @IBOutlet weak var ingTableView: UITableView!
+    
+    @IBOutlet weak var categoryPickerTextField: UITextField!
+    @IBOutlet weak var servingsSizeTextField: UITextField!
+    
+    var servingSizePicker = UIPickerView()
+    var servingSizeOptions: [Int] = [1, 2, 3, 4, 5, 6, 7, 8]
+    
+    var categoryPicker = UIPickerView()
+    var categoryPickerOptions: [String] = ["American", "Asian", "Latin", "etc."]
+    
+    
     var directionList = [String]()
     var ingList = [Ingredient]()
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        // Do any additional setup after loading the view.
+        navigationController?.isNavigationBarHidden = false
+        
+        self.servingSizePicker.delegate = self
+        self.servingSizePicker.dataSource = self
+        self.categoryPicker.delegate = self
+        self.categoryPicker.dataSource = self
+
+        servingsSizeTextField.inputView = servingSizePicker
+        servingSizePicker.tag = 0
+        categoryPickerTextField.inputView = categoryPicker
+        categoryPicker.tag = 1
+        servingsSizeTextField.text = String(servingSizeOptions[0])
+        categoryPickerTextField.text = categoryPickerOptions[0]
+    }
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        navigationController?.isNavigationBarHidden = true
+    }
+    
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if tableView == self.directionTableview {
@@ -50,19 +91,40 @@ class AddRecipeFirstPageViewController: UIViewController, UITableViewDelegate, U
         }
         return UITableViewCell()
     }
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        if pickerView.tag == 0 {
+            return servingSizeOptions.count
+        }
+        else {
+            return categoryPickerOptions.count
+        }
         
-        // Do any additional setup after loading the view.
-        navigationController?.isNavigationBarHidden = false
     }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    // Got off tutorial
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        if pickerView.tag == 0 {
+            return String(servingSizeOptions[row])
+        }
+        else {
+            return categoryPickerOptions[row]
+        }
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        navigationController?.isNavigationBarHidden = true
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        if pickerView.tag == 0 {
+            servingsSizeTextField.text = String(servingSizeOptions[row])
+        }
+        else {
+            categoryPickerTextField.text = categoryPickerOptions[row]
+        }
+        self.view.endEditing(true)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "firstPageToContains" {
+            
+        }
     }
 }
