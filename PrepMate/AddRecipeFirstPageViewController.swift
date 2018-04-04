@@ -35,17 +35,20 @@ class AddRecipeFirstPageViewController: UIViewController, UITableViewDelegate, U
         if tableView == self.ingTableView {
             return ingList.count
         }
+        return -1
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if tableView == self.directionTableview {
             let cell = tableView.dequeueReusableCell(withIdentifier: "directionTableCell", for: indexPath as IndexPath) as! DirectionTableCell
+            return cell
         }
         if tableView == self.ingTableView {
             let cell = tableView.dequeueReusableCell(withIdentifier: "ingredientTableCell", for: indexPath as IndexPath) as! IngredientTableCell
+            return cell
             
         }
-        
+        return UITableViewCell()
     }
     override func viewDidLoad() {
         super.viewDidLoad()
