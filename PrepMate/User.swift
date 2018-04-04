@@ -85,18 +85,18 @@ class User {
                 
                 // Get the error status and the error message from the database
                 if let parseJSON = JSONResponse {
-                   self.eMsg = parseJSON["msg"] as! String
-                   if let strId = parseJSON["id"] as? NSNumber {
-                       self.id = strId as! Int
-                   } else {
-                       self.id = Int(parseJSON["id"] as! String)!
-                   }
-                   self.photo.setPhoto(imageURL: parseJSON["photo"] as! String)
-                   self.fname = parseJSON["fname"] as! String
-                   self.lname = parseJSON["lname"] as! String
-                   self.email = parseJSON["email"] as! String
-                   self.bio = parseJSON["bio"] as! String
-                   vError = !(parseJSON["error"] as! Bool)
+                    self.eMsg = parseJSON["msg"] as! String
+                    if let strId = parseJSON["id"] as? NSNumber {
+                        self.id = strId as! Int
+                    } else {
+                        self.id = Int(parseJSON["id"] as! String)!
+                    }
+                    self.photo.setPhoto(imageURL: parseJSON["photo"] as! String)
+                    self.fname = parseJSON["fname"] as! String
+                    self.lname = parseJSON["lname"] as! String
+                    self.email = parseJSON["email"] as! String
+                    self.bio = parseJSON["bio"] as! String
+                    vError = !(parseJSON["error"] as! Bool)
                 }
             } catch {
                 self.eMsg = error.localizedDescription
@@ -110,7 +110,11 @@ class User {
         return vError
     }
     
-    public func addUser(newUser:(uname: String, pword: String, photo: String, fname: String, lname: String, email: String, bio: String)) {
+    public func addUser(newUser:(uname: String, pword: String, photo: Photo, fname: String, lname: String, email: String, bio: String)) {
+        
+    }
+    
+    public func updateUser(newUser:(uname: String, pword: String, photo: Photo, fname: String, lname: String, email: String, bio: String)) {
         
     }
     

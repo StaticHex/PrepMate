@@ -450,7 +450,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <textField opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="hxY-tI-dqk">
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="hxY-tI-dqk">
                                 <rect key="frame" x="10" y="158" width="355" height="30"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -1810,6 +1810,84 @@
             </objects>
             <point key="canvasLocation" x="3013" y="-434"/>
         </scene>
+        <!--Add URL View Controller-->
+        <scene sceneID="leh-vc-Lr1">
+            <objects>
+                <viewController id="qVx-al-VGk" customClass="AddURLViewController" customModule="PrepMate" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="pic-Qc-GlX">
+                        <rect key="frame" x="0.0" y="0.0" width="300" height="200"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vKS-ol-NdM">
+                                <rect key="frame" x="0.0" y="0.0" width="300" height="44"/>
+                                <items>
+                                    <navigationItem title="Image URL" id="yHc-e8-Ydk">
+                                        <barButtonItem key="leftBarButtonItem" style="done" id="rgJ-9n-rOv">
+                                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="kM9-u3-7yf">
+                                                <rect key="frame" x="16" y="7" width="66" height="30"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <state key="normal" title="save"/>
+                                                <connections>
+                                                    <action selector="onSaveClick:" destination="qVx-al-VGk" eventType="touchUpInside" id="YN1-kd-kEM"/>
+                                                </connections>
+                                            </button>
+                                        </barButtonItem>
+                                        <barButtonItem key="rightBarButtonItem" style="done" id="Ns9-Ys-DcH">
+                                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="7Ml-Pp-f01">
+                                                <rect key="frame" x="218" y="7" width="66" height="30"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <state key="normal" title="cancel"/>
+                                                <connections>
+                                                    <action selector="onCancelClick:" destination="qVx-al-VGk" eventType="touchUpInside" id="zTj-X9-ZTm"/>
+                                                </connections>
+                                            </button>
+                                        </barButtonItem>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="P3l-E0-2az">
+                                <rect key="frame" x="0.0" y="44" width="300" height="156"/>
+                                <subviews>
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="center" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="g5Q-pb-gWq">
+                                        <rect key="frame" x="0.0" y="0.0" width="300" height="75"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="75" id="mqr-PY-F4U"/>
+                                        </constraints>
+                                        <string key="text">Warning!: URL must end with .jpg, .gif, or .png. Relative paths such as google images or intsagram images are not supported at this time.</string>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                    </textView>
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="mVh-Ps-TJg">
+                                        <rect key="frame" x="0.0" y="75" width="300" height="81"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                    </textView>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" red="0.60846545470000002" green="0.8088142116" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="BPB-Dm-DpC" firstAttribute="bottom" secondItem="P3l-E0-2az" secondAttribute="bottom" id="BQI-sR-0Qg"/>
+                            <constraint firstItem="P3l-E0-2az" firstAttribute="top" secondItem="vKS-ol-NdM" secondAttribute="bottom" id="baM-gr-BoS"/>
+                            <constraint firstItem="vKS-ol-NdM" firstAttribute="top" secondItem="BPB-Dm-DpC" secondAttribute="top" id="gLz-Vj-pxz"/>
+                            <constraint firstItem="BPB-Dm-DpC" firstAttribute="trailing" secondItem="P3l-E0-2az" secondAttribute="trailing" id="r21-aG-wfs"/>
+                            <constraint firstItem="P3l-E0-2az" firstAttribute="leading" secondItem="BPB-Dm-DpC" secondAttribute="leading" id="wQW-f9-i9q"/>
+                            <constraint firstItem="vKS-ol-NdM" firstAttribute="trailing" secondItem="BPB-Dm-DpC" secondAttribute="trailing" id="yQb-GL-TcO"/>
+                            <constraint firstItem="vKS-ol-NdM" firstAttribute="leading" secondItem="BPB-Dm-DpC" secondAttribute="leading" id="zxV-r6-IH7"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="BPB-Dm-DpC"/>
+                    </view>
+                    <value key="contentSizeForViewInPopover" type="size" width="300" height="200"/>
+                    <size key="freeformSize" width="300" height="200"/>
+                    <connections>
+                        <outlet property="txtURL" destination="mVh-Ps-TJg" id="yGp-kE-i2K"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="y4e-zF-JJB" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3640" y="-419.19040479760122"/>
+        </scene>
         <!--User Profile View Controller-->
         <scene sceneID="Ru5-iR-lmp">
             <objects>
@@ -1834,6 +1912,9 @@
                                                 <state key="normal" image="2000px-Silver_-_replace_this_image_male.svg.png"/>
                                                 <connections>
                                                     <action selector="onAvatarClick:" destination="Lza-Wq-fMP" eventType="touchUpInside" id="naS-fV-IoF"/>
+                                                    <segue destination="qVx-al-VGk" kind="popoverPresentation" identifier="userPhotoPopover" popoverAnchorView="3Je-gs-hIW" id="wUR-zE-Zea">
+                                                        <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
+                                                    </segue>
                                                 </connections>
                                             </button>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" translatesAutoresizingMaskIntoConstraints="NO" id="krl-vc-loA">
@@ -2032,6 +2113,9 @@
                                                         </state>
                                                         <connections>
                                                             <action selector="onAddBlist:" destination="Lza-Wq-fMP" eventType="touchUpInside" id="el4-5k-A3l"/>
+                                                            <segue destination="9Ma-xE-TLB" kind="popoverPresentation" identifier="addBlistItemPopover" popoverAnchorView="d0R-tz-4dV" id="keE-bI-lD7">
+                                                                <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
+                                                            </segue>
                                                         </connections>
                                                     </button>
                                                     <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kfo-tk-6Ya">
@@ -2133,6 +2217,7 @@
                         <outlet property="btnAvatar" destination="3Je-gs-hIW" id="YTp-Un-lYh"/>
                         <outlet property="btnCancel" destination="sMd-gF-uoH" id="022-Lj-WJc"/>
                         <outlet property="btnSave" destination="Um2-aT-v78" id="FCa-ju-lYP"/>
+                        <outlet property="stkPwordStack" destination="pMw-R1-Xux" id="754-gg-31f"/>
                         <outlet property="tvBlacklist" destination="NAY-aM-mvK" id="JEF-Dy-UgZ"/>
                         <outlet property="txtBio" destination="5Bw-aV-YHI" id="sZb-hs-2dw"/>
                         <outlet property="txtEmail" destination="3LU-SD-5Vb" id="leY-iy-uNr"/>
@@ -2853,7 +2938,7 @@
                                                 </connections>
                                             </button>
                                         </barButtonItem>
-                                        <textField key="titleView" opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter Search Here" textAlignment="natural" minimumFontSize="17" id="VlJ-cp-yZa">
+                                        <textField key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter Search Here" textAlignment="natural" minimumFontSize="17" id="VlJ-cp-yZa">
                                             <rect key="frame" x="126" y="7" width="139" height="30"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <nil key="textColor"/>
