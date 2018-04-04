@@ -93,6 +93,7 @@
 		A1E3702B20695D5E00213631 /* PantryItemCustomTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1E3702A20695D5E00213631 /* PantryItemCustomTableViewCell.swift */; };
 		A1F1932D2062AD4E00AFB5E9 /* HistoryFavoriteSearchResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1F1932C2062AD4E00AFB5E9 /* HistoryFavoriteSearchResultsViewController.swift */; };
 		A1FC6B522071BE0B008C6F16 /* MealsCustomTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1FC6B512071BE0B008C6F16 /* MealsCustomTableViewCell.swift */; };
+		A203FB2E207527A50084B405 /* AssociatedTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = A203FB2D207527A50084B405 /* AssociatedTypes.swift */; };
 		A2177BDF206AFED00094E89D /* Recipe.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2177BDE206AFED00094E89D /* Recipe.swift */; };
 		A2177BE1206B009F0094E89D /* Vitamin.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2177BE0206B009F0094E89D /* Vitamin.swift */; };
 		A2177BE3206B00AA0094E89D /* Ingredient.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2177BE2206B00AA0094E89D /* Ingredient.swift */; };
@@ -201,6 +202,7 @@
 		A1E3702A20695D5E00213631 /* PantryItemCustomTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PantryItemCustomTableViewCell.swift; sourceTree = "<group>"; };
 		A1F1932C2062AD4E00AFB5E9 /* HistoryFavoriteSearchResultsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryFavoriteSearchResultsViewController.swift; sourceTree = "<group>"; };
 		A1FC6B512071BE0B008C6F16 /* MealsCustomTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealsCustomTableViewCell.swift; sourceTree = "<group>"; };
+		A203FB2D207527A50084B405 /* AssociatedTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssociatedTypes.swift; sourceTree = "<group>"; };
 		A2177BDE206AFED00094E89D /* Recipe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Recipe.swift; sourceTree = "<group>"; };
 		A2177BE0206B009F0094E89D /* Vitamin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vitamin.swift; sourceTree = "<group>"; };
 		A2177BE2206B00AA0094E89D /* Ingredient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ingredient.swift; sourceTree = "<group>"; };
@@ -349,6 +351,7 @@
 				A2177BE8206B0B750094E89D /* CommentDetailsPageViewController.swift */,
 				A2177BDE206AFED00094E89D /* Recipe.swift */,
 				A2177BE0206B009F0094E89D /* Vitamin.swift */,
+				A203FB2D207527A50084B405 /* AssociatedTypes.swift */,
 				A2177BE2206B00AA0094E89D /* Ingredient.swift */,
 				A2177BE4206B00C70094E89D /* Comment.swift */,
 				A2177BE6206B01F40094E89D /* User.swift */,
@@ -553,6 +556,7 @@
 				70A24775205C3CC700A2AC47 /* ViewController.swift in Sources */,
 				A1AA0045206195AD00FCDEC4 /* NewListItemViewController.swift in Sources */,
 				A2D3BD7E206334DD005BD508 /* AddDirectionPopoverViewController.swift in Sources */,
+				A203FB2E207527A50084B405 /* AssociatedTypes.swift in Sources */,
 				A1F1932D2062AD4E00AFB5E9 /* HistoryFavoriteSearchResultsViewController.swift in Sources */,
 				70A24773205C3CC700A2AC47 /* AppDelegate.swift in Sources */,
 				70DFB84E2063592B009DE826 /* AddBlacklistViewController.swift in Sources */,
