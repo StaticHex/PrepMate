@@ -2125,7 +2125,10 @@
                         </userDefinedRuntimeAttributes>
                     </view>
                     <connections>
+                        <outlet property="btnAddBlistItem" destination="d0R-tz-4dV" id="3Fj-gE-or8"/>
                         <outlet property="btnAvatar" destination="3Je-gs-hIW" id="YTp-Un-lYh"/>
+                        <outlet property="btnCancel" destination="sMd-gF-uoH" id="022-Lj-WJc"/>
+                        <outlet property="btnSave" destination="Um2-aT-v78" id="FCa-ju-lYP"/>
                         <outlet property="tvBlacklist" destination="NAY-aM-mvK" id="JEF-Dy-UgZ"/>
                         <outlet property="txtBio" destination="5Bw-aV-YHI" id="sZb-hs-2dw"/>
                         <outlet property="txtEmail" destination="3LU-SD-5Vb" id="leY-iy-uNr"/>

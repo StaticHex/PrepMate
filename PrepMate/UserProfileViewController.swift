@@ -25,6 +25,8 @@ class UserProfileViewController: UIViewController {
     @IBOutlet weak var txtPrefferences: UITextView!
     @IBOutlet weak var txtBio: UITextView!
     @IBOutlet weak var btnAddBlistItem: UIButton!
+    @IBOutlet weak var btnSave: UIButton!
+    @IBOutlet weak var btnCancel: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -54,6 +56,8 @@ class UserProfileViewController: UIViewController {
             txtBio.isSelectable = true
             tvBlacklist.isHidden = false
             txtPrefferences.isHidden = true
+            btnAddBlistItem.isHidden = false
+
             break
         case 2: // view
             txtUserName.text = currentUser.getUname()
