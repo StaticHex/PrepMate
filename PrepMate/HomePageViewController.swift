@@ -8,7 +8,11 @@
 
 import UIKit
 
-class HomePageViewController: UIViewController {
+protocol settingsProtocol: class {
+    func changeSidebarColor(color: UIColor)
+}
+
+class HomePageViewController: UIViewController, settingsProtocol {
     
     // UI Outlets
     @IBOutlet weak var menu: UIView!
@@ -21,6 +25,15 @@ class HomePageViewController: UIViewController {
         // Do any additional setup after loading the view.
         navigationController?.isNavigationBarHidden = true
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        let defaults = UserDefaults.standard
+        if defaults.object(forKey: "titleBarColor") != nil {
+            let decoded  = defaults.object(forKey: "titleBarColor") as! Data
+            let decodedColor = NSKeyedUnarchiver.unarchiveObject(with: decoded) as! UIColor
+            self.menu.backgroundColor = decodedColor
+        }
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -30,6 +43,10 @@ class HomePageViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if(segue.identifier == "logoutToLogin") {
             // TODO: Destroy user object and set up login
+        }
+        if segue.identifier == "homeToSettings" {
+            let vc = segue.destination as? SettingsViewController
+            vc?.sDelegate = self
         }
     }
 
@@ -84,4 +101,7 @@ class HomePageViewController: UIViewController {
         performSegue(withIdentifier: "homeToAddRecipe", sender: sender)
     }
     
+    func changeSidebarColor(color: UIColor) {
+        self.menu.backgroundColor = color
+    }
 }

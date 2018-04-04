@@ -23,6 +23,7 @@ class SettingsViewController: UIViewController, UIPopoverPresentationControllerD
     @IBOutlet weak var fontLabel: UILabel!
     @IBOutlet weak var unitsLabel: UILabel!
     
+    weak var sDelegate: settingsProtocol?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -95,7 +96,7 @@ class SettingsViewController: UIViewController, UIPopoverPresentationControllerD
 
             UILabel.appearance().textColor = color
             // Makes all buttons same color (issue: color change when pressed. Possible for all buttons to be fixed at once?
-            UIButton.appearance().tintColor = color
+//            UIButton.appearance().tintColor = color
             
             
             unitsLabel.textColor = color
@@ -114,7 +115,9 @@ class SettingsViewController: UIViewController, UIPopoverPresentationControllerD
             defaults.set(encodedData, forKey: "titleBarColor")
             // Nav Bar Color
             UINavigationBar.appearance().backgroundColor = color
+            sDelegate?.changeSidebarColor(color: color)
             // Trying to change nav bar color on change (cannot currently with the right alpha/scheme)
+            
         }
         
     }
