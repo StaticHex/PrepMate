@@ -40,13 +40,15 @@ class AddRecipeFirstPageViewController: UIViewController, UITableViewDelegate, U
     var servingSizeOptions: [Int] = [1, 2, 3, 4, 5, 6, 7, 8]
     
     var categoryPicker = UIPickerView()
-    var categoryPickerOptions: [String] = ["American", "Asian", "Latin", "etc."]
+    var categoryPickerOptions: [String] = categoryList
     
     var contains: [Bool] = [false, false, false, false, false, false, false, false, false, false, false, false, false]
     var dietary: [Bool] = [false, false, false, false, false, false, false]
     
     var directionList = [String]()
     var ingList = [Ingredient]()
+    
+    weak var secondDelegate: secondPageProtocol?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -291,6 +293,8 @@ class AddRecipeFirstPageViewController: UIViewController, UITableViewDelegate, U
         }
         print(flagVector)
         recipeToPass.setFlags(flags: flagVector)
+        
+        secondDelegate?.setRecipe(recipe: recipeToPass)
         
         self.performSegue(withIdentifier: "addRecipeFirstPageToSecond", sender: self)
         
