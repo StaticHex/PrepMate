@@ -99,7 +99,7 @@ class Recipe {
     public func setSugar(sugar: Int) { self.sugar = sugar}
     public func setComments(comments: [Comment]) { self.comments = comments}
     public func setIngredients(ingredients: [(id:Int,ing:Ingredient, amount:Float)]) { self.ingredients = ingredients}
-    public func setDirections(directions: [String]) { self.directions = directions}
+    public func setDirections(directions: [(id:Int, str:String)]) { self.directions = directions}
     public func setRating(rating: Int) { self.rating = rating}
     public func setFlags(flags: Int) { self.flags = flags}
     public func setVitamin(vitamin: [Vitamin]) { self.vitamin = vitamin}
@@ -125,8 +125,8 @@ class Recipe {
     public func getSugar() -> Int { return self.sugar}
     public func getComments() -> [Comment] { return self.comments}
     public func getIngredients() -> [(id:Int,ing:Ingredient, amount:Float)] { return self.ingredients}
-    public func getDirections() -> [String] { return self.directions}
-    public func getRating() -> Int { return self.rating}
+    public func getDirections() -> [(id:Int, str:String)] { return self.directions}
+    public func getRating() -> UIImage {return RatingImages[self.rating]}
     public func getFlags() -> Int{ return self.flags}
     public func getVitamins() -> [Vitamin] { return self.vitamin}
     /// Returns a dict of data for basic info
