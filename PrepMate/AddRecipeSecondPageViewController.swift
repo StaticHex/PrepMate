@@ -41,8 +41,6 @@ class AddRecipeSecondPageViewController: UIViewController, UIPopoverPresentation
         
         vitaminTableView.delegate = self
         vitaminTableView.dataSource = self
-        
-        navigationController?.isNavigationBarHidden = false
     }
 
     override func didReceiveMemoryWarning() {
@@ -54,6 +52,9 @@ class AddRecipeSecondPageViewController: UIViewController, UIPopoverPresentation
         return UIModalPresentationStyle.none
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        navigationController?.isNavigationBarHidden = false
+    }
     override func viewWillDisappear(_ animated: Bool) {
         navigationController?.isNavigationBarHidden = true
     }

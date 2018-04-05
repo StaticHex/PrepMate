@@ -57,6 +57,7 @@ class AddURLViewController: UIViewController {
     @IBAction func onSaveClick(_ sender: Any) {
         var isValidImage : Bool = false
 
+        // check to see if image ends in a valid image format
         let suffix = substring(tok: txtURL.text!, begin: txtURL.text!.count-4, end: txtURL.text!.count)
         let accepted = [".jpg", ".jpeg", ".gif", ".png"]
         for a in accepted {
@@ -66,6 +67,7 @@ class AddURLViewController: UIViewController {
             }
         }
         
+        // if image was not valid, display alert, otherwise pass image back to sender
         if !isValidImage {
             self.present(alert, animated: true)
         } else {
@@ -78,6 +80,7 @@ class AddURLViewController: UIViewController {
         self.dismiss(animated: true, completion: nil)
     }
     
+    // substring function because apple depreciated theirs
     func substring(tok: String, begin : Int, end : Int) -> String {
         if begin < 0 || end < 0 {
             return ""

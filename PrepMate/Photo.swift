@@ -44,7 +44,12 @@ class Photo {
             } else {
                 if let _ = response as? HTTPURLResponse {
                     if let iData = data {
-                        pic = UIImage(data: iData)!
+                        if let img = UIImage(data: iData) {
+                            pic = img
+                        } else {
+                            pic = #imageLiteral(resourceName: "2000px-Silver_-_replace_this_image_male.svg.png")
+                            self.path = ""
+                        }
                     } else {
                         self.eMsg = "Error, avatar image URL returned null or missing!"
                     }

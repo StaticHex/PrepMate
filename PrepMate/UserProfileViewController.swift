@@ -62,6 +62,7 @@ class UserProfileViewController: UIViewController, UIPopoverPresentationControll
         switch(op) {
         case 0: // add
             btnAvatar.setImage(#imageLiteral(resourceName: "2000px-Silver_-_replace_this_image_male.svg.png"), for: .normal)
+            btnAvatar.isEnabled = true
             txtUserName.isEnabled = true
             txtUserName.text = ""
             txtUserName.backgroundColor = UIColor.white
@@ -87,6 +88,7 @@ class UserProfileViewController: UIViewController, UIPopoverPresentationControll
             break
         case 1: // edit
             btnAvatar.setImage(currentUser.getPhoto(), for: .normal)
+            btnAvatar.isEnabled = true
             txtUserName.text = currentUser.getUname()
             txtUserName.isEnabled = false
             txtUserName.backgroundColor = UIColor.white
@@ -114,6 +116,7 @@ class UserProfileViewController: UIViewController, UIPopoverPresentationControll
             break
         case 2: // view
             btnAvatar.setImage(currentUser.getPhoto(), for: .normal)
+            btnAvatar.isEnabled = false
             txtUserName.text = currentUser.getUname()
             txtUserName.isEnabled = false
             txtUserName.backgroundColor = clearColor
@@ -144,6 +147,8 @@ class UserProfileViewController: UIViewController, UIPopoverPresentationControll
         }
     }
     
+    // Once again, not much here except for sending information to screens
+    // before segues
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if(segue.identifier == "userPhotoPopover") {
             let vc = segue.destination as? AddURLViewController
@@ -165,10 +170,14 @@ class UserProfileViewController: UIViewController, UIPopoverPresentationControll
         }
         
     }
+    
+    // Pop the popovers out!
     func adaptivePresentationStyle(for controller: UIPresentationController, traitCollection: UITraitCollection) -> UIModalPresentationStyle {
         return UIModalPresentationStyle.none
     }
     
+    // Both of these ended up being direct segues so these two functions can be unlinked and deleted
+    // TODO: Delete these when people aren't updating the storyboard
     @IBAction func onAvatarClick(_ sender: Any) {
     }
     
@@ -177,11 +186,15 @@ class UserProfileViewController: UIViewController, UIPopoverPresentationControll
     
     @IBAction func onSaveClick(_ sender: Any) {
         // hold these here so we can loop through them
-        let validation = [txtUserName, txtEmail, txtPword, txtVPword]
+
         var isInputValid : Bool = true // check to ensure no empty fields
         var pwordMatch : Bool = true // check to ensure passwords match
         var isPhotoSet : Bool = false // check to ensure photo is set
         var count : Int = 0
+        
+        // Since we have to validate so many fields, just loop through them
+        // if one of the fields is empty, draw a red border around it
+        let validation = [txtUserName, txtEmail, txtPword, txtVPword]
         for v in validation {
             if v?.text! == "" {
                 isInputValid = false
@@ -193,16 +206,21 @@ class UserProfileViewController: UIViewController, UIPopoverPresentationControll
             }
             count+=1
         }
+        
+        // If one of the required fields is blank, alert the user and then give them a chance to correct
+        // the mistake or cancel
         if !isInputValid {
             alert.title = "Missing required information"
             alert.message = "You must provide a valid username, password, email, and profile picture to register\n\nNote: Failure to provide a valid email will make it unable for you to recover your password and could result in escalation of disciplinary action in the event of a violation of terms of service."
             self.present(alert, animated: true)
+        // Need to make sure user can type their password at least somewhat easily
         } else if(txtPword.text! != txtVPword.text) {
             alert.title = "Passwords do not match"
             alert.message = "Please retype your password again or choose a new password"
             self.present(alert, animated: true)
             pwordMatch = false
         }
+        //if they haven't picked a photo yet force them to (null photos crash at present)
         if(avatarPhoto.getPath()=="") {
             isPhotoSet = false
             btnAvatar.layer.borderColor = UIColor.red.cgColor
@@ -213,6 +231,7 @@ class UserProfileViewController: UIViewController, UIPopoverPresentationControll
             btnAvatar.layer.borderWidth = 0.0
         }
         
+        // if everything above was OK, reset all border colors and perform our database operations
         if isInputValid && isPhotoSet && pwordMatch {
             // Reset properties of required fields
             txtUserName.layer.borderColor = UIColor.black.cgColor
@@ -250,6 +269,10 @@ class UserProfileViewController: UIViewController, UIPopoverPresentationControll
             }
         }
     }
+    
+    @IBAction func onCancelClick(_ sender: Any) {
+        self.navigationController?.popViewController(animated: true)
+    }
 
     // This method is called when the user touches the Return key on the
     // keyboard. The 'textField' passed in is a pointer to the textField
@@ -270,12 +293,10 @@ class UserProfileViewController: UIViewController, UIPopoverPresentationControll
         self.view.endEditing(true)
     }
     
+    // Needed for URLProtocol, passes information back here from our popover
     func setURL(url: String) {
         avatarPhoto.setPhoto(imageURL: url)
+        print(avatarPhoto.getPath())
         btnAvatar.setImage(avatarPhoto.getImage(), for: .normal)
-    }
-    
-    @IBAction func onCancelClick(_ sender: Any) {
-        self.navigationController?.popViewController(animated: true)
     }
 }

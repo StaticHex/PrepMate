@@ -52,7 +52,7 @@ class HomePageViewController: UIViewController, settingsProtocol, ProfileProtoco
             let vc = segue.destination as? UserProfileViewController
             vc?.profileDelegate = self
             vc?.currentUser = appUser
-            vc?.op = 2
+            vc?.op = 1
             vc?.avatarPhoto.setPhoto(imageURL: appUser.getPhotoURL())
         }
         menu.alpha = 0.0

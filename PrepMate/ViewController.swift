@@ -23,6 +23,9 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         self.navigationController?.isNavigationBarHidden = true
         // Do any additional setup after loading the view, typically from a nib.
+        
+        // Load frames of the splash screen animation into the load icon
+        // and start it animating
         loadIcon.animationImages = [#imageLiteral(resourceName: "frame_00_delay-0.04s.png"), #imageLiteral(resourceName: "frame_01_delay-0.04s.png"), #imageLiteral(resourceName: "frame_02_delay-0.04s.png"), #imageLiteral(resourceName: "frame_03_delay-0.04s.png"), #imageLiteral(resourceName: "frame_04_delay-0.04s.png"), #imageLiteral(resourceName: "frame_05_delay-0.04s.png"), #imageLiteral(resourceName: "frame_06_delay-0.04s.png"), #imageLiteral(resourceName: "frame_07_delay-0.04s.png"), #imageLiteral(resourceName: "frame_08_delay-0.04s.png"), #imageLiteral(resourceName: "frame_09_delay-0.04s.png"),
                                     #imageLiteral(resourceName: "frame_10_delay-0.04s.png"), #imageLiteral(resourceName: "frame_11_delay-0.04s.png"), #imageLiteral(resourceName: "frame_12_delay-0.04s.png"), #imageLiteral(resourceName: "frame_13_delay-0.04s.png"), #imageLiteral(resourceName: "frame_14_delay-0.04s.png"), #imageLiteral(resourceName: "frame_15_delay-0.04s.png"), #imageLiteral(resourceName: "frame_16_delay-0.04s.png"), #imageLiteral(resourceName: "frame_17_delay-0.04s.png"), #imageLiteral(resourceName: "frame_18_delay-0.04s.png"), #imageLiteral(resourceName: "frame_19_delay-0.04s.png"),
                                     #imageLiteral(resourceName: "frame_20_delay-0.04s.png"), #imageLiteral(resourceName: "frame_21_delay-0.04s.png"), #imageLiteral(resourceName: "frame_22_delay-0.04s.png"), #imageLiteral(resourceName: "frame_23_delay-0.04s.png")]
@@ -43,10 +46,10 @@ class ViewController: UIViewController {
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        var count = 1
-        var running = false
-        var con = cTest()
-        let queue = DispatchQueue.global()
+        var count = 1 // variable used to count how many times the app has tried to connect to internet
+        var running = false // used to keep connect test thread running
+        var con = cTest() // holds the result of our first connection attempt
+        let queue = DispatchQueue.global() // thread variable
         
         // Set up our alert controller herer
         let alert = UIAlertController(title: "fake title", message: "Do you want to try to connect again?", preferredStyle: .alert)

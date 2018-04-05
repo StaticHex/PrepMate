@@ -25,7 +25,7 @@ class ColorPickerViewController: UIViewController {
     @IBOutlet weak var sldGreen: UISlider!
     @IBOutlet weak var sldBlue: UISlider!
     @IBOutlet weak var txtHex: UITextField!
-    @IBOutlet weak var btnColor: UIButton!
+    @IBOutlet weak var btnColor: UIButton! // our color box
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,8 +45,7 @@ class ColorPickerViewController: UIViewController {
         txtHex.text = "#000000"
     }
         
-    // Called when the user touches on the main view (outside the UITextField).
-    //
+    // Clear contents of text field when user clicks inside
     @IBAction func onBeginEditRed(_ sender: Any) {
         txtRed.text = ""
     }
@@ -63,7 +62,7 @@ class ColorPickerViewController: UIViewController {
         txtHex.text = ""
     }
     
-    
+    // keyboard clear functions
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
     }
@@ -78,6 +77,10 @@ class ColorPickerViewController: UIViewController {
         self.dismiss(animated: true, completion: nil)
     }
     
+    // When anything is changed, update everything else
+    // - when the hex number is updated, update sliders and R/G/B boxes
+    // - when R/G/B boxes are updated, update sliders and hex number
+    // - when sliders are updated, update corresponding R/G/B box
     @IBAction func onEditRed(_ sender: Any) {
         if(txtRed.text! == "") {
             txtRed.text = "0"
@@ -171,6 +174,15 @@ class ColorPickerViewController: UIViewController {
                                            blue: CGFloat(bCol / 255.0), alpha: 1.0)
     }
     
+    // rgbToHex Function
+    // @param
+    // - red : red color component
+    // - green : green color component
+    // - blue : blue color component
+    // @description
+    // - Calls a recursive helper function on each component, formats
+    //   the components so that the hex string is always 6 digits long,
+    //   and then returns the formatted hex string
     func rgbToHex(red : Int, green : Int, blue : Int) -> String {
         var sRed = dtoh(decimal: red)
         var sGreen = dtoh(decimal: green)
@@ -187,6 +199,12 @@ class ColorPickerViewController: UIViewController {
         return sRed + sGreen + sBlue
     }
     
+    // dtoh (decimal to hex) function
+    // @param
+    // - decimal : the base 10 number to convert to hex
+    // @description
+    // - recursive helper function for the rgbToHex function,
+    //   converts a single decimal number to a hex value
     private func dtoh(decimal : Int) -> String {
         var digits = ["0","1","2","3","4","5","6","7",
                     "8","9","A","B","C","D","E","F"]
@@ -196,6 +214,14 @@ class ColorPickerViewController: UIViewController {
         return dtoh(decimal: decimal / 16) + digits[decimal % 16]
     }
     
+    // hexToRgb Function
+    // @param
+    // - hex : the hex string to convert to component values
+    // @description
+    // - Splits the hex string into sub strings and then calls a recursive helper function
+    //   to convert each substring into it's corresponding base 10 decimal value.
+    // @return
+    // - returns a tuple containing 3 values representing R/G/B component values
     func hexTorgb(hex : String) -> (red : Int, green : Int, blue : Int) {
         let sRed = substring(tok: hex, begin: 0, end: 2)
         let sGreen = substring(tok: hex, begin: 2, end: 4)
@@ -203,6 +229,12 @@ class ColorPickerViewController: UIViewController {
         return (red : hexHelper(tok: sRed, p: 1), green : hexHelper(tok: sGreen, p: 1),blue : hexHelper(tok: sBlue, p: 1))
     }
     
+    // hexHelper
+    // @param
+    // - tok : the string token to convert
+    // - p : the power to multiply the character by
+    // @description
+    // - Recursively converts a hex value to it's base 10 counterpart
     private func hexHelper(tok : String, p : Int) -> Int{
         var digits = ["0","1","2","3","4","5","6","7",
                       "8","9","A","B","C","D","E","F"]
@@ -226,7 +258,15 @@ class ColorPickerViewController: UIViewController {
         return Int(Float(delim)*pow(16, Float(p)) + Float(hexHelper(tok: remain, p: p - 1)))
     }
     
+    
+    // A substring function because apple depreciated theirs
     func substring(tok: String, begin : Int, end : Int) -> String {
+        if begin < 0 || end < 0 {
+            return ""
+        }
+        if begin >= end {
+            return ""
+        }
         var count : Int = 0
         let tokArray = Array(tok)
         var retStr : String = ""

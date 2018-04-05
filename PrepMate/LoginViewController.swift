@@ -18,9 +18,9 @@ class LoginViewController: UIViewController, UIPopoverPresentationControllerDele
     @IBOutlet weak var txtPassword: UITextField!
     @IBOutlet weak var swtRememberMe: UISwitch!
     
-    var segueId = ""
+    var segueId = "" // Used for switching between segues
     
-    var appUser = User()
+    var appUser = User() // holds our current user, this is passed from screen to screen
     
     // Set up our alert controller herer
     let alert = UIAlertController(title: "Sorry, we couldn't log you in", message: "", preferredStyle: .alert)
@@ -30,7 +30,7 @@ class LoginViewController: UIViewController, UIPopoverPresentationControllerDele
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        self.navigationController?.isNavigationBarHidden = true
+        // add an OK button to our alert
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler:  nil))
     }
 
@@ -39,18 +39,17 @@ class LoginViewController: UIViewController, UIPopoverPresentationControllerDele
         // Dispose of any resources that can be recreated.
     }
     
-
+    // Not too much to see here, mainly just sending information to various
+    // views when needed
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if(segue.identifier == "loginToHomeSegue") {
             let dest = segue.destination as? HomePageViewController
             dest?.appUser.copy(oldUser: appUser)
             appUser.clear()
-            // TODO: pass user data to home screen
         } else if(segue.identifier == "loginToUserProfile") {
             let dest = segue.destination as? UserProfileViewController
             dest?.profileDelegate = self
-            dest?.op = 0
-            // TODO: pass "add" operation to user profile screen
+            dest?.op = 0 // Tell profile page it's doing an add operation
         } else if(segue.identifier == "resetPwordPopover") {
             let vc = segue.destination as? ResetPwordViewController
             vc?.isModalInPopover = true
@@ -59,18 +58,16 @@ class LoginViewController: UIViewController, UIPopoverPresentationControllerDele
                 controller?.delegate = self
                 controller?.passthroughViews = nil
             }
-        } else if(segue.identifier == "loginToUserProfile") {
-            let dest = segue.destination as? UserProfileViewController
-            dest?.op = 0
         }
     }
     
+    // needed to make popover pop!
     func adaptivePresentationStyle(for controller: UIPresentationController, traitCollection: UITraitCollection) -> UIModalPresentationStyle {
         return UIModalPresentationStyle.none
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        self.navigationController?.isNavigationBarHidden = true
+        self.navigationController?.isNavigationBarHidden = true // hide the navigation bar
         txtPassword.text = ""
         txtUserName.text = ""
     }
@@ -102,12 +99,19 @@ class LoginViewController: UIViewController, UIPopoverPresentationControllerDele
 
     @IBAction func btnLogInClick(_ sender: Any) {
         segueId = "loginToHomeSegue"
+        
+        // Run our verify function, to make sure user has valid credentials
         if(self.appUser.verify(uname: txtUserName.text!, pword: txtPassword.text!)) {
             performSegue(withIdentifier: segueId, sender: sender)
         } else {
             alert.message = appUser.getEMsg()
             self.present(alert, animated: true)
         }
+        
+        // Comment out block above and uncomment following line to skip login screen
+        // for faster debug
+        // WARNING!: Commenting out block above leaves you with a <<null>> user so
+        // some functions may not work if you do this
         //performSegue(withIdentifier: segueId, sender: sender)
     }
     
@@ -115,6 +119,8 @@ class LoginViewController: UIViewController, UIPopoverPresentationControllerDele
         segueId = "loginToUserProfile"
     }
     
+    // Segue attached directly, so I don't think we need this anymore.
+    // TODO: Delete this when people aren't working on the storyboard
     @IBAction func btnForgotPasswordClick(_ sender: Any) {
     }
 }
