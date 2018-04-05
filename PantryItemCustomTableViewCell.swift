@@ -10,8 +10,8 @@ import UIKit
 
 class PantryItemCustomTableViewCell: UITableViewCell {
 
+    // Outlets
     @IBOutlet weak var itemName: UILabel!
-    
     @IBOutlet weak var itemAmount: UILabel!
     @IBOutlet weak var selectedItem: UIButton!
     
@@ -28,7 +28,7 @@ class PantryItemCustomTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
-
+    // Select the button on a certain cell
     @IBAction func selectItem(_ sender: Any) {
         if selectedItem.currentTitle == "□" {
             selectedItem.setTitle("■", for: .normal)
@@ -38,6 +38,7 @@ class PantryItemCustomTableViewCell: UITableViewCell {
         }
     }
 
+    // Protocol called to remove item from table view
     @IBAction func removePantryItem(_ sender: Any) {
         pDelegate?.removePItem(cell: self)
     }

@@ -10,6 +10,7 @@ import UIKit
 
 class MealsCustomTableViewCell: UITableViewCell {
 
+    // Outlets
     @IBOutlet weak var mealName: UILabel!
     @IBOutlet weak var rating: UIImageView!
     @IBOutlet weak var selectedItem: UIButton!
@@ -28,7 +29,7 @@ class MealsCustomTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
-    
+    // Select the button on a certain cell
     @IBAction func selectItem(_ sender: Any) {
         if selectedItem.currentTitle == "★" {
             selectedItem.setTitle("☆", for: .normal)
@@ -39,8 +40,8 @@ class MealsCustomTableViewCell: UITableViewCell {
 
     }
     
+    // Protocol called to remove cell from table view
     @IBAction func remove(_ sender: Any) {
-        print("Huey")
         mProtocol?.removeMeal(cell: self)
     }
     

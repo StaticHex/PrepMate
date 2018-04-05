@@ -11,12 +11,14 @@ import UIKit
 class CommentDetailsPageViewController: UIViewController {
     var comment = Comment()
     
+    // Outlets
     @IBOutlet weak var commentTitle: UINavigationItem!
     @IBOutlet weak var ratingsLabel: UIImageView!
     @IBOutlet weak var authorLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var timeLabel: UILabel!
     @IBOutlet weak var commentBody: UITextView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.loadPage()
@@ -42,15 +44,5 @@ class CommentDetailsPageViewController: UIViewController {
         //TODO implement back button:w
         
     }
-    
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

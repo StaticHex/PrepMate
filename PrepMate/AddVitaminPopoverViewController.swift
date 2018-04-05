@@ -10,16 +10,18 @@ import UIKit
 
 class AddVitaminPopoverViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
     
-
+    // Outlets
     @IBOutlet weak var vitaminTextView: UITextField!
     @IBOutlet weak var percentDailyValue: UITextField!
     @IBOutlet weak var inputError: UILabel!
     
+    // Picker Information
     var unitPicker = UIPickerView()
     var pickerOptions: [String] = vitaminList
     
     weak var secondDelegate: secondPageProtocol?
     
+    // Setting up settings for the current display such as picker info and labels
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -57,7 +59,7 @@ class AddVitaminPopoverViewController: UIViewController, UIPickerViewDelegate, U
         self.view.endEditing(true)
     }
     
-    // Add a vitamin to the vitamin table in the add recipe second page view controller
+    // Add a vitamin to the vitamin table in the add recipe second page view controller. Both inputs must be required by the user to add the vitamin
     @IBAction func saveVitamin(_ sender: Any) {
         if vitaminTextView.text! == "" || percentDailyValue.text! == "" {
             inputError.text = "Values must be non-empty"

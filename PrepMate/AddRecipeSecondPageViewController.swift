@@ -56,7 +56,7 @@ class AddRecipeSecondPageViewController: UIViewController, UIPopoverPresentation
         navigationController?.isNavigationBarHidden = false
     }
     override func viewWillDisappear(_ animated: Bool) {
-        navigationController?.isNavigationBarHidden = true
+//        navigationController?.isNavigationBarHidden = true
     }
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {

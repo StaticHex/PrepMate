@@ -10,6 +10,7 @@ import UIKit
 
 class ShoppingListCustomTableViewCell: UITableViewCell {
 
+    // Outlets
     @IBOutlet weak var selectedItem: UIButton!
     @IBOutlet weak var itemAmount: UILabel!
     @IBOutlet weak var itemName: UILabel!
@@ -26,10 +27,13 @@ class ShoppingListCustomTableViewCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
+    
+    // Call protocol to remove a cell from the display
     @IBAction func deleteItem(_ sender: Any) {
         sProtocol?.removeShoppingItem(cell: self)
     }
     
+    // Select the button on a certain cell
     @IBAction func selectItem(_ sender: Any) {
         if selectedItem.currentTitle == "■" {
             selectedItem.setTitle("□", for: .normal)

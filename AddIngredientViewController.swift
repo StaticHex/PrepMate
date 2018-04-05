@@ -10,7 +10,7 @@ import UIKit
 
 class AddIngredientViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
 
-    
+    // Outlets
     @IBOutlet weak var itemTextView: UITextField!
     @IBOutlet weak var amountTextView: UITextField!
     @IBOutlet weak var amountPickerTextView: UITextField!
@@ -20,9 +20,11 @@ class AddIngredientViewController: UIViewController, UIPickerViewDelegate, UIPic
     
     weak var iDelegate : firstPageProtocol?
     
+    // Picker information
     var unitPicker = UIPickerView()
     var amountPickerOptions: [String] = ["Cups", "Quarts", "Lbs", "Custom"]
     
+    // Setting up the display on the screen
     override func viewDidLoad() {
         super.viewDidLoad()
         self.unitPicker.delegate = self
@@ -48,7 +50,6 @@ class AddIngredientViewController: UIViewController, UIPickerViewDelegate, UIPic
         return amountPickerOptions.count
     }
     
-    // Got off tutorial
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         return amountPickerOptions[row]
     }
@@ -58,6 +59,7 @@ class AddIngredientViewController: UIViewController, UIPickerViewDelegate, UIPic
         self.view.endEditing(true)
     }
     
+    // Add ingredient protocol called. Ingredient info must be present
     @IBAction func addIngredient(_ sender: Any) {
         if amountTextView.text! == "" || itemTextView.text! == ""
         {

@@ -30,6 +30,8 @@ class Comment {
         self.description = description
         self.date = date
     }
+    
+    // Getter functions for class variables
     func getId() ->Int {return self.id}
     func getTitle() ->String {return self.title}
     func getAuthor() ->User {return self.author}

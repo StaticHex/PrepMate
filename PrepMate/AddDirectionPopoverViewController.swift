@@ -25,6 +25,7 @@ class AddDirectionPopoverViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    // Adding a direction to the first page add recipe controller. User must input some text to add it.
     @IBAction func saveDirection(_ sender: Any) {
         let direction = directionText.text!
         if direction == "" {
