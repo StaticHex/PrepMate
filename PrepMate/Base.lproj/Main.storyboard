@@ -1921,6 +1921,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="ode-Dc-hRf"/>
                     </view>
+                    <value key="contentSizeForViewInPopover" type="size" width="300" height="210"/>
                     <size key="freeformSize" width="300" height="210"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fpo-N6-tzg" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2128,7 +2129,7 @@
                                                         <rect key="frame" x="91.5" y="0.0" width="263.5" height="30"/>
                                                         <nil key="textColor"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                        <textInputTraits key="textInputTraits"/>
+                                                        <textInputTraits key="textInputTraits" secureTextEntry="YES" textContentType="password"/>
                                                     </textField>
                                                 </subviews>
                                                 <constraints>
@@ -2148,7 +2149,7 @@
                                                         <rect key="frame" x="138.5" y="0.0" width="216.5" height="30"/>
                                                         <nil key="textColor"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                        <textInputTraits key="textInputTraits"/>
+                                                        <textInputTraits key="textInputTraits" secureTextEntry="YES" textContentType="password"/>
                                                     </textField>
                                                 </subviews>
                                                 <constraints>
