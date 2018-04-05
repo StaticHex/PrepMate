@@ -370,6 +370,11 @@
                                 <state key="normal" title="+">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <segue destination="Jfh-Gh-Xgm" kind="popoverPresentation" identifier="addIngredientSegue" popoverAnchorView="Q8C-Hc-geI" id="pFF-rh-8ei">
+                                        <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
+                                    </segue>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Lhh-sD-pfr">
                                 <rect key="frame" x="35" y="403.5" width="20" height="20"/>
@@ -427,7 +432,7 @@
                                         <rect key="frame" x="174" y="0.0" width="61" height="30"/>
                                         <state key="normal" title="Dietary..."/>
                                         <connections>
-                                            <segue destination="rFD-UR-Ri3" kind="popoverPresentation" popoverAnchorView="RcK-Uf-YoJ" id="An3-By-Xlc">
+                                            <segue destination="rFD-UR-Ri3" kind="popoverPresentation" identifier="firstPageToDietary" popoverAnchorView="RcK-Uf-YoJ" id="An3-By-Xlc">
                                                 <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
                                             </segue>
                                         </connections>
@@ -510,6 +515,7 @@
                     <navigationItem key="navigationItem" id="pz2-wV-bR0">
                         <barButtonItem key="rightBarButtonItem" title="Next" id="eRy-P8-hvF">
                             <connections>
+                                <action selector="nextPage:" destination="y0K-sX-piS" id="dRr-bO-p4N"/>
                                 <segue destination="9Yy-Gj-YOe" kind="show" id="4gb-LC-1rx"/>
                             </connections>
                         </barButtonItem>
@@ -551,6 +557,9 @@
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sQw-J4-dUI">
                                                 <rect key="frame" x="74" y="0.0" width="30" height="30"/>
                                                 <state key="normal" title="□"/>
+                                                <connections>
+                                                    <action selector="treeNuts:" destination="kCo-2A-ylB" eventType="touchUpInside" id="Kzw-I8-rGl"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                     </stackView>
@@ -566,6 +575,9 @@
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Re9-c2-EDB">
                                                 <rect key="frame" x="73.5" y="0.0" width="30" height="30"/>
                                                 <state key="normal" title="□"/>
+                                                <connections>
+                                                    <action selector="eggs:" destination="kCo-2A-ylB" eventType="touchUpInside" id="nI7-hs-ToB"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                     </stackView>
@@ -581,6 +593,9 @@
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0ad-99-idR">
                                                 <rect key="frame" x="73" y="0.0" width="30" height="30"/>
                                                 <state key="normal" title="□"/>
+                                                <connections>
+                                                    <action selector="milk:" destination="kCo-2A-ylB" eventType="touchUpInside" id="7zk-Tj-WW7"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                     </stackView>
@@ -596,6 +611,9 @@
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Uhs-K1-Y3b">
                                                 <rect key="frame" x="72.5" y="0.0" width="30" height="30"/>
                                                 <state key="normal" title="□"/>
+                                                <connections>
+                                                    <action selector="gluten:" destination="kCo-2A-ylB" eventType="touchUpInside" id="0hG-ef-94C"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                     </stackView>
@@ -611,6 +629,9 @@
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Gia-uZ-kKV">
                                                 <rect key="frame" x="72" y="0.0" width="30" height="30"/>
                                                 <state key="normal" title="□"/>
+                                                <connections>
+                                                    <action selector="meat:" destination="kCo-2A-ylB" eventType="touchUpInside" id="Mat-Rf-dsS"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                     </stackView>
@@ -626,6 +647,9 @@
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uCa-sE-mXc">
                                                 <rect key="frame" x="72" y="0.0" width="30" height="30"/>
                                                 <state key="normal" title="□"/>
+                                                <connections>
+                                                    <action selector="pork:" destination="kCo-2A-ylB" eventType="touchUpInside" id="7bO-1E-XMI"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                     </stackView>
@@ -641,6 +665,9 @@
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eXQ-NM-zlS">
                                                 <rect key="frame" x="71.5" y="0.0" width="30" height="30"/>
                                                 <state key="normal" title="□"/>
+                                                <connections>
+                                                    <action selector="butter:" destination="kCo-2A-ylB" eventType="touchUpInside" id="fig-RA-h7M"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                     </stackView>
@@ -650,8 +677,16 @@
                                 <rect key="frame" x="0.0" y="0.0" width="300" height="44"/>
                                 <items>
                                     <navigationItem title="Contains..." id="fWI-cp-y6R">
-                                        <barButtonItem key="leftBarButtonItem" title="Save" id="qN4-TX-DZS"/>
-                                        <barButtonItem key="rightBarButtonItem" title="Discard" id="WfN-UC-dbw"/>
+                                        <barButtonItem key="leftBarButtonItem" title="Save" id="qN4-TX-DZS">
+                                            <connections>
+                                                <action selector="save:" destination="kCo-2A-ylB" id="b0w-Tq-4iq"/>
+                                            </connections>
+                                        </barButtonItem>
+                                        <barButtonItem key="rightBarButtonItem" title="Discard" id="WfN-UC-dbw">
+                                            <connections>
+                                                <action selector="discard:" destination="kCo-2A-ylB" id="EQs-n9-M3V"/>
+                                            </connections>
+                                        </barButtonItem>
                                     </navigationItem>
                                 </items>
                             </navigationBar>
@@ -670,6 +705,9 @@
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="djk-Gu-L33">
                                                 <rect key="frame" x="82" y="0.0" width="30" height="30"/>
                                                 <state key="normal" title="□"/>
+                                                <connections>
+                                                    <action selector="peanuts:" destination="kCo-2A-ylB" eventType="touchUpInside" id="mQK-EP-ry4"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                     </stackView>
@@ -685,6 +723,9 @@
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Pt0-wf-e3R">
                                                 <rect key="frame" x="81.5" y="0.0" width="30" height="30"/>
                                                 <state key="normal" title="□"/>
+                                                <connections>
+                                                    <action selector="shellfish:" destination="kCo-2A-ylB" eventType="touchUpInside" id="ljC-IQ-4TU"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                     </stackView>
@@ -700,6 +741,9 @@
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="A5x-c2-Rh9">
                                                 <rect key="frame" x="81" y="0.0" width="30" height="30"/>
                                                 <state key="normal" title="□"/>
+                                                <connections>
+                                                    <action selector="tomatoes:" destination="kCo-2A-ylB" eventType="touchUpInside" id="XqU-ul-h2H"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                     </stackView>
@@ -715,6 +759,9 @@
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YAx-R5-FlK">
                                                 <rect key="frame" x="81" y="0.0" width="30" height="30"/>
                                                 <state key="normal" title="□"/>
+                                                <connections>
+                                                    <action selector="soy:" destination="kCo-2A-ylB" eventType="touchUpInside" id="hHQ-PS-Zya"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                     </stackView>
@@ -730,6 +777,9 @@
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="c8a-1n-rjO">
                                                 <rect key="frame" x="80.5" y="0.0" width="30" height="30"/>
                                                 <state key="normal" title="□"/>
+                                                <connections>
+                                                    <action selector="fish:" destination="kCo-2A-ylB" eventType="touchUpInside" id="Dg7-Hs-1oN"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                     </stackView>
@@ -745,6 +795,9 @@
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CH0-V7-ErK">
                                                 <rect key="frame" x="80" y="0.0" width="30" height="30"/>
                                                 <state key="normal" title="□"/>
+                                                <connections>
+                                                    <action selector="yeast:" destination="kCo-2A-ylB" eventType="touchUpInside" id="iPi-Is-HdR"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                     </stackView>
@@ -764,6 +817,21 @@
                         <viewLayoutGuide key="safeArea" id="GbE-o8-jvP"/>
                     </view>
                     <size key="freeformSize" width="300" height="300"/>
+                    <connections>
+                        <outlet property="butterButton" destination="eXQ-NM-zlS" id="Smb-mg-kkn"/>
+                        <outlet property="eggsButton" destination="Re9-c2-EDB" id="ja5-1c-4me"/>
+                        <outlet property="fishButton" destination="c8a-1n-rjO" id="S1e-r0-Tbp"/>
+                        <outlet property="glutenButton" destination="Uhs-K1-Y3b" id="ljG-9o-dNC"/>
+                        <outlet property="meatButton" destination="Gia-uZ-kKV" id="ZE0-Hg-dVZ"/>
+                        <outlet property="milkButton" destination="0ad-99-idR" id="2km-k3-cMf"/>
+                        <outlet property="peanutsButton" destination="djk-Gu-L33" id="iWD-7H-eKd"/>
+                        <outlet property="porkButton" destination="uCa-sE-mXc" id="3TT-dy-jf2"/>
+                        <outlet property="shellfishButton" destination="Pt0-wf-e3R" id="4hF-ai-gkv"/>
+                        <outlet property="soyButton" destination="YAx-R5-FlK" id="UPt-7L-q0T"/>
+                        <outlet property="tomatoesButton" destination="A5x-c2-Rh9" id="Rfk-Q8-srP"/>
+                        <outlet property="treeNutsButton" destination="sQw-J4-dUI" id="kW7-UI-yKC"/>
+                        <outlet property="yeastButton" destination="CH0-V7-ErK" id="v2h-Xg-F4c"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ef8-li-beY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -781,8 +849,16 @@
                                 <rect key="frame" x="0.0" y="0.0" width="300" height="44"/>
                                 <items>
                                     <navigationItem title="Dietary" id="nXK-ZB-wE8">
-                                        <barButtonItem key="leftBarButtonItem" title="Save" id="UMC-fi-fLw"/>
-                                        <barButtonItem key="rightBarButtonItem" title="Discard" id="smm-u9-ly6"/>
+                                        <barButtonItem key="leftBarButtonItem" title="Save" id="UMC-fi-fLw">
+                                            <connections>
+                                                <action selector="save:" destination="rFD-UR-Ri3" id="gWn-3a-vYc"/>
+                                            </connections>
+                                        </barButtonItem>
+                                        <barButtonItem key="rightBarButtonItem" title="Discard" id="smm-u9-ly6">
+                                            <connections>
+                                                <action selector="discard:" destination="rFD-UR-Ri3" id="lyC-R8-vKa"/>
+                                            </connections>
+                                        </barButtonItem>
                                     </navigationItem>
                                 </items>
                             </navigationBar>
@@ -801,6 +877,9 @@
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="K8v-xU-Z57">
                                                 <rect key="frame" x="88.5" y="0.0" width="30" height="30"/>
                                                 <state key="normal" title="□"/>
+                                                <connections>
+                                                    <action selector="spicy:" destination="rFD-UR-Ri3" eventType="touchUpInside" id="B5O-FQ-BNG"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                     </stackView>
@@ -816,6 +895,9 @@
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Bb1-5f-76w">
                                                 <rect key="frame" x="88.5" y="0.0" width="30" height="30"/>
                                                 <state key="normal" title="□"/>
+                                                <connections>
+                                                    <action selector="healthy:" destination="rFD-UR-Ri3" eventType="touchUpInside" id="0R9-SH-aiP"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                     </stackView>
@@ -831,6 +913,9 @@
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lIi-8f-T81">
                                                 <rect key="frame" x="89" y="0.0" width="30" height="30"/>
                                                 <state key="normal" title="□"/>
+                                                <connections>
+                                                    <action selector="highFat:" destination="rFD-UR-Ri3" eventType="touchUpInside" id="h07-ug-c89"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                     </stackView>
@@ -846,6 +931,9 @@
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="czA-Uw-VRl">
                                                 <rect key="frame" x="89.5" y="0.0" width="30" height="30"/>
                                                 <state key="normal" title="□"/>
+                                                <connections>
+                                                    <action selector="vegan:" destination="rFD-UR-Ri3" eventType="touchUpInside" id="bzm-CB-pEY"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                     </stackView>
@@ -861,6 +949,9 @@
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="M51-E2-GSL">
                                                 <rect key="frame" x="89.5" y="0.0" width="30" height="30"/>
                                                 <state key="normal" title="□"/>
+                                                <connections>
+                                                    <action selector="vegetarian:" destination="rFD-UR-Ri3" eventType="touchUpInside" id="6pz-UF-WNc"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                     </stackView>
@@ -876,6 +967,9 @@
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jKe-6A-San">
                                                 <rect key="frame" x="89.5" y="0.0" width="30" height="30"/>
                                                 <state key="normal" title="□"/>
+                                                <connections>
+                                                    <action selector="kosher:" destination="rFD-UR-Ri3" eventType="touchUpInside" id="I4h-UC-HbW"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                     </stackView>
@@ -891,6 +985,9 @@
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4pV-Ra-mTo">
                                                 <rect key="frame" x="89.5" y="0.0" width="30" height="30"/>
                                                 <state key="normal" title="□"/>
+                                                <connections>
+                                                    <action selector="lowCarb:" destination="rFD-UR-Ri3" eventType="touchUpInside" id="tpo-dm-gIm"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                     </stackView>
@@ -908,6 +1005,15 @@
                         <viewLayoutGuide key="safeArea" id="dYM-k3-zym"/>
                     </view>
                     <size key="freeformSize" width="300" height="300"/>
+                    <connections>
+                        <outlet property="healthyButton" destination="Bb1-5f-76w" id="ns0-aO-Rb6"/>
+                        <outlet property="highFatButton" destination="lIi-8f-T81" id="6SZ-4C-Jwb"/>
+                        <outlet property="kosherButton" destination="jKe-6A-San" id="ZX3-NP-etV"/>
+                        <outlet property="lowCarbButton" destination="4pV-Ra-mTo" id="Sba-ao-Z2W"/>
+                        <outlet property="spicyButton" destination="K8v-xU-Z57" id="8bF-Kl-s3X"/>
+                        <outlet property="veganButton" destination="czA-Uw-VRl" id="bZO-bn-GJv"/>
+                        <outlet property="vegetarianButton" destination="M51-E2-GSL" id="MkN-vX-5Bk"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Uan-pd-F2f" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -925,8 +1031,16 @@
                                 <rect key="frame" x="0.0" y="0.0" width="300" height="44"/>
                                 <items>
                                     <navigationItem title="New Direction" id="geE-Gs-jed">
-                                        <barButtonItem key="leftBarButtonItem" title="Save" id="vlI-YN-DP4"/>
-                                        <barButtonItem key="rightBarButtonItem" title="Discard" id="TdV-lN-P2Z"/>
+                                        <barButtonItem key="leftBarButtonItem" title="Save" id="vlI-YN-DP4">
+                                            <connections>
+                                                <action selector="saveDirection:" destination="x30-u5-yQW" id="KAo-wi-FVp"/>
+                                            </connections>
+                                        </barButtonItem>
+                                        <barButtonItem key="rightBarButtonItem" title="Discard" id="TdV-lN-P2Z">
+                                            <connections>
+                                                <action selector="discardDirection:" destination="x30-u5-yQW" id="U4H-fM-Pay"/>
+                                            </connections>
+                                        </barButtonItem>
                                     </navigationItem>
                                 </items>
                             </navigationBar>
@@ -951,6 +1065,9 @@
                         <viewLayoutGuide key="safeArea" id="LL9-8E-cZa"/>
                     </view>
                     <size key="freeformSize" width="300" height="300"/>
+                    <connections>
+                        <outlet property="directionText" destination="wBt-OR-Tdq" id="f6q-GF-oI3"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0W9-a5-hFt" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -3758,6 +3875,89 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nE1-KT-is4" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="5097.6000000000004" y="1038.9805097451276"/>
+        </scene>
+        <!--Add Ingredient View Controller-->
+        <scene sceneID="qkA-47-DWO">
+            <objects>
+                <viewController id="Jfh-Gh-Xgm" customClass="AddIngredientViewController" customModule="PrepMate" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="1j1-SW-0br">
+                        <rect key="frame" x="0.0" y="0.0" width="300" height="275"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Item Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tw5-Mg-3Ac">
+                                <rect key="frame" x="16" y="20" width="83" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Amount" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CA1-IS-VbN">
+                                <rect key="frame" x="16" y="87" width="60" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="uWt-7y-sGK">
+                                <rect key="frame" x="16" y="49" width="254" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="cac-Zo-Z4D">
+                                <rect key="frame" x="16" y="116" width="83" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="KzU-z4-csG">
+                                <rect key="frame" x="107" y="116" width="105" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ACg-M6-bMW">
+                                <rect key="frame" x="80" y="200" width="30" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Add"/>
+                                <connections>
+                                    <action selector="addIngredient:" destination="Jfh-Gh-Xgm" eventType="touchUpInside" id="yfL-vQ-Ifh"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XOj-RQ-jip">
+                                <rect key="frame" x="173" y="200" width="48" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Cancel"/>
+                                <connections>
+                                    <action selector="cancel:" destination="Jfh-Gh-Xgm" eventType="touchUpInside" id="PKV-tL-vhd"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hYB-9Y-jLC">
+                                <rect key="frame" x="45" y="168" width="196" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="WR3-u6-X4o"/>
+                    </view>
+                    <size key="freeformSize" width="300" height="275"/>
+                    <connections>
+                        <outlet property="amountPickerTextView" destination="KzU-z4-csG" id="dkm-K0-H0D"/>
+                        <outlet property="amountTextView" destination="cac-Zo-Z4D" id="ggK-yH-hmo"/>
+                        <outlet property="inputError" destination="hYB-9Y-jLC" id="LIi-S6-qR2"/>
+                        <outlet property="itemTextView" destination="uWt-7y-sGK" id="q8T-MG-LGw"/>
+                        <outlet property="pickerText" destination="KzU-z4-csG" id="4EA-GG-uIz"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="eQb-5T-OEc" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1790" y="3466"/>
         </scene>
         <!--Test-->
         <scene sceneID="bwR-k6-eYC">

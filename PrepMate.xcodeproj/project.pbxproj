@@ -12,7 +12,6 @@
 		7011C395205DBD4100C965C5 /* UserProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7011C394205DBD4100C965C5 /* UserProfileViewController.swift */; };
 		7011C397205DCDF500C965C5 /* BlacklistCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7011C396205DCDF500C965C5 /* BlacklistCell.swift */; };
 		7014A98320699D2A004BC1A2 /* 2000px-Silver_-_replace_this_image_male.svg.png in Resources */ = {isa = PBXBuildFile; fileRef = 7014A98220699D29004BC1A2 /* 2000px-Silver_-_replace_this_image_male.svg.png */; };
-		702514892075845B00E17595 /* AddURLViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 702514882075845B00E17595 /* AddURLViewController.swift */; };
 		702C939A205F063E005AACE2 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 702C9399205F063E005AACE2 /* SettingsViewController.swift */; };
 		702C939C205F128C005AACE2 /* CreditsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 702C939B205F128C005AACE2 /* CreditsViewController.swift */; };
 		7035294A206482FA00F88A72 /* frame_09_delay-0.04s.png in Resources */ = {isa = PBXBuildFile; fileRef = 70352932206482F800F88A72 /* frame_09_delay-0.04s.png */; };
@@ -93,6 +92,7 @@
 		A1E3702920695A8A00213631 /* ShoppingListCustomTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1E3702820695A8A00213631 /* ShoppingListCustomTableViewCell.swift */; };
 		A1E3702B20695D5E00213631 /* PantryItemCustomTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1E3702A20695D5E00213631 /* PantryItemCustomTableViewCell.swift */; };
 		A1F1932D2062AD4E00AFB5E9 /* HistoryFavoriteSearchResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1F1932C2062AD4E00AFB5E9 /* HistoryFavoriteSearchResultsViewController.swift */; };
+		A1F5A0C320758F8200487135 /* AddIngredientViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1F5A0C220758F8200487135 /* AddIngredientViewController.swift */; };
 		A1FC6B522071BE0B008C6F16 /* MealsCustomTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1FC6B512071BE0B008C6F16 /* MealsCustomTableViewCell.swift */; };
 		A203FB2E207527A50084B405 /* AssociatedTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = A203FB2D207527A50084B405 /* AssociatedTypes.swift */; };
 		A2177BDF206AFED00094E89D /* Recipe.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2177BDE206AFED00094E89D /* Recipe.swift */; };
@@ -120,7 +120,6 @@
 		7011C394205DBD4100C965C5 /* UserProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileViewController.swift; sourceTree = "<group>"; };
 		7011C396205DCDF500C965C5 /* BlacklistCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlacklistCell.swift; sourceTree = "<group>"; };
 		7014A98220699D29004BC1A2 /* 2000px-Silver_-_replace_this_image_male.svg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "2000px-Silver_-_replace_this_image_male.svg.png"; sourceTree = "<group>"; };
-		702514882075845B00E17595 /* AddURLViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddURLViewController.swift; sourceTree = "<group>"; };
 		702C9399205F063E005AACE2 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		702C939B205F128C005AACE2 /* CreditsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreditsViewController.swift; sourceTree = "<group>"; };
 		70352932206482F800F88A72 /* frame_09_delay-0.04s.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "frame_09_delay-0.04s.png"; sourceTree = "<group>"; };
@@ -203,6 +202,7 @@
 		A1E3702820695A8A00213631 /* ShoppingListCustomTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoppingListCustomTableViewCell.swift; sourceTree = "<group>"; };
 		A1E3702A20695D5E00213631 /* PantryItemCustomTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PantryItemCustomTableViewCell.swift; sourceTree = "<group>"; };
 		A1F1932C2062AD4E00AFB5E9 /* HistoryFavoriteSearchResultsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryFavoriteSearchResultsViewController.swift; sourceTree = "<group>"; };
+		A1F5A0C220758F8200487135 /* AddIngredientViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddIngredientViewController.swift; sourceTree = "<group>"; };
 		A1FC6B512071BE0B008C6F16 /* MealsCustomTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealsCustomTableViewCell.swift; sourceTree = "<group>"; };
 		A203FB2D207527A50084B405 /* AssociatedTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssociatedTypes.swift; sourceTree = "<group>"; };
 		A2177BDE206AFED00094E89D /* Recipe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Recipe.swift; sourceTree = "<group>"; };
@@ -324,6 +324,7 @@
 		70A24766205C3CC700A2AC47 = {
 			isa = PBXGroup;
 			children = (
+				A1F5A0C220758F8200487135 /* AddIngredientViewController.swift */,
 				A1E3702820695A8A00213631 /* ShoppingListCustomTableViewCell.swift */,
 				A1E3702A20695D5E00213631 /* PantryItemCustomTableViewCell.swift */,
 				70A24771205C3CC700A2AC47 /* PrepMate */,
@@ -391,7 +392,6 @@
 				707180ED20702675009EA6A8 /* Photo.swift */,
 				70ED7516207159A20012CB35 /* ResetPwordViewController.swift */,
 				70D91E9B2073BDD5001B658E /* ColorPickerViewController.swift */,
-				702514882075845B00E17595 /* AddURLViewController.swift */,
 			);
 			path = PrepMate;
 			sourceTree = "<group>";
@@ -530,7 +530,6 @@
 				A2D3BD82206337E3005BD508 /* NewCommentPopoverViewController.swift in Sources */,
 				A2177BE3206B00AA0094E89D /* Ingredient.swift in Sources */,
 				A1E3702920695A8A00213631 /* ShoppingListCustomTableViewCell.swift in Sources */,
-				702514892075845B00E17595 /* AddURLViewController.swift in Sources */,
 				A2526BD220632DD000C89BCE /* AddRecipeSecondPageViewController.swift in Sources */,
 				A2D3BD7C20633291005BD508 /* AddRecipeDietaryPageViewController.swift in Sources */,
 				707180EE20702675009EA6A8 /* Photo.swift in Sources */,
@@ -562,6 +561,7 @@
 				A2D3BD7E206334DD005BD508 /* AddDirectionPopoverViewController.swift in Sources */,
 				A203FB2E207527A50084B405 /* AssociatedTypes.swift in Sources */,
 				A1F1932D2062AD4E00AFB5E9 /* HistoryFavoriteSearchResultsViewController.swift in Sources */,
+				A1F5A0C320758F8200487135 /* AddIngredientViewController.swift in Sources */,
 				70A24773205C3CC700A2AC47 /* AppDelegate.swift in Sources */,
 				70DFB84E2063592B009DE826 /* AddBlacklistViewController.swift in Sources */,
 				702C939A205F063E005AACE2 /* SettingsViewController.swift in Sources */,
