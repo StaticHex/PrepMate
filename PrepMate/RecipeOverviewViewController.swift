@@ -36,10 +36,8 @@ class RecipeOverviewViewController: UIViewController {
     }
     /// Load the recipe overview information
     private func loadRecipe(){
-        // TODO: Implement rating functionality
-        //ratingsImage.image! = self.recipe.getRating()
-        // TODO: uncomment this when actual recipe available
-        //recipeImage.image! = self.recipe.getPhoto()
+        ratingsImage.image = self.recipe.getRating()
+        recipeImage.image = self.recipe.getPhoto()
         ingredientText.text! = self.loadIngredients()
         directionsText.text! = self.loadDirections()
         caloriesLabel.text! = "Calories: \(self.recipe.getCalories())"

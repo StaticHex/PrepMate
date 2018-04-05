@@ -102,7 +102,7 @@ class AddRecipeSecondPageViewController: UIViewController, UIPopoverPresentation
     }
     
     @IBAction func saveRecipe(_ sender: Any) {
-        // Save recipe!
+        self.recipeToSave.addRecipe()
     }
     
     @IBAction func cancelRecipe(_ sender: Any) {
