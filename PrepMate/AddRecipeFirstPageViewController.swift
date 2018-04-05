@@ -42,8 +42,8 @@ class AddRecipeFirstPageViewController: UIViewController, UITableViewDelegate, U
     var categoryPicker = UIPickerView()
     var categoryPickerOptions: [String] = ["American", "Asian", "Latin", "etc."]
     
-    var contains: [Bool] = [Bool]()
-    var dietary: [Bool] = [Bool]()
+    var contains: [Bool] = [false, false, false, false, false, false, false, false, false, false, false, false, false]
+    var dietary: [Bool] = [false, false, false, false, false, false, false]
     
     var directionList = [String]()
     var ingList = [Ingredient]()
@@ -275,17 +275,24 @@ class AddRecipeFirstPageViewController: UIViewController, UITableViewDelegate, U
             if contains[c] {
                 flagVector += 1
             }
+            if c == 12 {
+                break
+            }
             flagVector <<= 1
         }
         for d in 0...6 {
             if dietary[d] {
                 flagVector += 1
             }
+            if d == 6 {
+                break
+            }
             flagVector <<= 1
         }
         print(flagVector)
         recipeToPass.setFlags(flags: flagVector)
         
+        self.performSegue(withIdentifier: "addRecipeFirstPageToSecond", sender: self)
         
         
     }

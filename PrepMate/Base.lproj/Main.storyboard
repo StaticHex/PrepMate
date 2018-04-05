@@ -516,7 +516,6 @@
                         <barButtonItem key="rightBarButtonItem" title="Next" id="eRy-P8-hvF">
                             <connections>
                                 <action selector="nextPage:" destination="y0K-sX-piS" id="dRr-bO-p4N"/>
-                                <segue destination="9Yy-Gj-YOe" kind="show" id="4gb-LC-1rx"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -528,11 +527,12 @@
                         <outlet property="prepTimeField" destination="56P-3l-mnG" id="b1r-yn-BAk"/>
                         <outlet property="recipeNameField" destination="1aU-xq-xFg" id="iv8-16-0Lc"/>
                         <outlet property="servingsSizeTextField" destination="T9w-Ra-qUz" id="dhU-Di-mBU"/>
+                        <segue destination="9Yy-Gj-YOe" kind="show" identifier="addRecipeFirstPageToSecond" id="g6q-kE-3CZ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="c5p-Jf-fWv" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1994.4000000000001" y="2433.7331334332835"/>
+            <point key="canvasLocation" x="-2009" y="2434"/>
         </scene>
         <!--Add Recipe Contains Popover View Controller-->
         <scene sceneID="kQe-ts-Iuj">
@@ -1345,7 +1345,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tfQ-KF-v5P" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1146.4000000000001" y="2454.4227886056974"/>
+            <point key="canvasLocation" x="-1292" y="2434"/>
         </scene>
         <!--New Comment Popover View Controller-->
         <scene sceneID="5l8-J7-1SM">

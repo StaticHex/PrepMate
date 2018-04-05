@@ -98,7 +98,7 @@ class AddRecipeDietaryPageViewController: UIViewController {
     }
     
     @IBAction func save(_ sender: Any) {
-        dDelegate?.contains(containsItem: dietaryVector)
+        dDelegate?.dietary(dietaryItem: dietaryVector)
         dismiss(animated: true, completion: nil)
     }
     @IBAction func discard(_ sender: Any) {
