@@ -55,6 +55,8 @@ class UserProfileViewController: UIViewController, UIPopoverPresentationControll
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.isNavigationBarHidden = false
         btnAvatar.layer.backgroundColor = UIColor.white.cgColor
+        let clearColor = UIColor(displayP3Red: 0.0, green: 0.0, blue: 0.0, alpha: 0.0)
+        
         // When view appears, hide and adjust UI components based on
         // whether we're adding, updating, or just viewing the user
         switch(op) {
@@ -62,15 +64,20 @@ class UserProfileViewController: UIViewController, UIPopoverPresentationControll
             btnAvatar.setImage(#imageLiteral(resourceName: "2000px-Silver_-_replace_this_image_male.svg.png"), for: .normal)
             txtUserName.isEnabled = true
             txtUserName.text = ""
+            txtUserName.backgroundColor = UIColor.white
             txtFName.isEnabled = true
             txtFName.text = ""
+            txtFName.backgroundColor = UIColor.white
             txtLName.isEnabled = true
             txtLName.text = ""
+            txtLName.backgroundColor = UIColor.white
             txtEmail.isEnabled = true
             txtEmail.text = ""
+            txtEmail.backgroundColor = UIColor.white
             txtBio.isEditable = true
             txtBio.text = ""
             txtBio.isSelectable = true
+            txtBio.backgroundColor = UIColor.white
             tvBlacklist.isHidden = false
             txtPrefferences.isHidden = true
             btnAddBlistItem.isHidden = false
@@ -82,17 +89,22 @@ class UserProfileViewController: UIViewController, UIPopoverPresentationControll
             btnAvatar.setImage(currentUser.getPhoto(), for: .normal)
             txtUserName.text = currentUser.getUname()
             txtUserName.isEnabled = false
+            txtUserName.backgroundColor = UIColor.white
             txtFName.text = currentUser.getFname()
             txtFName.isEnabled = true
+            txtFName.backgroundColor = UIColor.white
             txtLName.text = currentUser.getLname()
             txtLName.isEnabled = true
+            txtLName.backgroundColor = UIColor.white
             txtPword.text = currentUser.getPword()
             txtVPword.text = currentUser.getPword()
             txtEmail.text = currentUser.getEmail()
             txtEmail.isEnabled = true
+            txtEmail.backgroundColor = UIColor.white
             txtBio.text = currentUser.getBio()
             txtBio.isEditable = true
             txtBio.isSelectable = true
+            txtBio.backgroundColor = UIColor.white
             tvBlacklist.isHidden = false
             txtPrefferences.isHidden = true
             btnAddBlistItem.isHidden = false
@@ -104,15 +116,20 @@ class UserProfileViewController: UIViewController, UIPopoverPresentationControll
             btnAvatar.setImage(currentUser.getPhoto(), for: .normal)
             txtUserName.text = currentUser.getUname()
             txtUserName.isEnabled = false
+            txtUserName.backgroundColor = clearColor
             txtFName.text = currentUser.getFname()
-            txtFName.isEnabled = true
+            txtFName.isEnabled = false
+            txtFName.backgroundColor = clearColor
             txtLName.text = currentUser.getLname()
-            txtLName.isEnabled = true
+            txtLName.isEnabled = false
+            txtLName.backgroundColor = clearColor
             txtEmail.text = currentUser.getEmail()
-            txtEmail.isEnabled = true
+            txtEmail.isEnabled = false
+            txtEmail.backgroundColor = clearColor
             txtBio.text = currentUser.getBio()
-            txtBio.isEditable = true
-            txtBio.isSelectable = true
+            txtBio.isEditable = false
+            txtBio.backgroundColor = clearColor
+            txtBio.isSelectable = false
             tvBlacklist.isHidden = true
             txtPrefferences.isHidden = false
             txtPrefferences.isSelectable = false
