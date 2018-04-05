@@ -1,5 +1,5 @@
 Contributions:
-Joseph Bourque (40%)
+Joseph Bourque (40%, 40%)
 • Expanded REST API
   - AddIngredient, AddRecipe, AddRecipeDirection, AddRecipeIngredient, AddRecipeVitamin, AddUser, AddUserBList, GetIngredient, GetRecipeDirections, GetRecipeIngredients, GetRecipeVitamins, PwordReset, RemoveRecipe, RemoveRecipeDirection, RemoveRecipeIngredient, RemoveRecipeVitamin, RemoveUserBList, UpdateRecipe, UpdateRecipeDirection, UPdateRecipeIngredient, UpdateRecipeVitamin, UpdateUser, VerifyUser
   - Everything is sanitized
@@ -27,7 +27,7 @@ Joseph Bourque (40%)
   - both display alerts in the case of errors
 • Created User and Photo classes to help interact with the database safely
 
-Pablo Velasco (30%)
+Pablo Velasco (30%, 30%)
 • Created New Screens
   - Removed redundancy in screen displays. Replaced multiple screens with a label in the NewItemList screen
   - Implemented navigation and run-time (non-database) adding and displaying of Pantry/Shopping List items, as well as Meals/Favorites
@@ -38,9 +38,16 @@ Pablo Velasco (30%)
   - Recipe information stored and passed through both screens to be stored in the database
   - Popovers for each of these screens
   
-Yen Chen Wee (30%)
-• 
-  - 
+Yen Chen Wee (30%, 30%)
+• Recipe Box
+  - Implemented tableview and custom tableviewcells (recipeBoxCells). Also added a dummy recipe object here to display the recipe pages
+• Recipe Page
+  - Implemented all elements in the Recipe page. This includes the segmented control that switches between the recipe overview and nutrition page
+  - Implemented all UI elements in recipe overview and nutrition page to parse info from recipe objects
+  • Recipe, Comment, Ingredient and Vitamin Classes
+  - Implemented Recipe, Comment, Ingredient and Vitamin classes
+  
+
 
 
 Deviations:
