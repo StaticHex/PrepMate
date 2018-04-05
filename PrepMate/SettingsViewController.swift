@@ -75,11 +75,12 @@ class SettingsViewController: UIViewController, UIPopoverPresentationControllerD
         // Color picker
     }
     
+    // Update color scheme depending on if they selected font color or title color
     func updateColor(color : UIColor?, sender : Int) {
         
-        // Should have a default color scheme to set it back to original?
-        
         let defaults = UserDefaults.standard
+        
+        // Change text color
         if (sender == 1) {
             btnFontColor.backgroundColor = color
             let color = btnFontColor.backgroundColor!
@@ -87,16 +88,11 @@ class SettingsViewController: UIViewController, UIPopoverPresentationControllerD
             
             defaults.set(encodedData, forKey: "navBarTextColor")
             
-            // Nav Bar Item Colors
             UINavigationBar.appearance().tintColor = color
             
-            // Nav Bar Text
             UINavigationBar.appearance().titleTextAttributes = [NSAttributedStringKey.foregroundColor : color]
-            // UILabel.appearanceWhenContainedInInstancesOfClasses([MyViewController.self, MyotherViewController.self]).textColor = UIColor.red
 
             UILabel.appearance().textColor = color
-            // Makes all buttons same color (issue: color change when pressed. Possible for all buttons to be fixed at once?
-//            UIButton.appearance().tintColor = color
             
             
             unitsLabel.textColor = color
@@ -108,15 +104,14 @@ class SettingsViewController: UIViewController, UIPopoverPresentationControllerD
             self.navigationController?.navigationBar.tintColor = color
             
         } else {
+            // Change title background color
             btnTitleColor.backgroundColor = color
             let color = btnTitleColor.backgroundColor!
             let encodedData = NSKeyedArchiver.archivedData(withRootObject: color)
             
             defaults.set(encodedData, forKey: "titleBarColor")
-            // Nav Bar Color
             UINavigationBar.appearance().backgroundColor = color
             sDelegate?.changeSidebarColor(color: color)
-            // Trying to change nav bar color on change (cannot currently with the right alpha/scheme)
             
         }
         

@@ -10,12 +10,10 @@ import UIKit
 
 class NewListItemViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
     
-    
+    // Outlets
     @IBOutlet weak var itemNameInput: UITextField!
     @IBOutlet weak var amountInput: UITextField!
-    
     @IBOutlet weak var pickerText: UITextField!
-    
     @IBOutlet weak var inputError: UILabel!
     
     weak var sDelegate : shoppingListProtocol?
@@ -25,7 +23,7 @@ class NewListItemViewController: UIViewController, UIPickerViewDelegate, UIPicke
     // true if coming from shopping list, false if pantry list
     var whichController: Bool = true
     
-    
+    // Picker information used for display
     var unitPicker = UIPickerView()
     var pickerOptions: [String] = ["Cups", "Quarts", "Lbs", "Custom"]
     
@@ -78,6 +76,7 @@ class NewListItemViewController: UIViewController, UIPickerViewDelegate, UIPicke
         dismiss(animated: true, completion: nil)
     }
     
+    // Saving information from user input for a new list item. Information is required by the user to add it.
     @IBAction func save(_ sender: Any) {
         
         if amountInput.text! == "" || itemNameInput.text! == ""

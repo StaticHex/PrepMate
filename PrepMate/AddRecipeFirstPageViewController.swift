@@ -9,51 +9,53 @@
 import UIKit
 
 protocol firstPageProtocol : class {
-    // Vitamin/Allergy?
     func contains(containsItem: [Bool])
     func dietary(dietaryItem: [Bool])
-    
     func addDirection(direction: String)
     func addIngredient(ingredient: Ingredient)
 }
 
+// Direction Table Custom Cell
 class DirectionTableCell: UITableViewCell {
     @IBOutlet weak var directionLabel: UILabel!
 }
 
+// Ingredient Table Custom Cell
 class IngredientTableCell: UITableViewCell {
     @IBOutlet weak var ingLabel: UILabel!
     @IBOutlet weak var amountLabel: UILabel!
 }
+
 class AddRecipeFirstPageViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIPickerViewDelegate, UIPickerViewDataSource, UIPopoverPresentationControllerDelegate, firstPageProtocol {
 
+    // Screen outlets
     @IBOutlet weak var recipeNameField: UITextField!
     @IBOutlet weak var prepTimeField: UITextField!
     @IBOutlet weak var cookTimeField: UITextField!
     @IBOutlet weak var directionTableview: UITableView!
     @IBOutlet weak var ingTableView: UITableView!
-    
     @IBOutlet weak var categoryPickerTextField: UITextField!
     @IBOutlet weak var servingsSizeTextField: UITextField!
     
+    // Information for both pickers on the screen (Serving size and Categories)
     var servingSizePicker = UIPickerView()
     var servingSizeOptions: [Int] = [1, 2, 3, 4, 5, 6, 7, 8]
-    
     var categoryPicker = UIPickerView()
     var categoryPickerOptions: [String] = categoryList
     
+    // Contains and Dietary bitvector
     var contains: [Bool] = [false, false, false, false, false, false, false, false, false, false, false, false, false]
     var dietary: [Bool] = [false, false, false, false, false, false, false]
     
+    // List that is used to contain ingredients and directions for table view display
     var directionList = [String]()
     var ingList = [Ingredient]()
     
     weak var secondDelegate: secondPageProtocol?
     
+    // Setting up screen display information
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // Do any additional setup after loading the view.
         navigationController?.isNavigationBarHidden = false
         
         directionTableview.delegate = self
@@ -101,6 +103,7 @@ class AddRecipeFirstPageViewController: UIViewController, UITableViewDelegate, U
         return -1
     }
     
+    // Display different cell layouts depening which table is selected
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if tableView == self.directionTableview {
             let cell = tableView.dequeueReusableCell(withIdentifier: "directionTableCell", for: indexPath as IndexPath) as! DirectionTableCell
@@ -132,7 +135,7 @@ class AddRecipeFirstPageViewController: UIViewController, UITableViewDelegate, U
         
     }
     
-    // Got off tutorial
+    // Using a tag on which picker to choose to correctly display options
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         if pickerView.tag == 0 {
             return String(servingSizeOptions[row])
@@ -142,6 +145,7 @@ class AddRecipeFirstPageViewController: UIViewController, UITableViewDelegate, U
         }
     }
     
+    // Using a tag on which picker to choose to correctly display options
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         if pickerView.tag == 0 {
             servingsSizeTextField.text = String(servingSizeOptions[row])
@@ -152,6 +156,7 @@ class AddRecipeFirstPageViewController: UIViewController, UITableViewDelegate, U
         self.view.endEditing(true)
     }
     
+    // Preparing info for delegation when passing through different segues
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "firstPageToContains" {
             let vc = segue.destination as? AddRecipeContainsPopoverViewController
@@ -195,19 +200,25 @@ class AddRecipeFirstPageViewController: UIViewController, UITableViewDelegate, U
         }
     }
     
+    // Contains bit vector passing from Contains popover
     func contains(containsItem: [Bool]) {
         self.contains = containsItem
     }
+    
+    // Dietary bit vector passing from Dietary popover
     func dietary(dietaryItem: [Bool]) {
         self.dietary = dietaryItem
     }
     
+    // Function to add a direction to the direction table view. Non-DB yet
     func addDirection(direction: String) {
         directionList.insert(direction, at: 0)
         self.directionTableview.beginUpdates()
         self.directionTableview.insertRows(at: [IndexPath.init(row: 0, section: 0)], with: .automatic)
         self.directionTableview.endUpdates()
     }
+    
+    // Function to add an ingredient to the ingredient table view. Non-DB yet
     func addIngredient(ingredient: Ingredient) {
         ingList.insert(ingredient, at: 0)
         self.ingTableView.beginUpdates()
@@ -291,7 +302,6 @@ class AddRecipeFirstPageViewController: UIViewController, UITableViewDelegate, U
             }
             flagVector <<= 1
         }
-        print(flagVector)
         recipeToPass.setFlags(flags: flagVector)
         
         secondDelegate?.setRecipe(recipe: recipeToPass)

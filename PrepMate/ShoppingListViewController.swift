@@ -69,6 +69,7 @@ class ShoppingListViewController: UIViewController, UIPopoverPresentationControl
         return shoppingListItems.count
     }
     
+    // Display information about the shopping list item
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
         let cell:ShoppingListCustomTableViewCell = tableView.dequeueReusableCell(withIdentifier: "shoppingListTableCell", for: indexPath as IndexPath) as! ShoppingListCustomTableViewCell
@@ -85,6 +86,7 @@ class ShoppingListViewController: UIViewController, UIPopoverPresentationControl
         tableView.deselectRow(at: indexPath, animated: true)
     }
     
+    // Add an item to the shopping list table view. Non-db yet
     func addSItem(item: Ingredient) {
         shoppingListItems.insert(item, at: 0)
         self.shoppingListTableView.beginUpdates()
@@ -92,6 +94,7 @@ class ShoppingListViewController: UIViewController, UIPopoverPresentationControl
         self.shoppingListTableView.endUpdates()
     }
     
+    // Remove an item from the shopping list table view
     func removeShoppingItem(cell: ShoppingListCustomTableViewCell) {
         let indexPath = self.shoppingListTableView.indexPath(for: cell)
         shoppingListItems.remove(at: indexPath!.row)

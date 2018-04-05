@@ -12,8 +12,10 @@ class AddRecipeDietaryPageViewController: UIViewController {
 
     weak var dDelegate: firstPageProtocol?
     
+    // Used by the bitvector for flags
     var dietaryVector: [Bool] = [false, false, false, false, false, false, false]
     
+    // Outlets
     @IBOutlet weak var spicyButton: UIButton!
     @IBOutlet weak var healthyButton: UIButton!
     @IBOutlet weak var highFatButton: UIButton!
@@ -33,6 +35,8 @@ class AddRecipeDietaryPageViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    
+    // Following functions help set up the bit vector  for the dietary information
     @IBAction func spicy(_ sender: Any) {
         if spicyButton.currentTitle == "■" {
             spicyButton.setTitle("□", for: .normal)
@@ -97,10 +101,12 @@ class AddRecipeDietaryPageViewController: UIViewController {
         }
     }
     
+    // Save the dietary portion of the bit vector and pass it back to the first page add recipe controller
     @IBAction func save(_ sender: Any) {
         dDelegate?.dietary(dietaryItem: dietaryVector)
         dismiss(animated: true, completion: nil)
     }
+    
     @IBAction func discard(_ sender: Any) {
         dismiss(animated: true, completion: nil)
     }

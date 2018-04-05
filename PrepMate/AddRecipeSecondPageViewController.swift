@@ -21,6 +21,7 @@ class VitaminCustomCell: UITableViewCell {
 
 class AddRecipeSecondPageViewController: UIViewController, UIPopoverPresentationControllerDelegate, UITableViewDelegate, UITableViewDataSource,  secondPageProtocol {
 
+    // Outlets
     @IBOutlet weak var potassiumField: UITextField!
     @IBOutlet weak var cholesterolField: UITextField!
     @IBOutlet weak var carbField: UITextField!
@@ -32,8 +33,10 @@ class AddRecipeSecondPageViewController: UIViewController, UIPopoverPresentation
     
     @IBOutlet weak var vitaminTableView: UITableView!
     
+    // List for maintaining display of vitamins
     var vitamins: [Vitamin] = [Vitamin]()
     
+    // Recipe that will be saved if the user chooses to (will be passed from first add page controller)
     var recipeToSave: Recipe = Recipe()
     
     override func viewDidLoad() {
@@ -67,6 +70,7 @@ class AddRecipeSecondPageViewController: UIViewController, UIPopoverPresentation
         return vitamins.count
     }
     
+    // Displaying information for a vitamin in the Vitamin table view
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "vitaminTableCell", for: indexPath as IndexPath) as! VitaminCustomCell
         
@@ -77,6 +81,7 @@ class AddRecipeSecondPageViewController: UIViewController, UIPopoverPresentation
         return cell
     }
     
+    // Information used for passing through the segue
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "addVitaminPopover" {
             let vc = segue.destination as? AddVitaminPopoverViewController
@@ -90,6 +95,7 @@ class AddRecipeSecondPageViewController: UIViewController, UIPopoverPresentation
         }
     }
     
+    // Function to add a vitamin for display on the Vitamin table view
     func addVitamin(vitamin: Vitamin) {
         vitamins.insert(vitamin, at: 0)
         self.vitaminTableView.beginUpdates()
@@ -97,10 +103,12 @@ class AddRecipeSecondPageViewController: UIViewController, UIPopoverPresentation
         self.vitaminTableView.endUpdates()
     }
     
+    // Receiving information about the recipe being created from the first page.
     func setRecipe(recipe: Recipe) {
         self.recipeToSave = recipe
     }
     
+    // Save recipe.
     @IBAction func saveRecipe(_ sender: Any) {
         
         if Int(caloriesField.text!) == nil {
@@ -156,6 +164,7 @@ class AddRecipeSecondPageViewController: UIViewController, UIPopoverPresentation
         self.recipeToSave.addRecipe()
     }
     
+    // User is sent back to the home page
     @IBAction func cancelRecipe(_ sender: Any) {
         for controller in self.navigationController!.viewControllers as Array {
             if controller.isKind(of: HomePageViewController.self) {

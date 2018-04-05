@@ -13,8 +13,10 @@ class AddRecipeContainsPopoverViewController: UIViewController {
     
     weak var cDelegate: firstPageProtocol?
     
+    // Bit vector information for the Contains portion
     var vector: [Bool] = [false, false, false, false, false, false, false, false, false, false, false, false, false]
     
+    // Button outlets
     @IBOutlet weak var treeNutsButton: UIButton!
     @IBOutlet weak var eggsButton: UIButton!
     @IBOutlet weak var milkButton: UIButton!
@@ -42,6 +44,7 @@ class AddRecipeContainsPopoverViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 
+    // Following functions help set up the bit vector  for the Contains information
     @IBAction func treeNuts(_ sender: Any) {
         if treeNutsButton.currentTitle == "■" {
             treeNutsButton.setTitle("□", for: .normal)
@@ -160,6 +163,7 @@ class AddRecipeContainsPopoverViewController: UIViewController {
         }
     }
     
+    // Save the Contains portion of the bit vector and pass it back to the first page add recipe controller
     @IBAction func save(_ sender: Any) {
         cDelegate?.contains(containsItem: vector)
         dismiss(animated: true, completion: nil)

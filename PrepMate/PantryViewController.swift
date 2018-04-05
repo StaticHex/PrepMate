@@ -63,6 +63,7 @@ class PantryViewController: UIViewController, UIPopoverPresentationControllerDel
         return pantryListItems.count
     }
     
+    // Display information about the pantry item
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell:PantryItemCustomTableViewCell = tableView.dequeueReusableCell(withIdentifier: "pantryListTableCell", for: indexPath as IndexPath) as! PantryItemCustomTableViewCell
@@ -79,6 +80,7 @@ class PantryViewController: UIViewController, UIPopoverPresentationControllerDel
         self.performSegue(withIdentifier: "newListItemSegue2", sender: AnyClass.self)
     }
     
+    // Add a pantry item for the table view display
     func addPItem(item: Ingredient) {
         pantryListItems.insert(item, at: 0)
         self.pantryListTableView.beginUpdates()
@@ -86,6 +88,7 @@ class PantryViewController: UIViewController, UIPopoverPresentationControllerDel
         self.pantryListTableView.endUpdates()
     }
     
+    // Remove a table view cell from the pantry table view
     func removePItem(cell: PantryItemCustomTableViewCell) {
         let indexPath = self.pantryListTableView.indexPath(for: cell)
         pantryListItems.remove(at: indexPath!.row)

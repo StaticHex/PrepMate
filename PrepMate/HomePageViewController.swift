@@ -71,6 +71,7 @@ class HomePageViewController: UIViewController, settingsProtocol, ProfileProtoco
         self.navigationController?.popViewController(animated: true)
     }
     
+    // Navigate to different controller screens
     @IBAction func onMenuProfile(_ sender: Any) {
         performSegue(withIdentifier: "homeToProfile", sender: sender)
     }

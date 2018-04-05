@@ -8,7 +8,7 @@
 
 import UIKit
 
-// Deprecated?
+// Deprecated
 
 var customUnits = ["quarts", "lbs", "grams", "..."]
 class CustomUnitsViewController: UIViewController {
