@@ -11,6 +11,7 @@ import UIKit
 protocol ProfileProtocol : class {
     func updateUser(newUser : User)
 }
+
 class UserProfileViewController: UIViewController, UIPopoverPresentationControllerDelegate, URLProtocol {
     // ProfileProtocol Delegate
     weak var profileDelegate : ProfileProtocol?

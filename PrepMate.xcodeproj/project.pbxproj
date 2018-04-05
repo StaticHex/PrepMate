@@ -80,6 +80,7 @@
 		70D91E9C2073BDD5001B658E /* ColorPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70D91E9B2073BDD5001B658E /* ColorPickerViewController.swift */; };
 		70DFB84E2063592B009DE826 /* AddBlacklistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70DFB84D2063592B009DE826 /* AddBlacklistViewController.swift */; };
 		70ED7517207159A20012CB35 /* ResetPwordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70ED7516207159A20012CB35 /* ResetPwordViewController.swift */; };
+		70EDB0392075B12A00C93C0A /* AddURLViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70EDB0382075B12A00C93C0A /* AddURLViewController.swift */; };
 		A11A573220614CC500A7EF31 /* HomePageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11A573120614CC500A7EF31 /* HomePageViewController.swift */; };
 		A11A57342061639100A7EF31 /* ShoppingListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11A57332061639100A7EF31 /* ShoppingListViewController.swift */; };
 		A11A5736206168CD00A7EF31 /* SearchFilterPopoverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11A5735206168CD00A7EF31 /* SearchFilterPopoverViewController.swift */; };
@@ -190,6 +191,7 @@
 		70D91E9B2073BDD5001B658E /* ColorPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPickerViewController.swift; sourceTree = "<group>"; };
 		70DFB84D2063592B009DE826 /* AddBlacklistViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddBlacklistViewController.swift; sourceTree = "<group>"; };
 		70ED7516207159A20012CB35 /* ResetPwordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPwordViewController.swift; sourceTree = "<group>"; };
+		70EDB0382075B12A00C93C0A /* AddURLViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddURLViewController.swift; sourceTree = "<group>"; };
 		A11A573120614CC500A7EF31 /* HomePageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePageViewController.swift; sourceTree = "<group>"; };
 		A11A57332061639100A7EF31 /* ShoppingListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoppingListViewController.swift; sourceTree = "<group>"; };
 		A11A5735206168CD00A7EF31 /* SearchFilterPopoverViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchFilterPopoverViewController.swift; sourceTree = "<group>"; };
@@ -343,6 +345,7 @@
 		70A24771205C3CC700A2AC47 /* PrepMate */ = {
 			isa = PBXGroup;
 			children = (
+				70EDB0382075B12A00C93C0A /* AddURLViewController.swift */,
 				703D48D22072D5A300246CA3 /* misc icons */,
 				703D48D12072D58200246CA3 /* lauch screen animation */,
 				703D48D02072D55F00246CA3 /* rating star images */,
@@ -531,6 +534,7 @@
 				A2177BE3206B00AA0094E89D /* Ingredient.swift in Sources */,
 				A1E3702920695A8A00213631 /* ShoppingListCustomTableViewCell.swift in Sources */,
 				A2526BD220632DD000C89BCE /* AddRecipeSecondPageViewController.swift in Sources */,
+				70EDB0392075B12A00C93C0A /* AddURLViewController.swift in Sources */,
 				A2D3BD7C20633291005BD508 /* AddRecipeDietaryPageViewController.swift in Sources */,
 				707180EE20702675009EA6A8 /* Photo.swift in Sources */,
 				A24E8AD42062AA75005C8E2B /* RecipeNutritionViewController.swift in Sources */,
