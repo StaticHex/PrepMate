@@ -11,9 +11,14 @@ import UIKit
 protocol ProfileProtocol : class {
     func updateUser(newUser : User)
 }
-class UserProfileViewController: UIViewController {
+class UserProfileViewController: UIViewController, UIPopoverPresentationControllerDelegate, URLProtocol {
     // ProfileProtocol Delegate
     weak var profileDelegate : ProfileProtocol?
+    
+    // Set up our alert controller herer
+    let alert = UIAlertController(title: "",
+                                  message: "",
+                                  preferredStyle: .alert)
     
     // add = 0, edit = 1, view = 2, unset = -1
     var op : Int = -1
@@ -38,6 +43,7 @@ class UserProfileViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler:  nil))
     }
     
     override func didReceiveMemoryWarning() {
@@ -47,7 +53,7 @@ class UserProfileViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.isNavigationBarHidden = false
-        
+        btnAvatar.layer.backgroundColor = UIColor.white.cgColor
         // When view appears, hide and adjust UI components based on
         // whether we're adding, updating, or just viewing the user
         switch(op) {
@@ -79,6 +85,8 @@ class UserProfileViewController: UIViewController {
             txtFName.isEnabled = true
             txtLName.text = currentUser.getLname()
             txtLName.isEnabled = true
+            txtPword.text = currentUser.getPword()
+            txtVPword.text = currentUser.getPword()
             txtEmail.text = currentUser.getEmail()
             txtEmail.isEnabled = true
             txtBio.text = currentUser.getBio()
@@ -118,6 +126,31 @@ class UserProfileViewController: UIViewController {
         }
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if(segue.identifier == "userPhotoPopover") {
+            let vc = segue.destination as? AddURLViewController
+            vc?.urlDelegate = self
+            vc?.isModalInPopover = true
+            let controller = vc?.popoverPresentationController
+            if controller != nil {
+                controller?.delegate = self
+                controller?.passthroughViews = nil
+            }
+        } else if(segue.identifier == "addBlistItemPopover") {
+            let vc = segue.destination as? AddBlacklistViewController
+            vc?.isModalInPopover = true
+            let controller = vc?.popoverPresentationController
+            if controller != nil {
+                controller?.delegate = self
+                controller?.passthroughViews = nil
+            }
+        }
+        
+    }
+    func adaptivePresentationStyle(for controller: UIPresentationController, traitCollection: UITraitCollection) -> UIModalPresentationStyle {
+        return UIModalPresentationStyle.none
+    }
+    
     @IBAction func onAvatarClick(_ sender: Any) {
     }
     
@@ -130,22 +163,36 @@ class UserProfileViewController: UIViewController {
         var isInputValid : Bool = true // check to ensure no empty fields
         var pwordMatch : Bool = true // check to ensure passwords match
         var isPhotoSet : Bool = false // check to ensure photo is set
+        var count : Int = 0
         for v in validation {
             if v?.text! == "" {
                 isInputValid = false
                 v?.layer.borderColor = UIColor.red.cgColor
                 v?.layer.borderWidth = 1.0
+            } else {
+                v?.layer.borderColor = UIColor.black.cgColor
+                v?.layer.borderWidth = 0.0
             }
+            count+=1
         }
         if !isInputValid {
-            // show alert
-        }
-        if(txtPword.text! != txtVPword.text) {
-            // show alert
+            alert.title = "Missing required information"
+            alert.message = "You must provide a valid username, password, email, and profile picture to register\n\nNote: Failure to provide a valid email will make it unable for you to recover your password and could result in escalation of disciplinary action in the event of a violation of terms of service."
+            self.present(alert, animated: true)
+        } else if(txtPword.text! != txtVPword.text) {
+            alert.title = "Passwords do not match"
+            alert.message = "Please retype your password again or choose a new password"
+            self.present(alert, animated: true)
             pwordMatch = false
         }
         if(avatarPhoto.getPath()=="") {
             isPhotoSet = false
+            btnAvatar.layer.borderColor = UIColor.red.cgColor
+            btnAvatar.layer.borderWidth = 1.0
+        } else {
+            isPhotoSet = true
+            btnAvatar.layer.borderColor = UIColor.black.cgColor
+            btnAvatar.layer.borderWidth = 0.0
         }
         
         if isInputValid && isPhotoSet && pwordMatch {
@@ -158,17 +205,59 @@ class UserProfileViewController: UIViewController {
             txtPword.layer.borderWidth = 0.0
             txtVPword.layer.borderColor = UIColor.black.cgColor
             txtVPword.layer.borderWidth = 0.0
+            btnAvatar.layer.borderColor = UIColor.black.cgColor
+            btnAvatar.layer.borderWidth = 0.0
             
             if op == 0 {
-                currentUser.addUser(newUser: (uname: txtUserName.text!, pword: txtPword.text!, photo: avatarPhoto, fname: txtFName.text!, lname: txtLName.text!, email: txtEmail.text!, bio: txtBio.text!))
+                // Try to add our user, if an error occurs, display an alert with
+                // an error message
+                if(!currentUser.addUser(newUser: (uname: txtUserName.text!, pword: txtPword.text!, photo: avatarPhoto, fname: txtFName.text!, lname: txtLName.text!, email: txtEmail.text!, bio: txtBio.text!))) {
+                    profileDelegate?.updateUser(newUser: currentUser)
+                } else {
+                    alert.title = "User Not Added"
+                    alert.message = currentUser.getEMsg()
+                    self.present(alert, animated: true)
+                }
+
             } else if op == 1 {
-                currentUser.updateUser(newUser: (uname: txtUserName.text!, pword: txtPword.text!, photo: avatarPhoto, fname: txtFName.text!, lname: txtLName.text!, email: txtEmail.text!, bio: txtBio.text!))
+                // Try to update our user, if an error occurs, display an alert with
+                // an error message
+                if(!currentUser.updateUser(newUser: (uname: txtUserName.text!, pword: txtPword.text!, photo: avatarPhoto, fname: txtFName.text!, lname: txtLName.text!, email: txtEmail.text!, bio: txtBio.text!))) {
+                    profileDelegate?.updateUser(newUser: currentUser)
+                } else {
+                    alert.title = "User Not Updated"
+                    alert.message = currentUser.getEMsg()
+                    self.present(alert, animated: true)
+                }
             }
-            profileDelegate?.updateUser(newUser: currentUser)
-            self.navigationController?.popViewController(animated: true)
         }
+    }
+
+    // This method is called when the user touches the Return key on the
+    // keyboard. The 'textField' passed in is a pointer to the textField
+    // widget the cursor was in at the time they touched the Return key on
+    // the keyboard.
+    //
+    // From the Apple documentation: Asks the delegate if the text field
+    // should process the pressing of the return button.
+    //
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    
+    // Called when the user touches on the main view (outside the UITextField).
+    //
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    }
+    
+    func setURL(url: String) {
+        avatarPhoto.setPhoto(imageURL: url)
+        btnAvatar.setImage(avatarPhoto.getImage(), for: .normal)
     }
     
     @IBAction func onCancelClick(_ sender: Any) {
+        self.navigationController?.popViewController(animated: true)
     }
 }

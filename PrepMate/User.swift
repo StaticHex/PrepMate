@@ -110,12 +110,154 @@ class User {
         return vError
     }
     
-    public func addUser(newUser:(uname: String, pword: String, photo: Photo, fname: String, lname: String, email: String, bio: String)) {
+    public func addUser(newUser:(uname: String, pword: String, photo: Photo, fname: String, lname: String, email: String, bio: String)) -> Bool{
+        // set up user object for database operations
+        self.uname = newUser.uname
+        self.pword = newUser.pword
+        self.photo.copy(oldPhoto: newUser.photo)
+        self.fname = newUser.fname
+        self.lname = newUser.lname
+        self.email = newUser.email
+        self.bio = newUser.bio
         
+        // create a variable to return whether we errored out or not
+        var vError : Bool = false
+        
+        // path to our backend script
+        let URL_VERIFY = "http://www.teragentech.net/prepmate/AddUser.php"
+        
+        // variable which will spin until verification is finished
+        var finished : Bool = false
+        
+        // create our URL object
+        let url = URL(string: URL_VERIFY)
+        
+        // create the request and set the type to POST, otherwise we get authorization error
+        var request = URLRequest(url: url!)
+        request.httpMethod = "POST"
+        
+        let uname = self.uname
+        let pword = self.pword
+        let photo = self.photo.getPath()
+        let fname = self.fname
+        let lname = self.lname
+        let email = self.email
+        let bio = self.bio
+        
+        let params = "uname="+uname+"&pword="+pword+"&photo="+photo+"&fname="+fname+"&lname="+lname+"&email="+email+"&bio="+bio
+        
+        request.httpBody = params.data(using: String.Encoding.utf8)
+        
+        // Create a task and send our request to our REST API
+        let task = URLSession.shared.dataTask(with: request) {
+            data, response, error in
+            // if we error out, return the error message
+            if(error != nil) {
+                self.eMsg = error!.localizedDescription
+                finished = true
+                vError = true
+                return
+            }
+            
+            // If there was no error, parse the response
+            do {
+                // convert response to a dictionary
+                let JSONResponse = try JSONSerialization.jsonObject(with: data!, options: .mutableContainers) as? NSDictionary
+                
+                // Get the error status and the error message from the database
+                if let parseJSON = JSONResponse {
+                    self.eMsg = parseJSON["msg"] as! String
+                    if let strId = parseJSON["id"] as? NSNumber {
+                        self.id = strId as! Int
+                    } else {
+                        self.id = Int(parseJSON["id"] as! String)!
+                    }
+                    vError = (parseJSON["error"] as! Bool)
+                }
+            } catch {
+                self.eMsg = error.localizedDescription
+                vError = true
+            }
+            finished = true
+        }
+        // execute our task and then return the results
+        task.resume()
+        while(!finished) {}
+        return vError        
     }
     
-    public func updateUser(newUser:(uname: String, pword: String, photo: Photo, fname: String, lname: String, email: String, bio: String)) {
+    public func updateUser(newUser:(uname: String, pword: String, photo: Photo, fname: String, lname: String, email: String, bio: String)) -> Bool {
+        // set up user object for database operations
+        self.pword = newUser.pword
+        self.photo.copy(oldPhoto: newUser.photo)
+        self.fname = newUser.fname
+        self.lname = newUser.lname
+        self.email = newUser.email
+        self.bio = newUser.bio
         
+        // create a variable to return whether we errored out or not
+        var vError : Bool = false
+        
+        // path to our backend script
+        let URL_VERIFY = "http://www.teragentech.net/prepmate/UpdateUser.php"
+        
+        // variable which will spin until verification is finished
+        var finished : Bool = false
+        
+        // create our URL object
+        let url = URL(string: URL_VERIFY)
+        
+        // create the request and set the type to POST, otherwise we get authorization error
+        var request = URLRequest(url: url!)
+        request.httpMethod = "POST"
+        
+        let id = String(self.id)
+        let pword = self.pword
+        let photo = self.photo.getPath()
+        let fname = self.fname
+        let lname = self.lname
+        let email = self.email
+        let bio = self.bio
+        
+        var p = "id="+id+"&pword="+pword
+            p = p + "&photo="+photo+"&fname="
+            p = p + fname+"&lname="+lname
+            p = p + "&email="+email+"&bio="+bio
+        let params = p
+        
+        request.httpBody = params.data(using: String.Encoding.utf8)
+        
+        // Create a task and send our request to our REST API
+        let task = URLSession.shared.dataTask(with: request) {
+            data, response, error in
+            // if we error out, return the error message
+            if(error != nil) {
+                self.eMsg = error!.localizedDescription
+                finished = true
+                vError = true
+                return
+            }
+            
+            // If there was no error, parse the response
+            do {
+                // convert response to a dictionary
+                let JSONResponse = try JSONSerialization.jsonObject(with: data!, options: .mutableContainers) as? NSDictionary
+                
+                // Get the error status and the error message from the database
+                if let parseJSON = JSONResponse {
+                    self.eMsg = parseJSON["msg"] as! String
+                    vError = (parseJSON["error"] as! Bool)
+                }
+            } catch {
+                self.eMsg = error.localizedDescription
+                vError = true
+            }
+            finished = true
+        }
+        // execute our task and then return the results
+        task.resume()
+        while(!finished) {}
+        return vError
     }
     
     public func copy(oldUser: User) {
@@ -149,6 +291,7 @@ class User {
     public func getId() -> Int { return self.id }
     public func getUname() -> String { return self.uname }
     public func getPword() -> String { return self.pword }
+    public func getPhotoURL() -> String { return self.photo.getPath() }
     public func getPhoto() -> UIImage {return self.photo.getImage() }
     public func getFname() -> String { return self.fname }
     public func getLname() -> String { return self.lname }

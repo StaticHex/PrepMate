@@ -12,7 +12,7 @@ protocol settingsProtocol: class {
     func changeSidebarColor(color: UIColor)
 }
 
-class HomePageViewController: UIViewController, settingsProtocol {
+class HomePageViewController: UIViewController, settingsProtocol, ProfileProtocol {
     
     // UI Outlets
     @IBOutlet weak var menu: UIView!
@@ -23,10 +23,10 @@ class HomePageViewController: UIViewController, settingsProtocol {
         super.viewDidLoad()
         menu.alpha = 0
         // Do any additional setup after loading the view.
-        navigationController?.isNavigationBarHidden = true
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        navigationController?.isNavigationBarHidden = true
         let defaults = UserDefaults.standard
         if defaults.object(forKey: "titleBarColor") != nil {
             let decoded  = defaults.object(forKey: "titleBarColor") as! Data
@@ -48,6 +48,14 @@ class HomePageViewController: UIViewController, settingsProtocol {
             let vc = segue.destination as? SettingsViewController
             vc?.sDelegate = self
         }
+        if segue.identifier == "homeToProfile" {
+            let vc = segue.destination as? UserProfileViewController
+            vc?.profileDelegate = self
+            vc?.currentUser = appUser
+            vc?.op = 2
+            vc?.avatarPhoto.setPhoto(imageURL: appUser.getPhotoURL())
+        }
+        menu.alpha = 0.0
     }
 
     @IBAction func onMenuButtonClick(_ sender: Any) {
@@ -56,6 +64,11 @@ class HomePageViewController: UIViewController, settingsProtocol {
         } else {
             menu.alpha = 0
         }
+    }
+    
+    func updateUser(newUser: User) {
+        appUser.copy(oldUser: newUser)
+        self.navigationController?.popViewController(animated: true)
     }
     
     @IBAction func onMenuProfile(_ sender: Any) {

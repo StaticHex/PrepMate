@@ -11,7 +11,7 @@
 
 import UIKit
 
-class LoginViewController: UIViewController, UIPopoverPresentationControllerDelegate {
+class LoginViewController: UIViewController, UIPopoverPresentationControllerDelegate, ProfileProtocol {
     
     // UIComponent Outlets
     @IBOutlet weak var txtUserName: UITextField!
@@ -47,7 +47,9 @@ class LoginViewController: UIViewController, UIPopoverPresentationControllerDele
             appUser.clear()
             // TODO: pass user data to home screen
         } else if(segue.identifier == "loginToUserProfile") {
-            let _ = segue.destination as? UserProfileViewController
+            let dest = segue.destination as? UserProfileViewController
+            dest?.profileDelegate = self
+            dest?.op = 0
             // TODO: pass "add" operation to user profile screen
         } else if(segue.identifier == "resetPwordPopover") {
             let vc = segue.destination as? ResetPwordViewController
@@ -68,6 +70,7 @@ class LoginViewController: UIViewController, UIPopoverPresentationControllerDele
     }
     
     override func viewDidAppear(_ animated: Bool) {
+        self.navigationController?.isNavigationBarHidden = true
         txtPassword.text = ""
         txtUserName.text = ""
     }
@@ -85,6 +88,12 @@ class LoginViewController: UIViewController, UIPopoverPresentationControllerDele
         return true
     }
     
+    func updateUser(newUser: User) {
+        self.navigationController?.popViewController(animated: true)
+        appUser.copy(oldUser: newUser)
+        performSegue(withIdentifier: "loginToHomeSegue", sender: nil)
+    }
+    
     // Called when the user touches on the main view (outside the UITextField).
     //
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -93,15 +102,13 @@ class LoginViewController: UIViewController, UIPopoverPresentationControllerDele
 
     @IBAction func btnLogInClick(_ sender: Any) {
         segueId = "loginToHomeSegue"
-        /*
         if(self.appUser.verify(uname: txtUserName.text!, pword: txtPassword.text!)) {
             performSegue(withIdentifier: segueId, sender: sender)
         } else {
             alert.message = appUser.getEMsg()
             self.present(alert, animated: true)
         }
-        */
-        performSegue(withIdentifier: segueId, sender: sender)
+        //performSegue(withIdentifier: segueId, sender: sender)
     }
     
     @IBAction func btnSignUpClick(_ sender: Any) {
