@@ -71,7 +71,7 @@ class AddRecipeSecondPageViewController: UIViewController, UIPopoverPresentation
         
         let row = indexPath.row
         cell.vitaminName.text = vitaminList[vitamins[row].getIndex()]
-        cell.percentage.text = String(vitamins[row].getPercent())
+        cell.percentage.text = String(vitamins[row].getPercent()) + " %"
             
         return cell
     }

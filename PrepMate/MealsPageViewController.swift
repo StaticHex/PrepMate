@@ -78,7 +78,7 @@ class MealsPageViewController: UIViewController, UITableViewDelegate, UITableVie
     }
     
     @IBAction func addMealOption(_ sender: Any) {
-                let meal = Recipe(id: 1, name: "recipeAdded", photo: Photo(), category: 1, servings: 1, prepTime: 1, cookTime: 1, calories: 1, unsatFat: 1, satFat: 1, cholesterol: 1, sodium: 1, potassium: 1, carbs: 1, fiber: 1, sugar: 1, comments: [Comment](), ingredients: [(id:Int,ing:Ingredient, amount:Float)](), directions: [String](), rating: 1, flags: 1, vitamin: [Vitamin]())
+        let meal = Recipe(id: 1, name: "recipeAdded", photo: Photo(), category: 1, servings: 1, prepTime: 1, cookTime: 1, calories: 1, unsatFat: 1, satFat: 1, cholesterol: 1, sodium: 1, potassium: 1, carbs: 1, fiber: 1, sugar: 1, comments: [Comment](), ingredients: [(id:Int,ing:Ingredient, amount:Float)](), directions: [(id: -1, str: "Dummy")], rating: 1, flags: 1, vitamin: [Vitamin]())
         
                 meals.append(meal)
                 self.mealsTableView.beginUpdates()

@@ -262,11 +262,11 @@ class AddRecipeFirstPageViewController: UIViewController, UITableViewDelegate, U
         
         // Go through each direction to add to the recipe
         let directionCells = self.ingTableView.visibleCells as! Array<DirectionTableCell>
-        var directionInfo = [String]()
+        var directionInfo = [(id: Int, str: String)]()
         // Need to grab direction and cell, so counter and cell made to keep track of where I am
         var directionCounter = 0
         for cell in directionCells {
-            directionInfo.append(cell.directionLabel.text!)
+            directionInfo.append((-1, cell.directionLabel.text!))
             directionCounter += 1
         }
         recipeToPass.setDirections(directions: directionInfo)

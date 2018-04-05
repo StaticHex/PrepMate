@@ -64,7 +64,7 @@ class RecipeOverviewViewController: UIViewController {
         var result = String()
         var count = 1
         for direction in self.recipe.getDirections(){
-            result = result + String(format: "%d. %@\n", count, direction)
+            result = result + String(format: "%d. %@\n", count, direction.str)
             count = count + 1
         }
         return result
