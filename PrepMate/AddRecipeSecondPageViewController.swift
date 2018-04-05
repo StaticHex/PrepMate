@@ -102,6 +102,57 @@ class AddRecipeSecondPageViewController: UIViewController, UIPopoverPresentation
     }
     
     @IBAction func saveRecipe(_ sender: Any) {
+        
+        if Int(caloriesField.text!) == nil {
+            caloriesField.text = "Calories must be a number"
+            return
+        }
+        self.recipeToSave.setCalories(calories: Int(caloriesField.text!)!)
+        
+        if Int(fatField.text!) == nil {
+            fatField.text = "Fat must be a number"
+            return
+        }
+        self.recipeToSave.setSatFat(satFat: Int(fatField.text!)!)
+        
+        if Int(cholesterolField.text!) == nil {
+            cholesterolField.text = "Cholesterol must be a number"
+            return
+        }
+        self.recipeToSave.setCholesterol(cholesterol: Int(cholesterolField.text!)!)
+        
+        if Int(sodiumField.text!) == nil {
+            sodiumField.text = "Sodium must be a number"
+            return
+        }
+        self.recipeToSave.setSodium(sodium: Int(sodiumField.text!)!)
+        
+        if Int(potassiumField.text!) == nil {
+            potassiumField.text = "Potassium must be a number"
+            return
+        }
+        self.recipeToSave.setPotassium(potassium: Int(potassiumField.text!)!)
+        
+        if Int(sugarField.text!) == nil {
+            sugarField.text = "Sugar must be a number"
+            return
+        }
+        self.recipeToSave.setSugar(sugar: Int(sugarField.text!)!)
+        
+        if Int(carbField.text!) == nil {
+            carbField.text = "Carbohydrates must be a number"
+            return
+        }
+        self.recipeToSave.setCarbs(carbs: Int(cholesterolField.text!)!)
+        
+        if Int(fiberField.text!) == nil {
+            fiberField.text = "Fiber must be a number"
+            return
+        }
+        self.recipeToSave.setFiber(fiber: Int(fiberField.text!)!)
+        
+        self.recipeToSave.setVitamin(vitamin: vitamins)
+        
         self.recipeToSave.addRecipe()
     }
     
