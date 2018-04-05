@@ -129,4 +129,18 @@ class Recipe {
     public func getRating() -> Int { return self.rating}
     public func getFlags() -> Int{ return self.flags}
     public func getVitamins() -> [Vitamin] { return self.vitamin}
+    /// Returns a dict of data for basic info
+    public func getBasicInfo() -> [String: Int] {
+        var result = [String: Int]()
+        result["Calories"] = self.getCalories()
+        result["Unsat. Fat"] = self.getUnsatFat()
+        result["Sat. Fat"] = self.getSatFat()
+        result["Cholesterol"] = self.getCholesterol();
+        result["Sodium"] = self.getSodium()
+        result["Potassium"] = self.getPotassium()
+        result["Carbs"] = self.getCarbs()
+        result["Fiber"] = self.getFiber()
+        result["Sugar"] = self.getSugar()
+        return result
+    }
 }

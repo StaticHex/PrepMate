@@ -8,12 +8,15 @@
 
 import Foundation
 class Vitamin {
-    public var id:Int
-    public var index:Int
-    public var percent:Float
+    private var id:Int
+    private var index:Int
+    private var percent:Float
     init(id:Int, index:Int, percent:Float){
         self.id = id
         self.index = index
         self.percent = percent
     }
+    func getId() -> Int {return self.id}
+    func getIndex() -> Int{return self.index}
+    func getPercent() -> Float{return self.percent}
 }
