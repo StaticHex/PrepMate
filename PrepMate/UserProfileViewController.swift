@@ -12,7 +12,7 @@ protocol ProfileProtocol : class {
     func updateUser(newUser : User)
 }
 
-class UserProfileViewController: UIViewController, UIPopoverPresentationControllerDelegate, URLProtocol {
+class UserProfileViewController: UIViewController, UIPopoverPresentationControllerDelegate, UITableViewDelegate, UITableViewDataSource, URLProtocol, bListProtocol, bListCellProtocol {
     // ProfileProtocol Delegate
     weak var profileDelegate : ProfileProtocol?
     
@@ -45,6 +45,8 @@ class UserProfileViewController: UIViewController, UIPopoverPresentationControll
     override func viewDidLoad() {
         super.viewDidLoad()
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler:  nil))
+        self.tvBlacklist.delegate = self
+        self.tvBlacklist.dataSource = self
     }
     
     override func didReceiveMemoryWarning() {
@@ -162,6 +164,7 @@ class UserProfileViewController: UIViewController, UIPopoverPresentationControll
         } else if(segue.identifier == "addBlistItemPopover") {
             let vc = segue.destination as? AddBlacklistViewController
             vc?.isModalInPopover = true
+            vc?.bListDelegate = self
             let controller = vc?.popoverPresentationController
             if controller != nil {
                 controller?.delegate = self
@@ -174,6 +177,61 @@ class UserProfileViewController: UIViewController, UIPopoverPresentationControll
     // Pop the popovers out!
     func adaptivePresentationStyle(for controller: UIPresentationController, traitCollection: UITraitCollection) -> UIModalPresentationStyle {
         return UIModalPresentationStyle.none
+    }
+    
+    // Functions for implementing UITableViewDelegate and UITableViewDataSource
+    // Provided by Bill Bulko via class notes 2/5/2018 and 2/7/2018
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return currentUser.getPrefs().count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        let cell = tvBlacklist.dequeueReusableCell(withIdentifier: "BlacklistCell", for: indexPath as IndexPath) as! BlacklistCell
+        
+        let row = indexPath.row
+        let bl_key = currentUser.getPrefs()[row].key
+        let bl_value = currentUser.getPrefs()[row].value
+        cell.detail?.text = bl_key
+        cell.bListDelegate = self
+        cell.idx = row
+        switch(bl_key) {
+        case "Category":
+            for c in categoryList {
+                if bl_value == c.idx {
+                    cell.title?.text = c.name
+                }
+            }
+            break
+        case "Ingredient":
+            for i in ingredientList {
+                if bl_value == i.flag {
+                    cell.title?.text = i.name
+                }
+            }
+            break
+        case "Type":
+            for t in foodTypeList {
+                if bl_value == t.flag {
+                    cell.title?.text = t.name
+                }
+            }
+            break
+        default:
+            break
+        }
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        
+        let row = indexPath.row
+        print("Selected item = ",currentUser.getPrefs()[row])
     }
     
     // Both of these ended up being direct segues so these two functions can be unlinked and deleted
@@ -298,5 +356,16 @@ class UserProfileViewController: UIViewController, UIPopoverPresentationControll
         avatarPhoto.setPhoto(imageURL: url)
         print(avatarPhoto.getPath())
         btnAvatar.setImage(avatarPhoto.getImage(), for: .normal)
+    }
+    
+    // Needed for bListProtocol. passes information back from popover
+    func updateBlist(item: (bl_key: String, bl_value: Int)) {
+        currentUser.addPreference(key: item.bl_key, value: item.bl_value)
+        tvBlacklist.reloadData()
+    }
+    
+    func removeBListCell(idx: Int) {
+        currentUser.removePreference(idx: idx)
+        tvBlacklist.reloadData()
     }
 }

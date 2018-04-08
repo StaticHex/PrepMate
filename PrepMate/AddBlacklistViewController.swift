@@ -8,11 +8,28 @@
 
 import UIKit
 
-class AddBlacklistViewController: UIViewController {
+protocol bListProtocol : class {
+    func updateBlist(item: (bl_key: String, bl_value: Int))
+}
 
+class AddBlacklistViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
+
+    // data for our first picker
+    let pckrItemTypeData = ["Category", "Ingredient", "Type"]
+    
+    // delegate to pass our data back to the caller
+    weak var bListDelegate : bListProtocol?
+    
+    // UI Component Outlets
+    @IBOutlet weak var pckrItemType: UIPickerView!
+    @IBOutlet weak var pckrItemName: UIPickerView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        self.pckrItemType.delegate = self
+        self.pckrItemType.dataSource = self
+        self.pckrItemName.delegate = self
+        self.pckrItemType.delegate = self
         // Do any additional setup after loading the view.
     }
 
@@ -21,15 +38,78 @@ class AddBlacklistViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
     }
-    */
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        if pickerView == pckrItemType {
+            return pckrItemTypeData.count
+        }
+        if pickerView == pckrItemName {
+            switch(pckrItemTypeData[pckrItemType.selectedRow(inComponent: 0)]) {
+            case "Category":
+                return categoryList.count
+            case "Ingredient":
+                return ingredientList.count
+            case "Type":
+                return foodTypeList.count
+            default:
+                break
+            }
+        }
+        return -1
+    }
 
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        if pickerView == pckrItemType {
+            return pckrItemTypeData[row]
+        }
+        if pickerView == pckrItemName {
+            if pickerView == pckrItemName {
+                switch(pckrItemTypeData[pckrItemType.selectedRow(inComponent: 0)]) {
+                case "Category":
+                    return categoryList[row].name
+                case "Ingredient":
+                    return ingredientList[row].name
+                case "Type":
+                    return foodTypeList[row].name
+                default:
+                    break
+                }
+            }
+        }
+        return ""
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        if pickerView == pckrItemType {
+            pckrItemName.reloadAllComponents()
+        }
+    }
+    
+    @IBAction func onAddClick(_ sender: Any) {
+        var bListItem = (bl_key: "", bl_value: 0)
+        bListItem.bl_key = pckrItemTypeData[pckrItemType.selectedRow(inComponent: 0)]
+        switch(bListItem.bl_key) {
+        case "Category":
+            bListItem.bl_value = categoryList[pckrItemName.selectedRow(inComponent: 0)].idx
+            break
+        case "Ingredient":
+            bListItem.bl_value =  ingredientList[pckrItemName.selectedRow(inComponent: 0)].flag
+            break
+        case "Type":
+            bListItem.bl_value = foodTypeList[pckrItemName.selectedRow(inComponent: 0)].flag
+            break
+        default:
+            break
+        }
+        bListDelegate?.updateBlist(item: bListItem)
+        self.dismiss(animated: true, completion: nil)
+    }
+    
+    @IBAction func onCancelClick(_ sender: Any) {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
 }

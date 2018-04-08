@@ -18,6 +18,7 @@ class User {
     private var email : String
     private var bio : String
     private var eMsg : String
+    private var preferences : [(key: String, value: Int)]
     
     init() {
         id = -1
@@ -29,6 +30,7 @@ class User {
         email = ""
         bio = ""
         eMsg = ""
+        preferences = [(key: String, value: Int)]()
     }
     
     // Verify User Method
@@ -260,6 +262,16 @@ class User {
         return vError
     }
     
+    public func addPreference(key: String, value: Int) {
+        self.preferences.append((key: key, value: value))
+        // TODO: Run update to db here
+    }
+    
+    public func removePreference(idx: Int) {
+        self.preferences.remove(at: idx)
+        // TODO: Run update to db here
+    }
+    
     public func copy(oldUser: User) {
         self.id = oldUser.id
         self.uname = oldUser.uname
@@ -270,6 +282,10 @@ class User {
         self.email = oldUser.email
         self.bio = oldUser.bio
         self.eMsg = oldUser.eMsg
+        self.preferences = [(key: String, value: Int)]()
+        for p in oldUser.preferences {
+            self.preferences.append((key: p.key, value: p.value))
+        }
     }
     
     // Clear Method
@@ -285,6 +301,7 @@ class User {
         email = ""
         bio = ""
         eMsg = ""
+        self.preferences = [(key: String, value: Int)]()
     }
     
     // getters and setters
@@ -298,4 +315,5 @@ class User {
     public func getEmail() -> String { return self.email }
     public func getBio() -> String { return self.bio }
     public func getEMsg() -> String { return self.eMsg }
+    public func getPrefs() -> [(key: String, value: Int)] { return self.preferences }
 }

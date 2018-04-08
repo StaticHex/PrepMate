@@ -41,7 +41,7 @@ class AddRecipeFirstPageViewController: UIViewController, UITableViewDelegate, U
     var servingSizePicker = UIPickerView()
     var servingSizeOptions: [Int] = [1, 2, 3, 4, 5, 6, 7, 8]
     var categoryPicker = UIPickerView()
-    var categoryPickerOptions: [String] = categoryList
+    var categoryPickerOptions = [String]()
     
     // Contains and Dietary bitvector
     var contains: [Bool] = [false, false, false, false, false, false, false, false, false, false, false, false, false]
@@ -57,6 +57,10 @@ class AddRecipeFirstPageViewController: UIViewController, UITableViewDelegate, U
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.isNavigationBarHidden = false
+        
+        for c in categoryList {
+            categoryPickerOptions.append(c.name)
+        }
         
         directionTableview.delegate = self
         directionTableview.dataSource = self

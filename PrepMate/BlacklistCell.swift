@@ -8,8 +8,12 @@
 
 import UIKit
 
+protocol bListCellProtocol : class {
+    func removeBListCell(idx : Int)
+}
 class BlacklistCell: UITableViewCell {
-    
+    var idx : Int?
+    weak var bListDelegate : bListCellProtocol?
     //UI Component Outlets
     @IBOutlet weak var title: UILabel!
     @IBOutlet weak var detail: UILabel!
@@ -27,5 +31,6 @@ class BlacklistCell: UITableViewCell {
     }
 
     @IBAction func onRemoveClick(_ sender: Any) {
+        bListDelegate?.removeBListCell(idx: idx!)
     }
 }
