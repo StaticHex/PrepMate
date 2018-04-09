@@ -205,7 +205,7 @@ class Recipe {
                 if let parseJSON = JSONResponse {
                     eMsg = parseJSON["msg"] as! String
                     vError = (parseJSON["error"] as! Bool)
-                    recipeId = (parseJSON["id"] as! Int)
+                    recipeId = (parseJSON["code"] as! Int)
                 }
             } catch {
                 eMsg = error.localizedDescription

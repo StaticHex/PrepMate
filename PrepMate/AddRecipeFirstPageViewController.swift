@@ -26,7 +26,7 @@ class IngredientTableCell: UITableViewCell {
     @IBOutlet weak var amountLabel: UILabel!
 }
 
-class AddRecipeFirstPageViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIPickerViewDelegate, UIPickerViewDataSource, UIPopoverPresentationControllerDelegate, firstPageProtocol {
+class AddRecipeFirstPageViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIPickerViewDelegate, UIPickerViewDataSource, UIPopoverPresentationControllerDelegate, firstPageProtocol, secondPageProtocol {
 
     // Screen outlets
     @IBOutlet weak var recipeNameField: UITextField!
@@ -50,6 +50,7 @@ class AddRecipeFirstPageViewController: UIViewController, UITableViewDelegate, U
     // List that is used to contain ingredients and directions for table view display
     var directionList = [String]()
     var ingList = [Ingredient]()
+    var recipeToSave = Recipe()
     
     weak var secondDelegate: secondPageProtocol?
     
@@ -202,6 +203,11 @@ class AddRecipeFirstPageViewController: UIViewController, UITableViewDelegate, U
                 vc?.dDelegate = self
             }
         }
+        else if segue.identifier == "addRecipeFirstPageToSecond" {
+            let vc = segue.destination as? AddRecipeSecondPageViewController
+            vc?.recipeToSave = self.recipeToSave
+            vc?.addRecipeDelegate = self
+        }
     }
     
     // Contains bit vector passing from Contains popover
@@ -209,9 +215,14 @@ class AddRecipeFirstPageViewController: UIViewController, UITableViewDelegate, U
         self.contains = containsItem
     }
     
+    
     // Dietary bit vector passing from Dietary popover
     func dietary(dietaryItem: [Bool]) {
         self.dietary = dietaryItem
+    }
+    // Protocol function to save recipe changes from second add recipe page
+    func setRecipe(recipe: Recipe) {
+        self.recipeToSave = recipe
     }
     
     // Function to add a direction to the direction table view. Non-DB yet
@@ -233,36 +244,28 @@ class AddRecipeFirstPageViewController: UIViewController, UITableViewDelegate, U
     
     // Build an incomplete recipe to pass to next view controller to finish
     @IBAction func nextPage(_ sender: Any) {
-        let recipeToPass = Recipe()
-        
+
         // Name of the recipe
-        if recipeNameField.text! == "" {
-            recipeNameField.text = "Name must not be empty"
-            return
+        if recipeNameField.text! != "" {
+            recipeToSave.setName(name: recipeNameField.text!)
         }
-        recipeToPass.setName(name: recipeNameField.text!)
-        
+
         // Recipe category
-        recipeToPass.setCategory(category: categoryPickerOptions.index(of: categoryPickerTextField.text!)!)
+        recipeToSave.setCategory(category: categoryPickerOptions.index(of: categoryPickerTextField.text!)!)
         
         // Recipe servings
-        recipeToPass.setServings(servings: servingSizeOptions.index(of: Int(servingsSizeTextField.text!)!)!)
+        recipeToSave.setServings(servings: servingSizeOptions.index(of: Int(servingsSizeTextField.text!)!)!)
         
         // Recipe preptime
-        if Int(prepTimeField.text!) == nil {
-            prepTimeField.text = "Prep time must be a number"
-            return
+        if Int(prepTimeField.text!) != nil {
+            recipeToSave.setPrepTime(prepTime: Int(prepTimeField.text!)!)
         }
-        recipeToPass.setPrepTime(prepTime: Int(prepTimeField.text!)!)
-        
+
         // Recipe Cooktime
-        if Int(cookTimeField.text!) == nil {
-            cookTimeField.text = "Prep time must be a number"
-            return
+        if Int(cookTimeField.text!) != nil {
+            recipeToSave.setCookTime(cookTime: Int(cookTimeField.text!)!)
         }
-        recipeToPass.setCookTime(cookTime: Int(cookTimeField.text!)!)
-        
-        
+
         // Go through each ingredient to add to the recipe
         let ingredientCells = self.ingTableView.visibleCells as! Array<IngredientTableCell>
         var ingredientInfo = [(id: Int, ing: Ingredient, amount: Float)]()
@@ -272,11 +275,11 @@ class AddRecipeFirstPageViewController: UIViewController, UITableViewDelegate, U
             ingredientInfo.append((id: -1, ing: ingList[counter], amount: Float(cell.amountLabel.text!)!))
             counter += 1
         }
-        recipeToPass.setIngredients(ingredients: ingredientInfo)
+        recipeToSave.setIngredients(ingredients: ingredientInfo)
         
         
         // Go through each direction to add to the recipe
-        let directionCells = self.ingTableView.visibleCells as! Array<DirectionTableCell>
+        let directionCells = self.directionTableview.visibleCells as! Array<DirectionTableCell>
         var directionInfo = [(id: Int, str: String)]()
         // Need to grab direction and cell, so counter and cell made to keep track of where I am
         var directionCounter = 0
@@ -284,7 +287,7 @@ class AddRecipeFirstPageViewController: UIViewController, UITableViewDelegate, U
             directionInfo.append((-1, cell.directionLabel.text!))
             directionCounter += 1
         }
-        recipeToPass.setDirections(directions: directionInfo)
+        recipeToSave.setDirections(directions: directionInfo)
         
         // Setting up the bit vector for the recipe flags
         var flagVector = 0
@@ -306,9 +309,9 @@ class AddRecipeFirstPageViewController: UIViewController, UITableViewDelegate, U
             }
             flagVector <<= 1
         }
-        recipeToPass.setFlags(flags: flagVector)
+        recipeToSave.setFlags(flags: flagVector)
         
-        secondDelegate?.setRecipe(recipe: recipeToPass)
+        //secondDelegate?.setRecipe(recipe: recipeToPass)
         
         self.performSegue(withIdentifier: "addRecipeFirstPageToSecond", sender: self)
         

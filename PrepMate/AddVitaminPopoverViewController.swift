@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol addVitaminProtocol: class {
+    func addVitamin(vitamin:Vitamin)
+}
+
 class AddVitaminPopoverViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
     
     // Outlets
@@ -19,7 +23,7 @@ class AddVitaminPopoverViewController: UIViewController, UIPickerViewDelegate, U
     var unitPicker = UIPickerView()
     var pickerOptions: [String] = vitaminList
     
-    weak var secondDelegate: secondPageProtocol?
+    weak var addVitaminDelegate: addVitaminProtocol?
     
     // Setting up settings for the current display such as picker info and labels
     override func viewDidLoad() {
@@ -69,7 +73,7 @@ class AddVitaminPopoverViewController: UIViewController, UIPickerViewDelegate, U
             inputError.text = "Percentage must be a number"
         }
         let vitamin = Vitamin(id: -1, index: vitaminList.index(of: vitaminTextView.text!)!, percent: Float(percentDailyValue.text!)!)
-        secondDelegate?.addVitamin(vitamin: vitamin)
+        addVitaminDelegate?.addVitamin(vitamin: vitamin)
         dismiss(animated: true, completion: nil)
     }
     
