@@ -14,7 +14,6 @@ class AddIngredientViewController: UIViewController, UIPickerViewDelegate, UIPic
     @IBOutlet weak var itemTextView: UITextField!
     @IBOutlet weak var amountTextView: UITextField!
     @IBOutlet weak var amountPickerTextView: UITextField!
-    @IBOutlet weak var inputError: UILabel!
     
     @IBOutlet weak var pickerText: UITextField!
     
@@ -22,7 +21,7 @@ class AddIngredientViewController: UIViewController, UIPickerViewDelegate, UIPic
     
     // Picker information
     var unitPicker = UIPickerView()
-    var amountPickerOptions: [String] = ["Cups", "Quarts", "Lbs", "Custom"]
+    var amountPickerOptions: [String] = ["Cups", "Quarts", "Lbs"]
     
     // Setting up the display on the screen
     override func viewDidLoad() {
@@ -31,7 +30,6 @@ class AddIngredientViewController: UIViewController, UIPickerViewDelegate, UIPic
         self.unitPicker.dataSource = self
         itemTextView.text = ""
         amountTextView.text = ""
-        inputError.text = ""
         self.pickerText.text = amountPickerOptions[0]
         pickerText.inputView = unitPicker
     }
@@ -59,21 +57,26 @@ class AddIngredientViewController: UIViewController, UIPickerViewDelegate, UIPic
         self.view.endEditing(true)
     }
     
+    func recipeAlert(str:String) {
+        let alert = UIAlertController(title: "Add Recipe Error", message: "\(str) field cannot be empty", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .default, handler: { _ in
+            NSLog("The \"OK\" alert occured.")
+        }))
+        self.present(alert, animated: true, completion: nil)
+    }
+    
     // Add ingredient protocol called. Ingredient info must be present
     @IBAction func addIngredient(_ sender: Any) {
-        if amountTextView.text! == "" || itemTextView.text! == ""
-        {
-            inputError.text = "Fields cannot be empty"
+        if(itemTextView.text! == "") {
+            self.recipeAlert(str: "Item name")
+            return
+        }
+        if(amountTextView.text! == "") {
+            self.recipeAlert(str: "Item amount")
             return
         }
         
-        if Int(amountTextView.text!) == nil {
-            amountTextView.text! = ""
-            inputError.text = "Amount must be a number"
-            return
-        }
-        
-        let item = Ingredient(id: 1, name: itemTextView.text!, unit: Int(amountTextView.text!)!, customLabel: "empty")
+        let item = Ingredient(id: 1, name: itemTextView.text!, unit: Int(amountTextView.text!)!, customLabel: pickerText.text!)
         iDelegate?.addIngredient(ingredient: item)
         dismiss(animated: true, completion: nil)
     }

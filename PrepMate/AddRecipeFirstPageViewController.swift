@@ -43,6 +43,10 @@ class AddRecipeFirstPageViewController: UIViewController, UITableViewDelegate, U
     var categoryPicker = UIPickerView()
     var categoryPickerOptions = [String]()
     
+    var prepTimePicker = UIPickerView()
+    var cookTimePicker = UIPickerView()
+    var timeOptions: [[String]] = [["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"], [":"], ["00", "15", "30", "45"]]
+    
     // Contains and Dietary bitvector
     var contains: [Bool] = [false, false, false, false, false, false, false, false, false, false, false, false, false]
     var dietary: [Bool] = [false, false, false, false, false, false, false]
@@ -51,6 +55,8 @@ class AddRecipeFirstPageViewController: UIViewController, UITableViewDelegate, U
     var directionList = [String]()
     var ingList = [Ingredient]()
     var recipeToSave = Recipe()
+    
+    var directionCounter = 1
     
     weak var secondDelegate: secondPageProtocol?
     
@@ -72,13 +78,24 @@ class AddRecipeFirstPageViewController: UIViewController, UITableViewDelegate, U
         self.servingSizePicker.dataSource = self
         self.categoryPicker.delegate = self
         self.categoryPicker.dataSource = self
+        self.prepTimePicker.delegate = self
+        self.prepTimePicker.dataSource = self
+        self.cookTimePicker.delegate = self
+        self.cookTimePicker.dataSource = self
 
         servingsSizeTextField.inputView = servingSizePicker
-        servingSizePicker.tag = 0
         categoryPickerTextField.inputView = categoryPicker
+        prepTimeField.inputView = prepTimePicker
+        cookTimeField.inputView = cookTimePicker
+        servingSizePicker.tag = 0
         categoryPicker.tag = 1
+        prepTimePicker.tag = 2
+        cookTimePicker.tag = 3
         servingsSizeTextField.text = String(servingSizeOptions[0])
         categoryPickerTextField.text = categoryPickerOptions[0]
+        prepTimeField.text = timeOptions[0][0] + " hr(s)" +  timeOptions[1][0] + timeOptions[2][0] + " min(s)"
+        cookTimeField.text = timeOptions[0][0] + " hr(s)" +  timeOptions[1][0] + timeOptions[2][0] + " min(s)"
+        
     }
     
     override func didReceiveMemoryWarning() {
@@ -95,6 +112,9 @@ class AddRecipeFirstPageViewController: UIViewController, UITableViewDelegate, U
     }
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        if pickerView.tag == 2 || pickerView.tag == 3 {
+            return 3
+        }
         return 1
     }
     
@@ -114,14 +134,15 @@ class AddRecipeFirstPageViewController: UIViewController, UITableViewDelegate, U
             let cell = tableView.dequeueReusableCell(withIdentifier: "directionTableCell", for: indexPath as IndexPath) as! DirectionTableCell
             
             let row = indexPath.row
-            cell.directionLabel.text = directionList[row]
+            cell.directionLabel.text = String(directionCounter) + ". " + directionList[row]
+            directionCounter += 1
             return cell
         }
         if tableView == self.ingTableView {
             let cell = tableView.dequeueReusableCell(withIdentifier: "ingredientTableCell", for: indexPath as IndexPath) as! IngredientTableCell
             
             let row = indexPath.row
-            cell.amountLabel.text = String(ingList[row].getUnit())
+            cell.amountLabel.text = String(ingList[row].getUnit()) + " " + ingList[row].getCustomLabel()
             cell.ingLabel.text = ingList[row].getName()
             
             return cell
@@ -134,8 +155,11 @@ class AddRecipeFirstPageViewController: UIViewController, UITableViewDelegate, U
         if pickerView.tag == 0 {
             return servingSizeOptions.count
         }
-        else {
+        else if pickerView.tag == 1 {
             return categoryPickerOptions.count
+        }
+        else {
+            return timeOptions[component].count
         }
         
     }
@@ -145,8 +169,13 @@ class AddRecipeFirstPageViewController: UIViewController, UITableViewDelegate, U
         if pickerView.tag == 0 {
             return String(servingSizeOptions[row])
         }
-        else {
+        else if pickerView.tag == 1 {
             return categoryPickerOptions[row]
+        }
+        else {
+            print(component)
+            print(row)
+            return timeOptions[component][row]
         }
     }
     
@@ -155,8 +184,18 @@ class AddRecipeFirstPageViewController: UIViewController, UITableViewDelegate, U
         if pickerView.tag == 0 {
             servingsSizeTextField.text = String(servingSizeOptions[row])
         }
-        else {
+        else if pickerView.tag == 1 {
             categoryPickerTextField.text = categoryPickerOptions[row]
+        }
+        else if pickerView.tag == 2 {
+            let hour = timeOptions[0][pickerView.selectedRow(inComponent: 0)]
+            let min = timeOptions[2][pickerView.selectedRow(inComponent: 2)]
+            prepTimeField.text = hour + " hr(s)" + timeOptions[1][0] + min + " min(s)"
+        }
+        else {
+            let hour = timeOptions[0][pickerView.selectedRow(inComponent: 0)]
+            let min = timeOptions[2][pickerView.selectedRow(inComponent: 2)]
+            cookTimeField.text = hour + " hr(s)" + timeOptions[1][0] + min + " min(s)"
         }
         self.view.endEditing(true)
     }
@@ -242,12 +281,33 @@ class AddRecipeFirstPageViewController: UIViewController, UITableViewDelegate, U
         
     }
     
+    /// Helper function to alert recipe errors
+    func recipeAlert(str:String) {
+        let alert = UIAlertController(title: "Add Recipe Error", message: "\(str) field cannot be empty", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .default, handler: { _ in
+            NSLog("The \"OK\" alert occured.")
+        }))
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    
     // Build an incomplete recipe to pass to next view controller to finish
     @IBAction func nextPage(_ sender: Any) {
 
         // Name of the recipe
-        if recipeNameField.text! != "" {
-            recipeToSave.setName(name: recipeNameField.text!)
+        if(recipeNameField.text! == "") {
+            self.recipeAlert(str: "Name")
+            return
+        }
+        
+        if(ingList.count == 0) {
+            self.recipeAlert(str: "Ingredients")
+            return
+        }
+        
+        if(directionList.count == 0) {
+            self.recipeAlert(str: "Directions")
+            return
         }
 
         // Recipe category
@@ -272,7 +332,8 @@ class AddRecipeFirstPageViewController: UIViewController, UITableViewDelegate, U
         // Need to grab ingredient and cell, so counter and cell made to keep track of where I am
         var counter = 0
         for cell in ingredientCells {
-            ingredientInfo.append((id: -1, ing: ingList[counter], amount: Float(cell.amountLabel.text!)!))
+            let value = (cell.amountLabel.text?.components(separatedBy: " ").first)!
+            ingredientInfo.append((id: -1, ing: ingList[counter], amount: Float(value)!))
             counter += 1
         }
         recipeToSave.setIngredients(ingredients: ingredientInfo)

@@ -25,11 +25,21 @@ class AddDirectionPopoverViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    /// Helper function to alert recipe errors
+    func recipeAlert(str:String) {
+        let alert = UIAlertController(title: "Add Recipe Error", message: "\(str) field cannot be empty", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .default, handler: { _ in
+            NSLog("The \"OK\" alert occured.")
+        }))
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    
     // Adding a direction to the first page add recipe controller. User must input some text to add it.
     @IBAction func saveDirection(_ sender: Any) {
         let direction = directionText.text!
-        if direction == "" {
-            directionText.text = "Direction must not be empty"
+        if(direction == "") {
+            self.recipeAlert(str: "Direction")
             return
         }
         dDelegate?.addDirection(direction: direction)
