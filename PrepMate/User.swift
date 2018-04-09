@@ -18,7 +18,7 @@ class User {
     private var email : String
     private var bio : String
     private var eMsg : String
-    private var preferences : [(key: String, value: Int)]
+    private var preferences : [(id: Int, key: String, value: Int)]
     
     init() {
         id = -1
@@ -30,7 +30,7 @@ class User {
         email = ""
         bio = ""
         eMsg = ""
-        preferences = [(key: String, value: Int)]()
+        preferences = [(id: Int, key: String, value: Int)]()
     }
     
     // Verify User Method
@@ -109,6 +109,7 @@ class User {
         // execute our task and then return the results
         task.resume()
         while(!finished) {}
+        vError = !self.loadPrefList()
         return vError
     }
     
@@ -262,13 +263,134 @@ class User {
         return vError
     }
     
-    public func addPreference(key: String, value: Int) {
-        self.preferences.append((key: key, value: value))
-        // TODO: Run update to db here
+    public func addPreference(key: String, value: Int) -> Bool {
+        // create a new item, but don't give it an id yet
+        var newPref = (id: -1, key: key, value: value)
+        
+        // create a variable to return whether we errored out or not
+        var vError : Bool = false
+        
+        // path to our backend script
+        let URL_VERIFY = "http://www.teragentech.net/prepmate/AddUserBList.php"
+        
+        // variable which will spin until verification is finished
+        var finished : Bool = false
+        
+        // create our URL object
+        let url = URL(string: URL_VERIFY)
+        
+        // create the request and set the type to POST, otherwise we get authorization error
+        var request = URLRequest(url: url!)
+        request.httpMethod = "POST"
+        
+        let uid = String(self.id)
+        let bl_key = key
+        let bl_value = String(value)
+        
+        let params = "uid="+uid+"&key="+bl_key+"&value="+bl_value
+        
+        request.httpBody = params.data(using: String.Encoding.utf8)
+        
+        // Create a task and send our request to our REST API
+        let task = URLSession.shared.dataTask(with: request) {
+            data, response, error in
+            // if we error out, return the error message
+            if(error != nil) {
+                self.eMsg = error!.localizedDescription
+                finished = true
+                vError = true
+                return
+            }
+            
+            // If there was no error, parse the response
+            do {
+                // convert response to a dictionary
+                let JSONResponse = try JSONSerialization.jsonObject(with: data!, options: .mutableContainers) as? NSDictionary
+                
+                // Get the error status and the error message from the database
+                if let parseJSON = JSONResponse {
+                    self.eMsg = parseJSON["msg"] as! String
+                    if let strId = parseJSON["code"] as? NSNumber {
+                        newPref.id = strId as! Int
+                    } else {
+                        newPref.id = Int(parseJSON["code"] as! String)!
+                    }
+                    vError = (parseJSON["error"] as! Bool)
+                }
+            } catch {
+                self.eMsg = error.localizedDescription
+                vError = true
+            }
+            finished = true
+        }
+        // execute our task and then return the results
+        task.resume()
+        while(!finished) {}
+        
+        if(!vError) {
+            self.preferences.append(newPref)
+        }
+        return vError
     }
     
-    public func removePreference(idx: Int) {
-        self.preferences.remove(at: idx)
+    public func removePreference(idx: Int) -> Bool {
+        // create a variable to return whether we errored out or not
+        var vError : Bool = false
+        
+        // path to our backend script
+        let URL_VERIFY = "http://www.teragentech.net/prepmate/RemoveUserBList.php"
+        
+        // variable which will spin until verification is finished
+        var finished : Bool = false
+        
+        // create our URL object
+        let url = URL(string: URL_VERIFY)
+        
+        // create the request and set the type to POST, otherwise we get authorization error
+        var request = URLRequest(url: url!)
+        request.httpMethod = "POST"
+        
+        let id = String(self.preferences[idx].id)
+        
+        let params = "id="+id
+        
+        request.httpBody = params.data(using: String.Encoding.utf8)
+        
+        // Create a task and send our request to our REST API
+        let task = URLSession.shared.dataTask(with: request) {
+            data, response, error in
+            // if we error out, return the error message
+            if(error != nil) {
+                self.eMsg = error!.localizedDescription
+                finished = true
+                vError = true
+                return
+            }
+            
+            // If there was no error, parse the response
+            do {
+                // convert response to a dictionary
+                let JSONResponse = try JSONSerialization.jsonObject(with: data!, options: .mutableContainers) as? NSDictionary
+                
+                // Get the error status and the error message from the database
+                if let parseJSON = JSONResponse {
+                    self.eMsg = parseJSON["msg"] as! String
+                    vError = (parseJSON["error"] as! Bool)
+                }
+            } catch {
+                self.eMsg = error.localizedDescription
+                vError = true
+            }
+            finished = true
+        }
+        // execute our task and then return the results
+        task.resume()
+        while(!finished) {}
+        
+        if(!vError) {
+            self.preferences.remove(at: idx)
+        }
+        return vError
         // TODO: Run update to db here
     }
     
@@ -282,10 +404,7 @@ class User {
         self.email = oldUser.email
         self.bio = oldUser.bio
         self.eMsg = oldUser.eMsg
-        self.preferences = [(key: String, value: Int)]()
-        for p in oldUser.preferences {
-            self.preferences.append((key: p.key, value: p.value))
-        }
+        self.preferences = oldUser.preferences
     }
     
     // Clear Method
@@ -301,7 +420,76 @@ class User {
         email = ""
         bio = ""
         eMsg = ""
-        self.preferences = [(key: String, value: Int)]()
+        self.preferences = [(id: Int, key: String, value: Int)]()
+    }
+    
+    private func loadPrefList() -> Bool {
+        // create a variable to return whether we errored out or not
+        var vError : Bool = false
+        
+        // path to our backend script
+        let URL_VERIFY = "http://www.teragentech.net/prepmate/GetUserBList.php"
+        
+        // variable which will spin until verification is finished
+        var finished : Bool = false
+        
+        // create our URL object
+        let url = URL(string: URL_VERIFY)
+        
+        // create the request and set the type to POST, otherwise we get authorization error
+        var request = URLRequest(url: url!)
+        request.httpMethod = "POST"
+        
+        let id = String(self.id)
+        
+        let params = "id="+id
+        
+        request.httpBody = params.data(using: String.Encoding.utf8)
+        
+        // Create a task and send our request to our REST API
+        let task = URLSession.shared.dataTask(with: request) {
+            data, response, error in
+            // if we error out, return the error message
+            if(error != nil) {
+                self.eMsg = error!.localizedDescription
+                finished = true
+                vError = true
+                return
+            }
+            
+            // If there was no error, parse the response
+            do {
+                // convert response to a dictionary
+                let JSONResponse = try JSONSerialization.jsonObject(with: data!, options: .mutableContainers) as? NSDictionary
+                
+                // Get the error status and the error message from the database
+                if let parseJSON = JSONResponse {
+                    self.eMsg = parseJSON["msg"] as! String
+                    vError = (parseJSON["error"] as! Bool)
+                    if(!vError) {
+                        var count = 0
+                        while let record = parseJSON[String(count)] as? NSString {
+                            if let entry = try JSONSerialization.jsonObject(with: record.data(using: String.Encoding.utf8.rawValue)!, options: .mutableContainers) as? NSDictionary {
+                                let eid = Int(entry["id"] as! String)!
+                                let ekey = entry["bl_key"] as! String
+                                let evalue = Int(entry["bl_Value"] as! String)!
+                                let newPref = (id: eid, key: ekey, value: evalue)
+                                self.preferences.append(newPref)
+                            }
+                            count+=1
+                        }
+                    }
+                }
+            } catch {
+                self.eMsg = error.localizedDescription
+                vError = true
+            }
+            finished = true
+        }
+        // execute our task and then return the results
+        task.resume()
+        while(!finished) {}
+        return vError
     }
     
     // getters and setters
@@ -315,5 +503,5 @@ class User {
     public func getEmail() -> String { return self.email }
     public func getBio() -> String { return self.bio }
     public func getEMsg() -> String { return self.eMsg }
-    public func getPrefs() -> [(key: String, value: Int)] { return self.preferences }
+    public func getPrefs() -> [(id: Int, key: String, value: Int)] { return self.preferences }
 }

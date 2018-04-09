@@ -58,7 +58,7 @@ class UserProfileViewController: UIViewController, UIPopoverPresentationControll
         self.navigationController?.isNavigationBarHidden = false
         btnAvatar.layer.backgroundColor = UIColor.white.cgColor
         let clearColor = UIColor(displayP3Red: 0.0, green: 0.0, blue: 0.0, alpha: 0.0)
-        
+        self.tvBlacklist.reloadData()
         // When view appears, hide and adjust UI components based on
         // whether we're adding, updating, or just viewing the user
         switch(op) {
@@ -360,12 +360,22 @@ class UserProfileViewController: UIViewController, UIPopoverPresentationControll
     
     // Needed for bListProtocol. passes information back from popover
     func updateBlist(item: (bl_key: String, bl_value: Int)) {
-        currentUser.addPreference(key: item.bl_key, value: item.bl_value)
+        let error = currentUser.addPreference(key: item.bl_key, value: item.bl_value)
+        if(error) {
+            alert.title = "Preference could not be added"
+            alert.message = currentUser.getEMsg()
+            self.present(alert, animated: true)
+        }
         tvBlacklist.reloadData()
     }
     
     func removeBListCell(idx: Int) {
-        currentUser.removePreference(idx: idx)
+        let error = currentUser.removePreference(idx: idx)
+        if(error) {
+            alert.title = "Preference could not be removed"
+            alert.message = currentUser.getEMsg()
+            self.present(alert, animated: true)
+        }
         tvBlacklist.reloadData()
     }
 }
