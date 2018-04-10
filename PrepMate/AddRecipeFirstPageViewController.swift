@@ -66,7 +66,7 @@ class AddRecipeFirstPageViewController: UIViewController, UITableViewDelegate, U
         navigationController?.isNavigationBarHidden = false
         
         for c in categoryList {
-            categoryPickerOptions.append(c.name)
+            categoryPickerOptions.append(c)
         }
         
         directionTableview.delegate = self

@@ -201,11 +201,7 @@ class UserProfileViewController: UIViewController, UIPopoverPresentationControll
         cell.idx = row
         switch(bl_key) {
         case "Category":
-            for c in categoryList {
-                if bl_value == c.idx {
-                    cell.title?.text = c.name
-                }
-            }
+            cell.title?.text = categoryList[bl_value]
             break
         case "Ingredient":
             for i in ingredientList {

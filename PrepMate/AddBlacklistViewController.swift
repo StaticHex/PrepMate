@@ -69,7 +69,7 @@ class AddBlacklistViewController: UIViewController, UIPickerViewDelegate, UIPick
             if pickerView == pckrItemName {
                 switch(pckrItemTypeData[pckrItemType.selectedRow(inComponent: 0)]) {
                 case "Category":
-                    return categoryList[row].name
+                    return categoryList[row]
                 case "Ingredient":
                     return ingredientList[row].name
                 case "Type":
@@ -93,7 +93,7 @@ class AddBlacklistViewController: UIViewController, UIPickerViewDelegate, UIPick
         bListItem.bl_key = pckrItemTypeData[pckrItemType.selectedRow(inComponent: 0)]
         switch(bListItem.bl_key) {
         case "Category":
-            bListItem.bl_value = categoryList[pckrItemName.selectedRow(inComponent: 0)].idx
+            bListItem.bl_value = pckrItemName.selectedRow(inComponent: 0)
             break
         case "Ingredient":
             bListItem.bl_value =  ingredientList[pckrItemName.selectedRow(inComponent: 0)].flag
