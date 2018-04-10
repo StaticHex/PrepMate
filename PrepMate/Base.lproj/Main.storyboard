@@ -2683,6 +2683,9 @@
                                             </label>
                                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5se-lk-vfg">
                                                 <rect key="frame" x="0.0" y="20.5" width="357" height="31"/>
+                                                <connections>
+                                                    <action selector="onAMPantryCheck:" destination="anD-Fy-frC" eventType="valueChanged" id="Wdg-Bo-73C"/>
+                                                </connections>
                                             </switch>
                                         </subviews>
                                     </stackView>
@@ -2697,6 +2700,9 @@
                                             </label>
                                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eGx-la-hUv">
                                                 <rect key="frame" x="0.0" y="20.5" width="357" height="31"/>
+                                                <connections>
+                                                    <action selector="onAMSListCheck:" destination="anD-Fy-frC" eventType="valueChanged" id="mjw-Lm-Vr3"/>
+                                                </connections>
                                             </switch>
                                         </subviews>
                                     </stackView>

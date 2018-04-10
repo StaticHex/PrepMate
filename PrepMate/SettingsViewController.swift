@@ -75,6 +75,22 @@ class SettingsViewController: UIViewController, UIPopoverPresentationControllerD
                 swtRemember.setOn(false, animated: false)
             }
         }
+        if let decoded = defaults.object(forKey: "amPantry") as? Data {
+            let status = NSKeyedUnarchiver.unarchiveObject(with: decoded) as! Bool
+            if status {
+                swtManagePantry.setOn(true, animated: false)
+            } else {
+                swtManagePantry.setOn(false, animated: false)
+            }
+        }
+        if let decoded = defaults.object(forKey: "amSList") as? Data {
+            let status = NSKeyedUnarchiver.unarchiveObject(with: decoded) as! Bool
+            if status {
+                swtManageSlist.setOn(true, animated: false)
+            } else {
+                swtManageSlist.setOn(false, animated: false)
+            }
+        }
     }
 
     @IBAction func setTitleColor(_ sender: Any) {
@@ -83,6 +99,18 @@ class SettingsViewController: UIViewController, UIPopoverPresentationControllerD
     
     @IBAction func setFontColor(_ sender: Any) {
         // Color picker
+    }
+    
+    @IBAction func onAMPantryCheck(_ sender: Any) {
+        let data = NSKeyedArchiver.archivedData(withRootObject: swtManagePantry.isOn)
+        let defaults = UserDefaults.standard
+        defaults.set(data, forKey: "amPantry")
+    }
+    
+    @IBAction func onAMSListCheck(_ sender: Any) {
+        let data = NSKeyedArchiver.archivedData(withRootObject: swtManageSlist.isOn)
+        let defaults = UserDefaults.standard
+        defaults.set(data, forKey: "amSList")
     }
     
     @IBAction func onRememberCheck(_ sender: Any) {
