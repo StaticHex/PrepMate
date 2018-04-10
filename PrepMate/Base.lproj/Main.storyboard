@@ -2854,22 +2854,22 @@
                                 <rect key="frame" x="10" y="74" width="355" height="583"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="Tdt-BL-ccZ">
-                                        <rect key="frame" x="0.0" y="0.0" width="355" height="115.5"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="355" height="133"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Artwork" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yjg-TZ-HTx">
-                                                <rect key="frame" x="0.0" y="0.0" width="355" height="38.5"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="355" height="44.5"/>
                                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Photo Composition - Joseph Bourque" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GLf-PI-5kt">
-                                                <rect key="frame" x="0.0" y="38.5" width="355" height="38.5"/>
+                                                <rect key="frame" x="0.0" y="44.5" width="355" height="44"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="* All images labeled free for reuse with modification" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2PR-xY-0UP">
-                                                <rect key="frame" x="0.0" y="77" width="355" height="38.5"/>
+                                                <rect key="frame" x="0.0" y="88.5" width="355" height="44.5"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -2877,28 +2877,16 @@
                                         </subviews>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="ON6-5G-drw">
-                                        <rect key="frame" x="0.0" y="165.5" width="355" height="153.5"/>
+                                        <rect key="frame" x="0.0" y="183" width="355" height="88.5"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="REST API (PHP Backend)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oHg-4x-fCm">
-                                                <rect key="frame" x="0.0" y="0.0" width="355" height="38.5"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="355" height="44"/>
                                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Joseph Bourque" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oCN-60-ilk">
-                                                <rect key="frame" x="0.0" y="38.5" width="355" height="38"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                <nil key="textColor"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Pablo Velasco" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8zb-8Y-uTu">
-                                                <rect key="frame" x="0.0" y="76.5" width="355" height="38.5"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                <nil key="textColor"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Yen Chen Wee" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="H06-pz-pWp">
-                                                <rect key="frame" x="0.0" y="115" width="355" height="38.5"/>
+                                                <rect key="frame" x="0.0" y="44" width="355" height="44.5"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -2906,28 +2894,28 @@
                                         </subviews>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="CKL-1N-fJX">
-                                        <rect key="frame" x="0.0" y="369" width="355" height="214"/>
+                                        <rect key="frame" x="0.0" y="321.5" width="355" height="261.5"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Programming" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="y0w-Kr-F84">
-                                                <rect key="frame" x="0.0" y="0.0" width="355" height="53.5"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="355" height="65.5"/>
                                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Pablo Velasco" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FR6-Mn-Ado">
-                                                <rect key="frame" x="0.0" y="53.5" width="355" height="53.5"/>
+                                                <rect key="frame" x="0.0" y="65.5" width="355" height="65"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Yen Chen Wee" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ltC-Um-VWU">
-                                                <rect key="frame" x="0.0" y="107" width="355" height="53.5"/>
+                                                <rect key="frame" x="0.0" y="130.5" width="355" height="65.5"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Joseph Bourque" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="i8j-Wh-Pfu">
-                                                <rect key="frame" x="0.0" y="160.5" width="355" height="53.5"/>
+                                                <rect key="frame" x="0.0" y="196" width="355" height="65.5"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -3374,17 +3362,6 @@
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="S7v-CG-IkY">
-                                        <rect key="frame" x="5" y="557" width="225" height="36"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="20"/>
-                                        <state key="normal" title="Credits">
-                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="onCreditsClick:" destination="6UE-ry-ygn" eventType="touchUpInside" id="AiV-K0-xXp"/>
-                                        </connections>
-                                    </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZlO-vb-1xf">
                                         <rect key="frame" x="5" y="521" width="225" height="36"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -3394,6 +3371,17 @@
                                         </state>
                                         <connections>
                                             <action selector="onMenuLegalClick:" destination="6UE-ry-ygn" eventType="touchUpInside" id="YHd-Hn-8dI"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="S7v-CG-IkY">
+                                        <rect key="frame" x="5" y="557" width="225" height="36"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="20"/>
+                                        <state key="normal" title="Credits">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="onCreditsClick:" destination="6UE-ry-ygn" eventType="touchUpInside" id="AiV-K0-xXp"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -3414,6 +3402,22 @@
                     </view>
                     <navigationItem key="navigationItem" id="Gzw-uz-Kxy"/>
                     <connections>
+                        <outlet property="btnAddNewRecipe" destination="UVX-RC-ReO" id="msZ-3x-iyj"/>
+                        <outlet property="btnCredits" destination="S7v-CG-IkY" id="n3U-ib-VZd"/>
+                        <outlet property="btnLogout" destination="MOh-XJ-hiX" id="raU-Fy-vGi"/>
+                        <outlet property="btnMyFavorites" destination="uYt-Gy-k1q" id="bjm-BI-WOo"/>
+                        <outlet property="btnMyMeals" destination="gAw-ok-xm0" id="e18-E2-mwj"/>
+                        <outlet property="btnMyPantry" destination="Dy0-fP-5V9" id="ocz-8a-3xr"/>
+                        <outlet property="btnMyRecipes" destination="z6v-8z-F7R" id="iCQ-fw-qII"/>
+                        <outlet property="btnMyShoppingList" destination="OAu-Nn-EDY" id="hvm-Al-f8N"/>
+                        <outlet property="btnProfile" destination="q7u-WB-L7a" id="5Ed-Zb-XxY"/>
+                        <outlet property="btnRemoveRecipe" destination="hE7-7v-3J2" id="JuQ-QP-hQ5"/>
+                        <outlet property="btnSettings" destination="HNs-UQ-Jg1" id="QOw-qQ-XXO"/>
+                        <outlet property="btnTerms" destination="ZlO-vb-1xf" id="S0V-Sq-A3w"/>
+                        <outlet property="lblDataManagement" destination="e6W-5g-g7A" id="7Wv-fX-MJy"/>
+                        <outlet property="lblLegal" destination="25a-mi-tgA" id="oUe-go-dlc"/>
+                        <outlet property="lblRecipeOptions" destination="DPq-3x-BtO" id="cDB-uP-DVd"/>
+                        <outlet property="lblUserManagement" destination="vye-qN-O4y" id="4gx-qj-QcA"/>
                         <outlet property="menu" destination="tiI-kv-vnA" id="kTS-et-8kn"/>
                         <segue destination="anD-Fy-frC" kind="show" identifier="homeToSettings" id="ipy-Qs-3xM"/>
                         <segue destination="Lza-Wq-fMP" kind="show" identifier="homeToProfile" id="rrq-j1-upH"/>

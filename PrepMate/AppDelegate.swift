@@ -35,9 +35,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
             // Nav Bar Text
             UINavigationBar.appearance().titleTextAttributes = [NSAttributedStringKey.foregroundColor : decodedColor]
-            UILabel.appearance().textColor = decodedColor
-//            UIButton.appearance().tintColor = decodedColor
-
         }
 
         return true

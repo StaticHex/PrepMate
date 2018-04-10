@@ -16,6 +16,22 @@ class HomePageViewController: UIViewController, settingsProtocol, ProfileProtoco
     
     // UI Outlets
     @IBOutlet weak var menu: UIView!
+    @IBOutlet weak var lblRecipeOptions: UILabel!
+    @IBOutlet weak var btnAddNewRecipe: UIButton!
+    @IBOutlet weak var btnRemoveRecipe: UIButton!
+    @IBOutlet weak var lblDataManagement: UILabel!
+    @IBOutlet weak var btnMyRecipes: UIButton!
+    @IBOutlet weak var btnMyFavorites: UIButton!
+    @IBOutlet weak var btnMyPantry: UIButton!
+    @IBOutlet weak var btnMyShoppingList: UIButton!
+    @IBOutlet weak var btnMyMeals: UIButton!
+    @IBOutlet weak var lblUserManagement: UILabel!
+    @IBOutlet weak var btnProfile: UIButton!
+    @IBOutlet weak var btnSettings: UIButton!
+    @IBOutlet weak var btnLogout: UIButton!
+    @IBOutlet weak var lblLegal: UILabel!
+    @IBOutlet weak var btnCredits: UIButton!
+    @IBOutlet weak var btnTerms: UIButton!
     
     var appUser = User()
 
@@ -33,6 +49,30 @@ class HomePageViewController: UIViewController, settingsProtocol, ProfileProtoco
             let decodedColor = NSKeyedUnarchiver.unarchiveObject(with: decoded) as! UIColor
             self.menu.backgroundColor = decodedColor
         }
+
+        if defaults.object(forKey: "navBarTextColor") != nil {
+            let decoded  = defaults.object(forKey: "navBarTextColor") as! Data
+            let decodedColor = NSKeyedUnarchiver.unarchiveObject(with: decoded) as! UIColor
+            
+            // TODO ADD OUTLETS HERE!!!!
+            lblRecipeOptions.textColor = decodedColor
+            btnAddNewRecipe.setTitleColor(decodedColor, for: .normal)
+            btnRemoveRecipe.setTitleColor(decodedColor, for: .normal)
+            lblDataManagement.textColor = decodedColor
+            btnMyRecipes.setTitleColor(decodedColor, for: .normal)
+            btnMyFavorites.setTitleColor(decodedColor, for: .normal)
+            btnMyPantry.setTitleColor(decodedColor, for: .normal)
+            btnMyShoppingList.setTitleColor(decodedColor, for: .normal)
+            btnMyMeals.setTitleColor(decodedColor, for: .normal)
+            lblUserManagement.textColor = decodedColor
+            btnProfile.setTitleColor(decodedColor, for: .normal)
+            btnSettings.setTitleColor(decodedColor, for: .normal)
+            btnLogout.setTitleColor(decodedColor, for: .normal)
+            lblLegal.textColor = decodedColor
+            btnTerms.setTitleColor(decodedColor, for: .normal)
+            btnCredits.setTitleColor(decodedColor, for: .normal)
+        }
+
     }
 
     override func didReceiveMemoryWarning() {

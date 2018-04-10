@@ -91,7 +91,7 @@ class SettingsViewController: UIViewController, UIPopoverPresentationControllerD
             UINavigationBar.appearance().tintColor = color
             
             UINavigationBar.appearance().titleTextAttributes = [NSAttributedStringKey.foregroundColor : color]
-
+            
             UILabel.appearance().textColor = color
             
             
@@ -102,6 +102,7 @@ class SettingsViewController: UIViewController, UIPopoverPresentationControllerD
             titleLabel.textColor = color
             fontLabel.textColor = color
             self.navigationController?.navigationBar.tintColor = color
+            self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.foregroundColor : color]
             
         } else {
             // Change title background color
@@ -111,6 +112,7 @@ class SettingsViewController: UIViewController, UIPopoverPresentationControllerD
             
             defaults.set(encodedData, forKey: "titleBarColor")
             UINavigationBar.appearance().backgroundColor = color
+            self.navigationController?.navigationBar.backgroundColor = color
             sDelegate?.changeSidebarColor(color: color)
             
         }
