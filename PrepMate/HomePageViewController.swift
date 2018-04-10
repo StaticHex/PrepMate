@@ -33,7 +33,7 @@ class HomePageViewController: UIViewController, settingsProtocol, ProfileProtoco
     @IBOutlet weak var btnCredits: UIButton!
     @IBOutlet weak var btnTerms: UIButton!
     
-    var appUser = User()
+    var currentUser = User()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -87,13 +87,14 @@ class HomePageViewController: UIViewController, settingsProtocol, ProfileProtoco
         if segue.identifier == "homeToSettings" {
             let vc = segue.destination as? SettingsViewController
             vc?.sDelegate = self
+            vc?.currentUser = currentUser
         }
         if segue.identifier == "homeToProfile" {
             let vc = segue.destination as? UserProfileViewController
             vc?.profileDelegate = self
-            vc?.currentUser = appUser
+            vc?.currentUser = currentUser
             vc?.op = 1
-            vc?.avatarPhoto.setPhoto(imageURL: appUser.getPhotoURL())
+            vc?.avatarPhoto.setPhoto(imageURL: currentUser.getPhotoURL())
         }
         menu.alpha = 0.0
     }
@@ -107,7 +108,7 @@ class HomePageViewController: UIViewController, settingsProtocol, ProfileProtoco
     }
     
     func updateUser(newUser: User) {
-        appUser.copy(oldUser: newUser)
+        currentUser.copy(oldUser: newUser)
         self.navigationController?.popViewController(animated: true)
     }
     
@@ -128,7 +129,7 @@ class HomePageViewController: UIViewController, settingsProtocol, ProfileProtoco
     }
     
     @IBAction func onMenuLogout(_ sender: Any) {
-        appUser.clear()
+        currentUser.clear()
         self.navigationController?.popViewController(animated: true)
     }
     

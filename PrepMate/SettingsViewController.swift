@@ -9,6 +9,8 @@
 import UIKit
 
 class SettingsViewController: UIViewController, UIPopoverPresentationControllerDelegate, ColorPickProtocol {
+    var currentUser = User()
+    
     // UI Component Outlets
     @IBOutlet weak var swtManagePantry: UISwitch!
     @IBOutlet weak var swtManageSlist: UISwitch!
@@ -27,7 +29,6 @@ class SettingsViewController: UIViewController, UIPopoverPresentationControllerD
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationController?.isNavigationBarHidden = false
         btnTitleColor.layer.borderColor = UIColor.black.cgColor
         btnTitleColor.layer.borderWidth = 1
         btnFontColor.layer.borderColor = UIColor.black.cgColor
@@ -63,8 +64,17 @@ class SettingsViewController: UIViewController, UIPopoverPresentationControllerD
         return UIModalPresentationStyle.none
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        self.navigationController?.isNavigationBarHidden = true
+    override func viewWillAppear(_ animated: Bool) {
+        self.navigationController?.isNavigationBarHidden = false
+        let defaults = UserDefaults.standard
+        if let decoded = defaults.object(forKey: "remembered") as? Data {
+            let status = NSKeyedUnarchiver.unarchiveObject(with: decoded) as! Bool
+            if status {
+                swtRemember.setOn(true, animated: false)
+            } else {
+                swtRemember.setOn(false, animated: false)
+            }
+        }
     }
 
     @IBAction func setTitleColor(_ sender: Any) {
@@ -73,6 +83,23 @@ class SettingsViewController: UIViewController, UIPopoverPresentationControllerD
     
     @IBAction func setFontColor(_ sender: Any) {
         // Color picker
+    }
+    
+    @IBAction func onRememberCheck(_ sender: Any) {
+        let rData = NSKeyedArchiver.archivedData(withRootObject: swtRemember.isOn)
+        let defaults = UserDefaults.standard
+        defaults.set(rData, forKey: "remembered")
+        if swtRemember.isOn {
+            let unData = NSKeyedArchiver.archivedData(withRootObject: currentUser.getUname())
+            let pData = NSKeyedArchiver.archivedData(withRootObject: currentUser.getPword())
+            defaults.set(unData, forKey: "uname")
+            defaults.set(pData, forKey: "pword")
+        } else {
+            let unData = NSKeyedArchiver.archivedData(withRootObject: "")
+            let pData = NSKeyedArchiver.archivedData(withRootObject: "")
+            defaults.set(unData, forKey: "uname")
+            defaults.set(pData, forKey: "pword")
+        }
     }
     
     // Update color scheme depending on if they selected font color or title color

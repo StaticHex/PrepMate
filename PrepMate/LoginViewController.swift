@@ -19,8 +19,9 @@ class LoginViewController: UIViewController, UIPopoverPresentationControllerDele
     @IBOutlet weak var swtRememberMe: UISwitch!
     
     var segueId = "" // Used for switching between segues
+    var rememberUpdate = false
     
-    var appUser = User() // holds our current user, this is passed from screen to screen
+    var currentUser = User() // holds our current user, this is passed from screen to screen
     
     // Set up our alert controller herer
     let alert = UIAlertController(title: "Sorry, we couldn't log you in", message: "", preferredStyle: .alert)
@@ -44,8 +45,8 @@ class LoginViewController: UIViewController, UIPopoverPresentationControllerDele
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if(segue.identifier == "loginToHomeSegue") {
             let dest = segue.destination as? HomePageViewController
-            dest?.appUser.copy(oldUser: appUser)
-            appUser.clear()
+            dest?.currentUser.copy(oldUser: currentUser)
+            currentUser.clear()
         } else if(segue.identifier == "loginToUserProfile") {
             let dest = segue.destination as? UserProfileViewController
             dest?.profileDelegate = self
@@ -70,6 +71,23 @@ class LoginViewController: UIViewController, UIPopoverPresentationControllerDele
         self.navigationController?.isNavigationBarHidden = true // hide the navigation bar
         txtPassword.text = ""
         txtUserName.text = ""
+        
+        let defaults = UserDefaults.standard
+        if let decoded = defaults.object(forKey: "remembered") as? Data {
+            let status = NSKeyedUnarchiver.unarchiveObject(with: decoded) as! Bool
+            if status {
+                swtRememberMe.setOn(true, animated: false)
+            } else {
+                swtRememberMe.setOn(false, animated: false)
+            }
+            if let unData = defaults.object(forKey: "uname") as? Data {
+                txtUserName.text = NSKeyedUnarchiver.unarchiveObject(with: unData) as? String
+            }
+            
+            if let pData = defaults.object(forKey: "pword") as? Data {
+                txtPassword.text = NSKeyedUnarchiver.unarchiveObject(with: pData) as? String
+            }
+        }
     }
     
     // This method is called when the user touches the Return key on the
@@ -87,7 +105,7 @@ class LoginViewController: UIViewController, UIPopoverPresentationControllerDele
     
     func updateUser(newUser: User) {
         self.navigationController?.popViewController(animated: true)
-        appUser.copy(oldUser: newUser)
+        currentUser.copy(oldUser: newUser)
         performSegue(withIdentifier: "loginToHomeSegue", sender: nil)
     }
     
@@ -101,10 +119,26 @@ class LoginViewController: UIViewController, UIPopoverPresentationControllerDele
         segueId = "loginToHomeSegue"
         
         // Run our verify function, to make sure user has valid credentials
-        if(self.appUser.verify(uname: txtUserName.text!, pword: txtPassword.text!)) {
+        if(self.currentUser.verify(uname: txtUserName.text!, pword: txtPassword.text!)) {
+            if(rememberUpdate) {
+                let rData = NSKeyedArchiver.archivedData(withRootObject: swtRememberMe.isOn)
+                let defaults = UserDefaults.standard
+                defaults.set(rData, forKey: "remembered")
+                if swtRememberMe.isOn {
+                    let unData = NSKeyedArchiver.archivedData(withRootObject: currentUser.getUname())
+                    let pData = NSKeyedArchiver.archivedData(withRootObject: currentUser.getPword())
+                    defaults.set(unData, forKey: "uname")
+                    defaults.set(pData, forKey: "pword")
+                } else {
+                    let unData = NSKeyedArchiver.archivedData(withRootObject: "")
+                    let pData = NSKeyedArchiver.archivedData(withRootObject: "")
+                    defaults.set(unData, forKey: "uname")
+                    defaults.set(pData, forKey: "pword")
+                }
+            }
             performSegue(withIdentifier: segueId, sender: sender)
         } else {
-            alert.message = appUser.getEMsg()
+            alert.message = currentUser.getEMsg()
             self.present(alert, animated: true)
         }
         
@@ -122,5 +156,9 @@ class LoginViewController: UIViewController, UIPopoverPresentationControllerDele
     // Segue attached directly, so I don't think we need this anymore.
     // TODO: Delete this when people aren't working on the storyboard
     @IBAction func btnForgotPasswordClick(_ sender: Any) {
+    }
+
+    @IBAction func onRememberCheck(_ sender: Any) {
+        rememberUpdate = !rememberUpdate
     }
 }

@@ -1723,6 +1723,9 @@
                                             </stackView>
                                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="d8l-77-Kje">
                                                 <rect key="frame" x="116.5" y="0.0" width="51" height="40"/>
+                                                <connections>
+                                                    <action selector="onRememberCheck:" destination="Yc3-xh-1lc" eventType="valueChanged" id="JZY-X3-OLi"/>
+                                                </connections>
                                             </switch>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Remember Me" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="b5J-gy-8L6">
                                                 <rect key="frame" x="199" y="0.0" width="116" height="40"/>
@@ -2708,6 +2711,9 @@
                                             </label>
                                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="xwj-QK-5S4">
                                                 <rect key="frame" x="0.0" y="20.5" width="357" height="31"/>
+                                                <connections>
+                                                    <action selector="onRememberCheck:" destination="anD-Fy-frC" eventType="valueChanged" id="wsJ-3Q-mYf"/>
+                                                </connections>
                                             </switch>
                                         </subviews>
                                     </stackView>
@@ -4675,6 +4681,6 @@
         <segue reference="gfz-p4-kgy"/>
         <segue reference="2ZC-BU-Ttr"/>
         <segue reference="BjC-YD-RDR"/>
-        <segue reference="rrq-j1-upH"/>
+        <segue reference="xxt-hr-eTW"/>
     </inferredMetricsTieBreakers>
 </document>
