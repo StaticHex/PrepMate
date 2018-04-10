@@ -8,8 +8,10 @@
 
 import UIKit
 
-class SettingsViewController: UIViewController, UIPopoverPresentationControllerDelegate, ColorPickProtocol {
+class SettingsViewController: UIViewController, UIPopoverPresentationControllerDelegate, UIPickerViewDelegate, UIPickerViewDataSource, ColorPickProtocol {
     var currentUser = User()
+    
+    let pickerData = ["Standard", "Metric"]
     
     // UI Component Outlets
     @IBOutlet weak var swtManagePantry: UISwitch!
@@ -17,13 +19,13 @@ class SettingsViewController: UIViewController, UIPopoverPresentationControllerD
     @IBOutlet weak var swtRemember: UISwitch!
     @IBOutlet weak var btnTitleColor: UIButton!
     @IBOutlet weak var btnFontColor: UIButton!
-    
     @IBOutlet weak var pantryLabel: UILabel!
     @IBOutlet weak var shoppingLabel: UILabel!
     @IBOutlet weak var userLabel: UILabel!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var fontLabel: UILabel!
     @IBOutlet weak var unitsLabel: UILabel!
+    @IBOutlet weak var pckUnits: UIPickerView!
     
     weak var sDelegate: settingsProtocol?
     
@@ -33,6 +35,8 @@ class SettingsViewController: UIViewController, UIPopoverPresentationControllerD
         btnTitleColor.layer.borderWidth = 1
         btnFontColor.layer.borderColor = UIColor.black.cgColor
         btnFontColor.layer.borderWidth = 1
+        pckUnits.delegate = self
+        pckUnits.dataSource = self
         // Do any additional setup after loading the view.
     }
 
@@ -91,6 +95,28 @@ class SettingsViewController: UIViewController, UIPopoverPresentationControllerD
                 swtManageSlist.setOn(false, animated: false)
             }
         }
+        if let decoded = defaults.object(forKey: "units") as? Data {
+            let row = NSKeyedUnarchiver.unarchiveObject(with: decoded) as! Int
+            pckUnits.selectRow(row, inComponent: 0, animated: false)
+        }
+    }
+    
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return pickerData.count
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return pickerData[row]
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        let data = NSKeyedArchiver.archivedData(withRootObject: row)
+        let defaults = UserDefaults.standard
+        defaults.set(data, forKey: "units")
     }
 
     @IBAction func setTitleColor(_ sender: Any) {

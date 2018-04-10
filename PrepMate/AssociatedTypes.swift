@@ -84,3 +84,14 @@ public let foodTypeList = [(flag: 8192, name: "Spicy"),
                            (flag: 65536, name: "Vegan"),
                            (flag: 131072, name: "Vegetarian")]
 
+public let unitList = [(std: "custom", metric: "custom"),
+                        (std: "tsp", metric: "ml"),
+                        (std: "tbsp", metric: "ml"),
+                        (std: "fl oz", metric: "ml"),
+                        (std: "cup", metric: "ml"),
+                        (std: "quart", metric: "ml"),
+                        (std: "pint", metric: "ml"),
+                        (std: "oz", metric: "g"),
+                        (std: "lb", metric: "g"),
+                        (std: "in", metric: "cm")]
+

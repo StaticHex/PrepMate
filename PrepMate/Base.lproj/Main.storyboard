@@ -2841,6 +2841,7 @@
                         <outlet property="btnTitleColor" destination="u7Y-ve-vnf" id="ckj-uH-Rho"/>
                         <outlet property="fontLabel" destination="wvi-Qj-xzq" id="coB-62-Vb8"/>
                         <outlet property="pantryLabel" destination="xe9-as-BQL" id="WVn-nf-1HT"/>
+                        <outlet property="pckUnits" destination="e49-2d-WlQ" id="mZN-0t-WrL"/>
                         <outlet property="shoppingLabel" destination="FOI-eE-3He" id="0XJ-Js-tvG"/>
                         <outlet property="swtManagePantry" destination="5se-lk-vfg" id="p4G-ye-uof"/>
                         <outlet property="swtManageSlist" destination="eGx-la-hUv" id="WGq-LL-0a7"/>
