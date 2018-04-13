@@ -30,36 +30,48 @@ class Photo {
     public func getEMsg() -> String { return self.eMsg }
     public func setPhoto( imageURL: String) {
         self.path = imageURL
+        self.eMsg = ""
         if(self.path == "") {
+            self.image = #imageLiteral(resourceName: "2000px-Silver_-_replace_this_image_male.svg.png")
             return
         }
-        let picURL = URL(string: self.path)
+        
         let session = URLSession(configuration: .default)
-        var pic : UIImage = UIImage()
+        var pic : UIImage = #imageLiteral(resourceName: "2000px-Silver_-_replace_this_image_male.svg.png")
         var finished : Bool = false
-        let downloadTask = session.dataTask(with: picURL!) { (data, response, error) in
-            if let _ = error {
-                self.eMsg = "Something went wrong with the picture download!"
-                finished = true
-            } else {
-                if let _ = response as? HTTPURLResponse {
-                    if let iData = data {
-                        if let img = UIImage(data: iData) {
-                            pic = img
+        if let picURL = URL(string: self.path) {
+            let downloadTask = session.dataTask(with: picURL) { (data, response, error) in
+                if let _ = error {
+                    self.eMsg = "Something went wrong with the picture download!"
+                    self.path = ""
+                    finished = true
+                } else {
+                    if let _ = response as? HTTPURLResponse {
+                        if let iData = data {
+                            if let img = UIImage(data: iData) {
+                                pic = img
+                            } else {
+                                pic = #imageLiteral(resourceName: "2000px-Silver_-_replace_this_image_male.svg.png")
+                                self.path = ""
+                                self.eMsg = "Image data corrupt or missing, check URL and try again."
+                            }
                         } else {
-                            pic = #imageLiteral(resourceName: "2000px-Silver_-_replace_this_image_male.svg.png")
-                            self.path = ""
+                            self.eMsg = "Error, avatar image URL returned null or missing!"
                         }
                     } else {
-                        self.eMsg = "Error, avatar image URL returned null or missing!"
+                        self.eMsg = "Could not get image, failed to get a response from server!"
                     }
-                } else {
-                    self.eMsg = "Could not get image, failed to get a response from server!"
+                    finished = true
                 }
-                finished = true
             }
+            downloadTask.resume()
+        } else {
+            finished = true
+            self.eMsg = "Image URL could not be resolved as a valid file!"
+            self.path = ""
+            pic = #imageLiteral(resourceName: "2000px-Silver_-_replace_this_image_male.svg.png")
         }
-        downloadTask.resume()
+
         while(!finished) {}
         self.image = pic
     }

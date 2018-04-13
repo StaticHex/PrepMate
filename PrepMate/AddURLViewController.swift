@@ -71,8 +71,8 @@ class AddURLViewController: UIViewController {
         if !isValidImage {
             self.present(alert, animated: true)
         } else {
-            urlDelegate?.setURL(url: txtURL.text!)
             self.dismiss(animated: true, completion: nil)
+            urlDelegate?.setURL(url: txtURL.text!)
         }
     }
     

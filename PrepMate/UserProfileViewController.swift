@@ -243,7 +243,6 @@ class UserProfileViewController: UIViewController, UIPopoverPresentationControll
 
         var isInputValid : Bool = true // check to ensure no empty fields
         var pwordMatch : Bool = true // check to ensure passwords match
-        var isPhotoSet : Bool = false // check to ensure photo is set
         var count : Int = 0
         
         // Since we have to validate so many fields, just loop through them
@@ -274,19 +273,9 @@ class UserProfileViewController: UIViewController, UIPopoverPresentationControll
             self.present(alert, animated: true)
             pwordMatch = false
         }
-        //if they haven't picked a photo yet force them to (null photos crash at present)
-        if(avatarPhoto.getPath()=="") {
-            isPhotoSet = false
-            btnAvatar.layer.borderColor = UIColor.red.cgColor
-            btnAvatar.layer.borderWidth = 1.0
-        } else {
-            isPhotoSet = true
-            btnAvatar.layer.borderColor = UIColor.black.cgColor
-            btnAvatar.layer.borderWidth = 0.0
-        }
         
         // if everything above was OK, reset all border colors and perform our database operations
-        if isInputValid && isPhotoSet && pwordMatch {
+        if isInputValid && pwordMatch {
             // Reset properties of required fields
             txtUserName.layer.borderColor = UIColor.black.cgColor
             txtUserName.layer.borderWidth = 0.0
@@ -296,8 +285,6 @@ class UserProfileViewController: UIViewController, UIPopoverPresentationControll
             txtPword.layer.borderWidth = 0.0
             txtVPword.layer.borderColor = UIColor.black.cgColor
             txtVPword.layer.borderWidth = 0.0
-            btnAvatar.layer.borderColor = UIColor.black.cgColor
-            btnAvatar.layer.borderWidth = 0.0
             
             if op == 0 {
                 // Try to add our user, if an error occurs, display an alert with
@@ -350,8 +337,12 @@ class UserProfileViewController: UIViewController, UIPopoverPresentationControll
     // Needed for URLProtocol, passes information back here from our popover
     func setURL(url: String) {
         avatarPhoto.setPhoto(imageURL: url)
-        print(avatarPhoto.getPath())
         btnAvatar.setImage(avatarPhoto.getImage(), for: .normal)
+        if(avatarPhoto.getEMsg() != "" || avatarPhoto.getPath() == "") {
+            alert.title = "Photo could not be set"
+            alert.message = avatarPhoto.getEMsg()
+            self.present(alert, animated: true)
+        }
     }
     
     // Needed for bListProtocol. passes information back from popover
