@@ -42,7 +42,7 @@ class AddRecipeSecondPageViewController: UIViewController, UIPopoverPresentation
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        print(recipeToSave)
         vitaminTableView.delegate = self
         vitaminTableView.dataSource = self
         func back(sender: UIBarButtonItem) {
@@ -180,6 +180,7 @@ class AddRecipeSecondPageViewController: UIViewController, UIPopoverPresentation
     // Receiving information about the recipe being created from the first page.
     func setRecipe(recipe: Recipe) {
         self.recipeToSave = recipe
+        print(self.recipeToSave.getName())
     }
     
     // Save recipe.
@@ -260,6 +261,16 @@ class AddRecipeSecondPageViewController: UIViewController, UIPopoverPresentation
     
     // User is sent back to the home page
     @IBAction func cancelRecipe(_ sender: Any) {
+        
+        // Remove saved data from Contains and Dietary popovers
+        for c in 0...(containsVector.count-1) {
+            containsVector[c] = false
+        }
+        for d in 0...(dietaryVector.count-1) {
+            dietaryVector[d] = false
+        }
+        
+        
         for controller in self.navigationController!.viewControllers as Array {
             if controller.isKind(of: HomePageViewController.self) {
                 self.navigationController!.popToViewController(controller, animated: true)

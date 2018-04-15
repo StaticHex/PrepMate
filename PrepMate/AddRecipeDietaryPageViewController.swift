@@ -8,12 +8,17 @@
 
 import UIKit
 
+
+// Used by the bitvector for flags
+var dietaryVector: [Bool] = [false, false, false, false, false, false, false]
+
 class AddRecipeDietaryPageViewController: UIViewController {
 
     weak var dDelegate: firstPageProtocol?
+
     
-    // Used by the bitvector for flags
-    var dietaryVector: [Bool] = [false, false, false, false, false, false, false]
+    var dietaryVectorCopy: [Bool] = dietaryVector
+
     
     // Outlets
     @IBOutlet weak var spicyButton: UIButton!
@@ -26,7 +31,29 @@ class AddRecipeDietaryPageViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        self.dietaryVectorCopy = dietaryVector
+        
+        if dietaryVector[0] {
+            spicyButton.setTitle("■", for: .normal)
+        }
+        if dietaryVector[1] {
+            healthyButton.setTitle("■", for: .normal)
+        }
+        if dietaryVector[2] {
+            highFatButton.setTitle("■", for: .normal)
+        }
+        if dietaryVector[3] {
+            veganButton.setTitle("■", for: .normal)
+        }
+        if dietaryVector[4] {
+            vegetarianButton.setTitle("■", for: .normal)
+        }
+        if dietaryVector[5] {
+            kosherButton.setTitle("■", for: .normal)
+        }
+        if dietaryVector[6] {
+            lowCarbButton.setTitle("■", for: .normal)
+        }
         // Do any additional setup after loading the view.
     }
 
@@ -39,70 +66,78 @@ class AddRecipeDietaryPageViewController: UIViewController {
     // Following functions help set up the bit vector  for the dietary information
     @IBAction func spicy(_ sender: Any) {
         if spicyButton.currentTitle == "■" {
+            dietaryVectorCopy[0] = false
             spicyButton.setTitle("□", for: .normal)
         }
         else {
-            dietaryVector[0] = true
+            dietaryVectorCopy[0] = true
             spicyButton.setTitle("■", for: .normal)
         }
     }
     @IBAction func healthy(_ sender: Any) {
         if healthyButton.currentTitle == "■" {
+            dietaryVectorCopy[1] = false
             healthyButton.setTitle("□", for: .normal)
         }
         else {
-            dietaryVector[1] = true
+            dietaryVectorCopy[1] = true
             healthyButton.setTitle("■", for: .normal)
         }
     }
     @IBAction func highFat(_ sender: Any) {
         if highFatButton.currentTitle == "■" {
+            dietaryVectorCopy[2] = false
             highFatButton.setTitle("□", for: .normal)
         }
         else {
-            dietaryVector[2] = true
+            dietaryVectorCopy[2] = true
             highFatButton.setTitle("■", for: .normal)
         }
     }
     @IBAction func vegan(_ sender: Any) {
         if veganButton.currentTitle == "■" {
+            dietaryVectorCopy[3] = false
             veganButton.setTitle("□", for: .normal)
         }
         else {
-            dietaryVector[3] = true
+            dietaryVectorCopy[3] = true
             veganButton.setTitle("■", for: .normal)
         }
     }
     @IBAction func vegetarian(_ sender: Any) {
         if vegetarianButton.currentTitle == "■" {
+            dietaryVectorCopy[4] = false
             vegetarianButton.setTitle("□", for: .normal)
         }
         else {
-            dietaryVector[4] = true
+            dietaryVectorCopy[4] = true
             vegetarianButton.setTitle("■", for: .normal)
         }
     }
     @IBAction func kosher(_ sender: Any) {
         if kosherButton.currentTitle == "■" {
+            dietaryVectorCopy[5] = false
             kosherButton.setTitle("□", for: .normal)
         }
         else {
-            dietaryVector[5] = true
+            dietaryVectorCopy[5] = true
             kosherButton.setTitle("■", for: .normal)
         }
     }
     @IBAction func lowCarb(_ sender: Any) {
         if lowCarbButton.currentTitle == "■" {
+            dietaryVectorCopy[6] = false
             lowCarbButton.setTitle("□", for: .normal)
         }
         else {
-            dietaryVector[6] = true
+            dietaryVectorCopy[6] = true
             lowCarbButton.setTitle("■", for: .normal)
         }
     }
     
     // Save the dietary portion of the bit vector and pass it back to the first page add recipe controller
     @IBAction func save(_ sender: Any) {
+        dietaryVector = dietaryVectorCopy
         dDelegate?.dietary(dietaryItem: dietaryVector)
         dismiss(animated: true, completion: nil)
     }

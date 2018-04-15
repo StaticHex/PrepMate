@@ -244,8 +244,9 @@ class AddRecipeFirstPageViewController: UIViewController, UITableViewDelegate, U
         }
         else if segue.identifier == "addRecipeFirstPageToSecond" {
             let vc = segue.destination as? AddRecipeSecondPageViewController
-            vc?.recipeToSave = self.recipeToSave
             vc?.addRecipeDelegate = self
+            vc?.recipeToSave = self.recipeToSave
+
         }
     }
     
@@ -372,7 +373,7 @@ class AddRecipeFirstPageViewController: UIViewController, UITableViewDelegate, U
         }
         recipeToSave.setFlags(flags: flagVector)
         
-        //secondDelegate?.setRecipe(recipe: recipeToPass)
+        secondDelegate?.setRecipe(recipe: recipeToSave)
         
         self.performSegue(withIdentifier: "addRecipeFirstPageToSecond", sender: self)
         
