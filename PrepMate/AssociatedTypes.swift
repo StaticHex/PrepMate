@@ -84,14 +84,22 @@ public let foodTypeList = [(flag: 8192, name: "Spicy"),
                            (flag: 65536, name: "Vegan"),
                            (flag: 131072, name: "Vegetarian")]
 
-public let unitList = [(std: "custom", metric: "custom"),
-                        (std: "tsp", metric: "ml"),
-                        (std: "tbsp", metric: "ml"),
-                        (std: "fl oz", metric: "ml"),
-                        (std: "cup", metric: "ml"),
-                        (std: "quart", metric: "ml"),
-                        (std: "pint", metric: "ml"),
-                        (std: "oz", metric: "g"),
-                        (std: "lb", metric: "g"),
-                        (std: "in", metric: "cm")]
+// divide metric amount by factor to get standard amount
+public let unitList = [(std: "custom", metric: "custom", factor: 0.0),
+                        (std: "tsp", metric: "ml", factor: 5.0),
+                        (std: "tbsp", metric: "ml", factor: 15.0),
+                        (std: "fl oz", metric: "ml", factor: 30.0),
+                        (std: "cup", metric: "ml", factor: 240.0),
+                        (std: "pint", metric: "ml", factor: 480.0),
+                        (std: "quart", metric: "ml", factor: 960.0),
+                        (std: "oz", metric: "g", factor: 30.0),
+                        (std: "lb", metric: "g", factor: 480.0),
+                        (std: "in", metric: "cm", factor: 2.5)]
 
+public func metricToStd(unit:Int, amount:Double) -> Double {
+    return amount / unitList[unit].factor
+}
+
+public func stdToMetric(unit:Int, amount:Double) -> Double {
+    return amount * unitList[unit].factor
+}
