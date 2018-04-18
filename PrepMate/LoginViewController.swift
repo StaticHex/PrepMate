@@ -10,7 +10,7 @@
 //
 
 import UIKit
-
+var currentUser = User() // holds our current user
 class LoginViewController: UIViewController, UIPopoverPresentationControllerDelegate, ProfileProtocol {
     
     // UIComponent Outlets
@@ -21,7 +21,6 @@ class LoginViewController: UIViewController, UIPopoverPresentationControllerDele
     var segueId = "" // Used for switching between segues
     var rememberUpdate = false
     
-    var currentUser = User() // holds our current user, this is passed from screen to screen
     
     // Set up our alert controller herer
     let alert = UIAlertController(title: "Sorry, we couldn't log you in", message: "", preferredStyle: .alert)
@@ -119,7 +118,7 @@ class LoginViewController: UIViewController, UIPopoverPresentationControllerDele
         segueId = "loginToHomeSegue"
         
         // Run our verify function, to make sure user has valid credentials
-        if(self.currentUser.verify(uname: txtUserName.text!, pword: txtPassword.text!)) {
+        if(currentUser.verify(uname: txtUserName.text!, pword: txtPassword.text!)) {
             if(rememberUpdate) {
                 let rData = NSKeyedArchiver.archivedData(withRootObject: swtRememberMe.isOn)
                 let defaults = UserDefaults.standard

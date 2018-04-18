@@ -162,7 +162,7 @@ class Recipe {
         var request = URLRequest(url: url!)
         request.httpMethod = "POST"
         
-        let uid = String(self.id)
+        let uid = String(currentUser.getId())
         let name = self.name
         let photo = self.photo.getPath()
         let category = String(self.category)
