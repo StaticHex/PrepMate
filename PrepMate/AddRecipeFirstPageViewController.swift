@@ -14,11 +14,18 @@ protocol firstPageProtocol : class {
     func addDirection(direction: String)
     func addIngredient(ingredient: Ingredient)
     func removeIngredient(cell: IngredientTableCell)
+    func removeDirection(cell: DirectionTableCell)
 }
 
 // Direction Table Custom Cell
 class DirectionTableCell: UITableViewCell {
     @IBOutlet weak var directionLabel: UILabel!
+    
+    weak var cellProtocol : firstPageProtocol?
+    
+    @IBAction func removeDirection(_ sender: Any) {
+        cellProtocol?.removeDirection(cell: self)
+    }
 }
 
 // Ingredient Table Custom Cell
@@ -132,6 +139,12 @@ class AddRecipeFirstPageViewController: UIViewController, UITableViewDelegate, U
         self.ingTableView.deleteRows(at: [indexPath!], with: .fade)
     }
     
+    func removeDirection(cell: DirectionTableCell) {
+        let indexPath = self.directionTableview.indexPath(for: cell)
+        directionList.remove(at: indexPath!.row)
+        self.directionTableview.deleteRows(at: [indexPath!], with: .fade)
+    }
+    
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         if pickerView.tag == 2 || pickerView.tag == 3 {
             return 3
@@ -155,6 +168,7 @@ class AddRecipeFirstPageViewController: UIViewController, UITableViewDelegate, U
             let cell = tableView.dequeueReusableCell(withIdentifier: "directionTableCell", for: indexPath as IndexPath) as! DirectionTableCell
             
             let row = indexPath.row
+            cell.cellProtocol = self
             cell.directionLabel.text = String(directionCounter) + ". " + directionList[row]
             directionCounter += 1
             return cell
