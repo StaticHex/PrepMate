@@ -45,7 +45,7 @@ class AddRecipeFirstPageViewController: UIViewController, UITableViewDelegate, U
     
     var prepTimePicker = UIPickerView()
     var cookTimePicker = UIPickerView()
-    var timeOptions: [[String]] = [["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"], [":"], ["00", "15", "30", "45"]]
+    var timeOptions: [[String]] = [["00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"], [":"], ["00", "15", "30", "45"]]
     
     // Contains and Dietary bitvector
     var contains: [Bool] = [false, false, false, false, false, false, false, false, false, false, false, false, false]
@@ -55,6 +55,11 @@ class AddRecipeFirstPageViewController: UIViewController, UITableViewDelegate, U
     var directionList = [String]()
     var ingList = [Ingredient]()
     var recipeToSave = Recipe()
+    
+    var prepTimeHour: String = "00"
+    var prepTimeMin: String = "00"
+    var cookTimeHour: String = "00"
+    var cookTimeMin: String = "00"
     
     var directionCounter = 1
     
@@ -173,8 +178,6 @@ class AddRecipeFirstPageViewController: UIViewController, UITableViewDelegate, U
             return categoryPickerOptions[row]
         }
         else {
-            print(component)
-            print(row)
             return timeOptions[component][row]
         }
     }
@@ -190,11 +193,15 @@ class AddRecipeFirstPageViewController: UIViewController, UITableViewDelegate, U
         else if pickerView.tag == 2 {
             let hour = timeOptions[0][pickerView.selectedRow(inComponent: 0)]
             let min = timeOptions[2][pickerView.selectedRow(inComponent: 2)]
+            prepTimeHour = hour
+            prepTimeMin = min
             prepTimeField.text = hour + " hr(s)" + timeOptions[1][0] + min + " min(s)"
         }
         else {
             let hour = timeOptions[0][pickerView.selectedRow(inComponent: 0)]
             let min = timeOptions[2][pickerView.selectedRow(inComponent: 2)]
+            cookTimeHour = hour
+            cookTimeMin = min
             cookTimeField.text = hour + " hr(s)" + timeOptions[1][0] + min + " min(s)"
         }
         self.view.endEditing(true)
@@ -311,6 +318,16 @@ class AddRecipeFirstPageViewController: UIViewController, UITableViewDelegate, U
             return
         }
 
+        if  cookTimeField.text == "00 hr(s):00 min(s)" {
+            self.recipeAlert(str: "Cook Time")
+        }
+        
+        if  prepTimeField.text == "00 hr(s):00 min(s)" {
+            self.recipeAlert(str: "Prep Time")
+        }
+        
+        recipeToSave.setName(name: recipeNameField.text!)
+        
         // Recipe category
         recipeToSave.setCategory(category: categoryPickerOptions.index(of: categoryPickerTextField.text!)!)
         
@@ -318,14 +335,13 @@ class AddRecipeFirstPageViewController: UIViewController, UITableViewDelegate, U
         recipeToSave.setServings(servings: servingSizeOptions.index(of: Int(servingsSizeTextField.text!)!)!)
         
         // Recipe preptime
-        if Int(prepTimeField.text!) != nil {
-            recipeToSave.setPrepTime(prepTime: Int(prepTimeField.text!)!)
-        }
+        recipeToSave.setPrepTime(prepTime: (prepTimeHour + ":" + prepTimeMin + ":00"))
 
         // Recipe Cooktime
-        if Int(cookTimeField.text!) != nil {
-            recipeToSave.setCookTime(cookTime: Int(cookTimeField.text!)!)
-        }
+        recipeToSave.setCookTime(cookTime: (cookTimeHour + ":" + cookTimeMin + ":00"))
+        
+        print(recipeToSave.getCookTime())
+        print(recipeToSave.getPrepTime())
 
         // Go through each ingredient to add to the recipe
         let ingredientCells = self.ingTableView.visibleCells as! Array<IngredientTableCell>
@@ -373,6 +389,7 @@ class AddRecipeFirstPageViewController: UIViewController, UITableViewDelegate, U
         }
         recipeToSave.setFlags(flags: flagVector)
         
+        print(recipeToSave.getName())
         secondDelegate?.setRecipe(recipe: recipeToSave)
         
         self.performSegue(withIdentifier: "addRecipeFirstPageToSecond", sender: self)

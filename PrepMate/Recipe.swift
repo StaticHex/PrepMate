@@ -14,8 +14,8 @@ class Recipe {
     private var photo : Photo
     private var category : Int
     private var servings : Int
-    private var prepTime : Int
-    private var cookTime : Int
+    private var prepTime : String
+    private var cookTime : String
     private var calories : Int
     private var unsatFat : Int
     private var satFat : Int
@@ -37,8 +37,8 @@ class Recipe {
         self.photo = Photo()
         self.category = -1
         self.servings = -1
-        self.prepTime = -1
-        self.cookTime = -1
+        self.prepTime = "00:00:00"
+        self.cookTime = "00:00:00"
         self.calories = -1
         self.unsatFat = -1
         self.satFat = -1
@@ -55,7 +55,7 @@ class Recipe {
         self.flags = 0
         self.vitamin = [Vitamin]()
     }
-    init(id:Int, name:String, photo:Photo, category:Int, servings:Int, prepTime:Int, cookTime:Int, calories:Int, unsatFat:Int, satFat:Int, cholesterol:Int, sodium:Int, potassium:Int, carbs:Int, fiber:Int, sugar:Int, comments:[Comment], ingredients:[(id:Int, ing:Ingredient, amount:Float)], directions:[(id:Int, str:String)], rating:Int, flags:Int, vitamin:[Vitamin]) {
+    init(id:Int, name:String, photo:Photo, category:Int, servings:Int, prepTime:String, cookTime:String, calories:Int, unsatFat:Int, satFat:Int, cholesterol:Int, sodium:Int, potassium:Int, carbs:Int, fiber:Int, sugar:Int, comments:[Comment], ingredients:[(id:Int, ing:Ingredient, amount:Float)], directions:[(id:Int, str:String)], rating:Int, flags:Int, vitamin:[Vitamin]) {
         self.id = id
         self.name = name
         self.photo = photo
@@ -86,8 +86,8 @@ class Recipe {
     public func setPhoto(photo: Photo) { self.photo = photo}
     public func setCategory(category: Int) { self.category = category}
     public func setServings(servings: Int) { self.servings = servings}
-    public func setPrepTime(prepTime: Int) { self.prepTime = prepTime}
-    public func setCookTime(cookTime: Int) { self.cookTime = cookTime}
+    public func setPrepTime(prepTime: String) { self.prepTime = prepTime}
+    public func setCookTime(cookTime: String) { self.cookTime = cookTime}
     public func setCalories(calories: Int) { self.calories = calories}
     public func setUnsatFat(unsatFat: Int) { self.unsatFat = unsatFat}
     public func setSatFat(satFat: Int) { self.satFat = satFat}
@@ -112,8 +112,8 @@ class Recipe {
     public func getCategory() -> Int { return self.category}
     public func getServings() -> Int { return self.servings}
     // TODO: Possibly need to do processing for times over an hour
-    public func getPrepTime() -> Int { return self.prepTime}
-    public func getCookTime() -> Int { return self.cookTime}
+    public func getPrepTime() -> String { return self.prepTime}
+    public func getCookTime() -> String { return self.cookTime}
     public func getCalories() -> Int { return self.calories}
     public func getUnsatFat() -> Int { return self.unsatFat}
     public func getSatFat() -> Int { return self.satFat}
@@ -283,6 +283,7 @@ class Recipe {
                 // Get the error status and the error message from the database
                 if let parseJSON = JSONResponse {
                     eMsg = parseJSON["msg"] as! String
+                    print(eMsg)
                     vError = (parseJSON["error"] as! Bool)
                 }
             } catch {

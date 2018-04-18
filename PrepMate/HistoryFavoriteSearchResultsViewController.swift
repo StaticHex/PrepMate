@@ -56,7 +56,7 @@ class HistoryFavoriteSearchResultsViewController: UIViewController, UITableViewD
         let testIngredient = [(id:1, ing:Ingredient(id: 1, name: "Test", unit: 1, customLabel: "oz"), amount:Float(1.5))]
         let testVitamin = [Vitamin(id: 1, index: 1, percent: 0.5)]
         let testDirections = [(id: -1, str: "Test 1"), (id: -1, str: "Test 2")]
-        recipeList.append(Recipe(id: 1, name: "Test", photo: testImage, category: 10, servings: 8, prepTime:10, cookTime:20, calories: 120, unsatFat: 20, satFat: 30, cholesterol: 30, sodium: 40, potassium: 50, carbs: 60, fiber: 70, sugar: 80, comments: testComment, ingredients: testIngredient, directions: testDirections, rating: 1, flags: 4, vitamin: testVitamin))
+        recipeList.append(Recipe(id: 1, name: "Test", photo: testImage, category: 10, servings: 8, prepTime:"00:10:00", cookTime:"00:10:00", calories: 120, unsatFat: 20, satFat: 30, cholesterol: 30, sodium: 40, potassium: 50, carbs: 60, fiber: 70, sugar: 80, comments: testComment, ingredients: testIngredient, directions: testDirections, rating: 1, flags: 4, vitamin: testVitamin))
     }
     
     override func didReceiveMemoryWarning() {

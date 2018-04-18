@@ -17,7 +17,6 @@ class AddVitaminPopoverViewController: UIViewController, UIPickerViewDelegate, U
     // Outlets
     @IBOutlet weak var vitaminTextView: UITextField!
     @IBOutlet weak var percentDailyValue: UITextField!
-    @IBOutlet weak var inputError: UILabel!
     
     // Picker Information
     var unitPicker = UIPickerView()
@@ -33,7 +32,6 @@ class AddVitaminPopoverViewController: UIViewController, UIPickerViewDelegate, U
         self.unitPicker.dataSource = self
         vitaminTextView.inputView = unitPicker
         
-        inputError.text = ""
         self.vitaminTextView.text = ""
         self.percentDailyValue.text = ""
 
@@ -66,11 +64,11 @@ class AddVitaminPopoverViewController: UIViewController, UIPickerViewDelegate, U
     // Add a vitamin to the vitamin table in the add recipe second page view controller. Both inputs must be required by the user to add the vitamin
     @IBAction func saveVitamin(_ sender: Any) {
         if vitaminTextView.text! == "" || percentDailyValue.text! == "" {
-            inputError.text = "Values must be non-empty"
+            self.recipeAlert(str: "Values must not be empty")
             return
         }
         if Float(percentDailyValue.text!) == nil {
-            inputError.text = "Percentage must be a number"
+            self.recipeAlert(str: "Percent Daily Value")
         }
         let vitamin = Vitamin(id: -1, index: vitaminList.index(of: vitaminTextView.text!)!, percent: Float(percentDailyValue.text!)!)
         addVitaminDelegate?.addVitamin(vitamin: vitamin)
@@ -79,6 +77,15 @@ class AddVitaminPopoverViewController: UIViewController, UIPickerViewDelegate, U
     
     @IBAction func discard(_ sender: Any) {
         dismiss(animated: true, completion: nil)
+    }
+    
+    /// Helper function to alert recipe errors
+    func recipeAlert(str:String) {
+        let alert = UIAlertController(title: "Add Vitamin Error", message: "\(str) field cannot be empty", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .default, handler: { _ in
+            NSLog("The \"OK\" alert occured.")
+        }))
+        self.present(alert, animated: true, completion: nil)
     }
     
 }

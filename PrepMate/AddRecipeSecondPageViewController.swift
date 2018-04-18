@@ -29,6 +29,8 @@ class AddRecipeSecondPageViewController: UIViewController, UIPopoverPresentation
     @IBOutlet weak var caloriesField: UITextField!
     @IBOutlet weak var sodiumField: UITextField!
     @IBOutlet weak var sugarField: UITextField!
+    @IBOutlet weak var unsatField: UITextField!
+    @IBOutlet weak var urlField: UITextField!
     
     @IBOutlet weak var vitaminTableView: UITableView!
     
@@ -42,7 +44,6 @@ class AddRecipeSecondPageViewController: UIViewController, UIPopoverPresentation
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print(recipeToSave)
         vitaminTableView.delegate = self
         vitaminTableView.dataSource = self
         func back(sender: UIBarButtonItem) {
@@ -69,7 +70,7 @@ class AddRecipeSecondPageViewController: UIViewController, UIPopoverPresentation
     override func viewWillDisappear(_ animated: Bool) {
         // If user is returning to the first page
         if self.isMovingFromParentViewController {
-            self.saveRecipe()
+            self.saveRecipeValues()
             self.addRecipeDelegate?.setRecipe(recipe: self.recipeToSave)
         }
     }
@@ -86,6 +87,11 @@ class AddRecipeSecondPageViewController: UIViewController, UIPopoverPresentation
         if(self.recipeToSave.getCalories() != -1) {
             self.caloriesField.text! = "\(self.recipeToSave.getCalories())"
         }
+        
+        if(self.recipeToSave.getSatFat() != -1) {
+            self.fatField.text! = "\(self.recipeToSave.getSatFat())"
+        }
+        
         if(self.recipeToSave.getUnsatFat() != -1) {
             self.fatField.text! = "\(self.recipeToSave.getUnsatFat())"
         }
@@ -107,16 +113,22 @@ class AddRecipeSecondPageViewController: UIViewController, UIPopoverPresentation
         if(self.recipeToSave.getFiber() != -1) {
             self.fiberField.text! = "\(self.recipeToSave.getFiber())"
         }
+        
         self.vitamins = self.recipeToSave.getVitamins()
     }
     /// Save recipe changes before returning to the first add recipe page
-    func saveRecipe() {
+    func saveRecipeValues() {
         if Int(caloriesField.text!) != nil {
             self.recipeToSave.setCalories(calories: Int(caloriesField.text!)!)
         }
         
+        // Sat Fat
         if Int(fatField.text!) != nil {
             self.recipeToSave.setSatFat(satFat: Int(fatField.text!)!)
+        }
+        
+        if Int(unsatField.text!) != nil {
+            self.recipeToSave.setUnsatFat(unsatFat: Int(unsatField.text!)!)
         }
         
         if Int(cholesterolField.text!) != nil {
@@ -141,6 +153,12 @@ class AddRecipeSecondPageViewController: UIViewController, UIPopoverPresentation
         
         if Int(fiberField.text!) != nil {
             self.recipeToSave.setFiber(fiber: Int(fiberField.text!)!)
+        }
+        
+        if urlField.text! != "" {
+            let photo = Photo()
+            photo.setPhoto(imageURL: urlField.text!)
+            self.recipeToSave.setPhoto(photo: photo)
         }
         self.recipeToSave.setVitamin(vitamin: vitamins)
     }
@@ -186,20 +204,28 @@ class AddRecipeSecondPageViewController: UIViewController, UIPopoverPresentation
     // Save recipe.
     @IBAction func saveRecipe(_ sender: Any) {
         self.checkRecipe()
-        self.recipeToSave.addRecipe()
+        let success = self.recipeToSave.addRecipe()
+        if success {
+            self.databaseAlert(str: "Database Error")
+        }
+        else {
+            self.popViews()
+            return
+        }
+        
     }
     /// Verifies that all fields have been filled
     func checkRecipe(){
-        self.saveRecipe()
+        self.saveRecipeValues()
         if(self.recipeToSave.getName() == "") {
             self.recipeAlert(str: "Name")
             return
         }
-        if(self.recipeToSave.getPrepTime() == -1) {
+        if(self.recipeToSave.getPrepTime() == "00:00:00") {
             self.recipeAlert(str: "Prep Time")
             return
         }
-        if(self.recipeToSave.getCookTime() == -1) {
+        if(self.recipeToSave.getCookTime() == "00:00:00") {
             self.recipeAlert(str: "Cook Time")
             return
         }
@@ -208,7 +234,11 @@ class AddRecipeSecondPageViewController: UIViewController, UIPopoverPresentation
             return
         }
         if(self.recipeToSave.getSatFat() == -1) {
-            self.recipeAlert(str: "Fat")
+            self.recipeAlert(str: "Saturated Fat")
+            return
+        }
+        if(self.recipeToSave.getUnsatFat() == -1) {
+            self.recipeAlert(str: "Unsatuared Fat")
             return
         }
         if(self.recipeToSave.getCholesterol() == -1) {
@@ -247,6 +277,7 @@ class AddRecipeSecondPageViewController: UIViewController, UIPopoverPresentation
             self.recipeAlert(str: "Vitamins")
             return
         }
+
         
     }
     
@@ -259,6 +290,13 @@ class AddRecipeSecondPageViewController: UIViewController, UIPopoverPresentation
         self.present(alert, animated: true, completion: nil)
     }
     
+    func databaseAlert(str:String) {
+        let alert = UIAlertController(title: "Add Recipe Error", message: "\(str)", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .default, handler: { _ in
+            NSLog("The \"OK\" alert occured.")
+        }))
+        self.present(alert, animated: true, completion: nil)
+    }
     // User is sent back to the home page
     @IBAction func cancelRecipe(_ sender: Any) {
         
@@ -270,7 +308,12 @@ class AddRecipeSecondPageViewController: UIViewController, UIPopoverPresentation
             dietaryVector[d] = false
         }
         
+        self.popViews()
         
+    }
+    
+    func popViews()
+    {
         for controller in self.navigationController!.viewControllers as Array {
             if controller.isKind(of: HomePageViewController.self) {
                 self.navigationController!.popToViewController(controller, animated: true)
@@ -278,5 +321,4 @@ class AddRecipeSecondPageViewController: UIViewController, UIPopoverPresentation
             }
         }
     }
-    
 }
