@@ -13,6 +13,7 @@ protocol firstPageProtocol : class {
     func dietary(dietaryItem: [Bool])
     func addDirection(direction: String)
     func addIngredient(ingredient: Ingredient)
+    func removeIngredient(cell: IngredientTableCell)
 }
 
 // Direction Table Custom Cell
@@ -22,8 +23,17 @@ class DirectionTableCell: UITableViewCell {
 
 // Ingredient Table Custom Cell
 class IngredientTableCell: UITableViewCell {
+    
+    weak var cellProtocol : firstPageProtocol?
+    
     @IBOutlet weak var ingLabel: UILabel!
     @IBOutlet weak var amountLabel: UILabel!
+    
+    @IBAction func removeIngredient(_ sender: Any) {
+        cellProtocol?.removeIngredient(cell: self)
+    }
+    
+    
 }
 
 class AddRecipeFirstPageViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIPickerViewDelegate, UIPickerViewDataSource, UIPopoverPresentationControllerDelegate, firstPageProtocol, secondPageProtocol {
@@ -116,6 +126,12 @@ class AddRecipeFirstPageViewController: UIViewController, UITableViewDelegate, U
         return UIModalPresentationStyle.none
     }
     
+    func removeIngredient(cell: IngredientTableCell) {
+        let indexPath = self.ingTableView.indexPath(for: cell)
+        ingList.remove(at: indexPath!.row)
+        self.ingTableView.deleteRows(at: [indexPath!], with: .fade)
+    }
+    
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         if pickerView.tag == 2 || pickerView.tag == 3 {
             return 3
@@ -147,6 +163,8 @@ class AddRecipeFirstPageViewController: UIViewController, UITableViewDelegate, U
             let cell = tableView.dequeueReusableCell(withIdentifier: "ingredientTableCell", for: indexPath as IndexPath) as! IngredientTableCell
             
             let row = indexPath.row
+            
+            cell.cellProtocol = self
             cell.amountLabel.text = String(ingList[row].getUnit()) + " " + ingList[row].getCustomLabel()
             cell.ingLabel.text = ingList[row].getName()
             

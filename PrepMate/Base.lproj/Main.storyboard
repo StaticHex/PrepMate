@@ -332,26 +332,29 @@
                                             <rect key="frame" x="0.0" y="0.0" width="355" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Ingredient" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RbL-4Z-eCD">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Ingredient" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RbL-4Z-eCD">
                                                     <rect key="frame" x="10" y="5" width="78" height="21"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Amount" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="45Q-RG-272">
-                                                    <rect key="frame" x="285" y="5" width="60" height="21"/>
+                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ndM-oZ-F8l">
+                                                    <rect key="frame" x="312" y="1" width="30" height="30"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <state key="normal" title="X"/>
+                                                    <connections>
+                                                        <action selector="removeIngredient:" destination="fJd-FN-DGv" eventType="touchUpInside" id="uzC-tC-6HJ"/>
+                                                    </connections>
+                                                </button>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Amount" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="45Q-RG-272">
+                                                    <rect key="frame" x="202" y="5" width="102" height="21"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
-                                            <constraints>
-                                                <constraint firstItem="RbL-4Z-eCD" firstAttribute="top" secondItem="CVm-LG-a3K" secondAttribute="top" constant="5" id="PPe-ra-3s0"/>
-                                                <constraint firstItem="45Q-RG-272" firstAttribute="leading" secondItem="RbL-4Z-eCD" secondAttribute="trailing" constant="197" id="X6x-SG-Jbx"/>
-                                                <constraint firstItem="45Q-RG-272" firstAttribute="top" secondItem="CVm-LG-a3K" secondAttribute="top" constant="5" id="cy9-Sc-fF3"/>
-                                                <constraint firstAttribute="trailing" secondItem="45Q-RG-272" secondAttribute="trailing" constant="10" id="dnl-ZK-NrR"/>
-                                                <constraint firstItem="RbL-4Z-eCD" firstAttribute="leading" secondItem="CVm-LG-a3K" secondAttribute="leading" constant="10" id="hhV-WZ-NBd"/>
-                                            </constraints>
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="amountLabel" destination="45Q-RG-272" id="ySk-2f-Xcm"/>
@@ -4759,7 +4762,7 @@
         <image name="splash_screen.jpg" width="336" height="598"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="gfz-p4-kgy"/>
+        <segue reference="1hz-tg-fc6"/>
         <segue reference="2ZC-BU-Ttr"/>
         <segue reference="BjC-YD-RDR"/>
         <segue reference="xxt-hr-eTW"/>
