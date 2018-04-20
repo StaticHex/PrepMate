@@ -44,7 +44,6 @@ class LoginViewController: UIViewController, UIPopoverPresentationControllerDele
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if(segue.identifier == "loginToHomeSegue") {
             let dest = segue.destination as? HomePageViewController
-            dest?.currentUser.copy(oldUser: currentUser)
             currentUser.clear()
         } else if(segue.identifier == "loginToUserProfile") {
             let dest = segue.destination as? UserProfileViewController

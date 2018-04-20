@@ -103,3 +103,25 @@ public func metricToStd(unit:Int, amount:Double) -> Double {
 public func stdToMetric(unit:Int, amount:Double) -> Double {
     return amount * unitList[unit].factor
 }
+public func getTimestamp() -> String {
+    let date = Date()
+    let calendar = Calendar.current
+    var tsString = ""
+    tsString += calendar.component(.month, from: date).description + "/"
+    tsString += calendar.component(.day, from: date).description + "/"
+    tsString += calendar.component(.year, from: date).description + " "
+    var hour = Int(calendar.component(.hour, from: date).description)!
+    var suffix = "AM"
+    if(hour > 11) {
+        suffix = "PM"
+    }
+    if(hour > 12) {
+        hour -= 12
+    }
+    if(hour == 0) {
+        hour = 12
+    }
+    tsString += String(hour) + ":"
+    tsString += calendar.component(.minute, from: date).description+suffix
+    return tsString
+}

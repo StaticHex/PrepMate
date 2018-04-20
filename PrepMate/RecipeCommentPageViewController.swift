@@ -12,7 +12,7 @@ class RecipeCommentCell: UITableViewCell {
     @IBOutlet weak var commentPreview: UITextView!
 }
 import UIKit
-class RecipeCommentPageViewController: UIViewController, UITableViewDelegate, UITableViewDataSource{
+class RecipeCommentPageViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIPopoverPresentationControllerDelegate, addCommentProtocol{
     
     @IBOutlet weak var recipeCommentTableView: UITableView!
     var recipe = Recipe()
@@ -28,10 +28,15 @@ class RecipeCommentPageViewController: UIViewController, UITableViewDelegate, UI
         cell.commentPreview.allowsEditingTextAttributes = false
         cell.commentPreview.text! = comments[row].getDescription()
         // TODO: How do we populate the rating?
-        //cell.ratingsLabel.image =
+        cell.ratingsLabel.image = RatingImages[comments[row].getRating()]
         return cell
     }
-    
+    func addComment(comment: Comment) {
+        // TODO: Update the db? 
+        comments.append(comment)
+        self.recipe.setComments(comments: comments)
+        self.recipeCommentTableView.reloadData()
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         comments = self.recipe.getComments()
@@ -45,6 +50,9 @@ class RecipeCommentPageViewController: UIViewController, UITableViewDelegate, UI
         // Dispose of any resources that can be recreated.
     }
     
+    func adaptivePresentationStyle(for controller: UIPresentationController, traitCollection: UITraitCollection) -> UIModalPresentationStyle {
+        return UIModalPresentationStyle.none
+    }
 
     // MARK: - Navigation
 
@@ -55,6 +63,16 @@ class RecipeCommentPageViewController: UIViewController, UITableViewDelegate, UI
             let operatorIndex = recipeCommentTableView.indexPathForSelectedRow?.row
         {
             destination.comment = comments[operatorIndex]
+        }
+        else if segue.identifier == "addCommentSegue" {
+            let vc = segue.destination as? NewCommentPopoverViewController
+            vc?.isModalInPopover = true
+            let controller = vc?.popoverPresentationController
+            if controller != nil {
+                controller?.delegate = self
+                controller?.passthroughViews = nil
+                vc?.addCommentDelegate = self
+            }
         }
     }
 

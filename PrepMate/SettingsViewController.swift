@@ -9,7 +9,6 @@
 import UIKit
 
 class SettingsViewController: UIViewController, UIPopoverPresentationControllerDelegate, UIPickerViewDelegate, UIPickerViewDataSource, ColorPickProtocol {
-    var currentUser = User()
     
     let pickerData = ["Standard", "Metric"]
     

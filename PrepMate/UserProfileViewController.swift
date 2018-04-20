@@ -24,7 +24,6 @@ class UserProfileViewController: UIViewController, UIPopoverPresentationControll
     // add = 0, edit = 1, view = 2, unset = -1
     var op : Int = -1
     var isPhotoSet : Bool = false
-    var currentUser : User = User()
     var avatarPhoto : Photo = Photo()
     // UI Component outlets
     @IBOutlet weak var btnAvatar: UIButton!

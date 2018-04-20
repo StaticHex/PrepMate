@@ -30,11 +30,9 @@ class CommentDetailsPageViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     private func loadPage() {
-        //TODO: Implement ratings
-        //self.ratingsLabel.image
+        self.ratingsLabel.image = RatingImages[self.comment.getRating()]
         authorLabel.text! = self.comment.getAuthor().getFname() + " " + self.comment.getAuthor().getLname()
         dateLabel.text! = self.comment.getDate()
-        timeLabel.text! = self.comment.getTime()
         commentBody.text! = self.comment.getDescription()
         commentTitle.title = self.comment.getTitle()
 

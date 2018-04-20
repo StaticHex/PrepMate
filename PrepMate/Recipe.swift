@@ -163,6 +163,7 @@ class Recipe {
         request.httpMethod = "POST"
         
         let uid = String(currentUser.getId())
+        print("UID: \(uid)")
         let name = self.name
         let photo = self.photo.getPath()
         let category = String(self.category)

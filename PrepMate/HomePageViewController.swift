@@ -33,7 +33,6 @@ class HomePageViewController: UIViewController, settingsProtocol, ProfileProtoco
     @IBOutlet weak var btnCredits: UIButton!
     @IBOutlet weak var btnTerms: UIButton!
     
-    var currentUser = User()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,6 +41,9 @@ class HomePageViewController: UIViewController, settingsProtocol, ProfileProtoco
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        print("CURRENT USER FIRST NAME: \(currentUser.getFname())")
+        print("CURRENT USER ID: \(currentUser.getId())")
+        
         navigationController?.isNavigationBarHidden = true
         let defaults = UserDefaults.standard
         if defaults.object(forKey: "titleBarColor") != nil {
@@ -87,12 +89,10 @@ class HomePageViewController: UIViewController, settingsProtocol, ProfileProtoco
         if segue.identifier == "homeToSettings" {
             let vc = segue.destination as? SettingsViewController
             vc?.sDelegate = self
-            vc?.currentUser = currentUser
         }
         if segue.identifier == "homeToProfile" {
             let vc = segue.destination as? UserProfileViewController
             vc?.profileDelegate = self
-            vc?.currentUser = currentUser
             vc?.op = 1
             vc?.avatarPhoto.setPhoto(imageURL: currentUser.getPhotoURL())
         }
