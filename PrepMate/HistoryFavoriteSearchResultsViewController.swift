@@ -52,7 +52,7 @@ class HistoryFavoriteSearchResultsViewController: UIViewController, UITableViewD
         histFavTableView.dataSource = self
         var testImage = Photo()
         testImage.setPhoto(imageURL:"https://media1.popsugar-assets.com/files/thumbor/D0OYajmdcatHUC1-b4Axbf-uNxo/fit-in/2048xorig/filters:format_auto-!!-:strip_icc-!!-/2017/02/08/859/n/1922195/a7a42800589b73af54eda9.99423697_edit_img_image_43136859_1486581354/i/KFC-Fried-Chicken-Pizza.jpg")
-        let testComment = [Comment(id: 1, title: "TEST COMMENT", author: User(), rating: 1, description: "This is a test comment. Please work")]
+        let testComment = [Comment(id: 1, title: "TEST COMMENT", author: currentUser, rating: 1, description: "This is a test comment. Please work")]
         let testIngredient = [(id:1, ing:Ingredient(id: 1, name: "Test", unit: 1, customLabel: "oz"), amount:Float(1.5))]
         let testVitamin = [Vitamin(id: 1, index: 1, percent: 0.5)]
         let testDirections = [(id: -1, str: "Test 1"), (id: -1, str: "Test 2")]

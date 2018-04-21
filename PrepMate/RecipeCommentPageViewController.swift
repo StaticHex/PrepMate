@@ -12,7 +12,7 @@ class RecipeCommentCell: UITableViewCell {
     @IBOutlet weak var commentPreview: UITextView!
 }
 import UIKit
-class RecipeCommentPageViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIPopoverPresentationControllerDelegate, addCommentProtocol{
+class RecipeCommentPageViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIPopoverPresentationControllerDelegate, addCommentProtocol, sortCommentProtocol{
     
     @IBOutlet weak var recipeCommentTableView: UITableView!
     var recipe = Recipe()
@@ -53,6 +53,26 @@ class RecipeCommentPageViewController: UIViewController, UITableViewDelegate, UI
     func adaptivePresentationStyle(for controller: UIPresentationController, traitCollection: UITraitCollection) -> UIModalPresentationStyle {
         return UIModalPresentationStyle.none
     }
+    
+    @IBAction func onPressAdvanced(_ sender: Any) {
+        performSegue(withIdentifier: "advancedPopoverSegue", sender: sender)
+    }
+    func sortDate(ascend:Bool){
+        if(ascend){
+            //Sort by most recent date
+        } else {
+            //Sort by oldest first
+        }
+        
+    }
+    func sortRating(ascend:Bool) {
+        if(ascend){
+            //Sort by lowest rating first
+        } else {
+            //Sort by highest rating first
+        }
+    }
+    
 
     // MARK: - Navigation
 
@@ -72,6 +92,16 @@ class RecipeCommentPageViewController: UIViewController, UITableViewDelegate, UI
                 controller?.delegate = self
                 controller?.passthroughViews = nil
                 vc?.addCommentDelegate = self
+            }
+        }
+        else if segue.identifier == "advancedPopoverSegue"{
+            let vc = segue.destination as? CommentFilterPopoverViewController
+            vc?.isModalInPopover = true
+            let controller = vc?.popoverPresentationController
+            if controller != nil {
+                controller?.delegate = self
+                controller?.passthroughViews = nil
+                vc?.sortCommentDelegate = self
             }
         }
     }

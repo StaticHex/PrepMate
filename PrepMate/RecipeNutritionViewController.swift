@@ -50,6 +50,7 @@ class RecipeNutritionViewController: UIViewController, UICollectionViewDelegate,
         nutritionCollectionView.dataSource = self
         self.basicInfoText.text! = self.loadBasicInfo()
         self.vitaminInfoText.text! = self.loadVitaminInfo()
+
     }
 
     override func didReceiveMemoryWarning() {

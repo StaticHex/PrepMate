@@ -7,16 +7,13 @@
 //
 
 import UIKit
-
 class CommentDetailsPageViewController: UIViewController {
     var comment = Comment()
     
     // Outlets
-    @IBOutlet weak var commentTitle: UINavigationItem!
     @IBOutlet weak var ratingsLabel: UIImageView!
     @IBOutlet weak var authorLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
-    @IBOutlet weak var timeLabel: UILabel!
     @IBOutlet weak var commentBody: UITextView!
     
     override func viewDidLoad() {
@@ -34,13 +31,7 @@ class CommentDetailsPageViewController: UIViewController {
         authorLabel.text! = self.comment.getAuthor().getFname() + " " + self.comment.getAuthor().getLname()
         dateLabel.text! = self.comment.getDate()
         commentBody.text! = self.comment.getDescription()
-        commentTitle.title = self.comment.getTitle()
-
-    }
-    
-    @IBAction func onBackPressed(_ sender: Any) {
-        //TODO implement back button:w
-        
+        self.title = self.comment.getTitle()
     }
 
 }
