@@ -12,7 +12,11 @@ protocol settingsProtocol: class {
     func changeSidebarColor(color: UIColor)
 }
 
-class HomePageViewController: UIViewController, settingsProtocol, ProfileProtocol {
+class HomeCategoryTableViewCell: UITableViewCell {
+    @IBOutlet weak var categoryName: UILabel!
+}
+
+class HomePageViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, settingsProtocol, ProfileProtocol {
     
     // UI Outlets
     @IBOutlet weak var menu: UIView!
@@ -32,11 +36,14 @@ class HomePageViewController: UIViewController, settingsProtocol, ProfileProtoco
     @IBOutlet weak var lblLegal: UILabel!
     @IBOutlet weak var btnCredits: UIButton!
     @IBOutlet weak var btnTerms: UIButton!
+    @IBOutlet weak var categoryTableView: UITableView!
     
 
     override func viewDidLoad() {
         super.viewDidLoad()
         menu.alpha = 0
+        categoryTableView.dataSource = self
+        categoryTableView.delegate = self
         // Do any additional setup after loading the view.
     }
     
@@ -99,6 +106,24 @@ class HomePageViewController: UIViewController, settingsProtocol, ProfileProtoco
         menu.alpha = 0.0
     }
 
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return categoryList.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        let cell:HomeCategoryTableViewCell = tableView.dequeueReusableCell(withIdentifier: "categoryTableCell", for: indexPath as IndexPath) as! HomeCategoryTableViewCell
+        
+        
+        let row = indexPath.row
+        cell.categoryName.text = categoryList[row]
+        return cell
+    }
+    
     @IBAction func onMenuButtonClick(_ sender: Any) {
         if menu.alpha == 0 {
             menu.alpha = 1
