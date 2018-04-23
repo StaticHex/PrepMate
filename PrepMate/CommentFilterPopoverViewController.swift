@@ -104,7 +104,6 @@ class CommentFilterPopoverViewController: UIViewController, UIPickerViewDelegate
         }
     }
     @IBAction func onSortPressed(_ sender: Any) {
-        if
         dismiss(animated: true, completion: nil)
     }
     
