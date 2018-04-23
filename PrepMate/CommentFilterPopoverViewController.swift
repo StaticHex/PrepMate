@@ -8,8 +8,8 @@
 
 import UIKit
 protocol sortCommentProtocol: class {
-    func sortDate(ascend:Bool)
-    func sortRating(ascend: Bool)
+    func sortDate(ascend:Bool, enabledStars: [Bool], sortOption: Int)
+    func sortRating(ascend: Bool, enabledStars:[Bool], sortOption: Int)
 }
 class CommentFilterPopoverViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
 
@@ -22,7 +22,7 @@ class CommentFilterPopoverViewController: UIViewController, UIPickerViewDelegate
     @IBOutlet weak var sortPickerText: UITextField!
     var sortByPicker = UIPickerView()
     let sortOptions = ["Most Recent", "Oldest", "Highest Rating", "Lowest Rating"]
-    
+    var selectedOption = 0
     var sortCommentDelegate: sortCommentProtocol?
     
     override func viewDidLoad() {
@@ -104,6 +104,7 @@ class CommentFilterPopoverViewController: UIViewController, UIPickerViewDelegate
         }
     }
     @IBAction func onSortPressed(_ sender: Any) {
+        if
         dismiss(animated: true, completion: nil)
     }
     

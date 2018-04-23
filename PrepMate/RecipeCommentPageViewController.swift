@@ -17,6 +17,8 @@ class RecipeCommentPageViewController: UIViewController, UITableViewDelegate, UI
     @IBOutlet weak var recipeCommentTableView: UITableView!
     var recipe = Recipe()
     var comments = [Comment]()
+    var sortOption = 0
+    var enabledStars = [true, true, true, true, true]
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return comments.count
     }
@@ -57,7 +59,7 @@ class RecipeCommentPageViewController: UIViewController, UITableViewDelegate, UI
     @IBAction func onPressAdvanced(_ sender: Any) {
         performSegue(withIdentifier: "advancedPopoverSegue", sender: sender)
     }
-    func sortDate(ascend:Bool){
+    func sortDate(ascend:Bool, enabledStars: [Bool], sortOption: Int){
         if(ascend){
             //Sort by most recent date
         } else {
@@ -65,7 +67,7 @@ class RecipeCommentPageViewController: UIViewController, UITableViewDelegate, UI
         }
         
     }
-    func sortRating(ascend:Bool) {
+    func sortRating(ascend:Bool, enabledStars: [Bool], sortOption: Int) {
         if(ascend){
             //Sort by lowest rating first
         } else {
@@ -102,6 +104,8 @@ class RecipeCommentPageViewController: UIViewController, UITableViewDelegate, UI
                 controller?.delegate = self
                 controller?.passthroughViews = nil
                 vc?.sortCommentDelegate = self
+                vc?.selectedOption = self.sortOption
+                vc?.starSortVector = self.enabledStars
             }
         }
     }
