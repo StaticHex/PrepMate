@@ -29,6 +29,8 @@ class HistoryFavoriteSearchResultsViewController: UIViewController, UITableViewD
     /// Array containing the Recipes to show.
     var recipeList = [Recipe]()
     
+    var row : Int?
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return recipeList.count
     }

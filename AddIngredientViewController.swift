@@ -18,7 +18,11 @@ class AddIngredientViewController: UIViewController, UIPickerViewDelegate, UIPic
     
     @IBOutlet weak var pickerText: UITextField!
     
+    var whichController : Int = 0
+    
+    weak var sDelegate : shoppingListProtocol?
     weak var iDelegate : firstPageProtocol?
+    weak var pDelegate : pantryProtocol?
     
     // Picker information
     var unitPicker = UIPickerView()
@@ -157,7 +161,19 @@ class AddIngredientViewController: UIViewController, UIPickerViewDelegate, UIPic
         }
         
         let item = Ingredient(id: 1, name: itemTextView.text!, unit: Int(amountTextView.text!)!, customLabel: pickerText.text!)
-        iDelegate?.addIngredient(ingredient: item)
+        
+        
+        if whichController == 0 {
+            sDelegate?.addSItem(item: item)
+            print(whichController)
+            print("STOPPPPP")
+        }
+        else if whichController == 1 {
+            pDelegate?.addPItem(item: item)
+        }
+        else {
+            iDelegate?.addIngredient(ingredient: item)
+        }
         dismiss(animated: true, completion: nil)
     }
     

@@ -41,14 +41,14 @@ class ShoppingListViewController: UIViewController, UIPopoverPresentationControl
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "newListItemSegue" {
-            let vc = segue.destination as? NewListItemViewController
+            let vc = segue.destination as? AddIngredientViewController
             vc?.isModalInPopover = true
             let controller = vc?.popoverPresentationController
             if controller != nil {
                 controller?.delegate = self
                 controller?.passthroughViews = nil
                 vc?.sDelegate = self
-                vc?.whichController = true
+                vc?.whichController = 0
             }
         }
     }
@@ -78,7 +78,7 @@ class ShoppingListViewController: UIViewController, UIPopoverPresentationControl
         
         let row = indexPath.row
         cell.itemName.text = shoppingListItems[row].getName()
-        cell.itemAmount.text = String(shoppingListItems[row].getUnit())
+        cell.itemAmount.text = String(shoppingListItems[row].getUnit()) + " " + shoppingListItems[row].getCustomLabel()
         return cell
     }
     

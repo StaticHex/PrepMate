@@ -39,14 +39,14 @@ class PantryViewController: UIViewController, UIPopoverPresentationControllerDel
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "newListItemSegue2" {
-            let vc = segue.destination as? NewListItemViewController
+            let vc = segue.destination as? AddIngredientViewController
             vc?.isModalInPopover = true
             let controller = vc?.popoverPresentationController
             if controller != nil {
                 controller?.delegate = self
                 controller?.passthroughViews = nil
                 vc?.pDelegate = self
-                vc?.whichController = false
+                vc?.whichController = 1
             }
         }
     }
@@ -72,7 +72,8 @@ class PantryViewController: UIViewController, UIPopoverPresentationControllerDel
         
         let row = indexPath.row
         cell.itemName.text = pantryListItems[row].getName()
-        cell.itemAmount.text = String(pantryListItems[row].getUnit())
+        cell.itemAmount.text = String(pantryListItems[row].getUnit()) + " " + pantryListItems[row].getCustomLabel()
+        
         return cell
     }
     

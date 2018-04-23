@@ -3148,6 +3148,13 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="    Cuisine" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vBR-Yx-3wN">
+                                <rect key="frame" x="0.0" y="323" width="375" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vsk-Pl-koZ">
                                 <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                                 <items>
@@ -3280,10 +3287,15 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="66R-0h-oP2">
+                                                    <rect key="frame" x="192" y="5" width="139" height="33"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                </imageView>
                                             </subviews>
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="categoryName" destination="MmX-UV-VUq" id="I5V-v0-tFs"/>
+                                            <outlet property="cuisineImage" destination="66R-0h-oP2" id="wUb-eY-8xA"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -3454,13 +3466,6 @@
                                 </subviews>
                                 <color key="backgroundColor" red="0.43529412150000002" green="0.4431372583" blue="0.47450980539999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="    Cuisine" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vBR-Yx-3wN">
-                                <rect key="frame" x="0.0" y="333" width="375" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
@@ -3503,6 +3508,7 @@
                         <segue destination="0dP-6d-owt" kind="show" identifier="homeToRecipeList" id="gfz-p4-kgy"/>
                         <segue destination="lxe-Ys-8Vq" kind="show" identifier="homeToMeals" id="B1J-Fc-7Gs"/>
                         <segue destination="y0K-sX-piS" kind="show" identifier="homeToAddRecipe" id="zcz-VA-ErF"/>
+                        <segue destination="0dP-6d-owt" kind="show" identifier="homeToCuisineSegue" id="cOe-bu-kQK"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6Uy-Di-Ue0" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -3586,7 +3592,7 @@
                                         <state key="normal" title="+"/>
                                         <connections>
                                             <action selector="onAddClick:" destination="jAf-2P-R0r" eventType="touchUpInside" id="Jbx-2D-HKr"/>
-                                            <segue destination="rpr-aY-a5p" kind="popoverPresentation" identifier="newListItemSegue2" popoverAnchorView="mGR-ub-jsb" id="2ZC-BU-Ttr">
+                                            <segue destination="Jfh-Gh-Xgm" kind="popoverPresentation" identifier="newListItemSegue2" popoverAnchorView="mGR-ub-jsb" id="Ged-TP-QC8">
                                                 <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
                                             </segue>
                                         </connections>
@@ -3620,7 +3626,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YXz-Oj-9xS" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2569" y="1755"/>
+            <point key="canvasLocation" x="2568.8000000000002" y="1754.5727136431785"/>
         </scene>
         <!--Shopping List-->
         <scene sceneID="UqQ-12-YUD">
@@ -3710,8 +3716,7 @@
                                                 <fontDescription key="fontDescription" type="system" pointSize="32"/>
                                                 <state key="normal" title="+"/>
                                                 <connections>
-                                                    <action selector="addNewItem:" destination="ItD-MO-WN6" eventType="touchUpInside" id="EBu-8L-Pm8"/>
-                                                    <segue destination="rpr-aY-a5p" kind="popoverPresentation" identifier="newListItemSegue" popoverAnchorView="3wT-2J-ekw" id="RDO-cX-1yg">
+                                                    <segue destination="Jfh-Gh-Xgm" kind="popoverPresentation" identifier="newListItemSegue" popoverAnchorView="3wT-2J-ekw" id="bXW-K1-T9k">
                                                         <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
                                                     </segue>
                                                 </connections>
@@ -4006,7 +4011,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nE1-KT-is4" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5097.6000000000004" y="1038.9805097451276"/>
+            <point key="canvasLocation" x="5906" y="1160"/>
         </scene>
         <!--Add Ingredient View Controller-->
         <scene sceneID="qkA-47-DWO">
@@ -4830,8 +4835,8 @@
         <image name="splash_screen.jpg" width="336" height="598"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="gfz-p4-kgy"/>
-        <segue reference="2ZC-BU-Ttr"/>
+        <segue reference="cOe-bu-kQK"/>
+        <segue reference="bXW-K1-T9k"/>
         <segue reference="BjC-YD-RDR"/>
         <segue reference="rrq-j1-upH"/>
     </inferredMetricsTieBreakers>

@@ -14,6 +14,7 @@ protocol settingsProtocol: class {
 
 class HomeCategoryTableViewCell: UITableViewCell {
     @IBOutlet weak var categoryName: UILabel!
+    @IBOutlet weak var cuisineImage: UIImageView!
 }
 
 class HomePageViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, settingsProtocol, ProfileProtocol {
@@ -38,6 +39,7 @@ class HomePageViewController: UIViewController, UITableViewDelegate, UITableView
     @IBOutlet weak var btnTerms: UIButton!
     @IBOutlet weak var categoryTableView: UITableView!
     
+    var thisRow = 0
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -103,6 +105,11 @@ class HomePageViewController: UIViewController, UITableViewDelegate, UITableView
             vc?.op = 1
             vc?.avatarPhoto.setPhoto(imageURL: currentUser.getPhotoURL())
         }
+        if segue.identifier == "homeToCuisineSegue" {
+            let vc = segue.destination as? HistoryFavoriteSearchResultsViewController
+            vc?.row = self.thisRow
+        }
+        
         menu.alpha = 0.0
     }
 
@@ -179,6 +186,13 @@ class HomePageViewController: UIViewController, UITableViewDelegate, UITableView
     }
     @IBAction func onMenuAddRecipeClick(_ sender: Any) {
         performSegue(withIdentifier: "homeToAddRecipe", sender: sender)
+    }
+    
+    func tableView(_ tableView: UITableView,
+                   didSelectRowAt indexPath: IndexPath) {
+        self.thisRow = indexPath.row
+        performSegue(withIdentifier: "homeToCuisineSegue", sender: self)
+        
     }
     
     func changeSidebarColor(color: UIColor) {
