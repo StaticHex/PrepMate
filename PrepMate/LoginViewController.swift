@@ -10,7 +10,6 @@
 //
 
 import UIKit
-var currentUser = User() // holds our current user
 class LoginViewController: UIViewController, UIPopoverPresentationControllerDelegate, ProfileProtocol {
     
     // UIComponent Outlets
@@ -44,7 +43,6 @@ class LoginViewController: UIViewController, UIPopoverPresentationControllerDele
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if(segue.identifier == "loginToHomeSegue") {
             let dest = segue.destination as? HomePageViewController
-            currentUser.clear()
         } else if(segue.identifier == "loginToUserProfile") {
             let dest = segue.destination as? UserProfileViewController
             dest?.profileDelegate = self

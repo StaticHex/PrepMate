@@ -304,10 +304,10 @@ class Recipe : CustomStringConvertible {
                 // Get the error status and the error message from the database
                 if let parseJSON = JSONResponse {
                     self.eMsg = parseJSON["msg"] as! String
-                    if let strId = parseJSON["id"] as? NSNumber {
+                    if let strId = parseJSON["code"] as? NSNumber {
                         self.id = strId as! Int
                     } else {
-                        self.id = Int(parseJSON["id"] as! String)!
+                        self.id = Int(parseJSON["code"] as! String)!
                     }
                     vError = (parseJSON["error"] as! Bool)
                 }

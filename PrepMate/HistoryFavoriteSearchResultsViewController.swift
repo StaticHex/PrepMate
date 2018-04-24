@@ -52,11 +52,13 @@ class HistoryFavoriteSearchResultsViewController: UIViewController, UITableViewD
         navigationController?.isNavigationBarHidden = false
         histFavTableView.delegate = self
         histFavTableView.dataSource = self
-
+        /*
+         v
         var testRecipe = RecipeRecord()
         testRecipe.name = "Test"
         testRecipe.photo = "https://media1.popsugar-assets.com/files/thumbor/D0OYajmdcatHUC1-b4Axbf-uNxo/fit-in/2048xorig/filters:format_auto-!!-:strip_icc-!!-/2017/02/08/859/n/1922195/a7a42800589b73af54eda9.99423697_edit_img_image_43136859_1486581354/i/KFC-Fried-Chicken-Pizza.jpg"
         testRecipe.category = 10
+        testRecipe.creatorId = currentUser.getId()
         testRecipe.servings = "6~8"
         testRecipe.prepTime = "00:10:00"
         testRecipe.cookTime = "00:10:00"
@@ -107,8 +109,13 @@ class HistoryFavoriteSearchResultsViewController: UIViewController, UITableViewD
         if(recipe.addRecipeComment(newComment: comment)) {
             print(recipe)
         }
-
-        recipeList.append(recipe)
+        */
+        var rList = [21,22,48]
+        for r in rList {
+            var recipe = Recipe()
+            recipe.getRecipe(rid: r)
+            recipeList.append(recipe)
+        }
     }
     
     override func didReceiveMemoryWarning() {

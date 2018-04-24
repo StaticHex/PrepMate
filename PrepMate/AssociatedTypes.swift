@@ -126,3 +126,5 @@ public func getTimestamp() -> String {
     tsString += calendar.component(.minute, from: date).description+suffix
     return tsString
 }
+
+var currentUser = User()
