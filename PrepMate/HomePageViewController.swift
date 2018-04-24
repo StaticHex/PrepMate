@@ -50,8 +50,8 @@ class HomePageViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        print("CURRENT USER FIRST NAME: \(currentUser.getFname())")
-        print("CURRENT USER ID: \(currentUser.getId())")
+        print(categoryList.count)
+        print(categoryImages.count)
         
         navigationController?.isNavigationBarHidden = true
         let defaults = UserDefaults.standard
