@@ -59,17 +59,17 @@ class RecipeNutritionViewController: UIViewController, UICollectionViewDelegate,
     }
     
     func loadBasicInfo() -> String {
-        let maxWidth = 40
+        let maxWidth = 20
         var headerString = "Amount"
         var dataDict = self.recipe.getNutritionDict()
         headerString = headerString.padding(toLength: maxWidth, withPad: " ", startingAt: 0)
         headerString =  headerString + "Daily Value %\n\n"
         var result = headerString
         for key in dataDict.keys {
-            var tmp = key + ": \(dataDict[key]!)g"
+            var tmp = key + ": \(dataDict[key]!.amount)g"
             tmp = tmp.padding(toLength: maxWidth, withPad: " ", startingAt:0)
             // TODO: Change this to use FDA default values
-            tmp = tmp + "20%\n"
+            tmp = tmp + "\(dataDict[key]!.percent)%\n"
             result = result + tmp
         }
         return result

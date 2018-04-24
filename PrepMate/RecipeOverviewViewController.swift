@@ -41,7 +41,7 @@ class RecipeOverviewViewController: UIViewController {
         recipeImage.image = self.recipe.getPhoto()
         ingredientText.text! = self.loadIngredients()
         directionsText.text! = self.loadDirections()
-        caloriesLabel.text! = "Calories: \(self.recipe.getCalories())"
+        caloriesLabel.text! = "Calories: \(self.recipe.getCalories().amount)"
         servingsLabel.text! = "Servings: \(self.recipe.getServings())"
         fatLabel.text! = "Fat: \(self.recipe.getSatFatG().amount)"
         preptimeLabel.text! = "Prep: \(self.recipe.getPrepTime())"

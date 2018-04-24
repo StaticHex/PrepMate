@@ -34,17 +34,17 @@ class RecipeCommentPageViewController: UIViewController, UITableViewDelegate, UI
         return cell
     }
     func addComment(comment: Comment) {
-        // TODO: Update the db?
         if(self.recipe.addRecipeComment(newComment: comment)) {
             print(recipe)
         }
+        comments = (0..<self.recipe.getNumComment()).map({self.recipe.getRecipeComment(idx: $0)})
         self.recipeCommentTableView.reloadData()
     }
     override func viewDidLoad() {
         super.viewDidLoad()
         recipeCommentTableView.delegate = self
         recipeCommentTableView.dataSource = self
-        // Do any additional setup after loading the view.
+        comments = (0..<self.recipe.getNumComment()).map({self.recipe.getRecipeComment(idx: $0)})
     }
 
     override func didReceiveMemoryWarning() {
