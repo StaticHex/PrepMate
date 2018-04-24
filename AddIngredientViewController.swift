@@ -160,13 +160,15 @@ class AddIngredientViewController: UIViewController, UIPickerViewDelegate, UIPic
             return
         }
         
-        let item = Ingredient(id: 1, name: itemTextView.text!, unit: Int(amountTextView.text!)!, customLabel: pickerText.text!)
+        var ing = IngredientRecord()
+        ing.name = itemTextView.text!
+        ing.unit = Int(amountTextView.text!)!
+        ing.label = pickerText.text!
+        //let item = Ingredient(id: 1, name: itemTextView.text!, unit: Int(amountTextView.text!)!, customLabel: pickerText.text!)
         
-        
+        /*
         if whichController == 0 {
             sDelegate?.addSItem(item: item)
-            print(whichController)
-            print("STOPPPPP")
         }
         else if whichController == 1 {
             pDelegate?.addPItem(item: item)
@@ -174,6 +176,7 @@ class AddIngredientViewController: UIViewController, UIPickerViewDelegate, UIPic
         else {
             iDelegate?.addIngredient(ingredient: item)
         }
+ */
         dismiss(animated: true, completion: nil)
     }
     

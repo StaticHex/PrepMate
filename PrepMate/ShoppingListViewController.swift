@@ -78,7 +78,7 @@ class ShoppingListViewController: UIViewController, UIPopoverPresentationControl
         
         let row = indexPath.row
         cell.itemName.text = shoppingListItems[row].getName()
-        cell.itemAmount.text = String(shoppingListItems[row].getUnit()) + " " + shoppingListItems[row].getCustomLabel()
+        cell.itemAmount.text = String(shoppingListItems[row].getUnit()) + " " + shoppingListItems[row].getLabel()
         return cell
     }
     

@@ -91,15 +91,15 @@ class NewListItemViewController: UIViewController, UIPickerViewDelegate, UIPicke
             return
         }
         
-        let item = Ingredient(id: 1, name: itemNameInput.text!, unit: Int(amountInput.text!)!, customLabel: "empty")
-        
+       // let item = Ingredient(id: 1, name: itemNameInput.text!, unit: Int(amountInput.text!)!, customLabel: "empty")
+        /*
         if whichController {
             sDelegate?.addSItem(item: item)
         }
         else if !whichController {
             pDelegate?.addPItem(item: item)
         }
-        
+        */
         dismiss(animated: true, completion: nil)
     }
     

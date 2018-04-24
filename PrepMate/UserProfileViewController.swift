@@ -185,7 +185,7 @@ class UserProfileViewController: UIViewController, UIPopoverPresentationControll
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return currentUser.getPrefs().count
+        return currentUser.getPrefCount()
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -193,8 +193,9 @@ class UserProfileViewController: UIViewController, UIPopoverPresentationControll
         let cell = tvBlacklist.dequeueReusableCell(withIdentifier: "BlacklistCell", for: indexPath as IndexPath) as! BlacklistCell
         
         let row = indexPath.row
-        let bl_key = currentUser.getPrefs()[row].key
-        let bl_value = currentUser.getPrefs()[row].value
+        let pref = currentUser.getPref(idx: row)
+        let bl_key = pref.key
+        let bl_value = pref.value
         cell.detail?.text = bl_key
         cell.bListDelegate = self
         cell.idx = row
@@ -226,7 +227,6 @@ class UserProfileViewController: UIViewController, UIPopoverPresentationControll
         tableView.deselectRow(at: indexPath, animated: true)
         
         let row = indexPath.row
-        print("Selected item = ",currentUser.getPrefs()[row])
     }
     
     // Both of these ended up being direct segues so these two functions can be unlinked and deleted
@@ -288,7 +288,15 @@ class UserProfileViewController: UIViewController, UIPopoverPresentationControll
             if op == 0 {
                 // Try to add our user, if an error occurs, display an alert with
                 // an error message
-                if(!currentUser.addUser(newUser: (uname: txtUserName.text!, pword: txtPword.text!, photo: avatarPhoto, fname: txtFName.text!, lname: txtLName.text!, email: txtEmail.text!, bio: txtBio.text!))) {
+                var newRecord = UserRecord()
+                newRecord.uname = txtUserName.text!
+                newRecord.pword = txtPword.text!
+                newRecord.photo = avatarPhoto.getPath()
+                newRecord.fname = txtFName.text!
+                newRecord.lname = txtLName.text!
+                newRecord.email = txtEmail.text!
+                newRecord.bio = txtBio.text!
+                if(!currentUser.addUser(newUser: newRecord)) {
                     profileDelegate?.updateUser(newUser: currentUser)
                 } else {
                     alert.title = "User Not Added"
@@ -299,7 +307,15 @@ class UserProfileViewController: UIViewController, UIPopoverPresentationControll
             } else if op == 1 {
                 // Try to update our user, if an error occurs, display an alert with
                 // an error message
-                if(!currentUser.updateUser(newUser: (uname: txtUserName.text!, pword: txtPword.text!, photo: avatarPhoto, fname: txtFName.text!, lname: txtLName.text!, email: txtEmail.text!, bio: txtBio.text!))) {
+                var newRecord = UserRecord()
+                newRecord.uname = txtUserName.text!
+                newRecord.pword = txtPword.text!
+                newRecord.photo = avatarPhoto.getPath()
+                newRecord.fname = txtFName.text!
+                newRecord.lname = txtLName.text!
+                newRecord.email = txtEmail.text!
+                newRecord.bio = txtBio.text!
+                if(!currentUser.updateUser(newUser: newRecord)) {
                     profileDelegate?.updateUser(newUser: currentUser)
                 } else {
                     alert.title = "User Not Updated"
@@ -346,7 +362,10 @@ class UserProfileViewController: UIViewController, UIPopoverPresentationControll
     
     // Needed for bListProtocol. passes information back from popover
     func updateBlist(item: (bl_key: String, bl_value: Int)) {
-        let error = currentUser.addPreference(key: item.bl_key, value: item.bl_value)
+        var pref = UserPreference()
+        pref.key = item.bl_key
+        pref.value = item.bl_value
+        let error = currentUser.addPreference(pref: pref)
         if(error) {
             alert.title = "Preference could not be added"
             alert.message = currentUser.getEMsg()

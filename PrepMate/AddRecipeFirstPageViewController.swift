@@ -71,7 +71,7 @@ class AddRecipeFirstPageViewController: UIViewController, UITableViewDelegate, U
     // List that is used to contain ingredients and directions for table view display
     var directionList = [String]()
     var ingList = [Ingredient]()
-    var recipeToSave = Recipe()
+    var recipeToSave = RecipeRecord()
     
     var prepTimeHour: String = "00"
     var prepTimeMin: String = "00"
@@ -179,7 +179,7 @@ class AddRecipeFirstPageViewController: UIViewController, UITableViewDelegate, U
             let row = indexPath.row
             
             cell.cellProtocol = self
-            cell.amountLabel.text = String(ingList[row].getUnit()) + " " + ingList[row].getCustomLabel()
+            cell.amountLabel.text = String(ingList[row].getUnit()) + " " + ingList[row].getLabel()
             cell.ingLabel.text = ingList[row].getName()
             
             return cell
@@ -300,7 +300,7 @@ class AddRecipeFirstPageViewController: UIViewController, UITableViewDelegate, U
         self.dietary = dietaryItem
     }
     // Protocol function to save recipe changes from second add recipe page
-    func setRecipe(recipe: Recipe) {
+    func setRecipe(recipe: RecipeRecord) {
         self.recipeToSave = recipe
     }
     
@@ -358,46 +358,51 @@ class AddRecipeFirstPageViewController: UIViewController, UITableViewDelegate, U
             self.recipeAlert(str: "Prep Time")
         }
         
-        recipeToSave.setName(name: recipeNameField.text!)
+        recipeToSave.name = recipeNameField.text!
         
         // Recipe category
-        recipeToSave.setCategory(category: categoryPickerOptions.index(of: categoryPickerTextField.text!)!)
+        recipeToSave.category = categoryPickerOptions.index(of: categoryPickerTextField.text!)!
         
         // Recipe servings
-        recipeToSave.setServings(servings: servingSizeOptions.index(of: Int(servingsSizeTextField.text!)!)!)
+        recipeToSave.servings = "\(servingSizeOptions.index(of: Int(servingsSizeTextField.text!)!)!)"
         
         // Recipe preptime
-        recipeToSave.setPrepTime(prepTime: (prepTimeHour + ":" + prepTimeMin + ":00"))
+        recipeToSave.prepTime = (prepTimeHour + ":" + prepTimeMin + ":00")
 
         // Recipe Cooktime
-        recipeToSave.setCookTime(cookTime: (cookTimeHour + ":" + cookTimeMin + ":00"))
+        recipeToSave.cookTime = (cookTimeHour + ":" + cookTimeMin + ":00")
         
-        print(recipeToSave.getCookTime())
-        print(recipeToSave.getPrepTime())
+        print(recipeToSave.cookTime)
+        print(recipeToSave.prepTime)
 
         // Go through each ingredient to add to the recipe
         let ingredientCells = self.ingTableView.visibleCells as! Array<IngredientTableCell>
-        var ingredientInfo = [(id: Int, ing: Ingredient, amount: Float)]()
+        var ingredientInfo = [RecipeIngredient]()
         // Need to grab ingredient and cell, so counter and cell made to keep track of where I am
         var counter = 0
         for cell in ingredientCells {
             let value = (cell.amountLabel.text?.components(separatedBy: " ").first)!
-            ingredientInfo.append((id: -1, ing: ingList[counter], amount: Float(value)!))
+            var ing = RecipeIngredient()
+                ing.item = ingList[counter]
+                ing.amount = Double(value)!
+            
+            ingredientInfo.append(ing)
             counter += 1
         }
-        recipeToSave.setIngredients(ingredients: ingredientInfo)
+        recipeToSave.ingredients = ingredientInfo
         
         
         // Go through each direction to add to the recipe
         let directionCells = self.directionTableview.visibleCells as! Array<DirectionTableCell>
-        var directionInfo = [(id: Int, str: String)]()
+        var directionInfo = [Direction]()
         // Need to grab direction and cell, so counter and cell made to keep track of where I am
-        var directionCounter = 0
+
         for cell in directionCells {
-            directionInfo.append((-1, cell.directionLabel.text!))
-            directionCounter += 1
+            var dir = Direction()
+            dir.description = cell.directionLabel.text!
+            directionInfo.append(dir)
         }
-        recipeToSave.setDirections(directions: directionInfo)
+        recipeToSave.directions = directionInfo
         
         // Setting up the bit vector for the recipe flags
         var flagVector = 0
@@ -419,9 +424,9 @@ class AddRecipeFirstPageViewController: UIViewController, UITableViewDelegate, U
             }
             flagVector <<= 1
         }
-        recipeToSave.setFlags(flags: flagVector)
+        recipeToSave.flags = flagVector
         
-        print(recipeToSave.getName())
+        print(recipeToSave.name)
         secondDelegate?.setRecipe(recipe: recipeToSave)
         
         self.performSegue(withIdentifier: "addRecipeFirstPageToSecond", sender: self)

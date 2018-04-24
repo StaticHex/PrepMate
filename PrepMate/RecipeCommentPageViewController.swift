@@ -25,23 +25,23 @@ class RecipeCommentPageViewController: UIViewController, UITableViewDelegate, UI
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "recipeCommentCell", for: indexPath as IndexPath) as! RecipeCommentCell
         let row = indexPath.row
-        cell.commentTitle.text! = comments[row].getTitle()
+        cell.commentTitle.text! = comments[row].title
         cell.commentPreview.isScrollEnabled = false
         cell.commentPreview.allowsEditingTextAttributes = false
-        cell.commentPreview.text! = comments[row].getDescription()
+        cell.commentPreview.text! = comments[row].description
         // TODO: How do we populate the rating?
-        cell.ratingsLabel.image = RatingImages[comments[row].getRating()]
+        cell.ratingsLabel.image = RatingImages[comments[row].rating]
         return cell
     }
     func addComment(comment: Comment) {
-        // TODO: Update the db? 
-        comments.append(comment)
-        self.recipe.setComments(comments: comments)
+        // TODO: Update the db?
+        if(self.recipe.addRecipeComment(newComment: comment)) {
+            print(recipe)
+        }
         self.recipeCommentTableView.reloadData()
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        comments = self.recipe.getComments()
         recipeCommentTableView.delegate = self
         recipeCommentTableView.dataSource = self
         // Do any additional setup after loading the view.

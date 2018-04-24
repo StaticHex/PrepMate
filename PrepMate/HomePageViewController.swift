@@ -140,7 +140,7 @@ class HomePageViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     func updateUser(newUser: User) {
-        currentUser.copy(oldUser: newUser)
+        currentUser = newUser
         self.navigationController?.popViewController(animated: true)
     }
     

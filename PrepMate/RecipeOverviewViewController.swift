@@ -36,13 +36,14 @@ class RecipeOverviewViewController: UIViewController {
     }
     /// Load the recipe overview information
     private func loadRecipe(){
-        ratingsImage.image = self.recipe.getRating()
+        
+        ratingsImage.image = RatingImages[self.recipe.getRating()]
         recipeImage.image = self.recipe.getPhoto()
         ingredientText.text! = self.loadIngredients()
         directionsText.text! = self.loadDirections()
         caloriesLabel.text! = "Calories: \(self.recipe.getCalories())"
         servingsLabel.text! = "Servings: \(self.recipe.getServings())"
-        fatLabel.text! = "Fat: \(self.recipe.getSatFat())"
+        fatLabel.text! = "Fat: \(self.recipe.getSatFatG().amount)"
         preptimeLabel.text! = "Prep: \(self.recipe.getPrepTime())"
         cooktimeLabel.text! = "Cook: \(self.recipe.getCookTime())"
         
@@ -51,9 +52,10 @@ class RecipeOverviewViewController: UIViewController {
     private func loadIngredients() -> String{
         let maxWidth = 20
         var result = String()
-        for ingredient in self.recipe.getIngredients(){
-            let tmp = ingredient.ing.getName().padding(toLength: maxWidth, withPad: " ", startingAt:0)
-            result = result + String(format: "%@ %1.1f %@\n", tmp, ingredient.amount, ingredient.ing.getCustomLabel())
+        for i in 0..<self.recipe.getNumIngredients(){
+            let ingredient = self.recipe.getRecipeIngredient(idx: i)
+            let tmp = ingredient.item.getName().padding(toLength: maxWidth, withPad: " ", startingAt:0)
+            result = result + String(format: "%@ %1.1f %@\n", tmp, ingredient.amount, ingredient.item.getLabel())
         }
         return result
     }
@@ -61,8 +63,9 @@ class RecipeOverviewViewController: UIViewController {
     private func loadDirections() -> String {
         var result = String()
         var count = 1
-        for direction in self.recipe.getDirections(){
-            result = result + String(format: "%d. %@\n", count, direction.str)
+        for i in 0..<self.recipe.getNumDirections(){
+            var direction = self.recipe.getRecipeDirection(idx: i)
+            result = result + String(format: "%d. %@\n", count, direction.description)
             count = count + 1
         }
         return result

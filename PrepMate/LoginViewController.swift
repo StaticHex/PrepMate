@@ -103,7 +103,7 @@ class LoginViewController: UIViewController, UIPopoverPresentationControllerDele
     
     func updateUser(newUser: User) {
         self.navigationController?.popViewController(animated: true)
-        currentUser.copy(oldUser: newUser)
+        currentUser = newUser
         performSegue(withIdentifier: "loginToHomeSegue", sender: nil)
     }
     

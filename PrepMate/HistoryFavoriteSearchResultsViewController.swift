@@ -52,13 +52,63 @@ class HistoryFavoriteSearchResultsViewController: UIViewController, UITableViewD
         navigationController?.isNavigationBarHidden = false
         histFavTableView.delegate = self
         histFavTableView.dataSource = self
-        var testImage = Photo()
-        testImage.setPhoto(imageURL:"https://media1.popsugar-assets.com/files/thumbor/D0OYajmdcatHUC1-b4Axbf-uNxo/fit-in/2048xorig/filters:format_auto-!!-:strip_icc-!!-/2017/02/08/859/n/1922195/a7a42800589b73af54eda9.99423697_edit_img_image_43136859_1486581354/i/KFC-Fried-Chicken-Pizza.jpg")
-        let testComment = [Comment(id: 1, title: "TEST COMMENT", author: currentUser, rating: 1, description: "This is a test comment. Please work")]
-        let testIngredient = [(id:1, ing:Ingredient(id: 1, name: "Test", unit: 1, customLabel: "oz"), amount:Float(1.5))]
-        let testVitamin = [Vitamin(id: 1, index: 1, percent: 0.5)]
-        let testDirections = [(id: -1, str: "Test 1"), (id: -1, str: "Test 2")]
-        recipeList.append(Recipe(id: 1, name: "Test", photo: testImage, category: 10, servings: 8, prepTime:"00:10:00", cookTime:"00:10:00", calories: 120, unsatFat: 20, satFat: 30, cholesterol: 30, sodium: 40, potassium: 50, carbs: 60, fiber: 70, sugar: 80, comments: testComment, ingredients: testIngredient, directions: testDirections, rating: 1, flags: 4, vitamin: testVitamin))
+
+        var testRecipe = RecipeRecord()
+        testRecipe.name = "Test"
+        testRecipe.photo = "https://media1.popsugar-assets.com/files/thumbor/D0OYajmdcatHUC1-b4Axbf-uNxo/fit-in/2048xorig/filters:format_auto-!!-:strip_icc-!!-/2017/02/08/859/n/1922195/a7a42800589b73af54eda9.99423697_edit_img_image_43136859_1486581354/i/KFC-Fried-Chicken-Pizza.jpg"
+        testRecipe.category = 10
+        testRecipe.servings = "6~8"
+        testRecipe.prepTime = "00:10:00"
+        testRecipe.cookTime = "00:10:00"
+        testRecipe.calories = 120
+        testRecipe.unsatFat = 20
+        testRecipe.satFat = 30
+        testRecipe.cholesterol = 30
+        testRecipe.sodium = 40
+        testRecipe.potassium = 50
+        testRecipe.carbs = 60
+        testRecipe.fiber = 70
+        testRecipe.sugar = 80
+
+        var ingredient = RecipeIngredient()
+        if(ingredient.item.getIngredient(iid: 8)) {
+            print(ingredient)
+        }
+        ingredient.amount = 6
+        
+        testRecipe.ingredients.append((ingredient))
+
+        var vitamin = Vitamin()
+        vitamin.idx = 1
+        vitamin.percent = 0.5
+        
+        testRecipe.vitamins.append(vitamin)
+
+        var direction = Direction()
+        direction.description = "Test 1"
+        
+        testRecipe.directions.append(direction)
+        
+        var direction2 = Direction()
+        direction2.description = "Test 2"
+        
+        testRecipe.directions.append(direction2)
+        
+        let recipe = Recipe()
+        if(recipe.addRecipe(newRecipe: testRecipe)) {
+            print(recipe)
+        }
+        
+        var comment = Comment()
+        comment.title = "TEST COMMENT"
+        comment.rating = 1
+        comment.description = "This is a test comment. Please work"
+        
+        if(recipe.addRecipeComment(newComment: comment)) {
+            print(recipe)
+        }
+
+        recipeList.append(recipe)
     }
     
     override func didReceiveMemoryWarning() {

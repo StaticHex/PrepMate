@@ -1,151 +1,252 @@
 //
 //  Recipe.swift
-//  PrepMate
+//  TestApp
 //
-//  Created by Yen Chen Wee on 3/27/18.
+//  Created by Joseph Bourque on 4/17/18.
 //  Copyright © 2018 Joseph Bourque. All rights reserved.
 //
-
-import Foundation
 import UIKit
-class Recipe {
+import Foundation
+
+// Recipe Ingredient Struct
+// @members
+// - id : (int) id corresponding to an entry in the Recipe_Ingredient table
+// - item : (Ingredient) holds all the information for an entry from the
+//                     Ingredients table
+// - amount : (Double) holds the amount of the current ingredient (in metric
+//                     units).
+// @description
+// - Not to be confused with the Ingredient struct, this is a container used
+//   to hold an ingredient as well as how much of that ingredient to store
+//   in a recipe, pantry, shopping list, etc
+struct RecipeIngredient {
+    var id = -1
+    var item = Ingredient()
+    var amount = 0.0
+}
+
+// Recipe Direction Struct
+// @members
+// - id : (int) id corresponding to an entry in the Recipe_Direction table
+// - description : (string) The direction's body text
+// @description
+// - A container object used to hold the information from an entry in the
+//   Recipe_Direction table
+struct Direction {
+    var id = -1
+    var description = ""
+}
+
+// Recipe Vitamin Struct
+// @members
+// - id : (int) id corresponding to an entry in the Recipe_Vitamin table
+// - idx : (int) an index corresponding to an entry in the vitaminList
+//               global array
+// - percent : (Double) The daily percentage of the vitamin
+// @description
+// - A container object used to hold the information from an entry in the
+//   Recipe_Vitamin table
+struct Vitamin {
+    var id = -1
+    var idx = 0
+    var percent = 0.0
+}
+
+// Recipe Comment Struct
+// @members
+// - id : (int) id corresponding to an entry in the Recipe_Comment table
+// - userId : (int) id corresponding to an entry in the Users table
+// - date : (string) the timestamp corresponding to when the comment was
+//                   last updated (or added if never updated)
+// - rating : (int) Index into the ratingsList image array
+// - title : (String) Holds the title text for the comment
+// - description : (String) Holds the body text for the comment
+// @description
+// - A container object used to hold the information from an entry in the
+//   Recipe_Comment table
+struct Comment {
+    var id = -1
+    var userId = -1
+    var date = ""
+    var rating = 0
+    var title = ""
+    var description = ""
+}
+
+// Recipe Record Struct
+// @members
+// - creatorId : (int) holds the id for the user who originally posted the recipe
+// - name : (string) The name of the recipe
+// - rating : (int) holds the rating for the recipe overall (average of all ratings)
+// - photo : (string) holds the path to the cover image for the recipe
+// - category : (int) holds an index into the categoryList and categoryPhoto arrays
+// - servings : (string) holds how many servings the recipe is meant to produce
+// - prepTime : (string) holds how long expected prep time will take
+// - cook Time : (string) holds how long cook time is epxected to take
+// - flags : (int) a bit vector representing a list of common allergens and dietary modifiers
+// - calories : (double) the number of calories in the recipe
+// - unsatFat : (double) the amount of unsaturated fat (in grams) in the recipe
+// - satFat : (double) the amount of saturated fat (in grams) in the recipe
+// - cholesterol : (double) the amount of cholesterol (in milligrams) in the recipe
+// - sodium : (double) the amount of sodium (in milligrams) in the recipe
+// - potassium : (double) the amount of potassium (in milligrams) in the recipe
+// - carbs : (double) the amount of carbohydrates (in grams) in the recipe
+// - fiber : (double) the amount of fiber (in grams) in the recipe
+// - sugar : (double) the amount of sugar (in grams) in the recipe
+// - ingredients : (RecipeIngredient) a list of ingredients pertaining to the recipe (used for the add function only)
+// - directions : (Direction) a list of directions pertaining to the recipe (used for the add function only)
+// - vitamins : (Vitamin) a list of vitamins pertaining to the recipe (used for the add function only)
+// @description
+// - This struct is used to fetch, and modify data from within the recipe class before
+//   updating the database record. (Similar to how a packet works in a network API)
+struct RecipeRecord {
+    var creatorId = -1
+    var name = ""
+    var rating = 0
+    var photo = ""
+    var category = 0
+    var servings = ""
+    var prepTime = ""
+    var cookTime = ""
+    var flags = 0
+    var calories = 0.0
+    var unsatFat = 0.0
+    var satFat = 0.0
+    var cholesterol = 0.0
+    var sodium = 0.0
+    var potassium = 0.0
+    var carbs = 0.0
+    var fiber = 0.0
+    var sugar = 0.0
+    var ingredients = [RecipeIngredient]()
+    var directions = [Direction]()
+    var vitamins = [Vitamin]()
+}
+
+class Recipe : CustomStringConvertible {
     private var id : Int
+    private var creatorId : Int
     private var name : String
     private var photo : Photo
+    private var rating : Int
     private var category : Int
-    private var servings : Int
+    private var servings : String
     private var prepTime : String
     private var cookTime : String
-    private var calories : Int
-    private var unsatFat : Int
-    private var satFat : Int
-    private var cholesterol : Int
-    private var sodium : Int
-    private var potassium : Int
-    private var carbs : Int
-    private var fiber : Int
-    private var sugar : Int
+    private var flags : Int
+    private var calories : Double
+    private var unsatFat : Double
+    private var satFat : Double
+    private var cholesterol : Double
+    private var sodium : Double
+    private var potassium : Double
+    private var carbs : Double
+    private var fiber : Double
+    private var sugar : Double
+    private var ingredients : [RecipeIngredient]
+    private var directions : [Direction]
+    private var vitamins : [Vitamin]
     private var comments : [Comment]
-    private var ingredients : [(id:Int,ing:Ingredient, amount:Float)]
-    private var directions : [(id:Int, str:String)]
-    private var rating: Int
-    private var flags: Int
-    private var vitamin : [Vitamin]
+    private var eMsg : String
+    
+    // override function for print, prints contents of class vs. address
+    var description : String {
+        var desc = "ID: \(self.id)\n"
+        desc += "Creator ID: \(self.creatorId)\n"
+        desc += "Name: \(self.name)\n"
+        desc += "Photo: \(self.photo.getPath())\n"
+        desc += "Rating: \(self.rating)\n"
+        desc += "Category: \(categoryList[self.category])\n"
+        desc += "Servings: \(self.servings)\n"
+        desc += "Prep Time: \(self.prepTime)\n"
+        desc += "Cook Time: \(self.cookTime)\n"
+        desc += "Flags: \(self.flags)\n"
+        desc += "Calories: \(self.calories) -- \(self.getCalories().percent)%\n"
+        desc += "Unsaturated Fat: \(self.unsatFat) -- \(self.getUnsatFatG().percent)%\n"
+        desc += "Saturated Fat: \(self.satFat) -- \(self.getSatFatG().percent)%\n"
+        desc += "Cholesterol: \(self.cholesterol) -- \(self.getCholesterolMG().percent)%\n"
+        desc += "Sodium: \(self.sodium) -- \(self.getSodiumMG().percent)%\n"
+        desc += "Potassium: \(self.potassium) -- \(self.getPotassiumMG().percent)%\n"
+        desc += "Carbs: \(self.carbs) -- \(self.getCarbsG().percent)%\n"
+        desc += "Fiber: \(self.fiber) -- \(self.getFiberG().percent)%\n"
+        desc += "Sugar: \(self.sugar) -- \(self.getSugarG().percent)%\n\n"
+        desc += "Ingredients:\n"
+        for i in self.ingredients {
+            desc += "    \(i.item.getName()) -- \(i.amount) "
+            if(i.item.getUnit() == 0) {
+                desc += "\(i.item.getLabel())"
+            } else {
+                desc += unitList[i.item.getUnit()].std+"\n"
+            }
+            
+        }
+        desc += "\n\nDirections:\n"
+        var count = 1
+        for d in self.directions {
+            var c = ""
+            if(count < 10) {
+                c = "0\(count)"
+            } else {
+                c = "\(count)"
+            }
+            desc += "    \(c). \(d.description)\n"
+            count += 1
+        }
+        desc += "\n\nVitamins:\n"
+        for v in self.vitamins {
+            desc += "    \(vitaminList[v.idx]) -- \(v.percent)%\n"
+        }
+        desc += "\n\nComments:\n"
+        for c in self.comments {
+            desc += "    \(c.title) -- \(c.rating) : \(c.date)\n"
+        }
+        desc += "\n\n"
+        desc += "Error Message: \(self.eMsg)\n"
+        return desc
+    }
+    
+    // default constructor, creates an empty recipe object
     init() {
-        self.id = -1
-        self.name = ""
-        self.photo = Photo()
-        self.category = -1
-        self.servings = -1
-        self.prepTime = "00:00:00"
-        self.cookTime = "00:00:00"
-        self.calories = -1
-        self.unsatFat = -1
-        self.satFat = -1
-        self.cholesterol = -1
-        self.sodium = -1
-        self.potassium = -1
-        self.carbs = -1
-        self.fiber = -1
-        self.sugar = -1
-        self.comments = [Comment]()
-        self.ingredients = [(id:Int,ing:Ingredient, amount:Float)]()
-        self.directions = [(id:Int, str:String)]()
-        self.rating = 0
-        self.flags = 0
-        self.vitamin = [Vitamin]()
+        id = -1
+        creatorId = -1
+        name = ""
+        rating = 0
+        photo = Photo()
+        category = 0
+        servings = ""
+        prepTime = "00:00:00"
+        cookTime = "00:00:00"
+        flags = 0
+        calories = 0.0
+        unsatFat = 0.0
+        satFat = 0.0
+        cholesterol = 0.0
+        sodium = 0.0
+        potassium = 0.0
+        carbs = 0.0
+        fiber = 0.0
+        sugar = 0.0
+        ingredients = [RecipeIngredient]()
+        directions = [Direction]()
+        vitamins = [Vitamin]()
+        comments = [Comment]()
+        eMsg = ""
     }
-    init(id:Int, name:String, photo:Photo, category:Int, servings:Int, prepTime:String, cookTime:String, calories:Int, unsatFat:Int, satFat:Int, cholesterol:Int, sodium:Int, potassium:Int, carbs:Int, fiber:Int, sugar:Int, comments:[Comment], ingredients:[(id:Int, ing:Ingredient, amount:Float)], directions:[(id:Int, str:String)], rating:Int, flags:Int, vitamin:[Vitamin]) {
-        self.id = id
-        self.name = name
-        self.photo = photo
-        self.category = category
-        self.servings = servings
-        self.prepTime = prepTime
-        self.cookTime = cookTime
-        self.calories = calories
-        self.unsatFat = unsatFat
-        self.satFat = satFat
-        self.cholesterol = cholesterol
-        self.sodium = sodium
-        self.potassium = potassium
-        self.carbs = carbs
-        self.fiber = fiber
-        self.sugar = sugar
-        self.comments = comments
-        self.ingredients = ingredients
-        self.directions = directions
-        self.rating = rating
-        self.flags = flags
-        self.vitamin = vitamin
-    }
+    // ================================================================================
+    // Main class functions
+    // ================================================================================
     
-    // Setter functions for class variables
-    public func setId(id: Int) { self.id = id}
-    public func setName(name: String) { self.name = name}
-    public func setPhoto(photo: Photo) { self.photo = photo}
-    public func setCategory(category: Int) { self.category = category}
-    public func setServings(servings: Int) { self.servings = servings}
-    public func setPrepTime(prepTime: String) { self.prepTime = prepTime}
-    public func setCookTime(cookTime: String) { self.cookTime = cookTime}
-    public func setCalories(calories: Int) { self.calories = calories}
-    public func setUnsatFat(unsatFat: Int) { self.unsatFat = unsatFat}
-    public func setSatFat(satFat: Int) { self.satFat = satFat}
-    public func setCholesterol(cholesterol: Int) { self.cholesterol = cholesterol}
-    public func setSodium(sodium: Int) { self.sodium = sodium}
-    public func setPotassium(potassium: Int) { self.potassium = potassium}
-    public func setCarbs(carbs : Int) { self.carbs = carbs}
-    public func setFiber(fiber: Int) { self.fiber = fiber}
-    public func setSugar(sugar: Int) { self.sugar = sugar}
-    public func setComments(comments: [Comment]) { self.comments = comments}
-    public func setIngredients(ingredients: [(id:Int,ing:Ingredient, amount:Float)]) { self.ingredients = ingredients}
-    public func setDirections(directions: [(id:Int, str:String)]) { self.directions = directions}
-    public func setRating(rating: Int) { self.rating = rating}
-    public func setFlags(flags: Int) { self.flags = flags}
-    public func setVitamin(vitamin: [Vitamin]) { self.vitamin = vitamin}
-    
-    
-    // Getter functions for class variables
-    public func getId() -> Int { return self.id }
-    public func getName() -> String { return self.name }
-    public func getPhoto() -> UIImage { return self.photo.getImage()}
-    public func getCategory() -> Int { return self.category}
-    public func getServings() -> Int { return self.servings}
-    // TODO: Possibly need to do processing for times over an hour
-    public func getPrepTime() -> String { return self.prepTime}
-    public func getCookTime() -> String { return self.cookTime}
-    public func getCalories() -> Int { return self.calories}
-    public func getUnsatFat() -> Int { return self.unsatFat}
-    public func getSatFat() -> Int { return self.satFat}
-    public func getCholesterol() -> Int { return self.cholesterol}
-    public func getSodium() -> Int { return self.sodium}
-    public func getPotassium() -> Int { return self.potassium}
-    public func getCarbs() -> Int { return self.carbs}
-    public func getFiber() -> Int { return self.fiber}
-    public func getSugar() -> Int { return self.sugar}
-    public func getComments() -> [Comment] { return self.comments}
-    public func getIngredients() -> [(id:Int,ing:Ingredient, amount:Float)] { return self.ingredients}
-    public func getDirections() -> [(id:Int, str:String)] { return self.directions}
-    public func getRating() -> UIImage {return RatingImages[self.rating]}
-    public func getFlags() -> Int{ return self.flags}
-    public func getVitamins() -> [Vitamin] { return self.vitamin}
-    /// Returns a dict of data for basic info
-    public func getBasicInfo() -> [String: Int] {
-        var result = [String: Int]()
-        result["Calories"] = self.getCalories()
-        result["Unsat. Fat"] = self.getUnsatFat()
-        result["Sat. Fat"] = self.getSatFat()
-        result["Cholesterol"] = self.getCholesterol();
-        result["Sodium"] = self.getSodium()
-        result["Potassium"] = self.getPotassium()
-        result["Carbs"] = self.getCarbs()
-        result["Fiber"] = self.getFiber()
-        result["Sugar"] = self.getSugar()
-        return result
-    }
-    /// Adds this recipe to the database
-    public func addRecipe() -> Bool {
-
+    // Add Recipe Method
+    // @param
+    // - newRecipe : (RecipeRecord) data object to create a new recipe object from
+    // @description
+    // - Takes in a new recipe record and adds a reference for it to the Recipes
+    //   table.
+    // @return
+    // - Returns (true) if an error occured, returns (false) if the ingredient was added
+    //   successfully
+    public func addRecipe(newRecipe : RecipeRecord) -> Bool {
+        
         // create a variable to return whether we errored out or not
         var vError : Bool = false
         
@@ -162,36 +263,34 @@ class Recipe {
         var request = URLRequest(url: url!)
         request.httpMethod = "POST"
         
-        let uid = String(currentUser.getId())
-        print("UID: \(uid)")
-        let name = self.name
-        let photo = self.photo.getPath()
-        let category = String(self.category)
-        let servings = String(self.servings)
-        let ptime = String(self.prepTime)
-        let ctime = String(self.cookTime)
-        let flags = String(self.flags)
-        let calories = String(self.calories)
-        let ufat = String(self.unsatFat)
-        let sfat = String(self.satFat)
-        let cholesterol = String(self.cholesterol)
-        let sodium = String(self.sodium)
-        let potassium = String(self.potassium)
-        let carbs = String(self.carbs)
-        let fiber = String(self.fiber)
-        let sugar = String(self.sugar)
+        var pString = "uid=\(newRecipe.creatorId)"
+        pString += "&name=\(newRecipe.name)"
+        pString += "&photo=\(newRecipe.photo)"
+        pString += "&category=\(newRecipe.category)"
+        pString += "&servings=\(newRecipe.servings)"
+        pString += "&ptime=\(newRecipe.prepTime)"
+        pString += "&ctime=\(newRecipe.cookTime)"
+        pString += "&flags=\(newRecipe.flags)"
+        pString += "&calories=\(newRecipe.calories)"
+        pString += "&ufat=\(newRecipe.unsatFat)"
+        pString += "&sfat=\(newRecipe.satFat)"
+        pString += "&cholesterol=\(newRecipe.cholesterol)"
+        pString += "&sodium=\(newRecipe.sodium)"
+        pString += "&potassium=\(newRecipe.potassium)"
+        pString += "&carbs=\(newRecipe.carbs)"
+        pString += "&fiber=\(newRecipe.fiber)"
+        pString += "&sugar=\(newRecipe.sugar)"
         
-        let params = "uid=\(uid)&name=\(name)&photo=\(photo)&category=\(category)&servings=\(servings)&ptime=\(ptime)&ctime=\(ctime)&flags=\(flags)&calories=\(calories)&ufat=\(ufat)&sfat=\(sfat)&cholesterol=\(cholesterol)&sodium=\(sodium)&potassium=\(potassium)&carbs=\(carbs)&fiber=\(fiber)&sugar=\(sugar)"
+        let params = pString
         
         request.httpBody = params.data(using: String.Encoding.utf8)
-        var recipeId = -1
-        var eMsg = ""
+        
         // Create a task and send our request to our REST API
         let task = URLSession.shared.dataTask(with: request) {
             data, response, error in
             // if we error out, return the error message
             if(error != nil) {
-                eMsg = error!.localizedDescription
+                self.eMsg = error!.localizedDescription
                 finished = true
                 vError = true
                 return
@@ -204,12 +303,16 @@ class Recipe {
                 
                 // Get the error status and the error message from the database
                 if let parseJSON = JSONResponse {
-                    eMsg = parseJSON["msg"] as! String
+                    self.eMsg = parseJSON["msg"] as! String
+                    if let strId = parseJSON["id"] as? NSNumber {
+                        self.id = strId as! Int
+                    } else {
+                        self.id = Int(parseJSON["id"] as! String)!
+                    }
                     vError = (parseJSON["error"] as! Bool)
-                    recipeId = (parseJSON["code"] as! Int)
                 }
             } catch {
-                eMsg = error.localizedDescription
+                self.eMsg = error.localizedDescription
                 vError = true
             }
             finished = true
@@ -217,36 +320,755 @@ class Recipe {
         // execute our task and then return the results
         task.resume()
         while(!finished) {}
-        if(!vError){
-            // Add Recipe Directions
-            for i in 0...(self.directions.count-1) {
-                let result:(dError:Bool, errMsg:String) = AddDirections(rid:recipeId, num:i, str:directions[i].str)
-                if(result.dError) {
-                    print("Recipe::AddDirections(): \(result.errMsg)")
+        
+        if(!vError) {
+            // Fetch auxillary table entries (ingredients, directions, and vitamin)
+            for i in newRecipe.ingredients {
+                if(self.addRecipeIngredient(newIngredient: i)) {
+                    vError = true
+                    return vError
                 }
             }
-            // Add Recipe Vitamins
-            for vitamin in self.vitamin {
-                let result:(dError:Bool, errMsg:String) = vitamin.AddVitamin(rid: recipeId, idx: vitamin.getIndex(), percent: vitamin.getPercent())
-                if(result.dError) {
-                    print("Recipe::AddVitamin(): \(result.errMsg)")
+            for d in newRecipe.directions {
+                if(self.addRecipeDirection(newDirection: d)) {
+                    vError = true
+                    return vError
                 }
             }
-            // Add Recipe Ingredients
-            for ing in self.ingredients {
-                let result:(dError:Bool, errMsg:String) = ing.ing.AddIngredient(rid: recipeId, iid: ing.id, amount: ing.amount)
-                if(result.dError) {
-                    print("Recipe::AddIngredient(): \(result.errMsg)")
+            for v in newRecipe.vitamins {
+                if(self.addRecipeVitamin(newVitamin: v)) {
+                    vError = true
+                    return vError
                 }
             }
-        } else {
-            print("Recipe::addRecipe(): \(eMsg)")
+            
+            // Only update object if DB functions were successfull
+            self.creatorId = newRecipe.creatorId
+            self.rating = newRecipe.rating
+            self.name = newRecipe.name
+            self.photo.setPhoto(imageURL: newRecipe.photo)
+            self.category = newRecipe.category
+            self.servings = newRecipe.servings
+            self.prepTime = newRecipe.prepTime
+            self.cookTime = newRecipe.cookTime
+            self.flags = newRecipe.flags
+            self.calories = newRecipe.calories
+            self.unsatFat = newRecipe.unsatFat
+            self.satFat = newRecipe.satFat
+            self.cholesterol = newRecipe.cholesterol
+            self.sodium = newRecipe.sodium
+            self.potassium = newRecipe.potassium
+            self.carbs = newRecipe.carbs
+            self.fiber = newRecipe.fiber
+            self.sugar = newRecipe.sugar
         }
         return vError
     }
-    private func AddDirections(rid: Int, num:Int, str:String)-> (Bool, String) {
+    
+    // Update Recipe Method
+    // @param
+    // - updateRecipe : (RecipeRecord) A data object to update the current recipe's information with
+    // @description
+    // - Takes in a RecipeRecord and overwrites the current record's information with that of the record passed in.
+    // @return
+    // - Returns (true) if an error occured, returns (false) if the update was successful
+    public func updateRecipe(newRecipe : RecipeRecord) -> Bool {
         // create a variable to return whether we errored out or not
         var vError : Bool = false
+        
+        // path to our backend script
+        let URL_VERIFY = "http://www.teragentech.net/prepmate/UpdateRecipe.php"
+        
+        // variable which will spin until verification is finished
+        var finished : Bool = false
+        
+        // create our URL object
+        let url = URL(string: URL_VERIFY)
+        
+        // create the request and set the type to POST, otherwise we get authorization error
+        var request = URLRequest(url: url!)
+        request.httpMethod = "POST"
+        
+        print(self)
+        var pString = "id=\(self.id)"
+        pString += "&uid=\(newRecipe.creatorId)"
+        pString += "&name=\(newRecipe.name)"
+        pString += "&photo=\(newRecipe.photo)"
+        pString += "&category=\(newRecipe.category)"
+        pString += "&servings=\(newRecipe.servings)"
+        pString += "&ptime=\(newRecipe.prepTime)"
+        pString += "&ctime=\(newRecipe.cookTime)"
+        pString += "&flags=\(newRecipe.flags)"
+        pString += "&calories=\(newRecipe.calories)"
+        pString += "&ufat=\(newRecipe.unsatFat)"
+        pString += "&sfat=\(newRecipe.satFat)"
+        pString += "&cholesterol=\(newRecipe.cholesterol)"
+        pString += "&sodium=\(newRecipe.sodium)"
+        pString += "&potassium=\(newRecipe.potassium)"
+        pString += "&carbs=\(newRecipe.carbs)"
+        pString += "&fiber=\(newRecipe.fiber)"
+        pString += "&sugar=\(newRecipe.sugar)"
+        
+        let params = pString
+        
+        request.httpBody = params.data(using: String.Encoding.utf8)
+        
+        // Create a task and send our request to our REST API
+        let task = URLSession.shared.dataTask(with: request) {
+            data, response, error in
+            // if we error out, return the error message
+            if(error != nil) {
+                self.eMsg = error!.localizedDescription
+                finished = true
+                vError = true
+                return
+            }
+            
+            // If there was no error, parse the response
+            do {
+                // convert response to a dictionary
+                let JSONResponse = try JSONSerialization.jsonObject(with: data!, options: .mutableContainers) as? NSDictionary
+                
+                // Get the error status and the error message from the database
+                if let parseJSON = JSONResponse {
+                    self.eMsg = parseJSON["msg"] as! String
+                    vError = (parseJSON["error"] as! Bool)
+                }
+            } catch {
+                self.eMsg = error.localizedDescription
+                vError = true
+            }
+            finished = true
+        }
+        // execute our task and then return the results
+        task.resume()
+        while(!finished) {}
+        
+        // Only update recipe object if DB operation was successful
+        if(!vError) {
+            self.creatorId = newRecipe.creatorId
+            self.rating = newRecipe.rating
+            self.name = newRecipe.name
+            self.photo.setPhoto(imageURL: newRecipe.photo)
+            self.category = newRecipe.category
+            self.servings = newRecipe.servings
+            self.prepTime = newRecipe.prepTime
+            self.cookTime = newRecipe.cookTime
+            self.flags = newRecipe.flags
+            self.calories = newRecipe.calories
+            self.unsatFat = newRecipe.unsatFat
+            self.satFat = newRecipe.satFat
+            self.cholesterol = newRecipe.cholesterol
+            self.sodium = newRecipe.sodium
+            self.potassium = newRecipe.potassium
+            self.carbs = newRecipe.carbs
+            self.fiber = newRecipe.fiber
+            self.sugar = newRecipe.sugar
+        }
+        return vError
+    }
+    
+    public func getRecipe(rid : Int) -> Bool {
+        // set class variables for db functionality
+        self.id = rid
+        
+        // create a variable to return whether we errored out or not
+        var vError : Bool = false
+        
+        // path to our backend script
+        let URL_VERIFY = "http://www.teragentech.net/prepmate/GetRecipe.php"
+        
+        // variable which will spin until verification is finished
+        var finished : Bool = false
+        
+        // create our URL object
+        let url = URL(string: URL_VERIFY)
+        
+        // create the request and set the type to POST, otherwise we get authorization error
+        var request = URLRequest(url: url!)
+        request.httpMethod = "POST"
+        
+        let params = "id="+String(self.id)
+        
+        request.httpBody = params.data(using: String.Encoding.utf8)
+        
+        // Create a task and send our request to our REST API
+        let task = URLSession.shared.dataTask(with: request) {
+            data, response, error in
+            
+            // if we error out, return the error message
+            if(error != nil) {
+                self.eMsg = error!.localizedDescription
+                finished = true
+                vError = true
+                return
+            }
+            
+            // If there was no error, parse the response
+            do {
+                // convert response to a dictionary
+                let JSONResponse = try JSONSerialization.jsonObject(with: data!, options: .mutableContainers) as? NSDictionary
+                
+                // Get the error status and the error message from the database
+                if let parseJSON = JSONResponse {
+                    
+                    self.eMsg = parseJSON["msg"] as! String
+                    vError = (parseJSON["error"] as! Bool)
+                    // Get the remaining information from our returned record (if it exists)
+                    if let uid = parseJSON["uid"] as? String {
+                        self.creatorId = Int(uid)!
+                    } else {
+                        self.creatorId = -1
+                    }
+                    self.name = parseJSON["name"] as! String
+                    self.photo.setPhoto(imageURL: parseJSON["photo"] as! String)
+                    if let cat = parseJSON["category"] as? Int {
+                        self.category = cat
+                    } else {
+                        self.category = 0
+                    }
+                    self.servings = parseJSON["servings"] as! String
+                    self.prepTime = parseJSON["ptime"] as! String
+                    self.cookTime = parseJSON["ctime"] as! String
+                    if let flg = parseJSON["flags"] as? Int {
+                        self.flags = flg
+                    } else {
+                        self.flags = 0
+                    }
+                    if let cal = parseJSON["calories"] as? String {
+                        self.calories = Double(cal)!
+                    } else {
+                        self.calories = 0.0
+                    }
+                    if let ufat = parseJSON["ufat"] as? String {
+                        self.unsatFat = Double(ufat)!
+                    } else {
+                        self.unsatFat = 0.0
+                    }
+                    if let sfat = parseJSON["sfat"] as? String {
+                        self.satFat = Double(sfat)!
+                    } else {
+                        self.satFat = 0.0
+                    }
+                    if let chol = parseJSON["cholesterol"] as? String {
+                        self.cholesterol = Double(chol)!
+                    } else {
+                        self.cholesterol = 0.0
+                    }
+                    if let sod = parseJSON["sodium"] as? String {
+                        self.sodium = Double(sod)!
+                    } else {
+                        self.sodium = 0.0
+                    }
+                    if let pot = parseJSON["potassium"] as? String {
+                        self.potassium = Double(pot)!
+                    } else {
+                        self.potassium = 0.0
+                    }
+                    if let carb = parseJSON["carbs"] as? String {
+                        self.carbs = Double(carb)!
+                    } else {
+                        self.potassium = 0.0
+                    }
+                    if let fib = parseJSON["fiber"] as? String {
+                        self.fiber = Double(fib)!
+                    } else {
+                        self.fiber = 0.0
+                    }
+                    if let sug = parseJSON["sugar"] as? String {
+                        self.sugar = Double(sug)!
+                    } else {
+                        self.sugar = 0.0
+                    }
+                }
+            } catch {
+                self.eMsg = error.localizedDescription
+                vError = true
+            }
+            finished = true
+        }
+        
+        // execute our task and then return the results
+        task.resume()
+        while(!finished) {}
+        
+        
+        // load in additional information from auxillary tables
+        if(self.loadRecipeIngredients()) {
+            vError = true
+            return vError
+        }
+        if(self.loadRecipeDirections()) {
+            vError = true
+            return vError
+        }
+        if(self.loadRecipeVitamins()) {
+            vError = true
+            return vError
+        }
+        if(self.loadRecipeComments()) {
+            vError = true
+            return vError
+        }
+        return vError
+    }
+    
+    public func removeRecipe() -> Bool {
+        // create a variable to return whether we errored out or not
+        var vError : Bool = false
+        
+        // path to our backend script
+        let URL_VERIFY = "http://www.teragentech.net/prepmate/RemoveRecipe.php"
+        
+        // variable which will spin until verification is finished
+        var finished : Bool = false
+        
+        // create our URL object
+        let url = URL(string: URL_VERIFY)
+        
+        // create the request and set the type to POST, otherwise we get authorization error
+        var request = URLRequest(url: url!)
+        request.httpMethod = "POST"
+        
+        let params = "id="+String(self.id)
+        
+        request.httpBody = params.data(using: String.Encoding.utf8)
+        
+        // Create a task and send our request to our REST API
+        let task = URLSession.shared.dataTask(with: request) {
+            data, response, error in
+            // if we error out, return the error message
+            if(error != nil) {
+                self.eMsg = error!.localizedDescription
+                finished = true
+                vError = true
+                return
+            }
+            
+            // If there was no error, parse the response
+            do {
+                // convert response to a dictionary
+                let JSONResponse = try JSONSerialization.jsonObject(with: data!, options: .mutableContainers) as? NSDictionary
+                
+                // Get the error status and the error message from the database
+                if let parseJSON = JSONResponse {
+                    self.eMsg = parseJSON["msg"] as! String
+                    vError = (parseJSON["error"] as! Bool)
+                }
+            } catch {
+                self.eMsg = error.localizedDescription
+                vError = true
+            }
+            finished = true
+        }
+        // execute our task and then return the results
+        task.resume()
+        while(!finished) {}
+        
+        // Wipe recipe entry
+        if(!vError) {
+            self.clear()
+        }
+        return vError
+    }
+    
+    public func clear() {
+        id = -1
+        creatorId = -1
+        name = ""
+        rating = 0
+        photo = Photo()
+        category = 0
+        servings = ""
+        prepTime = "00:00:00"
+        cookTime = "00:00:00"
+        flags = 0
+        calories = 0.0
+        unsatFat = 0.0
+        satFat = 0.0
+        cholesterol = 0.0
+        sodium = 0.0
+        potassium = 0.0
+        carbs = 0.0
+        fiber = 0.0
+        sugar = 0.0
+        ingredients = [RecipeIngredient]()
+        directions = [Direction]()
+        vitamins = [Vitamin]()
+        comments = [Comment]()
+        eMsg = ""
+    }
+    
+    public func createRecord() -> RecipeRecord {
+        var newRecord = RecipeRecord()
+        newRecord.creatorId = self.creatorId
+        newRecord.name = self.name
+        newRecord.rating = self.rating
+        newRecord.photo = self.photo.getPath()
+        newRecord.category = self.category
+        newRecord.servings = self.servings
+        newRecord.prepTime = self.prepTime
+        newRecord.cookTime = self.cookTime
+        newRecord.flags = self.flags
+        newRecord.calories = self.calories
+        newRecord.unsatFat = self.unsatFat
+        newRecord.satFat = self.satFat
+        newRecord.cholesterol = self.cholesterol
+        newRecord.sodium = self.sodium
+        newRecord.potassium = self.potassium
+        newRecord.carbs = self.carbs
+        newRecord.fiber = self.fiber
+        newRecord.sugar = self.sugar
+        return newRecord
+    }
+    
+    public func getNutritionDict() -> [String: (amount : Double, percent: Double)] {
+        var result = [String: (amount : Double, percent: Double)]()
+        result["Calories"] = self.getCalories()
+        result["Unsat. Fat"] = self.getUnsatFatG()
+        result["Sat. Fat"] = self.getSatFatG()
+        result["Cholesterol"] = self.getCholesterolMG()
+        result["Sodium"] = self.getSodiumMG()
+        result["Potassium"] = self.getPotassiumMG()
+        result["Carbs"] = self.getCarbsG()
+        result["Fiber"] = self.getFiberG()
+        result["Sugar"] = self.getSugarG()
+        return result
+    }
+    
+    // getters (no setters)
+    public func getId() -> Int { return self.id }
+    public func getCreatorId() -> Int { return self.creatorId }
+    public func getName() -> String { return self.name }
+    public func getPhoto() -> UIImage { return self.photo.getImage() }
+    public func getCategory() -> Int { return self.category }
+    public func getServings() -> String { return self.servings }
+    public func getPrepTime() -> String { return self.prepTime }
+    public func getCookTime() -> String { return self.cookTime }
+    public func getFlags() -> Int { return self.flags }
+    public func getRating() -> Int { return self.rating }
+    public func getCalories() -> (amount : Double, percent : Double ) {
+        return (amount: self.calories, percent: roundP(p: (self.calories / 2000.0) * 100.0))
+    }
+    public func getUnsatFatG() -> (amount : Double, percent : Double) {
+        return (amount : self.unsatFat, percent: roundP(p: (self.unsatFat / 66.36) * 100.0))
+    }
+    public func getSatFatG() -> (amount:Double, percent:Double) {
+        return (amount : self.satFat, percent:roundP(p: (self.satFat / 66.36) * 100.0))
+    }
+    public func getCholesterolMG() -> (amount:Double, percent:Double) {
+        return (amount : self.cholesterol, percent: roundP(p: (self.cholesterol / 300.0) * 100.0))
+    }
+    public func getSodiumMG() -> (amount:Double, percent:Double) {
+        return (amount : self.sodium, percent: roundP(p: (self.sodium / 2300.0) * 100.0))
+    }
+    public func getPotassiumMG() -> (amount : Double, percent : Double) {
+        return (amount : self.potassium, percent: roundP(p: (self.potassium / 4700.0) * 100.0))
+    }
+    public func getCarbsG() -> (amount : Double, percent : Double) {
+        return (amount : self.carbs, percent: roundP(p: (self.carbs / 275) * 100.0))
+    }
+    public func getFiberG() -> (amount : Double, percent : Double) {
+        return (amount : self.fiber, percent: roundP(p: (self.fiber / 15.0) * 100.0))
+    }
+    public func getSugarG() -> (amount: Double, percent: Double) {
+        return (amount : self.sugar, percent: roundP(p: (self.sugar / 25.0) * 100.0))
+    }
+    public func getEMsg() -> String { return eMsg }
+    
+    
+    
+    // ================================================================================
+    // Recipe Ingredient functions
+    // ================================================================================
+    public func addRecipeIngredient(newIngredient : RecipeIngredient) -> Bool {
+        var ing = newIngredient
+        
+        var vError = false
+        
+        // path to our backend script
+        let URL_VERIFY = "http://www.teragentech.net/prepmate/AddRecipeIngredient.php"
+        
+        // variable which will spin until verification is finished
+        var finished : Bool = false
+        
+        // create our URL object
+        let url = URL(string: URL_VERIFY)
+        
+        // create the request and set the type to POST, otherwise we get authorization error
+        var request = URLRequest(url: url!)
+        request.httpMethod = "POST"
+        
+        var pString = "rid=\(String(self.id))"
+        pString += "&iid=\(String(ing.item.getId()))"
+        pString += "&amount=\(String(ing.amount))"
+        
+        let params = pString
+        
+        request.httpBody = params.data(using: String.Encoding.utf8)
+        
+        // Create a task and send our request to our REST API
+        let task = URLSession.shared.dataTask(with: request) {
+            data, response, error in
+            // if we error out, return the error message
+            if(error != nil) {
+                self.eMsg = error!.localizedDescription
+                finished = true
+                vError = true
+                return
+            }
+            
+            // If there was no error, parse the response
+            do {
+                // convert response to a dictionary
+                let JSONResponse = try JSONSerialization.jsonObject(with: data!, options: .mutableContainers) as? NSDictionary
+                
+                // Get the error status and the error message from the database
+                if let parseJSON = JSONResponse {
+                    self.eMsg = parseJSON["msg"] as! String
+                    if let strId = parseJSON["id"] as? NSNumber {
+                        ing.id = strId as! Int
+                    } else {
+                        ing.id = Int(parseJSON["id"] as! String)!
+                    }
+                    vError = (parseJSON["error"] as! Bool)
+                }
+            } catch {
+                self.eMsg = error.localizedDescription
+                vError = true
+            }
+            finished = true
+        }
+        // execute our task and then return the results
+        task.resume()
+        while(!finished) {}
+        if(!vError) {
+            self.ingredients.append(ing)
+        }
+        return vError
+    }
+    
+    public func updateRecipeIngredient(idx : Int, newAmount : Double) -> Bool {
+        // set up variables for db operations
+        self.ingredients[idx].amount = newAmount
+        
+        // create a variable to return whether we errored out or not
+        var vError : Bool = false
+        
+        // path to our backend script
+        let URL_VERIFY = "http://www.teragentech.net/prepmate/UpdateRecipeIngredient.php"
+        
+        // variable which will spin until verification is finished
+        var finished : Bool = false
+        
+        // create our URL object
+        let url = URL(string: URL_VERIFY)
+        
+        // create the request and set the type to POST, otherwise we get authorization error
+        var request = URLRequest(url: url!)
+        request.httpMethod = "POST"
+        
+        var pString = "id=\(String(self.ingredients[idx].id))"
+        pString += "&rid=\(String(self.id))"
+        pString += "&iid=\(String(self.ingredients[idx].item.getId()))"
+        pString += "&amount=\(String(self.ingredients[idx].amount))"
+        
+        let params = pString
+        
+        request.httpBody = params.data(using: String.Encoding.utf8)
+        
+        // Create a task and send our request to our REST API
+        let task = URLSession.shared.dataTask(with: request) {
+            data, response, error in
+            // if we error out, return the error message
+            if(error != nil) {
+                self.eMsg = error!.localizedDescription
+                finished = true
+                vError = true
+                return
+            }
+            
+            // If there was no error, parse the response
+            do {
+                // convert response to a dictionary
+                let JSONResponse = try JSONSerialization.jsonObject(with: data!, options: .mutableContainers) as? NSDictionary
+                
+                // Get the error status and the error message from the database
+                if let parseJSON = JSONResponse {
+                    self.eMsg = parseJSON["msg"] as! String
+                    vError = (parseJSON["error"] as! Bool)
+                }
+            } catch {
+                self.eMsg = error.localizedDescription
+                vError = true
+            }
+            finished = true
+        }
+        // execute our task and then return the results
+        task.resume()
+        while(!finished) {}
+        return vError
+    }
+    
+    public func removeRecipeIngredient(idx:Int) -> Bool {
+        // create a variable to return whether we errored out or not
+        var vError : Bool = false
+        
+        // path to our backend script
+        let URL_VERIFY = "http://www.teragentech.net/prepmate/RemoveRecipeIngredient.php"
+        
+        // variable which will spin until verification is finished
+        var finished : Bool = false
+        
+        // create our URL object
+        let url = URL(string: URL_VERIFY)
+        
+        // create the request and set the type to POST, otherwise we get authorization error
+        var request = URLRequest(url: url!)
+        request.httpMethod = "POST"
+        
+        let params = "id="+String(self.ingredients[idx].id)
+        
+        request.httpBody = params.data(using: String.Encoding.utf8)
+        
+        // Create a task and send our request to our REST API
+        let task = URLSession.shared.dataTask(with: request) {
+            data, response, error in
+            // if we error out, return the error message
+            if(error != nil) {
+                self.eMsg = error!.localizedDescription
+                finished = true
+                vError = true
+                return
+            }
+            
+            // If there was no error, parse the response
+            do {
+                // convert response to a dictionary
+                let JSONResponse = try JSONSerialization.jsonObject(with: data!, options: .mutableContainers) as? NSDictionary
+                
+                // Get the error status and the error message from the database
+                if let parseJSON = JSONResponse {
+                    self.eMsg = parseJSON["msg"] as! String
+                    vError = (parseJSON["error"] as! Bool)
+                }
+            } catch {
+                self.eMsg = error.localizedDescription
+                vError = true
+            }
+            finished = true
+        }
+        // execute our task and then return the results
+        task.resume()
+        while(!finished) {}
+        
+        // Wipe recipe entry
+        if(!vError) {
+            self.ingredients.remove(at: idx)
+        }
+        return vError
+    }
+    
+    private func loadRecipeIngredients() -> Bool {
+        // TODO: Write this funciton
+        // create a variable to return whether we errored out or not
+        var vError : Bool = false
+        
+        // path to our backend script
+        let URL_VERIFY = "http://www.teragentech.net/prepmate/GetRecipeIngredients.php"
+        
+        // variable which will spin until verification is finished
+        var finished : Bool = false
+        
+        // create our URL object
+        let url = URL(string: URL_VERIFY)
+        
+        // create the request and set the type to POST, otherwise we get authorization error
+        var request = URLRequest(url: url!)
+        request.httpMethod = "POST"
+        
+        let params = "id=\(String(self.id))"
+        
+        request.httpBody = params.data(using: String.Encoding.utf8)
+        
+        // Create a task and send our request to our REST API
+        let task = URLSession.shared.dataTask(with: request) {
+            data, response, error in
+            // if we error out, return the error message
+            if(error != nil) {
+                self.eMsg = error!.localizedDescription
+                finished = true
+                vError = true
+                return
+            }
+            
+            // If there was no error, parse the response
+            do {
+                // convert response to a dictionary
+                let JSONResponse = try JSONSerialization.jsonObject(with: data!, options: .mutableContainers) as? NSDictionary
+                
+                // Get the error status and the error message from the database
+                if let parseJSON = JSONResponse {
+                    self.eMsg = parseJSON["msg"] as! String
+                    vError = (parseJSON["error"] as! Bool)
+                    if(!vError) {
+                        var count = 0
+                        while let record = parseJSON[String(count)] as? NSString {
+                            if let entry = try JSONSerialization.jsonObject(with: record.data(using: String.Encoding.utf8.rawValue)!, options: .mutableContainers) as? NSDictionary {
+                                var newIng = RecipeIngredient()
+                                if let strId = entry["id"] as? String {
+                                    newIng.id = Int(strId)!
+                                } else {
+                                    vError = true
+                                    break
+                                }
+                                if let iid = entry["ingredient_id"] as? String {
+                                    if(Int(iid)! >= 0) {
+                                        DispatchQueue.main.async {
+                                            if(newIng.item.getIngredient(iid: Int(iid)!)){
+                                                vError = true
+                                            }
+                                        }
+                                        if(vError) {
+                                            break
+                                        }
+                                    }
+                                }
+                                if let strAmt = entry["amount"] as? String {
+                                    newIng.amount = Double(strAmt)!
+                                } else {
+                                    vError = true
+                                    break
+                                }
+                                self.ingredients.append(newIng)
+                            }
+                            count+=1
+                        }
+                    }
+                }
+            } catch {
+                self.eMsg = error.localizedDescription
+                vError = true
+            }
+            finished = true
+        }
+        // execute our task and then return the results
+        task.resume()
+        while(!finished) {}
+        return vError
+    }
+    
+    // Getters (no setters)
+    public func getNumIngredients() -> Int { return self.ingredients.count }
+    public func getRecipeIngredient(idx:Int) -> RecipeIngredient { return self.ingredients[idx] }
+    
+    // ================================================================================
+    // Recipe Direction functions
+    // ================================================================================
+    public func addRecipeDirection(newDirection: Direction) -> Bool {
+        var dir = newDirection
+        
+        var vError = false
         
         // path to our backend script
         let URL_VERIFY = "http://www.teragentech.net/prepmate/AddRecipeDirection.php"
@@ -261,8 +1083,11 @@ class Recipe {
         var request = URLRequest(url: url!)
         request.httpMethod = "POST"
         
-        let params = "rid=\(rid)&number=\(num)&description=\(str)"
-        var eMsg = ""
+        var pString = "rid=\(String(self.id))"
+        pString += "&description=\(String(dir.description))"
+        
+        let params = pString
+        
         request.httpBody = params.data(using: String.Encoding.utf8)
         
         // Create a task and send our request to our REST API
@@ -270,7 +1095,7 @@ class Recipe {
             data, response, error in
             // if we error out, return the error message
             if(error != nil) {
-                eMsg = error!.localizedDescription
+                self.eMsg = error!.localizedDescription
                 finished = true
                 vError = true
                 return
@@ -283,12 +1108,16 @@ class Recipe {
                 
                 // Get the error status and the error message from the database
                 if let parseJSON = JSONResponse {
-                    eMsg = parseJSON["msg"] as! String
-                    print(eMsg)
+                    self.eMsg = parseJSON["msg"] as! String
+                    if let strId = parseJSON["id"] as? NSNumber {
+                        dir.id = strId as! Int
+                    } else {
+                        dir.id = Int(parseJSON["id"] as! String)!
+                    }
                     vError = (parseJSON["error"] as! Bool)
                 }
             } catch {
-                eMsg = error.localizedDescription
+                self.eMsg = error.localizedDescription
                 vError = true
             }
             finished = true
@@ -296,6 +1125,792 @@ class Recipe {
         // execute our task and then return the results
         task.resume()
         while(!finished) {}
-        return (vError, eMsg)
+        if(!vError) {
+            self.directions.append(dir)
+        }
+        return vError
     }
+    
+    public func updateRecipeDirection(idx: Int, newDescription : String) -> Bool {
+        // set up variables for db operations
+        self.directions[idx].description = newDescription
+        
+        // create a variable to return whether we errored out or not
+        var vError : Bool = false
+        
+        // path to our backend script
+        let URL_VERIFY = "http://www.teragentech.net/prepmate/UpdateRecipeDirection.php"
+        
+        // variable which will spin until verification is finished
+        var finished : Bool = false
+        
+        // create our URL object
+        let url = URL(string: URL_VERIFY)
+        
+        // create the request and set the type to POST, otherwise we get authorization error
+        var request = URLRequest(url: url!)
+        request.httpMethod = "POST"
+        
+        var pString = "id=\(String(self.directions[idx].id))"
+        pString += "&rid=\(String(self.id))"
+        pString += "&description=\(String(self.directions[idx].description))"
+        
+        let params = pString
+        
+        request.httpBody = params.data(using: String.Encoding.utf8)
+        
+        // Create a task and send our request to our REST API
+        let task = URLSession.shared.dataTask(with: request) {
+            data, response, error in
+            // if we error out, return the error message
+            if(error != nil) {
+                self.eMsg = error!.localizedDescription
+                finished = true
+                vError = true
+                return
+            }
+            
+            // If there was no error, parse the response
+            do {
+                // convert response to a dictionary
+                let JSONResponse = try JSONSerialization.jsonObject(with: data!, options: .mutableContainers) as? NSDictionary
+                
+                // Get the error status and the error message from the database
+                if let parseJSON = JSONResponse {
+                    self.eMsg = parseJSON["msg"] as! String
+                    vError = (parseJSON["error"] as! Bool)
+                }
+            } catch {
+                self.eMsg = error.localizedDescription
+                vError = true
+            }
+            finished = true
+        }
+        // execute our task and then return the results
+        task.resume()
+        while(!finished) {}
+        return vError
+    }
+    
+    public func removeRecipeDirection(idx: Int) -> Bool {
+        // create a variable to return whether we errored out or not
+        var vError : Bool = false
+        
+        // path to our backend script
+        let URL_VERIFY = "http://www.teragentech.net/prepmate/RemoveRecipeDirection.php"
+        
+        // variable which will spin until verification is finished
+        var finished : Bool = false
+        
+        // create our URL object
+        let url = URL(string: URL_VERIFY)
+        
+        // create the request and set the type to POST, otherwise we get authorization error
+        var request = URLRequest(url: url!)
+        request.httpMethod = "POST"
+        
+        let params = "id="+String(self.directions[idx].id)
+        
+        request.httpBody = params.data(using: String.Encoding.utf8)
+        
+        // Create a task and send our request to our REST API
+        let task = URLSession.shared.dataTask(with: request) {
+            data, response, error in
+            // if we error out, return the error message
+            if(error != nil) {
+                self.eMsg = error!.localizedDescription
+                finished = true
+                vError = true
+                return
+            }
+            
+            // If there was no error, parse the response
+            do {
+                // convert response to a dictionary
+                let JSONResponse = try JSONSerialization.jsonObject(with: data!, options: .mutableContainers) as? NSDictionary
+                
+                // Get the error status and the error message from the database
+                if let parseJSON = JSONResponse {
+                    self.eMsg = parseJSON["msg"] as! String
+                    vError = (parseJSON["error"] as! Bool)
+                }
+            } catch {
+                self.eMsg = error.localizedDescription
+                vError = true
+            }
+            finished = true
+        }
+        // execute our task and then return the results
+        task.resume()
+        while(!finished) {}
+        
+        // Wipe recipe entry
+        if(!vError) {
+            self.directions.remove(at: idx)
+        }
+        return vError
+    }
+    
+    private func loadRecipeDirections() -> Bool {
+        // create a variable to return whether we errored out or not
+        var vError : Bool = false
+        
+        // path to our backend script
+        let URL_VERIFY = "http://www.teragentech.net/prepmate/GetRecipeDirections.php"
+        
+        // variable which will spin until verification is finished
+        var finished : Bool = false
+        
+        // create our URL object
+        let url = URL(string: URL_VERIFY)
+        
+        // create the request and set the type to POST, otherwise we get authorization error
+        var request = URLRequest(url: url!)
+        request.httpMethod = "POST"
+        
+        let params = "id=\(String(self.id))"
+        
+        request.httpBody = params.data(using: String.Encoding.utf8)
+        
+        // Create a task and send our request to our REST API
+        let task = URLSession.shared.dataTask(with: request) {
+            data, response, error in
+            // if we error out, return the error message
+            if(error != nil) {
+                self.eMsg = error!.localizedDescription
+                finished = true
+                vError = true
+                return
+            }
+            
+            // If there was no error, parse the response
+            do {
+                // convert response to a dictionary
+                let JSONResponse = try JSONSerialization.jsonObject(with: data!, options: .mutableContainers) as? NSDictionary
+                
+                // Get the error status and the error message from the database
+                if let parseJSON = JSONResponse {
+                    self.eMsg = parseJSON["msg"] as! String
+                    vError = (parseJSON["error"] as! Bool)
+                    if(!vError) {
+                        var count = 0
+                        while let record = parseJSON[String(count)] as? NSString {
+                            if let entry = try JSONSerialization.jsonObject(with: record.data(using: String.Encoding.utf8.rawValue)!, options: .mutableContainers) as? NSDictionary {
+                                var newDir = Direction()
+                                if let strId = entry["id"] as? String {
+                                    newDir.id = Int(strId)!
+                                } else {
+                                    vError = true
+                                    break
+                                }
+                                newDir.description = entry["description"] as! String
+                                self.directions.append(newDir)
+                            }
+                            count+=1
+                        }
+                    }
+                }
+            } catch {
+                self.eMsg = error.localizedDescription
+                vError = true
+            }
+            finished = true
+        }
+        // execute our task and then return the results
+        task.resume()
+        while(!finished) {}
+        return vError
+    }
+    
+    // Getters (no setters)
+    public func getNumDirections() -> Int { return self.directions.count }
+    public func getRecipeDirection(idx : Int) -> Direction { return self.directions[idx] }
+    
+    // ================================================================================
+    // Recipe Vitamin functions
+    // ================================================================================
+    public func addRecipeVitamin(newVitamin : Vitamin) -> Bool {
+        var vit = newVitamin
+        
+        var vError = false
+        
+        // path to our backend script
+        let URL_VERIFY = "http://www.teragentech.net/prepmate/AddRecipeVitamin.php"
+        
+        // variable which will spin until verification is finished
+        var finished : Bool = false
+        
+        // create our URL object
+        let url = URL(string: URL_VERIFY)
+        
+        // create the request and set the type to POST, otherwise we get authorization error
+        var request = URLRequest(url: url!)
+        request.httpMethod = "POST"
+        
+        var pString = "rid=\(String(self.id))"
+        pString += "&idx=\(String(vit.idx))"
+        pString += "&percent=\(String(vit.percent))"
+        
+        let params = pString
+        
+        request.httpBody = params.data(using: String.Encoding.utf8)
+        
+        // Create a task and send our request to our REST API
+        let task = URLSession.shared.dataTask(with: request) {
+            data, response, error in
+            // if we error out, return the error message
+            if(error != nil) {
+                self.eMsg = error!.localizedDescription
+                finished = true
+                vError = true
+                return
+            }
+            
+            // If there was no error, parse the response
+            do {
+                // convert response to a dictionary
+                let JSONResponse = try JSONSerialization.jsonObject(with: data!, options: .mutableContainers) as? NSDictionary
+                
+                // Get the error status and the error message from the database
+                if let parseJSON = JSONResponse {
+                    self.eMsg = parseJSON["msg"] as! String
+                    if let strId = parseJSON["id"] as? NSNumber {
+                        vit.id = strId as! Int
+                    } else {
+                        vit.id = Int(parseJSON["id"] as! String)!
+                    }
+                    vError = (parseJSON["error"] as! Bool)
+                }
+            } catch {
+                self.eMsg = error.localizedDescription
+                vError = true
+            }
+            finished = true
+        }
+        // execute our task and then return the results
+        task.resume()
+        while(!finished) {}
+        if(!vError) {
+            self.vitamins.append(vit)
+        }
+        return vError
+    }
+    
+    public func updateRecipeVitamin(idx : Int, newPercent : Double) -> Bool {
+        // set up variables for db operations
+        self.vitamins[idx].percent = newPercent
+        
+        // create a variable to return whether we errored out or not
+        var vError : Bool = false
+        
+        // path to our backend script
+        let URL_VERIFY = "http://www.teragentech.net/prepmate/UpdateRecipeVitamin.php"
+        
+        // variable which will spin until verification is finished
+        var finished : Bool = false
+        
+        // create our URL object
+        let url = URL(string: URL_VERIFY)
+        
+        // create the request and set the type to POST, otherwise we get authorization error
+        var request = URLRequest(url: url!)
+        request.httpMethod = "POST"
+        
+        var pString = "id=\(String(self.vitamins[idx].id))"
+        pString += "&rid=\(String(self.id))"
+        pString += "&idx=\(String(self.vitamins[idx].idx))"
+        pString += "&percent=\(String(self.vitamins[idx].percent))"
+        
+        let params = pString
+        
+        request.httpBody = params.data(using: String.Encoding.utf8)
+        
+        // Create a task and send our request to our REST API
+        let task = URLSession.shared.dataTask(with: request) {
+            data, response, error in
+            // if we error out, return the error message
+            if(error != nil) {
+                self.eMsg = error!.localizedDescription
+                finished = true
+                vError = true
+                return
+            }
+            
+            // If there was no error, parse the response
+            do {
+                // convert response to a dictionary
+                let JSONResponse = try JSONSerialization.jsonObject(with: data!, options: .mutableContainers) as? NSDictionary
+                
+                // Get the error status and the error message from the database
+                if let parseJSON = JSONResponse {
+                    self.eMsg = parseJSON["msg"] as! String
+                    vError = (parseJSON["error"] as! Bool)
+                }
+            } catch {
+                self.eMsg = error.localizedDescription
+                vError = true
+            }
+            finished = true
+        }
+        // execute our task and then return the results
+        task.resume()
+        while(!finished) {}
+        return vError
+    }
+    
+    public func removeRecipeVitamin(idx : Int) -> Bool {
+        // create a variable to return whether we errored out or not
+        var vError : Bool = false
+        
+        // path to our backend script
+        let URL_VERIFY = "http://www.teragentech.net/prepmate/RemoveRecipeVitamin.php"
+        
+        // variable which will spin until verification is finished
+        var finished : Bool = false
+        
+        // create our URL object
+        let url = URL(string: URL_VERIFY)
+        
+        // create the request and set the type to POST, otherwise we get authorization error
+        var request = URLRequest(url: url!)
+        request.httpMethod = "POST"
+        
+        let params = "id="+String(self.vitamins[idx].id)
+        
+        request.httpBody = params.data(using: String.Encoding.utf8)
+        
+        // Create a task and send our request to our REST API
+        let task = URLSession.shared.dataTask(with: request) {
+            data, response, error in
+            // if we error out, return the error message
+            if(error != nil) {
+                self.eMsg = error!.localizedDescription
+                finished = true
+                vError = true
+                return
+            }
+            
+            // If there was no error, parse the response
+            do {
+                // convert response to a dictionary
+                let JSONResponse = try JSONSerialization.jsonObject(with: data!, options: .mutableContainers) as? NSDictionary
+                
+                // Get the error status and the error message from the database
+                if let parseJSON = JSONResponse {
+                    self.eMsg = parseJSON["msg"] as! String
+                    vError = (parseJSON["error"] as! Bool)
+                }
+            } catch {
+                self.eMsg = error.localizedDescription
+                vError = true
+            }
+            finished = true
+        }
+        // execute our task and then return the results
+        task.resume()
+        while(!finished) {}
+        
+        // Wipe recipe entry
+        if(!vError) {
+            self.vitamins.remove(at: idx)
+        }
+        return vError
+    }
+    
+    private func loadRecipeVitamins() -> Bool {
+        // create a variable to return whether we errored out or not
+        var vError : Bool = false
+        
+        // path to our backend script
+        let URL_VERIFY = "http://www.teragentech.net/prepmate/GetRecipeVitamins.php"
+        
+        // variable which will spin until verification is finished
+        var finished : Bool = false
+        
+        // create our URL object
+        let url = URL(string: URL_VERIFY)
+        
+        // create the request and set the type to POST, otherwise we get authorization error
+        var request = URLRequest(url: url!)
+        request.httpMethod = "POST"
+        
+        let params = "id=\(String(self.id))"
+        
+        request.httpBody = params.data(using: String.Encoding.utf8)
+        
+        // Create a task and send our request to our REST API
+        let task = URLSession.shared.dataTask(with: request) {
+            data, response, error in
+            // if we error out, return the error message
+            if(error != nil) {
+                self.eMsg = error!.localizedDescription
+                finished = true
+                vError = true
+                return
+            }
+            
+            // If there was no error, parse the response
+            do {
+                // convert response to a dictionary
+                let JSONResponse = try JSONSerialization.jsonObject(with: data!, options: .mutableContainers) as? NSDictionary
+                
+                // Get the error status and the error message from the database
+                if let parseJSON = JSONResponse {
+                    self.eMsg = parseJSON["msg"] as! String
+                    vError = (parseJSON["error"] as! Bool)
+                    if(!vError) {
+                        var count = 0
+                        while let record = parseJSON[String(count)] as? NSString {
+                            if let entry = try JSONSerialization.jsonObject(with: record.data(using: String.Encoding.utf8.rawValue)!, options: .mutableContainers) as? NSDictionary {
+                                var newVit = Vitamin()
+                                if let strId = entry["id"] as? String {
+                                    newVit.id = Int(strId)!
+                                } else {
+                                    vError = true
+                                    break
+                                }
+                                if let strIdx = entry["idx"] as? String {
+                                    newVit.idx = Int(strIdx)!
+                                } else {
+                                    vError = true
+                                    break
+                                }
+                                if let strPer = entry["daily_percent"] as? String {
+                                    newVit.percent = Double(strPer)!
+                                } else {
+                                    vError = true
+                                    break
+                                }
+                                self.vitamins.append(newVit)
+                            }
+                            count+=1
+                        }
+                    }
+                }
+            } catch {
+                self.eMsg = error.localizedDescription
+                vError = true
+            }
+            finished = true
+        }
+        // execute our task and then return the results
+        task.resume()
+        while(!finished) {}
+        return vError
+    }
+    
+    // Getters (no setters)
+    public func getNumVitamin() -> Int { return self.vitamins.count }
+    public func getRecipeVitamin(idx : Int) -> Vitamin { return self.vitamins[idx] }
+    
+    // ================================================================================
+    // Recipe Comment functions
+    // ================================================================================
+    public func addRecipeComment(newComment : Comment) -> Bool {
+        // create mutable object
+        var com = newComment
+        
+        // set the timestamp
+        com.date = getTimestamp()
+        
+        var vError = false
+        
+        // path to our backend script
+        let URL_VERIFY = "http://www.teragentech.net/prepmate/AddRecipeComment.php"
+        
+        // variable which will spin until verification is finished
+        var finished : Bool = false
+        
+        // create our URL object
+        let url = URL(string: URL_VERIFY)
+        
+        // create the request and set the type to POST, otherwise we get authorization error
+        var request = URLRequest(url: url!)
+        request.httpMethod = "POST"
+        
+        // set params
+        var pString = "rid=\(String(self.id))"
+        pString += "&uid=\(String(com.userId))"
+        pString += "&date=\(com.date)"
+        pString += "&rating=\(String(com.rating))"
+        pString += "&title=\(com.title)"
+        pString += "&description=\(com.description)"
+        
+        let params = pString
+        
+        request.httpBody = params.data(using: String.Encoding.utf8)
+        
+        // Create a task and send our request to our REST API
+        let task = URLSession.shared.dataTask(with: request) {
+            data, response, error in
+            // if we error out, return the error message
+            if(error != nil) {
+                self.eMsg = error!.localizedDescription
+                finished = true
+                vError = true
+                return
+            }
+            
+            // If there was no error, parse the response
+            do {
+                // convert response to a dictionary
+                let JSONResponse = try JSONSerialization.jsonObject(with: data!, options: .mutableContainers) as? NSDictionary
+                
+                // Get the error status and the error message from the database
+                if let parseJSON = JSONResponse {
+                    self.eMsg = parseJSON["msg"] as! String
+                    if let strId = parseJSON["id"] as? NSNumber {
+                        com.id = strId as! Int
+                    } else {
+                        com.id = Int(parseJSON["id"] as! String)!
+                    }
+                    vError = (parseJSON["error"] as! Bool)
+                }
+            } catch {
+                self.eMsg = error.localizedDescription
+                vError = true
+            }
+            finished = true
+        }
+        // execute our task and then return the results
+        task.resume()
+        while(!finished) {}
+        if(!vError) {
+            self.comments.append(com)
+        }
+        return vError
+    }
+    
+    public func updateRecipeComment(idx: Int, newTitle : String, newRating : Int, newDescription : String) -> Bool {
+        
+        // set the timestamp
+        let date = getTimestamp()
+        
+        var vError = false
+        
+        // path to our backend script
+        let URL_VERIFY = "http://www.teragentech.net/prepmate/UpdateRecipeComment.php"
+        
+        // variable which will spin until verification is finished
+        var finished : Bool = false
+        
+        // create our URL object
+        let url = URL(string: URL_VERIFY)
+        
+        // create the request and set the type to POST, otherwise we get authorization error
+        var request = URLRequest(url: url!)
+        request.httpMethod = "POST"
+        
+        // set params
+        var pString = "id=\(String(self.comments[idx].id))"
+        pString += "&rid=\(String(self.id))"
+        pString += "&uid=\(String(self.comments[idx].userId))"
+        pString += "&date=\(date)"
+        pString += "&rating=\(newRating)"
+        pString += "&title=\(newTitle)"
+        pString += "&description=\(newDescription)"
+        
+        let params = pString
+        
+        request.httpBody = params.data(using: String.Encoding.utf8)
+        
+        // Create a task and send our request to our REST API
+        let task = URLSession.shared.dataTask(with: request) {
+            data, response, error in
+            // if we error out, return the error message
+            if(error != nil) {
+                self.eMsg = error!.localizedDescription
+                finished = true
+                vError = true
+                return
+            }
+            
+            // If there was no error, parse the response
+            do {
+                // convert response to a dictionary
+                let JSONResponse = try JSONSerialization.jsonObject(with: data!, options: .mutableContainers) as? NSDictionary
+                
+                // Get the error status and the error message from the database
+                if let parseJSON = JSONResponse {
+                    self.eMsg = parseJSON["msg"] as! String
+                    vError = (parseJSON["error"] as! Bool)
+                }
+            } catch {
+                self.eMsg = error.localizedDescription
+                vError = true
+            }
+            finished = true
+        }
+        // execute our task and then return the results
+        task.resume()
+        while(!finished) {}
+        
+        if(!vError) {
+            self.comments[idx].date = date
+            self.comments[idx].title = newTitle
+            self.comments[idx].rating = newRating
+            self.comments[idx].description = newDescription
+        }
+        return vError
+    }
+    
+    public func removeRecipeComment(idx : Int) -> Bool {
+        // create a variable to return whether we errored out or not
+        var vError : Bool = false
+        
+        // path to our backend script
+        let URL_VERIFY = "http://www.teragentech.net/prepmate/RemoveRecipeComment.php"
+        
+        // variable which will spin until verification is finished
+        var finished : Bool = false
+        
+        // create our URL object
+        let url = URL(string: URL_VERIFY)
+        
+        // create the request and set the type to POST, otherwise we get authorization error
+        var request = URLRequest(url: url!)
+        request.httpMethod = "POST"
+        
+        let params = "id="+String(self.comments[idx].id)
+        
+        request.httpBody = params.data(using: String.Encoding.utf8)
+        
+        // Create a task and send our request to our REST API
+        let task = URLSession.shared.dataTask(with: request) {
+            data, response, error in
+            // if we error out, return the error message
+            if(error != nil) {
+                self.eMsg = error!.localizedDescription
+                finished = true
+                vError = true
+                return
+            }
+            
+            // If there was no error, parse the response
+            do {
+                // convert response to a dictionary
+                let JSONResponse = try JSONSerialization.jsonObject(with: data!, options: .mutableContainers) as? NSDictionary
+                
+                // Get the error status and the error message from the database
+                if let parseJSON = JSONResponse {
+                    self.eMsg = parseJSON["msg"] as! String
+                    vError = (parseJSON["error"] as! Bool)
+                }
+            } catch {
+                self.eMsg = error.localizedDescription
+                vError = true
+            }
+            finished = true
+        }
+        // execute our task and then return the results
+        task.resume()
+        while(!finished) {}
+        
+        // Wipe recipe entry
+        if(!vError) {
+            self.comments.remove(at: idx)
+        }
+        return vError
+    }
+    
+    private func loadRecipeComments() -> Bool {
+        // create a variable to return whether we errored out or not
+        var vError : Bool = false
+        
+        // path to our backend script
+        let URL_VERIFY = "http://www.teragentech.net/prepmate/GetRecipeComments.php"
+        
+        // variable which will spin until verification is finished
+        var finished : Bool = false
+        
+        // create our URL object
+        let url = URL(string: URL_VERIFY)
+        
+        // create the request and set the type to POST, otherwise we get authorization error
+        var request = URLRequest(url: url!)
+        request.httpMethod = "POST"
+        
+        let params = "id=\(String(self.id))"
+        
+        request.httpBody = params.data(using: String.Encoding.utf8)
+        
+        // Create a task and send our request to our REST API
+        let task = URLSession.shared.dataTask(with: request) {
+            data, response, error in
+            // if we error out, return the error message
+            if(error != nil) {
+                self.eMsg = error!.localizedDescription
+                finished = true
+                vError = true
+                return
+            }
+            
+            // If there was no error, parse the response
+            do {
+                // convert response to a dictionary
+                let JSONResponse = try JSONSerialization.jsonObject(with: data!, options: .mutableContainers) as? NSDictionary
+                
+                // Get the error status and the error message from the database
+                if let parseJSON = JSONResponse {
+                    self.eMsg = parseJSON["msg"] as! String
+                    vError = (parseJSON["error"] as! Bool)
+                    if(!vError) {
+                        if let strRating = parseJSON["rank"] as? Int {
+                            self.rating = strRating
+                        } else {
+                            vError = true
+                        }
+                        
+                        var count = 0
+                        while let record = parseJSON[String(count)] as? NSString {
+                            if vError {
+                                break
+                            }
+                            if let entry = try JSONSerialization.jsonObject(with: record.data(using: String.Encoding.utf8.rawValue)!, options: .mutableContainers) as? NSDictionary {
+                                var newCom = Comment()
+                                if let strId = entry["id"] as? String {
+                                    newCom.id = Int(strId)!
+                                } else {
+                                    vError = true
+                                    break
+                                }
+                                if let strUid = entry["user_id"] as? String {
+                                    newCom.userId = Int(strUid)!
+                                } else {
+                                    vError = true
+                                    break
+                                }
+                                newCom.date = entry["date_posted"] as! String
+                                if let strRate = entry["rating"] as? String {
+                                    newCom.rating = Int(strRate)!
+                                } else {
+                                    vError = true
+                                    break
+                                }
+                                newCom.title = entry["title"] as! String
+                                newCom.description = entry["description"] as! String
+                                self.comments.append(newCom)
+                            }
+                            count+=1
+                        }
+                    }
+                }
+            } catch {
+                self.eMsg = error.localizedDescription
+                vError = true
+            }
+            finished = true
+        }
+        // execute our task and then return the results
+        task.resume()
+        while(!finished) {}
+        return vError
+    }
+    
+    // Getter s (no setters)
+    public func getNumComment() -> Int { return self.comments.count }
+    public func getRecipeComment(idx : Int) -> Comment { return self.comments[idx] }
+    
+    // helper functions
+    private func roundP(p : Double) -> Double { return (p * 100.0).rounded() / 100.0 }
 }

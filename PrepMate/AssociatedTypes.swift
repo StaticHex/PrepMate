@@ -96,6 +96,7 @@ public let unitList = [(std: "custom", metric: "custom", factor: 0.0),
                         (std: "lb", metric: "g", factor: 480.0),
                         (std: "in", metric: "cm", factor: 2.5)]
 
+
 public func metricToStd(unit:Int, amount:Double) -> Double {
     return amount / unitList[unit].factor
 }

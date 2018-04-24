@@ -9,7 +9,7 @@
 import UIKit
 
 protocol secondPageProtocol : class {
-    func setRecipe(recipe: Recipe)
+    func setRecipe(recipe: RecipeRecord)
 }
 
 class VitaminCustomCell: UITableViewCell {
@@ -38,7 +38,7 @@ class AddRecipeSecondPageViewController: UIViewController, UIPopoverPresentation
     var vitamins: [Vitamin] = [Vitamin]()
     
     // Recipe that will be saved if the user chooses to (will be passed from first add page controller)
-    var recipeToSave: Recipe = Recipe()
+    var recipeToSave: RecipeRecord = RecipeRecord()
     
     var addRecipeDelegate: secondPageProtocol?
     
@@ -84,91 +84,39 @@ class AddRecipeSecondPageViewController: UIViewController, UIPopoverPresentation
     }
     /// Load any available recipe changes
     func loadRecipe() {
-        if(self.recipeToSave.getCalories() != -1) {
-            self.caloriesField.text! = "\(self.recipeToSave.getCalories())"
-        }
-        
-        if(self.recipeToSave.getSatFat() != -1) {
-            self.fatField.text! = "\(self.recipeToSave.getSatFat())"
-        }
-        
-        if(self.recipeToSave.getUnsatFat() != -1) {
-            self.fatField.text! = "\(self.recipeToSave.getUnsatFat())"
-        }
-        if(self.recipeToSave.getCholesterol() != -1) {
-            self.cholesterolField.text! = "\(self.recipeToSave.getCholesterol())"
-        }
-        if(self.recipeToSave.getSodium() != -1) {
-            self.sodiumField.text! = "\(self.recipeToSave.getSodium())"
-        }
-        if(self.recipeToSave.getPotassium() != -1) {
-            self.potassiumField.text! = "\(self.recipeToSave.getPotassium())"
-        }
-        if(self.recipeToSave.getSugar() != -1) {
-            self.sugarField.text! = "\(self.recipeToSave.getSugar())"
-        }
-        if(self.recipeToSave.getCarbs() != -1) {
-            self.carbField.text! = "\(self.recipeToSave.getCarbs())"
-        }
-        if(self.recipeToSave.getFiber() != -1) {
-            self.fiberField.text! = "\(self.recipeToSave.getFiber())"
-        }
-        
-        self.vitamins = self.recipeToSave.getVitamins()
+        self.caloriesField.text! = "\(self.recipeToSave.calories)"
+        self.fatField.text! = "\(self.recipeToSave.satFat)"
+        self.fatField.text! = "\(self.recipeToSave.unsatFat)"
+        self.cholesterolField.text! = "\(self.recipeToSave.cholesterol)"
+        self.sodiumField.text! = "\(self.recipeToSave.sodium)"
+        self.potassiumField.text! = "\(self.potassiumField)"
+        self.sugarField.text! = "\(self.recipeToSave.sugar)"
+        self.carbField.text! = "\(self.recipeToSave.carbs)"
+        self.fiberField.text! = "\(self.recipeToSave.fiber)"
+        self.vitamins = self.recipeToSave.vitamins
     }
+    
     /// Save recipe changes before returning to the first add recipe page
     func saveRecipeValues() {
-        if Int(caloriesField.text!) != nil {
-            self.recipeToSave.setCalories(calories: Int(caloriesField.text!)!)
-        }
-        
-        // Sat Fat
-        if Int(fatField.text!) != nil {
-            self.recipeToSave.setSatFat(satFat: Int(fatField.text!)!)
-        }
-        
-        if Int(unsatField.text!) != nil {
-            self.recipeToSave.setUnsatFat(unsatFat: Int(unsatField.text!)!)
-        }
-        
-        if Int(cholesterolField.text!) != nil {
-            self.recipeToSave.setCholesterol(cholesterol: Int(cholesterolField.text!)!)
-        }
-        
-        if Int(sodiumField.text!) != nil {
-            self.recipeToSave.setSodium(sodium: Int(sodiumField.text!)!)
-        }
-        
-        if Int(potassiumField.text!) != nil {
-            self.recipeToSave.setPotassium(potassium: Int(potassiumField.text!)!)
-        }
-        
-        if Int(sugarField.text!) != nil {
-            self.recipeToSave.setSugar(sugar: Int(sugarField.text!)!)
-        }
-        
-        if Int(carbField.text!) != nil {
-            self.recipeToSave.setCarbs(carbs: Int(carbField.text!)!)
-        }
-        
-        if Int(fiberField.text!) != nil {
-            self.recipeToSave.setFiber(fiber: Int(fiberField.text!)!)
-        }
-        
-        if urlField.text! != "" {
-            let photo = Photo()
-            photo.setPhoto(imageURL: urlField.text!)
-            self.recipeToSave.setPhoto(photo: photo)
-        }
-        self.recipeToSave.setVitamin(vitamin: vitamins)
+        self.recipeToSave.calories = Double(caloriesField.text!)!
+        self.recipeToSave.satFat = Double(fatField.text!)!
+        self.recipeToSave.unsatFat = Double(unsatField.text!)!
+        self.recipeToSave.cholesterol = Double(cholesterolField.text!)!
+        self.recipeToSave.sodium = Double(sodiumField.text!)!
+        self.recipeToSave.potassium = Double(potassiumField.text!)!
+        self.recipeToSave.sugar = Double(sugarField.text!)!
+        self.recipeToSave.carbs = Double(carbField.text!)!
+        self.recipeToSave.fiber = Double(fiberField.text!)!
+        self.recipeToSave.photo = urlField.text!
+        self.recipeToSave.vitamins = vitamins
     }
     // Displaying information for a vitamin in the Vitamin table view
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "vitaminTableCell", for: indexPath as IndexPath) as! VitaminCustomCell
         
         let row = indexPath.row
-        cell.vitaminName.text = vitaminList[vitamins[row].getIndex()]
-        cell.percentage.text = String(vitamins[row].getPercent()) + " %"
+        cell.vitaminName.text = vitaminList[vitamins[row].idx]
+        cell.percentage.text = String(vitamins[row].percent) + " %"
             
         return cell
     }
@@ -196,15 +144,16 @@ class AddRecipeSecondPageViewController: UIViewController, UIPopoverPresentation
     }
     
     // Receiving information about the recipe being created from the first page.
-    func setRecipe(recipe: Recipe) {
+    func setRecipe(recipe: RecipeRecord) {
         self.recipeToSave = recipe
-        print(self.recipeToSave.getName())
+        print(self.recipeToSave.name)
     }
     
     // Save recipe.
     @IBAction func saveRecipe(_ sender: Any) {
         self.checkRecipe()
-        let success = self.recipeToSave.addRecipe()
+        let recipe = Recipe()
+        let success = recipe.addRecipe(newRecipe: recipeToSave)
         if success {
             self.databaseAlert(str: "Database Error")
         }
@@ -217,68 +166,66 @@ class AddRecipeSecondPageViewController: UIViewController, UIPopoverPresentation
     /// Verifies that all fields have been filled
     func checkRecipe(){
         self.saveRecipeValues()
-        if(self.recipeToSave.getName() == "") {
+        if(self.recipeToSave.name == "") {
             self.recipeAlert(str: "Name")
             return
         }
-        if(self.recipeToSave.getPrepTime() == "00:00:00") {
+        if(self.recipeToSave.prepTime == "00:00:00") {
             self.recipeAlert(str: "Prep Time")
             return
         }
-        if(self.recipeToSave.getCookTime() == "00:00:00") {
+        if(self.recipeToSave.cookTime == "00:00:00") {
             self.recipeAlert(str: "Cook Time")
             return
         }
-        if(self.recipeToSave.getCalories() == -1) {
+        if(self.recipeToSave.calories == -1) {
             self.recipeAlert(str: "Calories")
             return
         }
-        if(self.recipeToSave.getSatFat() == -1) {
+        if(self.recipeToSave.satFat == -1) {
             self.recipeAlert(str: "Saturated Fat")
             return
         }
-        if(self.recipeToSave.getUnsatFat() == -1) {
+        if(self.recipeToSave.unsatFat == -1) {
             self.recipeAlert(str: "Unsatuared Fat")
             return
         }
-        if(self.recipeToSave.getCholesterol() == -1) {
+        if(self.recipeToSave.cholesterol == -1) {
             self.recipeAlert(str: "Cholesterol")
             return
         }
-        if(self.recipeToSave.getSodium() == -1) {
+        if(self.recipeToSave.sodium == -1) {
             self.recipeAlert(str: "Sodium")
             return
         }
-        if(self.recipeToSave.getPotassium() == -1) {
+        if(self.recipeToSave.potassium == -1) {
             self.recipeAlert(str: "Potassium")
             return
         }
-        if(self.recipeToSave.getCarbs() == -1) {
+        if(self.recipeToSave.carbs == -1) {
             self.recipeAlert(str: "Carbohydrate")
             return
         }
-        if(self.recipeToSave.getFiber() == -1) {
+        if(self.recipeToSave.fiber == -1) {
             self.recipeAlert(str: "Fiber")
             return
         }
-        if(self.recipeToSave.getSugar() == -1) {
+        if(self.recipeToSave.sugar == -1) {
             self.recipeAlert(str: "Sugar")
             return
         }
-        if(self.recipeToSave.getIngredients().count == 0) {
+        if(self.recipeToSave.ingredients.count == 0) {
             self.recipeAlert(str: "Ingredients")
             return
         }
-        if(self.recipeToSave.getDirections().count == 0) {
+        if(self.recipeToSave.directions.count == 0) {
             self.recipeAlert(str: "Directions")
             return
         }
-        if(self.recipeToSave.getVitamins().count == 0) {
+        if(self.recipeToSave.vitamins.count == 0) {
             self.recipeAlert(str: "Vitamins")
             return
         }
-
-        
     }
     
     /// Helper function to alert recipe errors

@@ -46,7 +46,13 @@ class NewCommentPopoverViewController: UIViewController, UIPickerViewDelegate, U
             return
         }
         // TODO: Comment id?
-        addCommentDelegate?.addComment(comment: Comment(id: -1, title: titleTextField.text!, author: currentUser, rating:selectedRating, description: commentBody.text!))
+        var newComment = Comment()
+        newComment.title = titleTextField.text!
+        newComment.description = commentBody.text!
+        newComment.rating = selectedRating
+        newComment.userId = currentUser.getId()
+        newComment.date = getTimestamp()
+        addCommentDelegate?.addComment(comment: newComment)
         dismiss(animated: true, completion: nil)
     }
     @IBAction func onPressDiscard(_ sender: Any) {

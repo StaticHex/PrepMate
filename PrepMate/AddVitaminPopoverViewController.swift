@@ -70,7 +70,9 @@ class AddVitaminPopoverViewController: UIViewController, UIPickerViewDelegate, U
         if Float(percentDailyValue.text!) == nil {
             self.recipeAlert(str: "Percent Daily Value")
         }
-        let vitamin = Vitamin(id: -1, index: vitaminList.index(of: vitaminTextView.text!)!, percent: Float(percentDailyValue.text!)!)
+        var vitamin = Vitamin()
+        vitamin.idx = vitaminList.index(of: vitaminTextView.text!)!
+        vitamin.percent = Double(percentDailyValue.text!)!
         addVitaminDelegate?.addVitamin(vitamin: vitamin)
         dismiss(animated: true, completion: nil)
     }

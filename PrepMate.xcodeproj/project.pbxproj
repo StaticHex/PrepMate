@@ -97,9 +97,7 @@
 		A1FC6B522071BE0B008C6F16 /* MealsCustomTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1FC6B512071BE0B008C6F16 /* MealsCustomTableViewCell.swift */; };
 		A203FB2E207527A50084B405 /* AssociatedTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = A203FB2D207527A50084B405 /* AssociatedTypes.swift */; };
 		A2177BDF206AFED00094E89D /* Recipe.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2177BDE206AFED00094E89D /* Recipe.swift */; };
-		A2177BE1206B009F0094E89D /* Vitamin.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2177BE0206B009F0094E89D /* Vitamin.swift */; };
 		A2177BE3206B00AA0094E89D /* Ingredient.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2177BE2206B00AA0094E89D /* Ingredient.swift */; };
-		A2177BE5206B00C70094E89D /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2177BE4206B00C70094E89D /* Comment.swift */; };
 		A2177BE7206B01F40094E89D /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2177BE6206B01F40094E89D /* User.swift */; };
 		A2177BE9206B0B750094E89D /* CommentDetailsPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2177BE8206B0B750094E89D /* CommentDetailsPageViewController.swift */; };
 		A24E8AD22062A90B005C8E2B /* RecipePageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A24E8AD12062A90B005C8E2B /* RecipePageViewController.swift */; };
@@ -208,9 +206,7 @@
 		A1FC6B512071BE0B008C6F16 /* MealsCustomTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealsCustomTableViewCell.swift; sourceTree = "<group>"; };
 		A203FB2D207527A50084B405 /* AssociatedTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssociatedTypes.swift; sourceTree = "<group>"; };
 		A2177BDE206AFED00094E89D /* Recipe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Recipe.swift; sourceTree = "<group>"; };
-		A2177BE0206B009F0094E89D /* Vitamin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vitamin.swift; sourceTree = "<group>"; };
 		A2177BE2206B00AA0094E89D /* Ingredient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ingredient.swift; sourceTree = "<group>"; };
-		A2177BE4206B00C70094E89D /* Comment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
 		A2177BE6206B01F40094E89D /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		A2177BE8206B0B750094E89D /* CommentDetailsPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentDetailsPageViewController.swift; sourceTree = "<group>"; };
 		A24E8AD12062A90B005C8E2B /* RecipePageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipePageViewController.swift; sourceTree = "<group>"; };
@@ -356,10 +352,8 @@
 				A1FC6B512071BE0B008C6F16 /* MealsCustomTableViewCell.swift */,
 				A2177BE8206B0B750094E89D /* CommentDetailsPageViewController.swift */,
 				A2177BDE206AFED00094E89D /* Recipe.swift */,
-				A2177BE0206B009F0094E89D /* Vitamin.swift */,
 				A203FB2D207527A50084B405 /* AssociatedTypes.swift */,
 				A2177BE2206B00AA0094E89D /* Ingredient.swift */,
-				A2177BE4206B00C70094E89D /* Comment.swift */,
 				A2177BE6206B01F40094E89D /* User.swift */,
 				A1E370262069523100213631 /* CustomUnitsViewController.swift */,
 				A2D3BD8320633803005BD508 /* CommentFilterPopoverViewController.swift */,
@@ -538,12 +532,10 @@
 				A2D3BD7C20633291005BD508 /* AddRecipeDietaryPageViewController.swift in Sources */,
 				707180EE20702675009EA6A8 /* Photo.swift in Sources */,
 				A24E8AD42062AA75005C8E2B /* RecipeNutritionViewController.swift in Sources */,
-				A2177BE5206B00C70094E89D /* Comment.swift in Sources */,
 				7011C393205DAA0E00C965C5 /* LoginViewController.swift in Sources */,
 				A2526BD020632DBF00C89BCE /* AddRecipeFirstPageViewController.swift in Sources */,
 				A11A57342061639100A7EF31 /* ShoppingListViewController.swift in Sources */,
 				A11A573220614CC500A7EF31 /* HomePageViewController.swift in Sources */,
-				A2177BE1206B009F0094E89D /* Vitamin.swift in Sources */,
 				A1A075842062899500C65360 /* MealsPageViewController.swift in Sources */,
 				A1FC6B522071BE0B008C6F16 /* MealsCustomTableViewCell.swift in Sources */,
 				A2D3BD80206335FC005BD508 /* AddVitaminPopoverViewController.swift in Sources */,

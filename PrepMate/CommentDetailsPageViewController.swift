@@ -27,11 +27,16 @@ class CommentDetailsPageViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     private func loadPage() {
-        self.ratingsLabel.image = RatingImages[self.comment.getRating()]
-        authorLabel.text! = self.comment.getAuthor().getFname() + " " + self.comment.getAuthor().getLname()
-        dateLabel.text! = self.comment.getDate()
-        commentBody.text! = self.comment.getDescription()
-        self.title = self.comment.getTitle()
+        self.ratingsLabel.image = RatingImages[self.comment.rating]
+        let creator = User()
+        if(!creator.getUser(uid: comment.userId)) {
+            authorLabel.text! = creator.getUname()
+        } else {
+            authorLabel.text! = "I AM ERROR"
+        }
+        dateLabel.text! = self.comment.date
+        commentBody.text! = self.comment.description
+        self.title = self.comment.title
     }
 
 }

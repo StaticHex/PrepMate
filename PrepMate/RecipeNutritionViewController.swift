@@ -61,7 +61,7 @@ class RecipeNutritionViewController: UIViewController, UICollectionViewDelegate,
     func loadBasicInfo() -> String {
         let maxWidth = 40
         var headerString = "Amount"
-        var dataDict = self.recipe.getBasicInfo()
+        var dataDict = self.recipe.getNutritionDict()
         headerString = headerString.padding(toLength: maxWidth, withPad: " ", startingAt: 0)
         headerString =  headerString + "Daily Value %\n\n"
         var result = headerString
@@ -82,10 +82,11 @@ class RecipeNutritionViewController: UIViewController, UICollectionViewDelegate,
         headerString = headerString.padding(toLength: maxWidth, withPad: " ", startingAt: 0)
         headerString =  headerString + "Daily Value %\n\n"
         var result = headerString
-        for vitamin in self.recipe.getVitamins() {
-            var tmp = vitaminList[vitamin.getIndex()]
+        for i in 0..<self.recipe.getNumVitamin() {
+            let vitamin = recipe.getRecipeVitamin(idx: i)
+            var tmp = vitaminList[vitamin.idx]
             tmp = tmp.padding(toLength: 20, withPad: " ", startingAt:0)
-            tmp = tmp + "\(vitamin.getPercent())%\n"
+            tmp = tmp + "\(vitamin.percent)%\n"
             result = result + tmp
         }
         return result

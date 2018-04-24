@@ -72,7 +72,7 @@ class PantryViewController: UIViewController, UIPopoverPresentationControllerDel
         
         let row = indexPath.row
         cell.itemName.text = pantryListItems[row].getName()
-        cell.itemAmount.text = String(pantryListItems[row].getUnit()) + " " + pantryListItems[row].getCustomLabel()
+        cell.itemAmount.text = String(pantryListItems[row].getUnit()) + " " + pantryListItems[row].getLabel()
         
         return cell
     }
