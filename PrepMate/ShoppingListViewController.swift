@@ -16,7 +16,7 @@ protocol shoppingListProtocol: class {
 
 }
 
-class ShoppingListViewController: UIViewController, UIPopoverPresentationControllerDelegate, UITableViewDelegate, UITableViewDataSource, shoppingListProtocol {
+class ShoppingListViewController: UIViewController, UIPopoverPresentationControllerDelegate, UITableViewDelegate, UITableViewDataSource, shoppingListProtocol, AddIngredientProtocol {
 
     @IBOutlet weak var shoppingListTableView: UITableView!
     
@@ -47,8 +47,7 @@ class ShoppingListViewController: UIViewController, UIPopoverPresentationControl
             if controller != nil {
                 controller?.delegate = self
                 controller?.passthroughViews = nil
-                vc?.sDelegate = self
-                vc?.whichController = 0
+                vc?.addIngredientDelegate = self
             }
         }
     }
@@ -69,6 +68,7 @@ class ShoppingListViewController: UIViewController, UIPopoverPresentationControl
         return shoppingListItems.count
     }
     
+    
     // Display information about the shopping list item
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
@@ -84,6 +84,10 @@ class ShoppingListViewController: UIViewController, UIPopoverPresentationControl
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+    }
+    
+    func addReturnedIngredient(ingredient: RecipeIngredient) {
+        // TODO: ADD RETURNED INGREDIENT HERE!!!
     }
     
     // Add an item to the shopping list table view. Non-db yet

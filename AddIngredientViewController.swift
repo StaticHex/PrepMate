@@ -5,27 +5,29 @@
 //  Created by Pablo Velasco on 4/4/18.
 //  Copyright © 2018 Joseph Bourque. All rights reserved.
 //
-
 import UIKit
 
-class AddIngredientViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
+protocol AddIngredientProtocol : class {
+    func addReturnedIngredient(ingredient : RecipeIngredient)
+}
+class AddIngredientViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITableViewDelegate, UITableViewDataSource {
 
     // Outlets
     @IBOutlet weak var itemTextView: UITextField!
     @IBOutlet weak var amountTextView: UITextField!
-    @IBOutlet weak var amountPickerTextView: UITextField!
+    @IBOutlet weak var txtLabel: UITextField!
     @IBOutlet weak var tvAutoComp: UITableView!
+    @IBOutlet weak var pckUnits: UIPickerView!
     
-    @IBOutlet weak var pickerText: UITextField!
+    var newIngredient = RecipeIngredient()
+    var ingredients = [Ingredient]()
+    var finished = false
+    var thisRow = 0
+    var eMsg = ""
     
-    var whichController : Int = 0
-    
-    weak var sDelegate : shoppingListProtocol?
-    weak var iDelegate : firstPageProtocol?
-    weak var pDelegate : pantryProtocol?
+    weak var addIngredientDelegate : AddIngredientProtocol?
     
     // Picker information
-    var unitPicker = UIPickerView()
     var stdPickerOptions = ["custom", "tsp", "tbsp", "fl. oz", "cup", "pint", "quart", "oz", "lb", "in"]
     var metricPickerOptions = ["custom", "ml", "g", "cm"]
     var currentUnits = 0
@@ -33,13 +35,13 @@ class AddIngredientViewController: UIViewController, UIPickerViewDelegate, UIPic
     // Setting up the display on the screen
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.unitPicker.delegate = self
-        self.unitPicker.dataSource = self
+        self.tvAutoComp.delegate = self
+        self.tvAutoComp.dataSource = self
+        self.pckUnits.delegate = self
+        self.pckUnits.dataSource = self
+        itemTextView.addTarget(self, action: #selector(nameDidChange(_:)), for: .editingChanged)
         itemTextView.text = ""
         amountTextView.text = ""
-        
-        self.pickerText.text = stdPickerOptions[0]
-        pickerText.inputView = unitPicker
     }
 
     override func didReceiveMemoryWarning() {
@@ -53,6 +55,76 @@ class AddIngredientViewController: UIViewController, UIPickerViewDelegate, UIPic
             let row = NSKeyedUnarchiver.unarchiveObject(with: decoded) as! Int
             currentUnits = row
         }
+        tvAutoComp.isHidden = true;
+        ingredients.removeAll()
+        finished = false
+        pckUnits.selectRow(0, inComponent: 0, animated: false)
+        thisRow = 0
+        txtLabel.isEnabled = true
+        newIngredient = RecipeIngredient()
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        tvAutoComp.isHidden = true
+        textField.resignFirstResponder()
+        return false
+    }
+    
+    @objc func nameDidChange(_ textField :UITextField) {
+        ingredients.removeAll()
+        if(textField.text! != "") {
+            if(!ingredientAutofill(str: textField.text!)) {
+                tvAutoComp.reloadData()
+            } else {
+                print(self.eMsg)
+            }
+        } else {
+            self.ingredients.removeAll()
+            tvAutoComp.reloadData()
+            tvAutoComp.isHidden = true
+        }
+        if(ingredients.count > 0) {
+            tvAutoComp.isHidden = false
+            tvAutoComp.reloadData()
+        } else {
+            tvAutoComp.isHidden = true
+        }
+    }
+    
+    // Table View Functions
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return ingredients.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: "AutofillCell", for: indexPath as IndexPath)
+        
+        let row = indexPath.row
+        let unit = self.ingredients[row].getUnit()
+        cell.textLabel?.text = self.ingredients[row].getName()
+        if(unit == 0) {
+            cell.detailTextLabel?.text = self.ingredients[row].getLabel()
+        } else {
+            cell.detailTextLabel?.text = unitList[unit].std
+        }
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        
+        let row = indexPath.row
+        itemTextView.text = ingredients[row].getName()
+        itemTextView.isEnabled = false
+        print(ingredients[row].getUnit())
+        pckUnits.selectRow(ingredients[row].getUnit(), inComponent: 0, animated: false)
+        pckUnits.isUserInteractionEnabled = false
+        txtLabel.text = ingredients[row].getLabel()
+        txtLabel.isEnabled = false
+        newIngredient.item = ingredients[row]
+        tvAutoComp.isHidden = true
+        ingredients.removeAll()
     }
     
     // Picker info
@@ -75,10 +147,12 @@ class AddIngredientViewController: UIViewController, UIPickerViewDelegate, UIPic
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        if(currentUnits == 1) {
-            pickerText.text = metricPickerOptions[row]
+        thisRow = row
+        if(row==0) {
+            txtLabel.isEnabled = true
         } else {
-            pickerText.text = stdPickerOptions[row]
+            txtLabel.isEnabled = false
+            txtLabel.text = ""
         }
         self.view.endEditing(true)
     }
@@ -89,6 +163,81 @@ class AddIngredientViewController: UIViewController, UIPickerViewDelegate, UIPic
             NSLog("The \"OK\" alert occured.")
         }))
         self.present(alert, animated: true, completion: nil)
+    }
+    
+    func ingredientAutofill(str:String) -> Bool {
+        // create a variable to return whether we errored out or not
+        var vError : Bool = false
+        
+        // path to our backend script
+        let URL_VERIFY = "http://www.teragentech.net/prepmate/AutofillIngredient.php"
+        
+        // variable which will spin until verification is finished
+        var finished : Bool = false
+        
+        // create our URL object
+        let url = URL(string: URL_VERIFY)
+        
+        // create the request and set the type to POST, otherwise we get authorization error
+        var request = URLRequest(url: url!)
+        request.httpMethod = "POST"
+        
+        let params = "str=\(str)"
+        
+        request.httpBody = params.data(using: String.Encoding.utf8)
+        
+        // Create a task and send our request to our REST API
+        let task = URLSession.shared.dataTask(with: request) {
+            data, response, error in
+            // if we error out, return the error message
+            if(error != nil) {
+                self.eMsg = error!.localizedDescription
+                finished = true
+                vError = true
+                return
+            }
+            
+            // If there was no error, parse the response
+            do {
+                // convert response to a dictionary
+                let JSONResponse = try JSONSerialization.jsonObject(with: data!, options: .mutableContainers) as? NSDictionary
+                
+                // Get the error status and the error message from the database
+                if let parseJSON = JSONResponse {
+                    self.eMsg = parseJSON["msg"] as! String
+                    vError = (parseJSON["error"] as! Bool)
+                    if(!vError) {
+                        var count = 0
+                        while let record = parseJSON[String(count)] as? NSString {
+                            if let entry = try JSONSerialization.jsonObject(with: record.data(using: String.Encoding.utf8.rawValue)!, options: .mutableContainers) as? NSDictionary {
+                                if let strId = entry["id"] as? String {
+                                    let newIng = Ingredient()
+                                    DispatchQueue.main.async {
+                                        vError = newIng.getIngredient(iid: Int(strId)!)
+                                    }
+                                    if(vError) {
+                                        break
+                                    }
+                                    self.ingredients.append(newIng)
+                                } else {
+                                    vError = true
+                                    break
+                                }
+                            }
+                            count+=1
+                        }
+                    }
+                }
+            } catch {
+                self.eMsg = error.localizedDescription
+                vError = true
+            }
+            finished = true
+        }
+        // execute our task and then return the results
+        task.resume()
+        while(!finished) {}
+        return vError
     }
     
     // Metric to Index Method
@@ -160,31 +309,30 @@ class AddIngredientViewController: UIViewController, UIPickerViewDelegate, UIPic
             return
         }
         
-        var ing = IngredientRecord()
-        ing.name = itemTextView.text!
-        ing.unit = Int(amountTextView.text!)!
-        ing.label = pickerText.text!
-        //let item = Ingredient(id: 1, name: itemTextView.text!, unit: Int(amountTextView.text!)!, customLabel: pickerText.text!)
+        // Check to see if user input standard units and if so, convert amount to metric
+        // (remember, all database entries are metric)
+        var amount = Double(amountTextView.text!)!
+
+        if(currentUnits==0) {
+            amount = stdToMetric(unit: thisRow, amount: amount)
+        }
         
-        /*
-        if whichController == 0 {
-            sDelegate?.addSItem(item: item)
+        if(newIngredient.item.getId() < 0) {
+            var ing = IngredientRecord()
+            ing.name = itemTextView.text!
+            ing.unit = thisRow
+            ing.label = txtLabel.text!
+            if(!newIngredient.item.addIngredient(newIngredient: ing)) {
+                newIngredient.amount = amount
+            }
+        } else {
+            newIngredient.amount = amount
         }
-        else if whichController == 1 {
-            pDelegate?.addPItem(item: item)
-        }
-        else {
-            iDelegate?.addIngredient(ingredient: item)
-        }
- */
+        addIngredientDelegate?.addReturnedIngredient(ingredient: newIngredient)
         dismiss(animated: true, completion: nil)
     }
-    
+
     @IBAction func cancel(_ sender: Any) {
         dismiss(animated: true, completion: nil)
     }
-    
-    
-
-
 }

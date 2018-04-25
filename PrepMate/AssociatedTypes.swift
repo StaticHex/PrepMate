@@ -87,7 +87,7 @@ public let foodTypeList = [(flag: 8192, name: "Spicy"),
                            (flag: 131072, name: "Vegetarian")]
 
 // divide metric amount by factor to get standard amount
-public let unitList = [(std: "custom", metric: "custom", factor: 0.0),
+public let unitList = [(std: "custom", metric: "custom", factor: 1.0),
                         (std: "tsp", metric: "ml", factor: 5.0),
                         (std: "tbsp", metric: "ml", factor: 15.0),
                         (std: "fl oz", metric: "ml", factor: 30.0),

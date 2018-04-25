@@ -43,7 +43,7 @@ class IngredientTableCell: UITableViewCell {
     
 }
 
-class AddRecipeFirstPageViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIPickerViewDelegate, UIPickerViewDataSource, UIPopoverPresentationControllerDelegate, firstPageProtocol, secondPageProtocol {
+class AddRecipeFirstPageViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIPickerViewDelegate, UIPickerViewDataSource, UIPopoverPresentationControllerDelegate, firstPageProtocol, secondPageProtocol, AddIngredientProtocol {
 
     // Screen outlets
     @IBOutlet weak var recipeNameField: UITextField!
@@ -268,7 +268,7 @@ class AddRecipeFirstPageViewController: UIViewController, UITableViewDelegate, U
             if controller != nil {
                 controller?.delegate = self
                 controller?.passthroughViews = nil
-                vc?.iDelegate = self
+                vc?.addIngredientDelegate = self
             }
         }
         else if segue.identifier == "addDirectionPopover" {
@@ -294,6 +294,11 @@ class AddRecipeFirstPageViewController: UIViewController, UITableViewDelegate, U
         self.contains = containsItem
     }
     
+    func addReturnedIngredient(ingredient: RecipeIngredient) {
+        // TODO: ADD INGREDIENT CODE HERE
+        print(ingredient.item)
+        print(ingredient.amount)
+    }
     
     // Dietary bit vector passing from Dietary popover
     func dietary(dietaryItem: [Bool]) {

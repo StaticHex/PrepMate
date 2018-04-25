@@ -65,11 +65,12 @@ class HomePageViewController: UIViewController, UITableViewDelegate, UITableView
         recommendedCollectionView.delegate = self
         popularCollectionView.tag = 1
         recommendedCollectionView.tag = 2
-        var rList = [21,22,48]
+        let rList = [21,22,48]
         for r in rList {
-            var recipe = Recipe()
-            recipe.getRecipe(rid: r)
-            recipeList.append(recipe)
+            let recipe = Recipe()
+            if(!recipe.getRecipe(rid: r)) {
+                recipeList.append(recipe)
+            }
         }
         
         // Do any additional setup after loading the view.

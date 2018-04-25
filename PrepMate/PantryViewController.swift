@@ -15,7 +15,7 @@ protocol pantryProtocol : class {
 
 var pantryListItems = [Ingredient]()
 
-class PantryViewController: UIViewController, UIPopoverPresentationControllerDelegate, UITableViewDelegate, UITableViewDataSource, pantryProtocol {
+class PantryViewController: UIViewController, UIPopoverPresentationControllerDelegate, UITableViewDelegate, UITableViewDataSource, pantryProtocol, AddIngredientProtocol {
 
     @IBOutlet weak var pantryListTableView: UITableView!
     
@@ -45,8 +45,7 @@ class PantryViewController: UIViewController, UIPopoverPresentationControllerDel
             if controller != nil {
                 controller?.delegate = self
                 controller?.passthroughViews = nil
-                vc?.pDelegate = self
-                vc?.whichController = 1
+                vc?.addIngredientDelegate = self
             }
         }
     }
@@ -81,6 +80,9 @@ class PantryViewController: UIViewController, UIPopoverPresentationControllerDel
         self.performSegue(withIdentifier: "newListItemSegue2", sender: AnyClass.self)
     }
     
+    func addReturnedIngredient(ingredient: RecipeIngredient) {
+        // TODO: ADD THE RETURNED INGREDIENT HERE
+    }
     // Add a pantry item for the table view display
     func addPItem(item: Ingredient) {
         pantryListItems.insert(item, at: 0)
