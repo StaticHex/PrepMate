@@ -16,35 +16,32 @@ class RecipeCommentPageViewController: UIViewController, UITableViewDelegate, UI
     
     @IBOutlet weak var recipeCommentTableView: UITableView!
     var recipe = Recipe()
-    var comments = [Comment]()
     var sortOption = 0
     var enabledStars = [true, true, true, true, true]
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return comments.count
+        return self.recipe.getNumComment()
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "recipeCommentCell", for: indexPath as IndexPath) as! RecipeCommentCell
         let row = indexPath.row
-        cell.commentTitle.text! = comments[row].title
+        let curr = self.recipe.getRecipeComment(idx: row)
+        cell.commentTitle.text! = curr.title
         cell.commentPreview.isScrollEnabled = false
         cell.commentPreview.allowsEditingTextAttributes = false
-        cell.commentPreview.text! = comments[row].description
-        // TODO: How do we populate the rating?
-        cell.ratingsLabel.image = RatingImages[comments[row].rating]
+        cell.commentPreview.text! = curr.description
+        cell.ratingsLabel.image = RatingImages[curr.rating]
         return cell
     }
     func addComment(comment: Comment) {
         if(self.recipe.addRecipeComment(newComment: comment)) {
             print(recipe)
         }
-        comments = (0..<self.recipe.getNumComment()).map({self.recipe.getRecipeComment(idx: $0)})
         self.recipeCommentTableView.reloadData()
     }
     override func viewDidLoad() {
         super.viewDidLoad()
         recipeCommentTableView.delegate = self
         recipeCommentTableView.dataSource = self
-        comments = (0..<self.recipe.getNumComment()).map({self.recipe.getRecipeComment(idx: $0)})
     }
 
     override func didReceiveMemoryWarning() {
@@ -84,8 +81,7 @@ class RecipeCommentPageViewController: UIViewController, UITableViewDelegate, UI
             let destination = segue.destination as? CommentDetailsPageViewController,
             let operatorIndex = recipeCommentTableView.indexPathForSelectedRow?.row
         {
-            destination.comment = comments[operatorIndex]
-        }
+            destination.comment = self.recipe.getRecipeComment(idx: operatorIndex)        }
         else if segue.identifier == "addCommentSegue" {
             let vc = segue.destination as? NewCommentPopoverViewController
             vc?.isModalInPopover = true
