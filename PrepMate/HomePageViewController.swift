@@ -12,12 +12,22 @@ protocol settingsProtocol: class {
     func changeSidebarColor(color: UIColor)
 }
 
+class PopularCustomViewCell: UICollectionViewCell {
+    @IBOutlet weak var foodTitle: UILabel!
+    @IBOutlet weak var foodImage: UIImageView!
+}
+
+class RecommendedCustomViewCell: UICollectionViewCell {
+    @IBOutlet weak var foodTitle: UILabel!
+    @IBOutlet weak var foodImage: UIImageView!
+}
+
 class HomeCategoryTableViewCell: UITableViewCell {
     @IBOutlet weak var categoryName: UILabel!
     @IBOutlet weak var cuisineImage: UIImageView!
 }
 
-class HomePageViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, settingsProtocol, ProfileProtocol {
+class HomePageViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UICollectionViewDataSource, UICollectionViewDelegate, settingsProtocol, ProfileProtocol {
     
     // UI Outlets
     @IBOutlet weak var menu: UIView!
@@ -38,14 +48,30 @@ class HomePageViewController: UIViewController, UITableViewDelegate, UITableView
     @IBOutlet weak var btnCredits: UIButton!
     @IBOutlet weak var btnTerms: UIButton!
     @IBOutlet weak var categoryTableView: UITableView!
+    @IBOutlet weak var popularCollectionView: UICollectionView!
+    @IBOutlet weak var recommendedCollectionView: UICollectionView!
     
     var thisRow = 0
-
+    var recipeList = [Recipe]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         menu.alpha = 0
         categoryTableView.dataSource = self
         categoryTableView.delegate = self
+        popularCollectionView.dataSource = self
+        popularCollectionView.delegate = self
+        recommendedCollectionView.dataSource = self
+        recommendedCollectionView.delegate = self
+        popularCollectionView.tag = 1
+        recommendedCollectionView.tag = 2
+        var rList = [21,22,48]
+        for r in rList {
+            var recipe = Recipe()
+            recipe.getRecipe(rid: r)
+            recipeList.append(recipe)
+        }
+        
         // Do any additional setup after loading the view.
     }
     
@@ -91,6 +117,39 @@ class HomePageViewController: UIViewController, UITableViewDelegate, UITableView
         // Dispose of any resources that can be recreated.
     }
     
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return self.recipeList.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
+        // get a reference to our storyboard cell
+        if collectionView.tag == 1 {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "topRecipesCell", for: indexPath as IndexPath) as! PopularCustomViewCell
+            
+            let row = indexPath.row
+            
+            cell.foodTitle.text = self.recipeList[row].getName()
+            cell.foodImage.image = self.recipeList[row].getPhoto()
+            
+            return cell
+        }
+        else {
+             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "recommendedRecipesCell", for: indexPath as IndexPath) as! RecommendedCustomViewCell
+            
+            let row = indexPath.row
+            
+            cell.foodTitle.text = self.recipeList[row].getName()
+            cell.foodImage.image = self.recipeList[row].getPhoto()
+            
+            return cell
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        collectionView.deselectItem(at: indexPath, animated: true)
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if(segue.identifier == "logoutToLogin") {
             // TODO: Destroy user object and set up login
@@ -108,6 +167,20 @@ class HomePageViewController: UIViewController, UITableViewDelegate, UITableView
         if segue.identifier == "homeToCuisineSegue" {
             let vc = segue.destination as? HistoryFavoriteSearchResultsViewController
             vc?.row = self.thisRow
+        }
+        if segue.identifier == "popularToRecipeSegue" {
+            let vc = segue.destination as? RecipePageViewController
+            let cell = sender as! PopularCustomViewCell
+            let indexPath = popularCollectionView.indexPath(for: cell)
+            let selected = recipeList[(indexPath?.row)!]
+            vc?.recipe = selected
+        }
+        if segue.identifier == "recommendedToRecipeSegue" {
+            let vc = segue.destination as? RecipePageViewController
+            let cell = sender as! PopularCustomViewCell
+            let indexPath = popularCollectionView.indexPath(for: cell)
+            let selected = recipeList[(indexPath?.row)!]
+            vc?.recipe = selected
         }
         
         menu.alpha = 0.0
@@ -129,6 +202,8 @@ class HomePageViewController: UIViewController, UITableViewDelegate, UITableView
         let row = indexPath.row
         cell.categoryName.text = categoryList[row]
         return cell
+        
+        
     }
     
     @IBAction func onMenuButtonClick(_ sender: Any) {
@@ -192,7 +267,8 @@ class HomePageViewController: UIViewController, UITableViewDelegate, UITableView
                    didSelectRowAt indexPath: IndexPath) {
         self.thisRow = indexPath.row
         performSegue(withIdentifier: "homeToCuisineSegue", sender: self)
-        
+        tableView.deselectRow(at: indexPath, animated: true)
+
     }
     
     func changeSidebarColor(color: UIColor) {
