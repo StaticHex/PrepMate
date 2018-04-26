@@ -183,7 +183,20 @@ class AddRecipeFirstPageViewController: UIViewController, UITableViewDelegate, U
             let row = indexPath.row
             
             cell.cellProtocol = self
-            cell.amountLabel.text = String(ingList[row].amount) + " " + ingList[row].item.getLabel()
+            
+            let defaults = UserDefaults.standard
+            
+            let idx = ingList[row].item.getUnit()
+            // Standard
+            
+            if defaults.integer(forKey: "units") == 0 {
+                let valToDisplay = metricToStd(unit: ingList[row].item.getUnit(), amount: ingList[row].amount)
+                cell.amountLabel.text = String(valToDisplay) + " " + unitList[idx].std
+            }
+            else {
+                cell.amountLabel.text = String(ingList[row].amount) + " " + unitList[idx].metric
+            }
+
             cell.ingLabel.text = ingList[row].item.getName()
             
             return cell
