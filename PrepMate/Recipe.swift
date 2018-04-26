@@ -1813,6 +1813,114 @@ class Recipe : CustomStringConvertible {
         return vError
     }
     
+    public func getFilteredRecipeComments(query : String) -> Bool {
+        // FIELDS
+        // id(key), recipe_id, user_id, date_posted, rating, title, description
+        
+        self.comments.removeAll()
+        
+        // create a variable to return whether we errored out or not
+        var vError : Bool = false
+        
+        // path to our backend script
+        let URL_VERIFY = "http://www.teragentech.net/prepmate/GetFilteredComments.php"
+        
+        // variable which will spin until verification is finished
+        var finished : Bool = false
+        
+        // create our URL object
+        let url = URL(string: URL_VERIFY)
+        
+        // create the request and set the type to POST, otherwise we get authorization error
+        var request = URLRequest(url: url!)
+        request.httpMethod = "POST"
+        
+        
+        // Note: Start fed in query with " AND"
+        let q = "recipe_id=\(self.id)\(query)"
+        
+        let params = "query=\(q)"
+        
+        request.httpBody = params.data(using: String.Encoding.utf8)
+        
+        // Create a task and send our request to our REST API
+        let task = URLSession.shared.dataTask(with: request) {
+            data, response, error in
+            // if we error out, return the error message
+            if(error != nil) {
+                self.eMsg = error!.localizedDescription
+                finished = true
+                vError = true
+                return
+            }
+            
+            // If there was no error, parse the response
+            do {
+                // convert response to a dictionary
+                let JSONResponse = try JSONSerialization.jsonObject(with: data!, options: .mutableContainers) as? NSDictionary
+                
+                // Get the error status and the error message from the database
+                if let parseJSON = JSONResponse {
+                    self.eMsg = parseJSON["msg"] as! String
+                    vError = (parseJSON["error"] as! Bool)
+                    if(!vError) {
+                        if let strRating = parseJSON["rank"] as? Int {
+                            self.rating = strRating
+                        } else {
+                            vError = true
+                        }
+                        
+                        var count = 0
+                        while let record = parseJSON[String(count)] as? NSString {
+                            if vError {
+                                break
+                            }
+                            if let entry = try JSONSerialization.jsonObject(with: record.data(using: String.Encoding.utf8.rawValue)!, options: .mutableContainers) as? NSDictionary {
+                                var newCom = Comment()
+                                if let strId = entry["id"] as? String {
+                                    newCom.id = Int(strId)!
+                                } else {
+                                    vError = true
+                                    break
+                                }
+                                if let strUid = entry["user_id"] as? String {
+                                    newCom.userId = Int(strUid)!
+                                } else {
+                                    vError = true
+                                    break
+                                }
+                                newCom.date = entry["date_posted"] as! String
+                                if let strRate = entry["rating"] as? String {
+                                    newCom.rating = Int(strRate)!
+                                } else {
+                                    vError = true
+                                    break
+                                }
+                                newCom.title = entry["title"] as! String
+                                newCom.description = entry["description"] as! String
+                                self.comments.append(newCom)
+                            }
+                            count+=1
+                        }
+                    }
+                }
+            } catch {
+                self.eMsg = error.localizedDescription
+                vError = true
+            }
+            finished = true
+        }
+        // execute our task and then return the results
+        task.resume()
+        while(!finished) {}
+        return vError
+    }
+    
+    public func resetRecipeComments() {
+        self.comments.removeAll()
+        self.loadRecipeComments()
+    }
+    
     private func loadRecipeComments() -> Bool {
         // create a variable to return whether we errored out or not
         var vError : Bool = false
