@@ -119,6 +119,7 @@ class AddIngredientViewController: UIViewController, UIPickerViewDelegate, UIPic
         itemTextView.isEnabled = false
         print(ingredients[row].getUnit())
         pckUnits.selectRow(ingredients[row].getUnit(), inComponent: 0, animated: false)
+        thisRow = ingredients[row].getUnit()
         pckUnits.isUserInteractionEnabled = false
         txtLabel.text = ingredients[row].getLabel()
         txtLabel.isEnabled = false

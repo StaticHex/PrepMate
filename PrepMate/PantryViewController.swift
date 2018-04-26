@@ -72,8 +72,19 @@ class PantryViewController: UIViewController, UIPopoverPresentationControllerDel
         cell.pDelegate = self
         
         let row = indexPath.row
+        
+        let defaults = UserDefaults.standard
+
+        let idx = pantryListItems[row].item.getUnit()
+        // Standard
+        if defaults.integer(forKey: "units") == 0 {
+           let valToDisplay = metricToStd(unit: pantryListItems[row].item.getUnit(), amount: pantryListItems[row].amount)
+            cell.itemAmount.text = String(valToDisplay) + " " + unitList[idx].std
+        }
+        else {
+            cell.itemAmount.text = String(pantryListItems[row].amount) + " " + unitList[idx].metric
+        }
         cell.itemName.text = pantryListItems[row].item.getName()
-        cell.itemAmount.text = String(pantryListItems[row].amount) + " " + pantryListItems[row].item.getLabel()
         
         return cell
     }

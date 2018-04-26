@@ -77,8 +77,19 @@ class ShoppingListViewController: UIViewController, UIPopoverPresentationControl
         cell.sProtocol = self
         
         let row = indexPath.row
+
+        let defaults = UserDefaults.standard
+        let idx = shoppingListItems[row].item.getUnit()
+        if defaults.integer(forKey: "units") == 0 {
+            let valToDisplay = metricToStd(unit: shoppingListItems[row].item.getUnit(), amount: shoppingListItems[row].amount)
+            cell.itemAmount.text = String(valToDisplay) + " " + unitList[idx].std
+        }
+        else {
+            cell.itemAmount.text = String(shoppingListItems[row].amount) + " " + unitList[idx].metric
+        }
+        
         cell.itemName.text = shoppingListItems[row].item.getName()
-        cell.itemAmount.text = String(shoppingListItems[row].amount) + " " + shoppingListItems[row].item.getLabel()
+        
         return cell
     }
     
