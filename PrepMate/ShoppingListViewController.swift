@@ -8,10 +8,8 @@
 
 import UIKit
 
-var shoppingListItems = [Ingredient]()
-
 protocol shoppingListProtocol: class {
-    func addSItem(item: Ingredient)
+    func addSItem(item: RecipeIngredient)
     func removeShoppingItem(cell: ShoppingListCustomTableViewCell)
 
 }
@@ -19,6 +17,8 @@ protocol shoppingListProtocol: class {
 class ShoppingListViewController: UIViewController, UIPopoverPresentationControllerDelegate, UITableViewDelegate, UITableViewDataSource, shoppingListProtocol, AddIngredientProtocol {
 
     @IBOutlet weak var shoppingListTableView: UITableView!
+    
+    var shoppingListItems = [RecipeIngredient]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -77,8 +77,8 @@ class ShoppingListViewController: UIViewController, UIPopoverPresentationControl
         cell.sProtocol = self
         
         let row = indexPath.row
-        cell.itemName.text = shoppingListItems[row].getName()
-        cell.itemAmount.text = String(shoppingListItems[row].getUnit()) + " " + shoppingListItems[row].getLabel()
+        cell.itemName.text = shoppingListItems[row].item.getName()
+        cell.itemAmount.text = String(shoppingListItems[row].amount) + " " + shoppingListItems[row].item.getLabel()
         return cell
     }
     
@@ -87,11 +87,11 @@ class ShoppingListViewController: UIViewController, UIPopoverPresentationControl
     }
     
     func addReturnedIngredient(ingredient: RecipeIngredient) {
-        // TODO: ADD RETURNED INGREDIENT HERE!!!
+        addSItem(item: ingredient)
     }
     
     // Add an item to the shopping list table view. Non-db yet
-    func addSItem(item: Ingredient) {
+    func addSItem(item: RecipeIngredient) {
         shoppingListItems.insert(item, at: 0)
         self.shoppingListTableView.beginUpdates()
         self.shoppingListTableView.insertRows(at: [IndexPath.init(row: 0, section: 0)], with: .automatic)

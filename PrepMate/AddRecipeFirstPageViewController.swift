@@ -12,7 +12,7 @@ protocol firstPageProtocol : class {
     func contains(containsItem: [Bool])
     func dietary(dietaryItem: [Bool])
     func addDirection(direction: String)
-    func addIngredient(ingredient: Ingredient)
+    func addIngredient(ingredient: RecipeIngredient)
     func removeIngredient(cell: IngredientTableCell)
     func removeDirection(cell: DirectionTableCell)
 }
@@ -70,7 +70,7 @@ class AddRecipeFirstPageViewController: UIViewController, UITableViewDelegate, U
     
     // List that is used to contain ingredients and directions for table view display
     var directionList = [String]()
-    var ingList = [Ingredient]()
+    var ingList = [RecipeIngredient]()
     var recipeToSave = RecipeRecord()
     
     var prepTimeHour: String = "00"
@@ -162,6 +162,10 @@ class AddRecipeFirstPageViewController: UIViewController, UITableViewDelegate, U
         return -1
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
+    
     // Display different cell layouts depening which table is selected
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if tableView == self.directionTableview {
@@ -179,8 +183,8 @@ class AddRecipeFirstPageViewController: UIViewController, UITableViewDelegate, U
             let row = indexPath.row
             
             cell.cellProtocol = self
-            cell.amountLabel.text = String(ingList[row].getUnit()) + " " + ingList[row].getLabel()
-            cell.ingLabel.text = ingList[row].getName()
+            cell.amountLabel.text = String(ingList[row].amount) + " " + ingList[row].item.getLabel()
+            cell.ingLabel.text = ingList[row].item.getName()
             
             return cell
             
@@ -296,6 +300,7 @@ class AddRecipeFirstPageViewController: UIViewController, UITableViewDelegate, U
     
     func addReturnedIngredient(ingredient: RecipeIngredient) {
         // TODO: ADD INGREDIENT CODE HERE
+        addIngredient(ingredient: ingredient)
         print(ingredient.item)
         print(ingredient.amount)
     }
@@ -318,7 +323,7 @@ class AddRecipeFirstPageViewController: UIViewController, UITableViewDelegate, U
     }
     
     // Function to add an ingredient to the ingredient table view. Non-DB yet
-    func addIngredient(ingredient: Ingredient) {
+    func addIngredient(ingredient: RecipeIngredient) {
         ingList.insert(ingredient, at: 0)
         self.ingTableView.beginUpdates()
         self.ingTableView.insertRows(at: [IndexPath.init(row: 0, section: 0)], with: .automatic)
@@ -388,7 +393,7 @@ class AddRecipeFirstPageViewController: UIViewController, UITableViewDelegate, U
         for cell in ingredientCells {
             let value = (cell.amountLabel.text?.components(separatedBy: " ").first)!
             var ing = RecipeIngredient()
-                ing.item = ingList[counter]
+                ing.item = ingList[counter].item
                 ing.amount = Double(value)!
             
             ingredientInfo.append(ing)

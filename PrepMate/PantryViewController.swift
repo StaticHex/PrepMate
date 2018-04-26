@@ -9,15 +9,17 @@
 import UIKit
 
 protocol pantryProtocol : class {
-    func addPItem(item: Ingredient)
+    func addPItem(item: RecipeIngredient)
     func removePItem(cell: PantryItemCustomTableViewCell)
 }
 
-var pantryListItems = [Ingredient]()
 
 class PantryViewController: UIViewController, UIPopoverPresentationControllerDelegate, UITableViewDelegate, UITableViewDataSource, pantryProtocol, AddIngredientProtocol {
 
     @IBOutlet weak var pantryListTableView: UITableView!
+    
+    var pantryListItems = [RecipeIngredient]()
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -70,8 +72,8 @@ class PantryViewController: UIViewController, UIPopoverPresentationControllerDel
         cell.pDelegate = self
         
         let row = indexPath.row
-        cell.itemName.text = pantryListItems[row].getName()
-        cell.itemAmount.text = String(pantryListItems[row].getUnit()) + " " + pantryListItems[row].getLabel()
+        cell.itemName.text = pantryListItems[row].item.getName()
+        cell.itemAmount.text = String(pantryListItems[row].amount) + " " + pantryListItems[row].item.getLabel()
         
         return cell
     }
@@ -81,10 +83,10 @@ class PantryViewController: UIViewController, UIPopoverPresentationControllerDel
     }
     
     func addReturnedIngredient(ingredient: RecipeIngredient) {
-        // TODO: ADD THE RETURNED INGREDIENT HERE
+        addPItem(item: ingredient)
     }
     // Add a pantry item for the table view display
-    func addPItem(item: Ingredient) {
+    func addPItem(item: RecipeIngredient) {
         pantryListItems.insert(item, at: 0)
         self.pantryListTableView.beginUpdates()
         self.pantryListTableView.insertRows(at: [IndexPath.init(row: 0, section: 0)], with: .automatic)
