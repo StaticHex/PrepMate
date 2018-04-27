@@ -110,6 +110,11 @@ class CommentFilterPopoverViewController: UIViewController, UIPickerViewDelegate
     @IBAction func onCancelPressed(_ sender: Any) {
         dismiss(animated: true, completion: nil)
     }
+    /// Resets comment filter
+    @IBAction func onReset(_ sender: Any) {
+        // TODO: implement reset
+        
+    }
     
 
 }

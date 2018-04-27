@@ -1515,7 +1515,7 @@
             <objects>
                 <viewController id="uc0-GA-RnZ" customClass="CommentFilterPopoverViewController" customModule="PrepMate" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="7Dg-iW-qmI">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="200"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="300"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Uqk-uX-6RR">
@@ -1648,12 +1648,20 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zum-6X-QQs">
+                                <rect key="frame" x="168" y="252.5" width="39" height="30"/>
+                                <state key="normal" title="Reset"/>
+                                <connections>
+                                    <action selector="onReset:" destination="uc0-GA-RnZ" eventType="touchUpInside" id="r3z-HO-3w4"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="AQK-El-asv" firstAttribute="top" secondItem="nie-gf-5iE" secondAttribute="bottom" constant="22.5" id="0Yx-J5-SnO"/>
                             <constraint firstItem="4iu-To-o84" firstAttribute="top" secondItem="Uqk-uX-6RR" secondAttribute="bottom" constant="10" id="2T4-Ae-pq6"/>
                             <constraint firstItem="4iu-To-o84" firstAttribute="leading" secondItem="1P0-VZ-olr" secondAttribute="leading" constant="10" id="5Vg-Io-4KD"/>
+                            <constraint firstItem="Zum-6X-QQs" firstAttribute="centerX" secondItem="7Dg-iW-qmI" secondAttribute="centerX" id="AEb-RK-4Lb"/>
                             <constraint firstItem="nie-gf-5iE" firstAttribute="top" secondItem="4iu-To-o84" secondAttribute="bottom" constant="10" id="GMg-LX-HKK"/>
                             <constraint firstItem="1P0-VZ-olr" firstAttribute="trailing" secondItem="AQK-El-asv" secondAttribute="trailing" constant="10" id="L1b-xo-DQ9"/>
                             <constraint firstItem="1P0-VZ-olr" firstAttribute="trailing" secondItem="pSu-ZE-Hpg" secondAttribute="trailing" constant="5" id="Ma6-Al-8JG"/>
@@ -1665,11 +1673,12 @@
                             <constraint firstItem="Uqk-uX-6RR" firstAttribute="leading" secondItem="1P0-VZ-olr" secondAttribute="leading" id="cv3-em-qhQ"/>
                             <constraint firstItem="Uqk-uX-6RR" firstAttribute="top" secondItem="1P0-VZ-olr" secondAttribute="top" id="ko7-wa-6hJ"/>
                             <constraint firstItem="pSu-ZE-Hpg" firstAttribute="top" secondItem="AQK-El-asv" secondAttribute="bottom" constant="5" id="xsr-cl-smn"/>
+                            <constraint firstItem="Zum-6X-QQs" firstAttribute="top" secondItem="pSu-ZE-Hpg" secondAttribute="bottom" constant="60" id="xvR-kX-Ief"/>
                             <constraint firstItem="1P0-VZ-olr" firstAttribute="trailing" secondItem="4iu-To-o84" secondAttribute="trailing" constant="10" id="yZN-IA-X1D"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="1P0-VZ-olr"/>
                     </view>
-                    <size key="freeformSize" width="375" height="200"/>
+                    <size key="freeformSize" width="375" height="300"/>
                     <connections>
                         <outlet property="fiveStarButton" destination="Yfw-XF-aUo" id="UhB-zr-ngQ"/>
                         <outlet property="fourStarButton" destination="lIz-cv-oqz" id="0lG-fk-zRL"/>
@@ -1681,7 +1690,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="s31-cv-csp" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="186" y="2269"/>
+            <point key="canvasLocation" x="184.80000000000001" y="2268.6656671664168"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
@@ -3185,7 +3194,7 @@
                                                 </connections>
                                             </button>
                                         </barButtonItem>
-                                        <textField key="titleView" opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter Search Here" textAlignment="natural" minimumFontSize="17" id="VlJ-cp-yZa">
+                                        <textField key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter Search Here" textAlignment="natural" minimumFontSize="17" id="VlJ-cp-yZa">
                                             <rect key="frame" x="126" y="7" width="139" height="30"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <nil key="textColor"/>
@@ -4897,7 +4906,7 @@
     <inferredMetricsTieBreakers>
         <segue reference="cOe-bu-kQK"/>
         <segue reference="Ikg-C1-34D"/>
-        <segue reference="Ged-TP-QC8"/>
+        <segue reference="bXW-K1-T9k"/>
         <segue reference="BjC-YD-RDR"/>
         <segue reference="rrq-j1-upH"/>
     </inferredMetricsTieBreakers>
