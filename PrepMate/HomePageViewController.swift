@@ -65,13 +65,7 @@ class HomePageViewController: UIViewController, UITableViewDelegate, UITableView
         recommendedCollectionView.delegate = self
         popularCollectionView.tag = 1
         recommendedCollectionView.tag = 2
-        let rList = [21,22,48]
-        for r in rList {
-            let recipe = Recipe()
-            if(!recipe.getRecipe(rid: r)) {
-                recipeList.append(recipe)
-            }
-        }
+        recipeList = getRecipes(query: "id>=1 ORDER BY rating ASC LIMIT 10")
         
         // Do any additional setup after loading the view.
     }

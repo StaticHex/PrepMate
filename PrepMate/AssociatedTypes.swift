@@ -129,4 +129,77 @@ public func getTimestamp() -> String {
     return tsString
 }
 
+public var recipeEMsg = ""
+
+func getRecipes(query:String) -> [Recipe] {
+    var recipes = [Recipe]()
+    
+    // path to our backend script
+    let URL_VERIFY = "http://www.teragentech.net/prepmate/GetRecipes.php"
+    
+    // variable which will spin until verification is finished
+    var finished : Bool = false
+    
+    // create our URL object
+    let url = URL(string: URL_VERIFY)
+    
+    // create the request and set the type to POST, otherwise we get authorization error
+    var request = URLRequest(url: url!)
+    request.httpMethod = "POST"
+    let params = "query=\(query)"
+    
+    request.httpBody = params.data(using: String.Encoding.utf8)
+    
+    // Create a task and send our request to our REST API
+    let task = URLSession.shared.dataTask(with: request) {
+        data, response, error in
+        // if we error out, return the error message
+        if(error != nil) {
+            recipeEMsg = error!.localizedDescription
+            finished = true
+            recipes.removeAll()
+            return
+        }
+        
+        // If there was no error, parse the response
+        do {
+            // convert response to a dictionary
+            let JSONResponse = try JSONSerialization.jsonObject(with: data!, options: .mutableContainers) as? NSDictionary
+            
+            // Get the error status and the error message from the database
+            if let parseJSON = JSONResponse {
+                recipeEMsg = parseJSON["msg"] as! String
+                let vError = (parseJSON["error"] as! Bool)
+                if(!vError) {
+                    var count = 0
+                    while let record = parseJSON[String(count)] as? NSString {
+                        if let entry = try JSONSerialization.jsonObject(with: record.data(using: String.Encoding.utf8.rawValue)!, options: .mutableContainers) as? NSDictionary {
+                            let newRecipe = Recipe()
+                            if(!newRecipe.populateFromDict(query: entry)) {
+                                recipes.append(newRecipe)
+                            } else {
+                                print(newRecipe.getEMsg())
+                            }
+                            count+=1
+                        }
+                    }
+                } else {
+                    recipes.removeAll()
+                    return
+                }
+            }
+        } catch {
+            recipeEMsg = error.localizedDescription
+            recipes.removeAll()
+            return
+        }
+        finished = true
+    }
+    // execute our task and then return the results
+    task.resume()
+    while(!finished) {}
+
+    return recipes
+}
+
 var currentUser = User()

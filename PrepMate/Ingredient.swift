@@ -229,6 +229,30 @@ class Ingredient : CustomStringConvertible {
         self.eMsg = ""
     }
     
+    public func populateFromDict(query : NSDictionary) -> Bool {
+        if let newId = query["id"] as? String {
+            self.id = Int(newId)!
+        } else {
+            return true
+        }
+        self.name = query["name"] as! String
+        if let newUnit = query["unit"] as? String {
+            self.unit = Int(newUnit)!
+        } else {
+            self.id = -1
+            return true
+        }
+        if let newLabel = query["custom"] as? String {
+            self.label = newLabel
+        } else {
+            self.id = -1
+            return true
+        }
+        return false
+        
+    }
+
+    
     // getters (no setters)
     public func getId() -> Int { return self.id }
     public func getName() -> String { return self.name }

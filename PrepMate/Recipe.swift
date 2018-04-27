@@ -672,6 +672,8 @@ class Recipe : CustomStringConvertible {
         return vError
     }
     
+    
+    
     public func clear() {
         id = -1
         creatorId = -1
@@ -722,6 +724,222 @@ class Recipe : CustomStringConvertible {
         return newRecord
     }
     
+    public func populateFromDict(query:NSDictionary)->Bool {
+        do {
+            // TODO: Populate base properties here
+            if let rid = query["id"] as? String {
+                self.id = Int(rid)!
+            } else {
+                eMsg = "Populate function errored while parsing id"
+                return true
+            }
+            if let rInfo = query["info"]! as? NSDictionary {
+                if let cid = rInfo["uid"] as? String {
+                    self.creatorId = Int(cid)!
+                } else {
+                    eMsg = "Populate function errored while parsing creatorId"
+                    return true
+                }
+                self.name = rInfo["name"] as! String
+                self.photo.setPhoto(imageURL: rInfo["photo"] as! String)
+                if let rank = rInfo["rating"] as? String {
+                    self.rating = Int(rank)!
+                } else {
+                    eMsg = "Populate function errored while parsing rating"
+                    return true
+                }
+                if let cat = rInfo["category"] as? String {
+                    self.category = Int(cat)!
+                } else {
+                    eMsg = "Populate function errored while parsing category"
+                    return true
+                }
+                self.servings = rInfo["servings"] as! String
+                self.prepTime = rInfo["ptime"] as! String
+                self.cookTime = rInfo["ctime"] as! String
+                self.flags = rInfo["flags"] as! Int
+                if let cal = rInfo["calories"] as? String {
+                    self.calories = Double(cal)!
+                } else {
+                    eMsg = "Populate function errored while parsing calories"
+                    return true
+                }
+                if let ufat = rInfo["ufat"] as? String {
+                    self.unsatFat =  Double(ufat)!
+                } else {
+                    eMsg = "Populate function errored while parsing unsat. fat"
+                    return true
+                }
+                if let sfat = rInfo["sfat"] as? String {
+                    self.satFat = Double(sfat)!
+                } else {
+                    eMsg = "Populate function errored while parsing sat. fat"
+                    return true
+                }
+                if let chol = rInfo["cholesterol"] as? String {
+                    self.cholesterol = Double(chol)!
+                } else {
+                    eMsg = "Populate function errored while parsing cholesterol"
+                    return true
+                }
+                if let sod = rInfo["sodium"] as? String {
+                    self.sodium = Double(sod)!
+                } else {
+                    eMsg = "Populate function errored while parsing sodium"
+                    return true
+                }
+                if let pot = rInfo["potassium"] as? String {
+                    self.potassium = Double(pot)!
+                } else {
+                    eMsg = "Populate function errored while parsing potassium"
+                    return true
+                }
+                if let car = rInfo["carbs"] as? String {
+                    self.carbs = Double(car)!
+                } else {
+                    eMsg = "Populate function errored while parsing carbs"
+                    return true
+                }
+                if let fib = rInfo["fiber"] as? String {
+                    self.fiber = Double(fib)!
+                } else {
+                    eMsg = "Populate function errored while parsing fiber"
+                    return true
+                }
+                if let sug = rInfo["sugar"] as? String {
+                    self.sugar = Double(sug)!
+                }else {
+                    eMsg = "Populate function errored while parsing sugar"
+                    return true
+                }
+            } else {
+                eMsg = "Populate function errored while trying to parse recipe info"
+                return true
+            }
+            
+            // Populate our ingredients
+            var ingCount = 0
+            if let newIngredients = query["ingredients"]! as? NSDictionary {
+                while let ingRecord = newIngredients[String(ingCount)] as? NSString {
+                    if let ingEntry = try JSONSerialization.jsonObject(with: ingRecord.data(using:
+                        String.Encoding.utf8.rawValue)!, options: .mutableContainers) as? NSDictionary {
+                        var newRIngredient = RecipeIngredient()
+                        if let rid = ingEntry["id"] as? String {
+                            newRIngredient.id = Int(rid)!
+                        } else {
+                            newRIngredient.id = -1
+                            self.eMsg = "Populate Function errored while parsing ingredient id"
+                            return true
+                        }
+                        if let amt = ingEntry["amount"] as? String {
+                            newRIngredient.amount = Double(amt)!
+                        } else {
+                            self.eMsg = "Populate Function errored while parsing ingredient amount"
+                            return true
+                        }
+                        if let ingInfo = ingEntry["ingredient_id"] as? NSDictionary {
+                            if(!newRIngredient.item.populateFromDict(query: ingInfo)) {
+                                self.ingredients.append(newRIngredient)
+                            } else {
+                                self.eMsg = "An error occured while populating an ingredient"
+                                return true
+                            }
+                        } else {
+                            self.eMsg = "Populate Function errored while parsing ingredient item"
+                            return true
+                        }
+                    }
+                    ingCount+=1
+                }
+            } else {
+                self.eMsg = "Populate Function errored while parsing ingredients"
+                return true
+            }
+            // TODO: Populate directions here
+            var dirCount = 0
+            if let newDirections = query["directions"] as? NSDictionary {
+                while let dirRecord = newDirections[String(dirCount)] as? NSString {
+                    if let dirEntry = try JSONSerialization.jsonObject(with: dirRecord.data(using: String.Encoding.utf8.rawValue)!, options: .mutableContainers) as? NSDictionary {
+                        var newDir = Direction()
+                        if let did = dirEntry["id"] as? String {
+                            newDir.id = Int(did)!
+                        } else {
+                            self.eMsg = "Populate function errored while parsing direction id"
+                            return true
+                        }
+                        newDir.description = dirEntry["description"] as! String
+                        self.directions.append(newDir)
+                    }
+                    dirCount+=1
+                }
+            }
+            // TODO: Populate vitamin info here
+            var vitCount = 0
+            if let newVitamins = query["vitamins"] as? NSDictionary {
+                while let vitRecord = newVitamins[String(vitCount)] as? NSString {
+                    if let vitEntry = try JSONSerialization.jsonObject(with: vitRecord.data(using: String.Encoding.utf8.rawValue)!, options: .mutableContainers) as? NSDictionary {
+                        var newVit = Vitamin()
+                        if let vid = vitEntry["id"] as? String {
+                            newVit.id = Int(vid)!
+                        } else {
+                            self.eMsg = "Populate function errored while parsing vitamin id"
+                            return true
+                        }
+                        if let vidx = vitEntry["idx"] as? String {
+                            newVit.idx = Int(vidx)!
+                        } else {
+                            self.eMsg = "Populate function errored while parsing vitamin index"
+                            return true
+                        }
+                        if let vper = vitEntry["daily_percent"] as? String {
+                            newVit.percent = Double(vper)!
+                        } else {
+                            self.eMsg = "Populate function errored while parsing vitamin percent"
+                            return true
+                        }
+                        self.vitamins.append(newVit)
+                    }
+                    vitCount += 1
+                }
+            }
+            // TODO: Populate comments here
+            var comCount = 0
+            if let newComments = query["comments"] as? NSDictionary {
+                while let comRecord = newComments[String(comCount)] as? NSString {
+                    if let comEntry = try JSONSerialization.jsonObject(with: comRecord.data(using: String.Encoding.utf8.rawValue)!, options: .mutableContainers) as? NSDictionary {
+                        var newCom = Comment()
+                        if let cid = comEntry["id"] as? String {
+                            newCom.id = Int(cid)!
+                        } else {
+                            self.eMsg = "Populate function errored while parsing comment id"
+                            return true
+                        }
+                        newCom.date = comEntry["date_posted"] as! String
+                        if let uid = comEntry["user_id"] as? String {
+                            newCom.userId = Int(uid)!
+                        } else {
+                            self.eMsg = "Populate function errored while parsing user id"
+                            return true
+                        }
+                        newCom.title = comEntry["title"] as! String
+                        newCom.description = comEntry["description"] as! String
+                        if let rtg = comEntry["rating"] as? String {
+                            newCom.rating = Int(rtg)!
+                        } else {
+                            self.eMsg = "Populate function errored while parsing comment rating"
+                            return true
+                        }
+                        self.comments.append(newCom)
+                    }
+                    comCount += 1
+                }
+            }
+        } catch {
+            self.eMsg = error.localizedDescription
+        }
+        return false
+    }
+
     public func getNutritionDict() -> [String: (amount : Double, percent: Double)] {
         var result = [String: (amount : Double, percent: Double)]()
         result["Calories"] = self.getCalories()
