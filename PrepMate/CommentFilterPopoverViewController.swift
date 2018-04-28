@@ -8,8 +8,8 @@
 
 import UIKit
 protocol sortCommentProtocol: class {
-    func sortDate(ascend:Bool, enabledStars: [Bool], sortOption: Int)
-    func sortRating(ascend: Bool, enabledStars:[Bool], sortOption: Int)
+    func sortDate(enabledStars: [Bool], sortOption: Int)
+    func sortRating(enabledStars:[Bool], sortOption: Int)
 }
 class CommentFilterPopoverViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
 
@@ -18,6 +18,8 @@ class CommentFilterPopoverViewController: UIViewController, UIPickerViewDelegate
     @IBOutlet weak var threeStarButton: UIButton!
     @IBOutlet weak var fourStarButton: UIButton!
     @IBOutlet weak var fiveStarButton: UIButton!
+    let enabled = "■"
+    let notEnabled = "□"
     var starSortVector = [false, false, false, false, false]
     @IBOutlet weak var sortPickerText: UITextField!
     var sortByPicker = UIPickerView()
@@ -30,8 +32,42 @@ class CommentFilterPopoverViewController: UIViewController, UIPickerViewDelegate
         sortByPicker.delegate = self
         sortByPicker.dataSource = self
         sortPickerText.inputView = sortByPicker
-        sortPickerText.text = sortOptions[0]
-        // Do any additional setup after loading the view.
+        sortPickerText.text = sortOptions[selectedOption]
+        if(starSortVector[0]){
+            oneStarButton.setTitle(enabled, for: .normal)
+        } else {
+            oneStarButton.setTitle(notEnabled, for: .normal)
+        }
+        if(starSortVector[0]){
+            oneStarButton.setTitle(enabled, for: .normal)
+        } else {
+            oneStarButton.setTitle(notEnabled, for: .normal)
+        }
+
+        if(starSortVector[1]){
+            twoStarButton.setTitle(enabled, for: .normal)
+        } else {
+            twoStarButton.setTitle(notEnabled, for: .normal)
+        }
+
+        if(starSortVector[2]){
+            threeStarButton.setTitle(enabled, for: .normal)
+        } else {
+            threeStarButton.setTitle(notEnabled, for: .normal)
+        }
+
+        if(starSortVector[3]){
+            fourStarButton.setTitle(enabled, for: .normal)
+        } else {
+            fourStarButton.setTitle(notEnabled, for: .normal)
+        }
+        
+        if(starSortVector[4]){
+            fiveStarButton.setTitle(enabled, for: .normal)
+        } else {
+            fiveStarButton.setTitle(notEnabled, for: .normal)
+        }
+        
     }
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
@@ -45,6 +81,7 @@ class CommentFilterPopoverViewController: UIViewController, UIPickerViewDelegate
     }
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         self.sortPickerText.text = sortOptions[row]
+        self.selectedOption = row
     }
     
     override func didReceiveMemoryWarning() {
@@ -104,6 +141,13 @@ class CommentFilterPopoverViewController: UIViewController, UIPickerViewDelegate
         }
     }
     @IBAction func onSortPressed(_ sender: Any) {
+        if(selectedOption <= 1){
+            // Sort by date
+            self.sortCommentDelegate?.sortDate(enabledStars: starSortVector, sortOption: selectedOption)
+        } else {
+            // Sort by rating
+            self.sortCommentDelegate?.sortRating(enabledStars: starSortVector, sortOption: selectedOption)
+        }
         dismiss(animated: true, completion: nil)
     }
     
@@ -112,8 +156,13 @@ class CommentFilterPopoverViewController: UIViewController, UIPickerViewDelegate
     }
     /// Resets comment filter
     @IBAction func onReset(_ sender: Any) {
-        // TODO: implement reset
-        
+        starSortVector = [true, true, true, true, true]
+        oneStarButton.setTitle("■", for: .normal)
+        twoStarButton.setTitle("■", for: .normal)
+        threeStarButton.setTitle("■", for: .normal)
+        fourStarButton.setTitle("■", for: .normal)
+        fiveStarButton.setTitle("■", for: .normal)
+        self.selectedOption = 0
     }
     
 

@@ -2055,9 +2055,10 @@ class Recipe : CustomStringConvertible {
         
         
         // Note: Start fed in query with " AND"
-        let q = "recipe_id=\(self.id)\(query)"
+        let q = "recipe_id=\(self.id) \(query)"
         
         let params = "query=\(q)"
+        print("QUERY: \(params)")
         
         request.httpBody = params.data(using: String.Encoding.utf8)
         

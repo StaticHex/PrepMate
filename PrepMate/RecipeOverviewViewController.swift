@@ -31,6 +31,8 @@ class RecipeOverviewViewController: UIViewController {
         super.viewDidLoad()
         self.ingredientText.layer.borderWidth = 1
         self.directionsText.layer.borderWidth = 1
+        self.recipeImage.contentMode = .scaleAspectFit
+        self.ratingsImage.contentMode = .scaleAspectFit
         self.loadRecipe()
         // Do any additional setup after loading the view.
     }

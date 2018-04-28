@@ -56,20 +56,47 @@ class RecipeCommentPageViewController: UIViewController, UITableViewDelegate, UI
     @IBAction func onPressAdvanced(_ sender: Any) {
         performSegue(withIdentifier: "advancedPopoverSegue", sender: sender)
     }
-    func sortDate(ascend:Bool, enabledStars: [Bool], sortOption: Int){
-        if(ascend){
-            //Sort by most recent date
+    func sortDate(enabledStars: [Bool], sortOption: Int){
+        print(self.recipe)
+        self.enabledStars = enabledStars
+        self.sortOption = sortOption
+        var str = "AND rating IN (\(findEnabledStars(enabled: self.enabledStars)))"
+        if(sortOption == 0){
+            str = str + " ORDER BY date_posted ASC"
         } else {
             //Sort by oldest first
+            str = str + " ORDER BY date_posted DESC"
         }
-        
+        self.recipe.getFilteredRecipeComments(query: str)
+        self.recipeCommentTableView.reloadData()
     }
-    func sortRating(ascend:Bool, enabledStars: [Bool], sortOption: Int) {
-        if(ascend){
-            //Sort by lowest rating first
+    func sortRating(enabledStars: [Bool], sortOption: Int) {
+        self.enabledStars = enabledStars
+        self.sortOption = sortOption
+        var str = "AND rating IN (\(findEnabledStars(enabled: self.enabledStars)))"
+        if(sortOption == 3){
+            str = str + "ORDER BY rating ASC"
         } else {
             //Sort by highest rating first
+            str = str + "ORDER BY rating DESC"
         }
+        self.recipe.getFilteredRecipeComments(query: str)
+        self.recipeCommentTableView.reloadData()
+    }
+    private func findEnabledStars(enabled: [Bool]) -> String {
+        var results = [String]()
+        if(enabled[0]){
+            results = ["0", "1", "2", "3"]
+        }
+        for i in 1..<enabled.count {
+            if(enabled[i]){
+                results.append("\((i+1)*2)")
+                if(i < enabled.count - 1){
+                    results.append("\((i+1)*2+1)")
+                }
+            }
+        }
+        return "\(results.joined(separator: ", "))"
     }
     
 
