@@ -83,9 +83,9 @@ class HomePageViewController: UIViewController, UITableViewDelegate, UITableView
             let decoded  = defaults.object(forKey: "titleBarColor") as! Data
             let decodedColor = NSKeyedUnarchiver.unarchiveObject(with: decoded) as! UIColor
             self.menu.backgroundColor = decodedColor
-            self.popularLabel.backgroundColor = decodedColor.withAlphaComponent(0.5)
-            self.recommendedLabel.backgroundColor = decodedColor.withAlphaComponent(0.5)
-            self.cuisineLabel.backgroundColor = decodedColor.withAlphaComponent(0.5)
+            self.popularLabel.backgroundColor = decodedColor.withAlphaComponent(0.2)
+            self.recommendedLabel.backgroundColor = decodedColor.withAlphaComponent(0.2)
+            self.cuisineLabel.backgroundColor = decodedColor.withAlphaComponent(0.2)
         }
 
         if defaults.object(forKey: "navBarTextColor") != nil {
@@ -133,9 +133,10 @@ class HomePageViewController: UIViewController, UITableViewDelegate, UITableView
             
             let row = indexPath.row
             
-            cell.foodTitle.text = self.recipeList[row].getName()
+            cell.foodTitle.text = self.recipeList[row].getName().capitalized
             cell.foodImage.image = self.recipeList[row].getPhoto()
-            
+            cell.foodImage.contentMode = .scaleAspectFill
+
             return cell
         }
         else {
@@ -143,8 +144,9 @@ class HomePageViewController: UIViewController, UITableViewDelegate, UITableView
             
             let row = indexPath.row
             
-            cell.foodTitle.text = self.recipeList[row].getName()
+            cell.foodTitle.text = self.recipeList[row].getName().capitalized
             cell.foodImage.image = self.recipeList[row].getPhoto()
+            cell.foodImage.contentMode = .scaleAspectFill
             
             return cell
         }

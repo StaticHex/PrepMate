@@ -172,7 +172,7 @@ class AddRecipeFirstPageViewController: UIViewController, UITableViewDelegate, U
             
             let row = indexPath.row
             cell.cellProtocol = self
-            cell.directionLabel.text = "\(row+1). \(directionList[row])"
+            cell.directionLabel.text = "\(directionList[row])"
             return cell
         }
         if tableView == self.ingTableView {

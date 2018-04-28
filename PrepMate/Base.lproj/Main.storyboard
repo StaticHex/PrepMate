@@ -3226,19 +3226,24 @@
                                             <rect key="frame" x="0.0" y="0.0" width="150" height="100"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Food Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5By-0I-JN6">
-                                                    <rect key="frame" x="37" y="3" width="77" height="21"/>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hYl-jj-9ji">
+                                                    <rect key="frame" x="0.0" y="0.0" width="150" height="100"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Food Title" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5By-0I-JN6">
+                                                    <rect key="frame" x="0.0" y="0.0" width="150" height="20.5"/>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hYl-jj-9ji">
-                                                    <rect key="frame" x="0.0" y="70" width="150" height="30"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                </imageView>
                                             </subviews>
                                         </view>
+                                        <constraints>
+                                            <constraint firstItem="5By-0I-JN6" firstAttribute="top" secondItem="tmb-lV-j8m" secondAttribute="top" id="1cU-8b-eM9"/>
+                                            <constraint firstItem="5By-0I-JN6" firstAttribute="leading" secondItem="tmb-lV-j8m" secondAttribute="leading" id="Y5P-nF-nv2"/>
+                                            <constraint firstAttribute="trailing" secondItem="5By-0I-JN6" secondAttribute="trailing" id="Yfi-9h-QBv"/>
+                                        </constraints>
                                         <connections>
                                             <outlet property="foodImage" destination="hYl-jj-9ji" id="IvI-3D-hKR"/>
                                             <outlet property="foodTitle" destination="5By-0I-JN6" id="0oM-Ls-h5p"/>
@@ -3273,19 +3278,24 @@
                                             <rect key="frame" x="0.0" y="0.0" width="150" height="100"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Food Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ok2-RG-9No">
-                                                    <rect key="frame" x="37" y="3" width="77" height="21"/>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kft-lk-i1e">
+                                                    <rect key="frame" x="0.0" y="0.0" width="150" height="100"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Food Title" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ok2-RG-9No">
+                                                    <rect key="frame" x="0.0" y="0.0" width="150" height="20.5"/>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kft-lk-i1e">
-                                                    <rect key="frame" x="0.0" y="70" width="150" height="30"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                </imageView>
                                             </subviews>
                                         </view>
+                                        <constraints>
+                                            <constraint firstItem="ok2-RG-9No" firstAttribute="leading" secondItem="Mrt-an-D0G" secondAttribute="leading" id="2ke-ml-Igs"/>
+                                            <constraint firstItem="ok2-RG-9No" firstAttribute="top" secondItem="Mrt-an-D0G" secondAttribute="top" id="cZw-1o-Zb4"/>
+                                            <constraint firstAttribute="trailing" secondItem="ok2-RG-9No" secondAttribute="trailing" id="ffq-br-NXg"/>
+                                        </constraints>
                                         <connections>
                                             <outlet property="foodImage" destination="kft-lk-i1e" id="Sp3-rC-Lj1"/>
                                             <outlet property="foodTitle" destination="ok2-RG-9No" id="dbA-UV-CZq"/>
