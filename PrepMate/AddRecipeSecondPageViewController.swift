@@ -155,9 +155,9 @@ class AddRecipeSecondPageViewController: UIViewController, UIPopoverPresentation
     
     // Function to add a vitamin for display on the Vitamin table view
     func addVitamin(vitamin: Vitamin) {
-        vitamins.insert(vitamin, at: 0)
+        vitamins.append(vitamin)
         self.vitaminTableView.beginUpdates()
-        self.vitaminTableView.insertRows(at: [IndexPath.init(row: 0, section: 0)], with: .automatic)
+        self.vitaminTableView.insertRows(at: [IndexPath.init(row: vitamins.count - 1, section: 0)], with: .automatic)
         self.vitaminTableView.endUpdates()
     }
     
