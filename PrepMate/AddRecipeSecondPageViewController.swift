@@ -12,13 +12,23 @@ protocol secondPageProtocol : class {
     func setRecipe(recipe: RecipeRecord)
 }
 
+protocol removeVitaminProtocol : class {
+    func removeVitamin(cell: VitaminCustomCell)
+}
+
 class VitaminCustomCell: UITableViewCell {
     @IBOutlet weak var vitaminName: UILabel!
     @IBOutlet weak var percentage: UILabel!
     
+    weak var vProtocol : removeVitaminProtocol?
+    
+    @IBAction func removeVit(_ sender: Any) {
+        vProtocol?.removeVitamin(cell: self)
+    }
+    
 }
 
-class AddRecipeSecondPageViewController: UIViewController, UIPopoverPresentationControllerDelegate, UITableViewDelegate, UITableViewDataSource, addVitaminProtocol {
+class AddRecipeSecondPageViewController: UIViewController, UIPopoverPresentationControllerDelegate, UITableViewDelegate, UITableViewDataSource, addVitaminProtocol, removeVitaminProtocol {
 
     // Outlets
     @IBOutlet weak var potassiumField: UITextField!
@@ -82,14 +92,21 @@ class AddRecipeSecondPageViewController: UIViewController, UIPopoverPresentation
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return vitamins.count
     }
+    
+    func removeVitamin(cell: VitaminCustomCell) {
+        let indexPath = self.vitaminTableView.indexPath(for: cell)
+        vitamins.remove(at: indexPath!.row)
+        self.vitaminTableView.deleteRows(at: [indexPath!], with: .fade)
+    }
+    
     /// Load any available recipe changes
     func loadRecipe() {
         self.caloriesField.text! = "\(self.recipeToSave.calories)"
         self.fatField.text! = "\(self.recipeToSave.satFat)"
-        self.fatField.text! = "\(self.recipeToSave.unsatFat)"
+        self.unsatField.text! = "\(self.recipeToSave.unsatFat)"
         self.cholesterolField.text! = "\(self.recipeToSave.cholesterol)"
         self.sodiumField.text! = "\(self.recipeToSave.sodium)"
-        self.potassiumField.text! = "\(self.potassiumField)"
+        self.potassiumField.text! = "\(self.recipeToSave.potassium)"
         self.sugarField.text! = "\(self.recipeToSave.sugar)"
         self.carbField.text! = "\(self.recipeToSave.carbs)"
         self.fiberField.text! = "\(self.recipeToSave.fiber)"
@@ -115,6 +132,7 @@ class AddRecipeSecondPageViewController: UIViewController, UIPopoverPresentation
         let cell = tableView.dequeueReusableCell(withIdentifier: "vitaminTableCell", for: indexPath as IndexPath) as! VitaminCustomCell
         
         let row = indexPath.row
+        cell.vProtocol = self
         cell.vitaminName.text = vitaminList[vitamins[row].idx]
         cell.percentage.text = String(vitamins[row].percent) + " %"
             
