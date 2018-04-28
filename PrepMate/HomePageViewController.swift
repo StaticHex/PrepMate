@@ -51,6 +51,9 @@ class HomePageViewController: UIViewController, UITableViewDelegate, UITableView
     @IBOutlet weak var popularCollectionView: UICollectionView!
     @IBOutlet weak var recommendedCollectionView: UICollectionView!
     
+    @IBOutlet weak var popularLabel: UILabel!
+    @IBOutlet weak var recommendedLabel: UILabel!
+    @IBOutlet weak var cuisineLabel: UILabel!
     var thisRow = 0
     var recipeList = [Recipe]()
     
@@ -80,6 +83,9 @@ class HomePageViewController: UIViewController, UITableViewDelegate, UITableView
             let decoded  = defaults.object(forKey: "titleBarColor") as! Data
             let decodedColor = NSKeyedUnarchiver.unarchiveObject(with: decoded) as! UIColor
             self.menu.backgroundColor = decodedColor
+            self.popularLabel.backgroundColor = decodedColor.withAlphaComponent(0.5)
+            self.recommendedLabel.backgroundColor = decodedColor.withAlphaComponent(0.5)
+            self.cuisineLabel.backgroundColor = decodedColor.withAlphaComponent(0.5)
         }
 
         if defaults.object(forKey: "navBarTextColor") != nil {
@@ -87,6 +93,9 @@ class HomePageViewController: UIViewController, UITableViewDelegate, UITableView
             let decodedColor = NSKeyedUnarchiver.unarchiveObject(with: decoded) as! UIColor
             
             // TODO ADD OUTLETS HERE!!!!
+            self.cuisineLabel.textColor = decodedColor
+            self.recommendedLabel.textColor = decodedColor
+            self.popularLabel.textColor = decodedColor
             lblRecipeOptions.textColor = decodedColor
             btnAddNewRecipe.setTitleColor(decodedColor, for: .normal)
             btnRemoveRecipe.setTitleColor(decodedColor, for: .normal)
@@ -195,6 +204,7 @@ class HomePageViewController: UIViewController, UITableViewDelegate, UITableView
         
         
         let row = indexPath.row
+        cell.cuisineImage.image = categoryImages[row]
         cell.categoryName.text = categoryList[row]
         return cell
         

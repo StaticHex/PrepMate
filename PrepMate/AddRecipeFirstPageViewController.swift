@@ -329,7 +329,7 @@ class AddRecipeFirstPageViewController: UIViewController, UITableViewDelegate, U
     
     // Function to add a direction to the direction table view. Non-DB yet
     func addDirection(direction: String) {
-        directionList.insert(direction, at: 0)
+        directionList.append(direction)
         self.directionTableview.beginUpdates()
         self.directionTableview.insertRows(at: [IndexPath.init(row: 0, section: 0)], with: .automatic)
         self.directionTableview.endUpdates()
@@ -337,7 +337,7 @@ class AddRecipeFirstPageViewController: UIViewController, UITableViewDelegate, U
     
     // Function to add an ingredient to the ingredient table view. Non-DB yet
     func addIngredient(ingredient: RecipeIngredient) {
-        ingList.insert(ingredient, at: 0)
+        ingList.append(ingredient)
         self.ingTableView.beginUpdates()
         self.ingTableView.insertRows(at: [IndexPath.init(row: 0, section: 0)], with: .automatic)
         self.ingTableView.endUpdates()
