@@ -78,7 +78,6 @@ class AddRecipeFirstPageViewController: UIViewController, UITableViewDelegate, U
     var cookTimeHour: String = "00"
     var cookTimeMin: String = "00"
     
-    var directionCounter = 1
     
     weak var secondDelegate: secondPageProtocol?
     
@@ -173,8 +172,7 @@ class AddRecipeFirstPageViewController: UIViewController, UITableViewDelegate, U
             
             let row = indexPath.row
             cell.cellProtocol = self
-            cell.directionLabel.text = String(directionCounter) + ". " + directionList[row]
-            directionCounter += 1
+            cell.directionLabel.text = "\(row+1). \(directionList[row])"
             return cell
         }
         if tableView == self.ingTableView {
@@ -331,7 +329,7 @@ class AddRecipeFirstPageViewController: UIViewController, UITableViewDelegate, U
     func addDirection(direction: String) {
         directionList.append(direction)
         self.directionTableview.beginUpdates()
-        self.directionTableview.insertRows(at: [IndexPath.init(row: 0, section: 0)], with: .automatic)
+        self.directionTableview.insertRows(at: [IndexPath.init(row: directionList.count-1, section: 0)], with: .automatic)
         self.directionTableview.endUpdates()
     }
     
@@ -339,7 +337,7 @@ class AddRecipeFirstPageViewController: UIViewController, UITableViewDelegate, U
     func addIngredient(ingredient: RecipeIngredient) {
         ingList.append(ingredient)
         self.ingTableView.beginUpdates()
-        self.ingTableView.insertRows(at: [IndexPath.init(row: 0, section: 0)], with: .automatic)
+        self.ingTableView.insertRows(at: [IndexPath.init(row: ingList.count-1, section: 0)], with: .automatic)
         self.ingTableView.endUpdates()
         
     }
