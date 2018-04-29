@@ -27,7 +27,7 @@ class HomeCategoryTableViewCell: UITableViewCell {
     @IBOutlet weak var cuisineImage: UIImageView!
 }
 
-class HomePageViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UICollectionViewDataSource, UICollectionViewDelegate, settingsProtocol, ProfileProtocol {
+class HomePageViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UICollectionViewDataSource, UICollectionViewDelegate, UIPopoverPresentationControllerDelegate, settingsProtocol, ProfileProtocol {
     
     // UI Outlets
     @IBOutlet weak var menu: UIView!
@@ -189,8 +189,22 @@ class HomePageViewController: UIViewController, UITableViewDelegate, UITableView
             let selected = recipeList[(indexPath?.row)!]
             vc?.recipe = selected
         }
+        if segue.identifier == "AdvancedSearchPopover" {
+            let vc = segue.destination as? SearchFilterPopoverViewController
+            vc?.isModalInPopover = true
+            //vc?.addIngredientDelegate = self
+            let controller = vc?.popoverPresentationController
+            if controller != nil {
+                controller?.delegate = self
+                controller?.passthroughViews = nil
+            }
+        }
         
         menu.alpha = 0.0
+    }
+    
+    func adaptivePresentationStyle(for controller: UIPresentationController, traitCollection: UITraitCollection) -> UIModalPresentationStyle {
+        return UIModalPresentationStyle.none
     }
 
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {

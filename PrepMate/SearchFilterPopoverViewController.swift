@@ -44,9 +44,12 @@ class SearchFilterPopoverViewController: UIViewController {
 
     // Nav. Bar actions
     @IBAction func onApply(_ sender: Any) {
+        self.dismiss(animated: true, completion: nil)
     }
     
     @IBAction func onCancel(_ sender: Any) {
+        print("clicked!")
+        self.dismiss(animated: true, completion: nil)
     }
     
     // Check Box Actions
