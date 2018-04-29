@@ -113,13 +113,17 @@ class HistoryFavoriteSearchResultsViewController: UIViewController, UITableViewD
         if(recipe.addRecipeComment(newComment: comment)) {
             print(recipe)
         }
-        */
+        
         var rList = [21,22,48]
         for r in rList {
             var recipe = Recipe()
             recipe.getRecipe(rid: r)
             recipeList.append(recipe)
-        }
+        }*/
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        histFavTableView.reloadData()
     }
     
     override func didReceiveMemoryWarning() {

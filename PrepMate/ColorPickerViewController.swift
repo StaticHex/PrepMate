@@ -257,26 +257,4 @@ class ColorPickerViewController: UIViewController {
 
         return Int(Float(delim)*pow(16, Float(p)) + Float(hexHelper(tok: remain, p: p - 1)))
     }
-    
-    
-    // A substring function because apple depreciated theirs
-    func substring(tok: String, begin : Int, end : Int) -> String {
-        if begin < 0 || end < 0 {
-            return ""
-        }
-        if begin >= end {
-            return ""
-        }
-        var count : Int = 0
-        let tokArray = Array(tok)
-        var retStr : String = ""
-        for c in tokArray {
-            if count >= begin && count < end {
-                retStr += String(c)
-            }
-            count += 1
-        }
-        
-        return retStr
-    }
 }

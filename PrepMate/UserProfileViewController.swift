@@ -185,6 +185,7 @@ class UserProfileViewController: UIViewController, UIPopoverPresentationControll
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        print(currentUser)
         return currentUser.getPrefCount()
     }
     
@@ -204,18 +205,10 @@ class UserProfileViewController: UIViewController, UIPopoverPresentationControll
             cell.title?.text = categoryList[bl_value]
             break
         case "Ingredient":
-            for i in ingredientList {
-                if bl_value == i.flag {
-                    cell.title?.text = i.name
-                }
-            }
+            cell.title?.text = ingredientList[bl_value].name
             break
         case "Type":
-            for t in foodTypeList {
-                if bl_value == t.flag {
-                    cell.title?.text = t.name
-                }
-            }
+            cell.title?.text = foodTypeList[bl_value].name
             break
         default:
             break
@@ -226,7 +219,8 @@ class UserProfileViewController: UIViewController, UIPopoverPresentationControll
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         
-        let row = indexPath.row
+        var row = indexPath.row
+        print(row)
     }
     
     // Both of these ended up being direct segues so these two functions can be unlinked and deleted

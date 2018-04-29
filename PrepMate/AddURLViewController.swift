@@ -79,29 +79,4 @@ class AddURLViewController: UIViewController {
     @IBAction func onCancelClick(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
     }
-    
-    // substring function because apple depreciated theirs
-    func substring(tok: String, begin : Int, end : Int) -> String {
-        if begin < 0 || end < 0 {
-            return ""
-        }
-        if begin >= end {
-            return ""
-        }
-        
-        var count : Int = 0
-        let tokArray = Array(tok)
-        var retStr : String = ""
-        for c in tokArray {
-            if count >= begin && count < end {
-                retStr += String(c)
-            }
-            if count >= end {
-                break
-            }
-            count += 1
-        }
-        
-        return retStr
-    }
 }

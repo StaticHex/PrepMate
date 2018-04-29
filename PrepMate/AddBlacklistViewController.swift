@@ -91,19 +91,7 @@ class AddBlacklistViewController: UIViewController, UIPickerViewDelegate, UIPick
     @IBAction func onAddClick(_ sender: Any) {
         var bListItem = (bl_key: "", bl_value: 0)
         bListItem.bl_key = pckrItemTypeData[pckrItemType.selectedRow(inComponent: 0)]
-        switch(bListItem.bl_key) {
-        case "Category":
-            bListItem.bl_value = pckrItemName.selectedRow(inComponent: 0)
-            break
-        case "Ingredient":
-            bListItem.bl_value =  ingredientList[pckrItemName.selectedRow(inComponent: 0)].flag
-            break
-        case "Type":
-            bListItem.bl_value = foodTypeList[pckrItemName.selectedRow(inComponent: 0)].flag
-            break
-        default:
-            break
-        }
+        bListItem.bl_value = pckrItemName.selectedRow(inComponent: 0)
         bListDelegate?.updateBlist(item: bListItem)
         self.dismiss(animated: true, completion: nil)
     }

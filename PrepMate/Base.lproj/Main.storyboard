@@ -3203,7 +3203,11 @@
                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                             <textInputTraits key="textInputTraits"/>
                                         </textField>
-                                        <barButtonItem key="rightBarButtonItem" style="plain" systemItem="search" id="Vmz-le-13b"/>
+                                        <barButtonItem key="rightBarButtonItem" style="plain" systemItem="search" id="Vmz-le-13b">
+                                            <connections>
+                                                <action selector="onSearchSubmit:" destination="6UE-ry-ygn" id="Yvl-2m-dzv"/>
+                                            </connections>
+                                        </barButtonItem>
                                     </navigationItem>
                                 </items>
                             </navigationBar>
@@ -5488,8 +5492,8 @@
         <image name="splash_screen.jpg" width="336" height="598"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="cOe-bu-kQK"/>
-        <segue reference="BKp-FF-ZUX"/>
+        <segue reference="gfz-p4-kgy"/>
+        <segue reference="Ikg-C1-34D"/>
         <segue reference="bXW-K1-T9k"/>
         <segue reference="BjC-YD-RDR"/>
         <segue reference="rrq-j1-upH"/>

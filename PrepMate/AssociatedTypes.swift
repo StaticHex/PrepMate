@@ -83,8 +83,8 @@ public let ingredientList = [(flag: 1, name: "Tree Nuts"),
 public let foodTypeList = [(flag: 8192, name: "Spicy"),
                            (flag: 16384, name: "Healthy"),
                            (flag: 32768, name: "High Fat"),
-                           (flag: 65536, name: "Vegan"),
-                           (flag: 131072, name: "Vegetarian")]
+                           (flag: 65536, name: "Vegetarian"),
+                           (flag: 131072, name: "Vegan")]
 
 // divide metric amount by factor to get standard amount
 public let unitList = [(std: "custom", metric: "custom", factor: 1.0),
@@ -200,6 +200,27 @@ func getRecipes(query:String) -> [Recipe] {
     while(!finished) {}
 
     return recipes
+}
+
+// A substring function because apple depreciated theirs
+func substring(tok: String, begin : Int, end : Int) -> String {
+    if begin < 0 || end < 0 {
+        return ""
+    }
+    if begin >= end {
+        return ""
+    }
+    var count : Int = 0
+    let tokArray = Array(tok)
+    var retStr : String = ""
+    for c in tokArray {
+        if count >= begin && count < end {
+            retStr += String(c)
+        }
+        count += 1
+    }
+    
+    return retStr
 }
 
 var currentUser = User()

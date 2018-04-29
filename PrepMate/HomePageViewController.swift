@@ -27,7 +27,7 @@ class HomeCategoryTableViewCell: UITableViewCell {
     @IBOutlet weak var cuisineImage: UIImageView!
 }
 
-class HomePageViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UICollectionViewDataSource, UICollectionViewDelegate, UIPopoverPresentationControllerDelegate, settingsProtocol, ProfileProtocol {
+class HomePageViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UICollectionViewDataSource, UICollectionViewDelegate, UIPopoverPresentationControllerDelegate, settingsProtocol, ProfileProtocol, SearchFilterProtocol {
     
     // UI Outlets
     @IBOutlet weak var menu: UIView!
@@ -57,6 +57,12 @@ class HomePageViewController: UIViewController, UITableViewDelegate, UITableView
     @IBOutlet weak var cuisineLabel: UILabel!
     var thisRow = 0
     var recipeList = [Recipe]()
+    var searchFilter = ""
+    var searchString = ""
+    
+    // This is a special recipe collection for passing between screens
+    // used when moving to recipe box or search results
+    var passedRecipes = [Recipe]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -192,12 +198,16 @@ class HomePageViewController: UIViewController, UITableViewDelegate, UITableView
         if segue.identifier == "AdvancedSearchPopover" {
             let vc = segue.destination as? SearchFilterPopoverViewController
             vc?.isModalInPopover = true
-            //vc?.addIngredientDelegate = self
+            vc?.searchFilterDelegate = self
             let controller = vc?.popoverPresentationController
             if controller != nil {
                 controller?.delegate = self
                 controller?.passthroughViews = nil
             }
+        }
+        if segue.identifier == "homeToRecipeList" {
+            let vc = segue.destination as! HistoryFavoriteSearchResultsViewController
+            vc.recipeList = passedRecipes
         }
         
         menu.alpha = 0.0
@@ -226,6 +236,10 @@ class HomePageViewController: UIViewController, UITableViewDelegate, UITableView
         return cell
         
         
+    }
+    
+    func setSearchFilter(query: String) {
+        searchFilter = query
     }
     
     @IBAction func onMenuButtonClick(_ sender: Any) {
@@ -269,6 +283,7 @@ class HomePageViewController: UIViewController, UITableViewDelegate, UITableView
         performSegue(withIdentifier: "homeToPantry", sender: sender)
     }
     @IBAction func onMenuRecipeClick(_ sender: Any) {
+        passedRecipes = getRecipes(query: "uid=\(currentUser.getId())")
         performSegue(withIdentifier: "homeToRecipeList", sender: sender)
         menu.alpha = 0
     }
@@ -284,6 +299,10 @@ class HomePageViewController: UIViewController, UITableViewDelegate, UITableView
     @IBAction func onMenuAddRecipeClick(_ sender: Any) {
         performSegue(withIdentifier: "homeToAddRecipe", sender: sender)
     }
+    
+    @IBAction func onSearchSubmit(_ sender: Any) {
+    }
+    
     
     func tableView(_ tableView: UITableView,
                    didSelectRowAt indexPath: IndexPath) {

@@ -191,7 +191,7 @@ class User : CustomStringConvertible {
         while(!finished) {}
         
         // if there was no error, go ahead and load the user's preference list
-        if(!vError) {
+        if(vError) {
             vError = !self.loadPrefList()
         }
         return vError
