@@ -116,8 +116,6 @@ class AddRecipeFirstPageViewController: UIViewController, UITableViewDelegate, U
         if recipeToSave.name != "" {
             recipeNameField.text = recipeToSave.name.capitalized
             ingList = recipeToSave.ingredients
-            print("AA@@#@#@#@#@#@#@#@#@#")
-            print(ingList)
             for item in recipeToSave.directions {
                 print(item.description)
                 directionList.append(item.description)
@@ -131,6 +129,23 @@ class AddRecipeFirstPageViewController: UIViewController, UITableViewDelegate, U
             prepTimeField.text = prepTime[0] + " hr(s)" +  timeOptions[1][0] + prepTime[1] + " min(s)"
             cookTimeField.text = cookTime[0] + " hr(s)" +  timeOptions[1][0] + cookTime[1] + " min(s)"
             // Do flags
+            
+            var flagNum = self.recipeToSave.flags
+            for d in 0...6 {
+                if (flagNum & 1 ) == 1 {
+                    dietaryVector[d] = true
+                }
+                flagNum = flagNum >> 1
+            }
+            for c in 0...12 {
+                if (flagNum & 1 ) == 1 {
+                    containsVector[c] = true
+                }
+                flagNum = flagNum >> 1
+            }
+            
+            
+            
         }
         else {
             servingsSizeTextField.text = String(servingSizeOptions[0])
@@ -488,7 +503,7 @@ class AddRecipeFirstPageViewController: UIViewController, UITableViewDelegate, U
             flagVector <<= 1
         }
         recipeToSave.flags = flagVector
-        
+        recipeToSave.creatorId = currentUser.getId()
         print(recipeToSave.name)
         secondDelegate?.setRecipe(recipe: recipeToSave)
         
