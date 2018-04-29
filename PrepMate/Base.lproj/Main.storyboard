@@ -177,6 +177,16 @@
                                     <constraint firstItem="TT3-WE-W3i" firstAttribute="leading" secondItem="HbV-h6-ilG" secondAttribute="leading" constant="81" id="kI2-7e-uMT"/>
                                 </constraints>
                             </stackView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vV8-Uw-MKY">
+                                <rect key="frame" x="319" y="161" width="46" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="4Fu-4P-yVX"/>
+                                </constraints>
+                                <state key="normal" title="Button"/>
+                                <connections>
+                                    <action selector="onCreatorButton:" destination="XWZ-63-vso" eventType="touchUpInside" id="V64-4L-BMc"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
@@ -192,8 +202,10 @@
                             <constraint firstItem="Lnz-28-0cZ" firstAttribute="trailing" secondItem="SfS-LM-Qc7" secondAttribute="trailing" constant="9" id="fau-Rj-60O"/>
                             <constraint firstItem="bPQ-pl-WJO" firstAttribute="leading" secondItem="vZm-dj-S0R" secondAttribute="leading" id="i3U-DS-pfF"/>
                             <constraint firstItem="ad8-mf-4CR" firstAttribute="leading" secondItem="Lnz-28-0cZ" secondAttribute="leading" constant="55" id="j63-X8-vmJ"/>
+                            <constraint firstItem="ad8-mf-4CR" firstAttribute="top" secondItem="vV8-Uw-MKY" secondAttribute="bottom" id="jQd-Z6-vN1"/>
                             <constraint firstItem="HbV-h6-ilG" firstAttribute="top" secondItem="ePx-k5-66z" secondAttribute="bottom" constant="39" id="jS8-2Z-UDe"/>
                             <constraint firstAttribute="bottom" secondItem="HbV-h6-ilG" secondAttribute="bottom" constant="20" symbolic="YES" id="jhb-Kn-jTy"/>
+                            <constraint firstItem="Lnz-28-0cZ" firstAttribute="trailing" secondItem="vV8-Uw-MKY" secondAttribute="trailing" constant="10" id="kgd-LW-0Ge"/>
                             <constraint firstItem="bPQ-pl-WJO" firstAttribute="bottom" secondItem="ZxD-6N-gzp" secondAttribute="bottom" id="pZ7-QM-UFC"/>
                             <constraint firstItem="Lnz-28-0cZ" firstAttribute="trailing" secondItem="HbV-h6-ilG" secondAttribute="trailing" constant="8" id="ryF-u0-PJp"/>
                             <constraint firstItem="ad8-mf-4CR" firstAttribute="top" secondItem="bPQ-pl-WJO" secondAttribute="bottom" constant="5" id="sDg-UH-MMH"/>
@@ -208,6 +220,7 @@
                     <connections>
                         <outlet property="caloriesLabel" destination="frO-W5-0O0" id="stQ-0P-D0R"/>
                         <outlet property="cooktimeLabel" destination="yF0-1i-hEW" id="ea6-0p-RRy"/>
+                        <outlet property="creatorButton" destination="vV8-Uw-MKY" id="zdx-0D-T99"/>
                         <outlet property="directionsText" destination="rmy-wq-hhB" id="SM4-1d-K81"/>
                         <outlet property="fatLabel" destination="Bve-MN-blM" id="Xos-ET-8Zm"/>
                         <outlet property="ingredientText" destination="267-t0-3mD" id="6wa-Bk-nLY"/>

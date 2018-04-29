@@ -47,6 +47,12 @@ class RecipePageViewController: UIViewController {
     }
     override func viewWillAppear(_ animated: Bool) {
         navigationController?.isNavigationBarHidden = false
+        if(currentUser.getId() == self.recipe.getCreatorId()){
+            print("SAME USER")
+            self.editButton.isEnabled = true
+        }else{
+            self.editButton.isEnabled = false
+        }
     }
     
     override func didReceiveMemoryWarning() {
@@ -55,6 +61,7 @@ class RecipePageViewController: UIViewController {
     }
     
     @IBAction func onEditPressed(_ sender: Any) {
+        print("EDIT PRESSED")
     }
     
     

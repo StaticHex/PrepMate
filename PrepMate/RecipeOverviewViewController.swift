@@ -13,10 +13,16 @@ class RecipeOverviewViewController: UIViewController {
 
     /// When Favorite button is pressed
     @IBAction func onFavoritePressed(_ sender: Any) {
-    
+        
     }
     @IBAction func onAddPressed(_ sender: Any) {
+        
     }
+    
+    @IBAction func onCreatorButton(_ sender: Any) {
+        
+    }
+    @IBOutlet weak var creatorButton: UIButton!
     @IBOutlet weak var ratingsImage: UIImageView!
     @IBOutlet weak var recipeImage: UIImageView!
     @IBOutlet weak var ingredientText: UITextView!
@@ -34,6 +40,9 @@ class RecipeOverviewViewController: UIViewController {
         self.recipeImage.contentMode = .scaleAspectFit
         self.ratingsImage.contentMode = .scaleAspectFit
         self.loadRecipe()
+        let creator = User()
+        creator.getUser(uid: self.recipe.getCreatorId())
+        self.creatorButton.setTitle(creator.getUname(), for: .normal)
         // Do any additional setup after loading the view.
     }
     /// Load the recipe overview information
