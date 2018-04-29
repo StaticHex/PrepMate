@@ -32,13 +32,20 @@ class MealsCustomTableViewCell: UITableViewCell {
     
     // Select the button on a certain cell
     @IBAction func selectItem(_ sender: Any) {
-        if selectedItem.currentTitle == "★" {
-            selectedItem.setTitle("☆", for: .normal)
+        var title = "■"
+        if selectedItem.currentTitle == "■" {
+            title = "□"
         }
         else {
-            selectedItem.setTitle("★", for: .normal)
+            title = "■"
         }
+        UIView.performWithoutAnimation {
+            self.selectedItem.setTitle(title, for: .normal)
+            self.selectedItem.layoutIfNeeded()
+        }
+        
     }
+
     // Protocol called to remove cell from table view
     @IBAction func remove(_ sender: Any) {
         mProtocol?.removeMeal(cell: self)

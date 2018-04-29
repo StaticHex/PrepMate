@@ -17,8 +17,6 @@ protocol mealsProtocol : class {
 class MealsPageViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, mealsProtocol {
     
     
-
-    
     var meals = [Recipe]()
 
     

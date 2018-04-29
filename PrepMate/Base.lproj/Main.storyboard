@@ -4416,12 +4416,15 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sRx-zo-0nF">
-                                                    <rect key="frame" x="322" y="8" width="30" height="30"/>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sRx-zo-0nF">
+                                                    <rect key="frame" x="323" y="5" width="30" height="33"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="30" id="YGY-J2-U8i"/>
                                                     </constraints>
                                                     <state key="normal" title="X"/>
+                                                    <connections>
+                                                        <action selector="remove:" destination="4kq-6s-CUm" eventType="touchUpInside" id="W8z-Gb-ZsZ"/>
+                                                    </connections>
                                                 </button>
                                                 <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QPE-tc-WOE">
                                                     <rect key="frame" x="240" y="-4" width="30" height="51"/>
@@ -4436,12 +4439,13 @@
                                                 </button>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="sRx-zo-0nF" firstAttribute="top" secondItem="QOs-Lf-IvW" secondAttribute="topMargin" constant="-23" id="ESM-Q7-omJ"/>
+                                                <constraint firstAttribute="bottom" secondItem="sRx-zo-0nF" secondAttribute="bottom" constant="5" id="D39-z1-xdL"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="sRx-zo-0nF" secondAttribute="trailing" constant="7" id="HIb-HX-dkz"/>
                                                 <constraint firstItem="sRx-zo-0nF" firstAttribute="leading" secondItem="QPE-tc-WOE" secondAttribute="trailing" constant="52" id="JpS-NP-qUJ"/>
                                                 <constraint firstItem="uuT-pG-Gke" firstAttribute="centerY" secondItem="QOs-Lf-IvW" secondAttribute="centerY" id="KCj-K4-EW3"/>
                                                 <constraint firstItem="QPE-tc-WOE" firstAttribute="leading" secondItem="uuT-pG-Gke" secondAttribute="trailing" constant="31" id="Zcf-Ah-Ryd"/>
                                                 <constraint firstItem="uuT-pG-Gke" firstAttribute="leading" secondItem="QOs-Lf-IvW" secondAttribute="leadingMargin" constant="-1" id="aLd-d8-QbT"/>
+                                                <constraint firstItem="sRx-zo-0nF" firstAttribute="top" secondItem="QOs-Lf-IvW" secondAttribute="top" constant="5" id="cTk-kk-E1o"/>
                                                 <constraint firstItem="uuT-pG-Gke" firstAttribute="centerY" secondItem="QPE-tc-WOE" secondAttribute="centerY" id="iQK-46-pzu"/>
                                             </constraints>
                                         </tableViewCellContentView>
