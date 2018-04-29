@@ -4288,11 +4288,18 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="PWD-tQ-Tsv"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Test" id="Hb1-ZH-Z7h"/>
+                    <navigationItem key="navigationItem" title="Test" id="Hb1-ZH-Z7h">
+                        <barButtonItem key="rightBarButtonItem" title="Edit" id="gBy-lL-h9Q">
+                            <connections>
+                                <action selector="onEditPressed:" destination="bmi-Ww-24u" id="uUc-Xx-hG7"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="RecipeCommentView" destination="eai-8n-ILe" id="56a-ah-jDS"/>
                         <outlet property="RecipeNutritionView" destination="8g0-KK-NKx" id="iAY-W1-IKc"/>
                         <outlet property="RecipeOverviewView" destination="T35-Gu-naN" id="4Mj-9t-Oin"/>
+                        <outlet property="editButton" destination="gBy-lL-h9Q" id="PWb-Np-6ZN"/>
                         <outlet property="navBar" destination="Hb1-ZH-Z7h" id="yGx-wT-stv"/>
                     </connections>
                 </viewController>

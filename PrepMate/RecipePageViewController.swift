@@ -12,6 +12,8 @@ class RecipePageViewController: UIViewController {
     var recipe = Recipe()
     @IBOutlet weak var RecipeOverviewView: UIView!
     @IBOutlet weak var RecipeNutritionView: UIView!
+    
+    @IBOutlet weak var editButton: UIBarButtonItem!
     @IBOutlet weak var RecipeCommentView: UIView!
     @IBOutlet weak var navBar: UINavigationItem!
     @IBAction func onSegmentPressed(_ sender: UISegmentedControl) {
@@ -51,6 +53,10 @@ class RecipePageViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    @IBAction func onEditPressed(_ sender: Any) {
+    }
+    
     
 
     
