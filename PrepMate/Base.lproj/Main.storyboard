@@ -4403,139 +4403,205 @@
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <stackView opaque="NO" contentMode="scaleToFill" spacing="50" translatesAutoresizingMaskIntoConstraints="NO" id="S3L-M3-Bpl">
-                                                    <rect key="frame" x="15" y="8" width="348" height="30"/>
-                                                    <subviews>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gbk-Zh-WyA">
-                                                            <rect key="frame" x="0.0" y="0.0" width="35.5" height="30"/>
-                                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                            <nil key="textColor"/>
-                                                            <nil key="highlightedColor"/>
-                                                        </label>
-                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="N9N-eV-GoJ">
-                                                            <rect key="frame" x="85.5" y="0.0" width="95" height="30"/>
-                                                            <constraints>
-                                                                <constraint firstAttribute="height" constant="30" id="QJf-Xy-itj"/>
-                                                            </constraints>
-                                                        </imageView>
-                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LXw-8w-cfD">
-                                                            <rect key="frame" x="230.5" y="0.0" width="33" height="30"/>
-                                                            <constraints>
-                                                                <constraint firstAttribute="width" constant="33" id="giX-LI-17l"/>
-                                                            </constraints>
-                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                            <state key="normal" title="☆"/>
-                                                            <connections>
-                                                                <action selector="selectItem:" destination="4kq-6s-CUm" eventType="touchUpInside" id="daO-Lm-VPD"/>
-                                                            </connections>
-                                                        </button>
-                                                        <button opaque="NO" alpha="0.34999999999999998" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9gR-74-LkB">
-                                                            <rect key="frame" x="313.5" y="0.0" width="34.5" height="30"/>
-                                                            <fontDescription key="fontDescription" type="system" pointSize="25"/>
-                                                            <state key="normal" title="X"/>
-                                                            <connections>
-                                                                <action selector="remove:" destination="4kq-6s-CUm" eventType="touchUpInside" id="020-hD-Sgr"/>
-                                                            </connections>
-                                                        </button>
-                                                    </subviews>
-                                                </stackView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Meal Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uuT-pG-Gke">
+                                                    <rect key="frame" x="15" y="11" width="194" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sRx-zo-0nF">
+                                                    <rect key="frame" x="322" y="8" width="30" height="30"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="30" id="YGY-J2-U8i"/>
+                                                    </constraints>
+                                                    <state key="normal" title="X"/>
+                                                </button>
+                                                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QPE-tc-WOE">
+                                                    <rect key="frame" x="240" y="-4" width="30" height="51"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="30" id="ykx-2y-LUF"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="32"/>
+                                                    <state key="normal" title="□"/>
+                                                    <connections>
+                                                        <action selector="selectItem:" destination="4kq-6s-CUm" eventType="touchUpInside" id="D9I-3Z-UfY"/>
+                                                    </connections>
+                                                </button>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="S3L-M3-Bpl" firstAttribute="leading" secondItem="QOs-Lf-IvW" secondAttribute="leading" constant="15" id="UhW-38-M3F"/>
-                                                <constraint firstAttribute="bottom" secondItem="S3L-M3-Bpl" secondAttribute="bottom" constant="6" id="aqg-ie-bwj"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="S3L-M3-Bpl" secondAttribute="trailing" constant="-3" id="v8n-ri-jvo"/>
+                                                <constraint firstItem="sRx-zo-0nF" firstAttribute="top" secondItem="QOs-Lf-IvW" secondAttribute="topMargin" constant="-23" id="ESM-Q7-omJ"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="sRx-zo-0nF" secondAttribute="trailing" constant="7" id="HIb-HX-dkz"/>
+                                                <constraint firstItem="sRx-zo-0nF" firstAttribute="leading" secondItem="QPE-tc-WOE" secondAttribute="trailing" constant="52" id="JpS-NP-qUJ"/>
+                                                <constraint firstItem="uuT-pG-Gke" firstAttribute="centerY" secondItem="QOs-Lf-IvW" secondAttribute="centerY" id="KCj-K4-EW3"/>
+                                                <constraint firstItem="QPE-tc-WOE" firstAttribute="leading" secondItem="uuT-pG-Gke" secondAttribute="trailing" constant="31" id="Zcf-Ah-Ryd"/>
+                                                <constraint firstItem="uuT-pG-Gke" firstAttribute="leading" secondItem="QOs-Lf-IvW" secondAttribute="leadingMargin" constant="-1" id="aLd-d8-QbT"/>
+                                                <constraint firstItem="uuT-pG-Gke" firstAttribute="centerY" secondItem="QPE-tc-WOE" secondAttribute="centerY" id="iQK-46-pzu"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <outlet property="mealName" destination="gbk-Zh-WyA" id="Yiv-me-WV4"/>
-                                            <outlet property="rating" destination="N9N-eV-GoJ" id="XlR-9Q-xup"/>
-                                            <outlet property="removeItem" destination="9gR-74-LkB" id="qNo-t0-1hX"/>
-                                            <outlet property="selectedItem" destination="LXw-8w-cfD" id="sNr-BC-buD"/>
+                                            <outlet property="mealName" destination="uuT-pG-Gke" id="OdC-PH-j2e"/>
+                                            <outlet property="removeItem" destination="sRx-zo-0nF" id="EsE-DB-Elg"/>
+                                            <outlet property="selectedItem" destination="QPE-tc-WOE" id="4E1-jf-o1V"/>
                                             <segue destination="0dP-6d-owt" kind="show" identifier="mealsToRecipeBoxSegue" id="1hz-tg-fc6"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
-                            <stackView opaque="NO" contentMode="scaleToFill" spacing="180" translatesAutoresizingMaskIntoConstraints="NO" id="96Y-jW-Qpd">
-                                <rect key="frame" x="28" y="616" width="332" height="51"/>
-                                <subviews>
-                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="40" translatesAutoresizingMaskIntoConstraints="NO" id="p3a-bc-UIz">
-                                        <rect key="frame" x="0.0" y="0.0" width="122" height="51"/>
-                                        <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WgM-5W-gyb">
-                                                <rect key="frame" x="0.0" y="0.0" width="34" height="51"/>
-                                                <state key="normal" title="Save"/>
-                                            </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0Rn-Hr-NDX">
-                                                <rect key="frame" x="74" y="0.0" width="48" height="51"/>
-                                                <state key="normal" title="Cancel"/>
-                                            </button>
-                                        </subviews>
-                                    </stackView>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PtD-Fv-ikb">
-                                        <rect key="frame" x="302" y="0.0" width="30" height="51"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="32"/>
-                                        <state key="normal" title="+"/>
-                                        <connections>
-                                            <action selector="addMeal:" destination="lxe-Ys-8Vq" eventType="touchUpInside" id="2cn-G6-dvQ"/>
-                                        </connections>
-                                    </button>
-                                </subviews>
-                            </stackView>
-                            <stackView opaque="NO" contentMode="scaleToFill" spacing="210" translatesAutoresizingMaskIntoConstraints="NO" id="XxG-fm-FUx">
-                                <rect key="frame" x="15" y="76" width="345" height="51"/>
-                                <subviews>
-                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="hOn-mv-j1N">
-                                        <rect key="frame" x="0.0" y="0.0" width="345" height="51"/>
-                                        <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="s3y-cA-xTQ">
-                                                <rect key="frame" x="0.0" y="0.0" width="300" height="51"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="width" constant="300" id="OjZ-vt-Tft"/>
-                                                </constraints>
-                                                <state key="normal" title="🛒"/>
-                                                <connections>
-                                                    <action selector="addMealToShoppingList:" destination="lxe-Ys-8Vq" eventType="touchUpInside" id="Edb-Rf-dCD"/>
-                                                </connections>
-                                            </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5Hi-CU-VZM">
-                                                <rect key="frame" x="315" y="0.0" width="30" height="51"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="width" constant="30" id="EHL-iR-Og3"/>
-                                                </constraints>
-                                                <fontDescription key="fontDescription" type="system" pointSize="32"/>
-                                                <state key="normal" title="+"/>
-                                                <connections>
-                                                    <action selector="addMealOption:" destination="lxe-Ys-8Vq" eventType="touchUpInside" id="JUG-Q1-UMF"/>
-                                                </connections>
-                                            </button>
-                                        </subviews>
-                                    </stackView>
-                                </subviews>
-                            </stackView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tep-fh-O46">
+                                <rect key="frame" x="335" y="624" width="30" height="38"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="32"/>
+                                <state key="normal" title="+"/>
+                                <connections>
+                                    <action selector="addMeal:" destination="lxe-Ys-8Vq" eventType="touchUpInside" id="02a-8D-Fot"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kNs-sK-yb6">
+                                <rect key="frame" x="335" y="82" width="30" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="🛒"/>
+                                <connections>
+                                    <action selector="addMealToShoppingList:" destination="lxe-Ys-8Vq" eventType="touchUpInside" id="UBF-HA-FQt"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Meals" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wRJ-rl-s2L">
+                                <rect key="frame" x="16" y="87" width="72" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="XYm-j1-hhV" firstAttribute="centerX" secondItem="XxG-fm-FUx" secondAttribute="centerX" id="4CQ-N2-pU8"/>
-                            <constraint firstItem="XxG-fm-FUx" firstAttribute="leading" secondItem="HQ3-vP-KXw" secondAttribute="leading" constant="15" id="86J-l7-oDR"/>
-                            <constraint firstItem="XxG-fm-FUx" firstAttribute="top" secondItem="HQ3-vP-KXw" secondAttribute="top" constant="12" id="KoE-S1-via"/>
-                            <constraint firstItem="HQ3-vP-KXw" firstAttribute="trailing" secondItem="96Y-jW-Qpd" secondAttribute="trailing" constant="15" id="ORZ-uY-Wzn"/>
+                            <constraint firstItem="HQ3-vP-KXw" firstAttribute="trailing" secondItem="tep-fh-O46" secondAttribute="trailing" constant="10" id="O8Z-OX-niF"/>
+                            <constraint firstAttribute="trailing" secondItem="XYm-j1-hhV" secondAttribute="trailing" id="RU4-ng-6tm"/>
                             <constraint firstItem="XYm-j1-hhV" firstAttribute="leading" secondItem="P0c-3s-0HF" secondAttribute="leading" id="RkE-aW-VaP"/>
+                            <constraint firstItem="HQ3-vP-KXw" firstAttribute="bottom" secondItem="tep-fh-O46" secondAttribute="bottom" constant="5" id="W2U-Sq-QHP"/>
                             <constraint firstItem="XYm-j1-hhV" firstAttribute="top" secondItem="HQ3-vP-KXw" secondAttribute="top" constant="56" id="X5T-X8-5te"/>
                             <constraint firstItem="HQ3-vP-KXw" firstAttribute="bottom" secondItem="XYm-j1-hhV" secondAttribute="bottom" constant="48" id="nFP-P1-Rje"/>
-                            <constraint firstItem="HQ3-vP-KXw" firstAttribute="trailing" secondItem="XxG-fm-FUx" secondAttribute="trailing" constant="15" id="oRE-VO-qn6"/>
-                            <constraint firstItem="96Y-jW-Qpd" firstAttribute="bottom" secondItem="HQ3-vP-KXw" secondAttribute="bottom" id="uOp-Ka-DMw"/>
+                            <constraint firstItem="tep-fh-O46" firstAttribute="top" secondItem="XYm-j1-hhV" secondAttribute="bottom" constant="5" id="tbQ-ur-gN9"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="HQ3-vP-KXw"/>
                     </view>
                     <connections>
                         <outlet property="mealsTableView" destination="XYm-j1-hhV" id="wgf-eP-lOo"/>
                         <segue destination="0dP-6d-owt" kind="show" identifier="addingMealsToRecipeBox" id="ZzU-AX-Knj"/>
+                        <segue destination="Jq2-Zg-B3V" kind="show" identifier="addMealSegue" id="WvK-Xy-F8Q"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="a6t-2Z-cL7" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="510" y="1240"/>
+            <point key="canvasLocation" x="509.60000000000002" y="1239.1304347826087"/>
+        </scene>
+        <!--Add Meals View Controller-->
+        <scene sceneID="pAS-Zu-kJi">
+            <objects>
+                <viewController id="Jq2-Zg-B3V" customClass="AddMealsViewController" customModule="PrepMate" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="CTA-xM-JX4">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Meal Name:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jmV-qk-aGe">
+                                <rect key="frame" x="15" y="79" width="91" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="iLf-Nj-Azt">
+                                <rect key="frame" x="15" y="110" width="345" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="nqg-WV-vd5"/>
+                                </constraints>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Select Recipes:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pfr-1g-mgp">
+                                <rect key="frame" x="128" y="160" width="118" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fQy-5d-4jf">
+                                <rect key="frame" x="70" y="627" width="34" height="30"/>
+                                <state key="normal" title="Save"/>
+                                <connections>
+                                    <action selector="saveMeal:" destination="Jq2-Zg-B3V" eventType="touchUpInside" id="d4J-U2-Yls"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Bxw-ko-3Xv">
+                                <rect key="frame" x="257" y="627" width="48" height="30"/>
+                                <state key="normal" title="Cancel"/>
+                                <connections>
+                                    <action selector="cancel:" destination="Jq2-Zg-B3V" eventType="touchUpInside" id="lhy-28-V5I"/>
+                                </connections>
+                            </button>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="fUQ-Mf-g3o">
+                                <rect key="frame" x="0.0" y="186" width="375" height="431"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="mealCell" id="9FC-wC-0wb" customClass="MealsOptionsCustomCell" customModule="PrepMate" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="9FC-wC-0wb" id="7GS-nl-OJD">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Recipe Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="T5g-de-CPI">
+                                                    <rect key="frame" x="15" y="11" width="171" height="21"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4va-lm-hHm">
+                                                    <rect key="frame" x="315" y="-4" width="30" height="51"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="32"/>
+                                                    <state key="normal" title="□"/>
+                                                    <connections>
+                                                        <action selector="selectItem:" destination="9FC-wC-0wb" eventType="touchUpInside" id="Ob5-4T-3Hc"/>
+                                                    </connections>
+                                                </button>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="recipeName" destination="T5g-de-CPI" id="1ci-40-qGq"/>
+                                            <outlet property="selectedItem" destination="4va-lm-hHm" id="c5m-B5-c8m"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="fQy-5d-4jf" firstAttribute="top" secondItem="fUQ-Mf-g3o" secondAttribute="bottom" constant="10" id="1Te-cz-7I1"/>
+                            <constraint firstItem="L06-S2-duK" firstAttribute="bottom" secondItem="Bxw-ko-3Xv" secondAttribute="bottom" constant="10" id="2QF-5u-N0T"/>
+                            <constraint firstItem="fUQ-Mf-g3o" firstAttribute="trailing" secondItem="L06-S2-duK" secondAttribute="trailing" id="3K8-F7-kQ7"/>
+                            <constraint firstItem="iLf-Nj-Azt" firstAttribute="top" secondItem="jmV-qk-aGe" secondAttribute="bottom" constant="10" id="AQh-El-NzU"/>
+                            <constraint firstItem="L06-S2-duK" firstAttribute="trailing" secondItem="pfr-1g-mgp" secondAttribute="trailing" constant="129" id="Ibb-6K-VPb"/>
+                            <constraint firstItem="fQy-5d-4jf" firstAttribute="leading" secondItem="L06-S2-duK" secondAttribute="leading" constant="70" id="JDH-tX-Xs3"/>
+                            <constraint firstItem="pfr-1g-mgp" firstAttribute="leading" secondItem="L06-S2-duK" secondAttribute="leading" constant="128" id="JFB-IP-wce"/>
+                            <constraint firstItem="fUQ-Mf-g3o" firstAttribute="leading" secondItem="L06-S2-duK" secondAttribute="leading" id="L9E-Un-FOc"/>
+                            <constraint firstItem="L06-S2-duK" firstAttribute="bottom" secondItem="fQy-5d-4jf" secondAttribute="bottom" constant="10" id="brZ-w2-a56"/>
+                            <constraint firstItem="jmV-qk-aGe" firstAttribute="top" secondItem="L06-S2-duK" secondAttribute="top" constant="15" id="dJJ-Bx-QXc"/>
+                            <constraint firstItem="pfr-1g-mgp" firstAttribute="top" secondItem="iLf-Nj-Azt" secondAttribute="bottom" constant="20" id="hcz-t6-8wQ"/>
+                            <constraint firstItem="jmV-qk-aGe" firstAttribute="leading" secondItem="L06-S2-duK" secondAttribute="leading" constant="15" id="hqr-Oe-UuF"/>
+                            <constraint firstItem="L06-S2-duK" firstAttribute="trailing" secondItem="Bxw-ko-3Xv" secondAttribute="trailing" constant="70" id="p2g-hb-ejb"/>
+                            <constraint firstItem="fUQ-Mf-g3o" firstAttribute="top" secondItem="pfr-1g-mgp" secondAttribute="bottom" constant="5" id="qTe-gI-7y6"/>
+                            <constraint firstItem="iLf-Nj-Azt" firstAttribute="leading" secondItem="L06-S2-duK" secondAttribute="leading" constant="15" id="vHv-Gf-iKH"/>
+                            <constraint firstItem="L06-S2-duK" firstAttribute="trailing" secondItem="iLf-Nj-Azt" secondAttribute="trailing" constant="15" id="yOu-54-NHj"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="L06-S2-duK"/>
+                    </view>
+                    <connections>
+                        <outlet property="mealNameInput" destination="iLf-Nj-Azt" id="ACt-So-uVE"/>
+                        <outlet property="mealsTableView" destination="fUQ-Mf-g3o" id="xxp-YN-S9D"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="wBC-dV-5r1" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1325.5999999999999" y="1238.2308845577213"/>
         </scene>
         <!--Recipe Nutrition View Controller-->
         <scene sceneID="8PS-hZ-xbG">
@@ -4929,9 +4995,9 @@
         <image name="splash_screen.jpg" width="336" height="598"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="cOe-bu-kQK"/>
+        <segue reference="ZzU-AX-Knj"/>
         <segue reference="Ikg-C1-34D"/>
-        <segue reference="pFF-rh-8ei"/>
+        <segue reference="bXW-K1-T9k"/>
         <segue reference="BjC-YD-RDR"/>
         <segue reference="rrq-j1-upH"/>
     </inferredMetricsTieBreakers>

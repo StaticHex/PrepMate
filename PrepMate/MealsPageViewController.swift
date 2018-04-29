@@ -10,12 +10,18 @@ import UIKit
 
 protocol mealsProtocol : class {
     func removeMeal(cell: MealsCustomTableViewCell)
+    func addFromSelectedMeals(recipe: Recipe)
 }
 
-var meals = [Recipe]()
 
 class MealsPageViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, mealsProtocol {
+    
+    
 
+    
+    var meals = [Recipe]()
+
+    
     @IBOutlet weak var mealsTableView: UITableView!
     
     override func viewDidLoad() {
@@ -33,7 +39,7 @@ class MealsPageViewController: UIViewController, UITableViewDelegate, UITableVie
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        navigationController?.isNavigationBarHidden = true
+        navigationController?.isNavigationBarHidden = false
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -43,10 +49,19 @@ class MealsPageViewController: UIViewController, UITableViewDelegate, UITableVie
         else if segue.identifier == "addingMealsToRecipeBox" {
             let vc = segue.destination as? HistoryFavoriteSearchResultsViewController
         }
+        if segue.identifier == "addMealSegue" {
+            let vc = segue.destination as? AddMealsViewController
+            vc?.mProtocol = self
+        }
+        
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -58,11 +73,17 @@ class MealsPageViewController: UIViewController, UITableViewDelegate, UITableVie
         let cell:MealsCustomTableViewCell = tableView.dequeueReusableCell(withIdentifier: "mealsTableCell", for: indexPath as IndexPath) as! MealsCustomTableViewCell
         
         cell.mProtocol = self
-        
         let row = indexPath.row
         cell.mealName.text = meals[row].getName()
         
         return cell
+    }
+    
+    func addFromSelectedMeals(recipe: Recipe) {
+        meals.append(recipe)
+        self.mealsTableView.beginUpdates()
+        self.mealsTableView.insertRows(at: [IndexPath.init(row: meals.count - 1, section: 0)], with: .automatic)
+        self.mealsTableView.endUpdates()
     }
     
     func removeMeal(cell: MealsCustomTableViewCell) {
@@ -70,25 +91,13 @@ class MealsPageViewController: UIViewController, UITableViewDelegate, UITableVie
         meals.remove(at: indexPath!.row)
         self.mealsTableView.deleteRows(at: [indexPath!], with: .fade)
     }
-
-    @IBAction func addMeal(_ sender: Any) {
-        
-        // UNNECESSARY?
-        self.performSegue(withIdentifier: "addingMealsToRecipeBox", sender: sender)
-    }
     
-    @IBAction func addMealOption(_ sender: Any) {
-        /*let meal = Recipe(id: 1, name: "recipeAdded", photo: Photo(), category: 1, servings: 1, prepTime: "00:00:00", cookTime: "00:00:00", calories: 1, unsatFat: 1, satFat: 1, cholesterol: 1, sodium: 1, potassium: 1, carbs: 1, fiber: 1, sugar: 1, comments: [Comment](), ingredients: [(id:Int,ing:Ingredient, amount:Float)](), directions: [(id: -1, str: "Dummy")], rating: 1, flags: 1, vitamin: [Vitamin]())
-        
-                meals.append(meal)
-                self.mealsTableView.beginUpdates()
-                self.mealsTableView.insertRows(at: [IndexPath.init(row: 0, section: 0)], with: .automatic)
-                self.mealsTableView.endUpdates()
-//        self.performSegue(withIdentifier: "addingMealsToRecipeBox", sender: sender)*/
-    }
     
     @IBAction func addMealToShoppingList(_ sender: Any) {
         
         // Go through rows, which are selected, then add to shopping list (first checking if we need to make new row in shopping list or just adding an amount)
+    }
+    @IBAction func addMeal(_ sender: Any) {
+        self.performSegue(withIdentifier: "addMealSegue", sender: sender)
     }
 }

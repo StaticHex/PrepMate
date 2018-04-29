@@ -137,6 +137,7 @@
 		A1A0758620628E8300C65360 /* RecipeOverviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1A0758520628E8300C65360 /* RecipeOverviewViewController.swift */; };
 		A1AA0045206195AD00FCDEC4 /* NewListItemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1AA0044206195AD00FCDEC4 /* NewListItemViewController.swift */; };
 		A1AA004720619BBF00FCDEC4 /* CustomUnitPopoverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1AA004620619BBF00FCDEC4 /* CustomUnitPopoverViewController.swift */; };
+		A1C6385320952D120087B356 /* AddMealsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1C6385220952D120087B356 /* AddMealsViewController.swift */; };
 		A1E370272069523100213631 /* CustomUnitsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1E370262069523100213631 /* CustomUnitsViewController.swift */; };
 		A1E3702920695A8A00213631 /* ShoppingListCustomTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1E3702820695A8A00213631 /* ShoppingListCustomTableViewCell.swift */; };
 		A1E3702B20695D5E00213631 /* PantryItemCustomTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1E3702A20695D5E00213631 /* PantryItemCustomTableViewCell.swift */; };
@@ -294,6 +295,7 @@
 		A1A0758520628E8300C65360 /* RecipeOverviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeOverviewViewController.swift; sourceTree = "<group>"; };
 		A1AA0044206195AD00FCDEC4 /* NewListItemViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewListItemViewController.swift; sourceTree = "<group>"; };
 		A1AA004620619BBF00FCDEC4 /* CustomUnitPopoverViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomUnitPopoverViewController.swift; sourceTree = "<group>"; };
+		A1C6385220952D120087B356 /* AddMealsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AddMealsViewController.swift; path = PrepMate/AddMealsViewController.swift; sourceTree = "<group>"; };
 		A1E370262069523100213631 /* CustomUnitsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomUnitsViewController.swift; sourceTree = "<group>"; };
 		A1E3702820695A8A00213631 /* ShoppingListCustomTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoppingListCustomTableViewCell.swift; sourceTree = "<group>"; };
 		A1E3702A20695D5E00213631 /* PantryItemCustomTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PantryItemCustomTableViewCell.swift; sourceTree = "<group>"; };
@@ -418,6 +420,7 @@
 		70A24766205C3CC700A2AC47 = {
 			isa = PBXGroup;
 			children = (
+				A1C6385220952D120087B356 /* AddMealsViewController.swift */,
 				A1F5A0C220758F8200487135 /* AddIngredientViewController.swift */,
 				A1E3702820695A8A00213631 /* ShoppingListCustomTableViewCell.swift */,
 				A1E3702A20695D5E00213631 /* PantryItemCustomTableViewCell.swift */,
@@ -764,6 +767,7 @@
 				A24E8AD62062AA8C005C8E2B /* RecipeCommentPageViewController.swift in Sources */,
 				70D91E9C2073BDD5001B658E /* ColorPickerViewController.swift in Sources */,
 				A2D3BD8420633803005BD508 /* CommentFilterPopoverViewController.swift in Sources */,
+				A1C6385320952D120087B356 /* AddMealsViewController.swift in Sources */,
 				A11A5736206168CD00A7EF31 /* SearchFilterPopoverViewController.swift in Sources */,
 				70ED7517207159A20012CB35 /* ResetPwordViewController.swift in Sources */,
 			);
