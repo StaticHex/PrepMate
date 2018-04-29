@@ -101,15 +101,15 @@ class AddRecipeSecondPageViewController: UIViewController, UIPopoverPresentation
     
     /// Load any available recipe changes
     func loadRecipe() {
-        self.caloriesField.placeholder = "\(self.recipeToSave.calories)"
-        self.fatField.placeholder = "\(self.recipeToSave.satFat)"
-        self.unsatField.placeholder = "\(self.recipeToSave.unsatFat)"
-        self.cholesterolField.placeholder = "\(self.recipeToSave.cholesterol)"
-        self.sodiumField.placeholder = "\(self.recipeToSave.sodium)"
-        self.potassiumField.placeholder = "\(self.recipeToSave.potassium)"
-        self.sugarField.placeholder = "\(self.recipeToSave.sugar)"
-        self.carbField.placeholder = "\(self.recipeToSave.carbs)"
-        self.fiberField.placeholder = "\(self.recipeToSave.fiber)"
+        self.caloriesField.text = "\(self.recipeToSave.calories)"
+        self.fatField.text = "\(self.recipeToSave.satFat)"
+        self.unsatField.text = "\(self.recipeToSave.unsatFat)"
+        self.cholesterolField.text = "\(self.recipeToSave.cholesterol)"
+        self.sodiumField.text = "\(self.recipeToSave.sodium)"
+        self.potassiumField.text = "\(self.recipeToSave.potassium)"
+        self.sugarField.text = "\(self.recipeToSave.sugar)"
+        self.carbField.text = "\(self.recipeToSave.carbs)"
+        self.fiberField.text = "\(self.recipeToSave.fiber)"
         self.vitamins = self.recipeToSave.vitamins
     }
     

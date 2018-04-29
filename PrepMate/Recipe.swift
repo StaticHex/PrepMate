@@ -721,6 +721,8 @@ class Recipe : CustomStringConvertible {
         newRecord.carbs = self.carbs
         newRecord.fiber = self.fiber
         newRecord.sugar = self.sugar
+        newRecord.directions = self.directions
+        newRecord.ingredients = self.ingredients
         return newRecord
     }
     

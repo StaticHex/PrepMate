@@ -323,6 +323,8 @@ class AddIngredientViewController: UIViewController, UIPickerViewDelegate, UIPic
             ing.name = itemTextView.text!
             ing.unit = thisRow
             ing.label = txtLabel.text!
+            print(ing.label)
+            print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
             if(!newIngredient.item.addIngredient(newIngredient: ing)) {
                 newIngredient.amount = amount
             }

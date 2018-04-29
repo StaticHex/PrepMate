@@ -65,8 +65,25 @@ class RecipeOverviewViewController: UIViewController {
         var result = String()
         for i in 0..<self.recipe.getNumIngredients(){
             let ingredient = self.recipe.getRecipeIngredient(idx: i)
+            print(ingredient.item)
             let tmp = ingredient.item.getName().padding(toLength: maxWidth, withPad: " ", startingAt:0)
-            result = result + String(format: "%@ %1.1f %@\n", tmp, ingredient.amount, ingredient.item.getLabel())
+            let defaults = UserDefaults.standard
+            if defaults.integer(forKey: "units") == 0 {
+                if ingredient.item.getLabel() != "" {
+                    result = result + String(format: "%@ %1.1f %@\n", tmp, ingredient.amount, ingredient.item.getLabel())
+                }
+                else {
+                    result = result + String(format: "%@ %1.1f %@\n", tmp, ingredient.amount, unitList[ingredient.item.getUnit()].std)
+                }
+            }
+            else {
+                if ingredient.item.getLabel() != "" {
+                    result = result + String(format: "%@ %1.1f %@\n", tmp, ingredient.amount, ingredient.item.getLabel())
+                }
+                else {
+                    result = result + String(format: "%@ %1.1f %@\n", tmp, ingredient.amount, unitList[ingredient.item.getUnit()].metric)
+                }
+            }
         }
         return result
     }

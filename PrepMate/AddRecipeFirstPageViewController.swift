@@ -114,9 +114,12 @@ class AddRecipeFirstPageViewController: UIViewController, UITableViewDelegate, U
         cookTimePicker.tag = 3
         if recipeToSave.name != "" {
             recipeNameField.text = recipeToSave.name.capitalized
-            // Not working
             ingList = recipeToSave.ingredients
+            
+            print(recipeToSave.directions)
+            
             for item in recipeToSave.directions {
+                print(item.description)
                 directionList.append(item.description)
             }
             self.ingTableView.reloadData()
@@ -208,10 +211,20 @@ class AddRecipeFirstPageViewController: UIViewController, UITableViewDelegate, U
             
             if defaults.integer(forKey: "units") == 0 {
                 let valToDisplay = metricToStd(unit: ingList[row].item.getUnit(), amount: ingList[row].amount)
-                cell.amountLabel.text = String(valToDisplay) + " " + unitList[idx].std
+                if ingList[row].item.getLabel() != "" {
+                    cell.amountLabel.text = String(format: "%1.1f %@\n", valToDisplay, ingList[row].item.getLabel())
+                }
+                else {
+                    cell.amountLabel.text = String(format: "%1.1f %@\n", valToDisplay, unitList[ingList[row].item.getUnit()].std)
+                }
             }
             else {
-                cell.amountLabel.text = String(ingList[row].amount) + " " + unitList[idx].metric
+                if ingList[row].item.getLabel() != "" {
+                    cell.amountLabel.text = String(format: "%1.1f %@\n", ingList[row].amount, ingList[row].item.getLabel())
+                }
+                else {
+                    cell.amountLabel.text = String(format: "%1.1f %@\n", ingList[row].amount, unitList[ingList[row].item.getUnit()].metric)
+                }
             }
 
             cell.ingLabel.text = ingList[row].item.getName()
