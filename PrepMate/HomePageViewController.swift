@@ -51,6 +51,7 @@ class HomePageViewController: UIViewController, UITableViewDelegate, UITableView
     @IBOutlet weak var popularCollectionView: UICollectionView!
     @IBOutlet weak var recommendedCollectionView: UICollectionView!
     @IBOutlet weak var tvSearchAutofill: UITableView!
+    @IBOutlet weak var txtSearch: UITextField!
     
     @IBOutlet weak var popularLabel: UILabel!
     @IBOutlet weak var recommendedLabel: UILabel!
@@ -301,6 +302,7 @@ class HomePageViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     @IBAction func onSearchSubmit(_ sender: Any) {
+        searchString = "name LIKE '%\(txtSearch.text!)%'"
     }
     
     

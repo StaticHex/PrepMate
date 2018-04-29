@@ -3625,6 +3625,7 @@
                         <outlet property="recommendedCollectionView" destination="Mkp-1C-kLF" id="cS8-3A-giu"/>
                         <outlet property="recommendedLabel" destination="4Sj-fv-8tG" id="CpK-uR-0HQ"/>
                         <outlet property="tvSearchAutofill" destination="qQA-aJ-r61" id="Z57-Vc-qc7"/>
+                        <outlet property="txtSearch" destination="VlJ-cp-yZa" id="cDr-eK-zcj"/>
                         <segue destination="anD-Fy-frC" kind="show" identifier="homeToSettings" id="ipy-Qs-3xM"/>
                         <segue destination="Lza-Wq-fMP" kind="show" identifier="homeToProfile" id="rrq-j1-upH"/>
                         <segue destination="TOo-LJ-sTB" kind="show" identifier="homeToLegal" id="mP4-0G-pgT"/>
