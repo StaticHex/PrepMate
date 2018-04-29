@@ -4945,7 +4945,7 @@
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Date" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vVf-HL-DKu">
-                                <rect key="frame" x="120" y="80" width="160" height="25"/>
+                                <rect key="frame" x="61" y="80" width="160" height="25"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="160" id="Kfo-nH-J4R"/>
                                     <constraint firstAttribute="height" constant="25" id="yUI-vx-QN2"/>
@@ -4954,26 +4954,22 @@
                                 <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Author" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="17s-xK-BM2">
-                                <rect key="frame" x="5" y="80" width="105" height="20.5"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="20.5" id="Z6R-1m-WU5"/>
-                                    <constraint firstAttribute="width" constant="105" id="haG-p1-opg"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.078200347569999995" green="0.6558961271" blue="1" alpha="0.84999999999999998" colorSpace="custom" customColorSpace="displayP3"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="knB-u1-QeQ">
+                                <rect key="frame" x="5" y="77" width="46" height="30"/>
+                                <state key="normal" title="Button"/>
+                                <connections>
+                                    <action selector="onAuthorPressed:" destination="t24-by-706" eventType="touchUpInside" id="69M-bF-now"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="vVf-HL-DKu" firstAttribute="leading" secondItem="17s-xK-BM2" secondAttribute="trailing" constant="10" id="1S8-0r-gXi"/>
+                            <constraint firstItem="knB-u1-QeQ" firstAttribute="leading" secondItem="EJM-PV-pcZ" secondAttribute="leading" constant="5" id="6pl-xl-k5a"/>
                             <constraint firstItem="vVf-HL-DKu" firstAttribute="top" secondItem="DaW-CJ-8cV" secondAttribute="bottom" constant="10" id="Ilj-uY-DIm"/>
                             <constraint firstItem="vVf-HL-DKu" firstAttribute="top" secondItem="DaW-CJ-8cV" secondAttribute="bottom" constant="10" id="Jd1-eN-Z8w"/>
                             <constraint firstItem="EJM-PV-pcZ" firstAttribute="bottom" secondItem="pin-Tv-qXJ" secondAttribute="bottom" constant="5" id="K9F-o9-BsM"/>
-                            <constraint firstItem="17s-xK-BM2" firstAttribute="top" secondItem="DaW-CJ-8cV" secondAttribute="bottom" constant="10" id="L6I-S5-eWW"/>
-                            <constraint firstItem="17s-xK-BM2" firstAttribute="leading" secondItem="EJM-PV-pcZ" secondAttribute="leading" constant="5" id="MP8-Zf-ehf"/>
-                            <constraint firstItem="vVf-HL-DKu" firstAttribute="leading" secondItem="17s-xK-BM2" secondAttribute="trailing" constant="10" id="PXZ-zY-BbL"/>
+                            <constraint firstItem="vVf-HL-DKu" firstAttribute="leading" secondItem="knB-u1-QeQ" secondAttribute="trailing" constant="10" id="biO-Au-Kqr"/>
+                            <constraint firstItem="knB-u1-QeQ" firstAttribute="top" secondItem="DaW-CJ-8cV" secondAttribute="bottom" constant="7" id="gDm-Rw-lfD"/>
                             <constraint firstItem="pin-Tv-qXJ" firstAttribute="leading" secondItem="EJM-PV-pcZ" secondAttribute="leading" constant="5" id="lcR-ZX-mfd"/>
                             <constraint firstItem="EJM-PV-pcZ" firstAttribute="trailing" secondItem="pin-Tv-qXJ" secondAttribute="trailing" constant="5" id="oNf-e7-Sz9"/>
                             <constraint firstItem="DaW-CJ-8cV" firstAttribute="leading" secondItem="EJM-PV-pcZ" secondAttribute="leading" constant="5" id="pK1-a7-9sA"/>
@@ -4983,7 +4979,7 @@
                         <viewLayoutGuide key="safeArea" id="EJM-PV-pcZ"/>
                     </view>
                     <connections>
-                        <outlet property="authorLabel" destination="17s-xK-BM2" id="amP-QF-aiv"/>
+                        <outlet property="authorLabel" destination="knB-u1-QeQ" id="5mw-pQ-ukH"/>
                         <outlet property="commentBody" destination="pin-Tv-qXJ" id="744-sl-beh"/>
                         <outlet property="dateLabel" destination="vVf-HL-DKu" id="v8f-v7-6CD"/>
                         <outlet property="ratingsLabel" destination="DaW-CJ-8cV" id="4Jq-FT-BRJ"/>

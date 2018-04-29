@@ -12,7 +12,7 @@ class CommentDetailsPageViewController: UIViewController {
     
     // Outlets
     @IBOutlet weak var ratingsLabel: UIImageView!
-    @IBOutlet weak var authorLabel: UILabel!
+    @IBOutlet weak var authorLabel: UIButton!
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var commentBody: UITextView!
     
@@ -21,7 +21,9 @@ class CommentDetailsPageViewController: UIViewController {
         self.loadPage()
         // Do any additional setup after loading the view.
     }
-
+    @IBAction func onAuthorPressed(_ sender: Any) {
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -30,9 +32,9 @@ class CommentDetailsPageViewController: UIViewController {
         self.ratingsLabel.image = RatingImages[self.comment.rating]
         let creator = User()
         if(!creator.getUser(uid: comment.userId)) {
-            authorLabel.text! = creator.getUname()
+            authorLabel.setTitle(creator.getUname(), for: .normal)
         } else {
-            authorLabel.text! = "I AM ERROR"
+            authorLabel.setTitle("I AM ERROR", for: .normal)
         }
         dateLabel.text! = self.comment.date
         commentBody.text! = self.comment.description
