@@ -2083,12 +2083,6 @@ class Recipe : CustomStringConvertible {
                     self.eMsg = parseJSON["msg"] as! String
                     vError = (parseJSON["error"] as! Bool)
                     if(!vError) {
-                        if let strRating = parseJSON["rank"] as? Int {
-                            self.rating = strRating
-                        } else {
-                            vError = true
-                        }
-                        
                         var count = 0
                         while let record = parseJSON[String(count)] as? NSString {
                             if vError {
