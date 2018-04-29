@@ -50,6 +50,7 @@ class HomePageViewController: UIViewController, UITableViewDelegate, UITableView
     @IBOutlet weak var categoryTableView: UITableView!
     @IBOutlet weak var popularCollectionView: UICollectionView!
     @IBOutlet weak var recommendedCollectionView: UICollectionView!
+    @IBOutlet weak var tvSearchAutofill: UITableView!
     
     @IBOutlet weak var popularLabel: UILabel!
     @IBOutlet weak var recommendedLabel: UILabel!
