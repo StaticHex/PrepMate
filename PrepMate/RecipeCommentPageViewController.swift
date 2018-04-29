@@ -57,7 +57,6 @@ class RecipeCommentPageViewController: UIViewController, UITableViewDelegate, UI
         performSegue(withIdentifier: "advancedPopoverSegue", sender: sender)
     }
     func sortDate(enabledStars: [Bool], sortOption: Int){
-        print(self.recipe)
         self.enabledStars = enabledStars
         self.sortOption = sortOption
         var str = "AND rating IN (\(findEnabledStars(enabled: self.enabledStars)))"

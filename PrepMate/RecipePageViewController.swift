@@ -12,10 +12,11 @@ class RecipePageViewController: UIViewController {
     var recipe = Recipe()
     @IBOutlet weak var RecipeOverviewView: UIView!
     @IBOutlet weak var RecipeNutritionView: UIView!
-    
     @IBOutlet weak var editButton: UIBarButtonItem!
     @IBOutlet weak var RecipeCommentView: UIView!
     @IBOutlet weak var navBar: UINavigationItem!
+    var isUser: Bool = false
+    //var tintColor = UIColor.black
     @IBAction func onSegmentPressed(_ sender: UISegmentedControl) {
         if(sender.selectedSegmentIndex == 0){
             // Overview segment selected
@@ -23,6 +24,8 @@ class RecipePageViewController: UIViewController {
                 self.RecipeOverviewView.alpha = 1
                 self.RecipeNutritionView.alpha = 0
                 self.RecipeCommentView.alpha = 0
+                //self.navBar.rightBarButtonItem?.tintColor = self.tintColor
+                self.navBar.rightBarButtonItem?.isEnabled = self.isUser
             })
         } else if(sender.selectedSegmentIndex == 1) {
             // Nutrition info segment selected
@@ -30,6 +33,9 @@ class RecipePageViewController: UIViewController {
                 self.RecipeOverviewView.alpha = 0
                 self.RecipeNutritionView.alpha = 1
                 self.RecipeCommentView.alpha = 0
+               // self.navBar.rightBarButtonItem?.tintColor = self.tintColor
+                self.navBar.rightBarButtonItem?.isEnabled = self.isUser
+                
             })
         } else {
             // Comment segment selected
@@ -37,6 +43,8 @@ class RecipePageViewController: UIViewController {
                 self.RecipeOverviewView.alpha = 0
                 self.RecipeNutritionView.alpha = 0
                 self.RecipeCommentView.alpha = 1
+                self.navBar.rightBarButtonItem?.tintColor = UIColor.clear
+                self.navBar.rightBarButtonItem?.isEnabled = false
             })
         }
     }
@@ -48,8 +56,8 @@ class RecipePageViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         navigationController?.isNavigationBarHidden = false
         if(currentUser.getId() == self.recipe.getCreatorId()){
-            print("SAME USER")
             self.editButton.isEnabled = true
+            isUser = true
         }else{
             self.editButton.isEnabled = false
         }
