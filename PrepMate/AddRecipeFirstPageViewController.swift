@@ -78,6 +78,7 @@ class AddRecipeFirstPageViewController: UIViewController, UITableViewDelegate, U
     var cookTimeHour: String = "00"
     var cookTimeMin: String = "00"
     
+    var fromEdit = false
     
     weak var secondDelegate: secondPageProtocol?
     
@@ -115,9 +116,8 @@ class AddRecipeFirstPageViewController: UIViewController, UITableViewDelegate, U
         if recipeToSave.name != "" {
             recipeNameField.text = recipeToSave.name.capitalized
             ingList = recipeToSave.ingredients
-            
-            print(recipeToSave.directions)
-            
+            print("AA@@#@#@#@#@#@#@#@#@#")
+            print(ingList)
             for item in recipeToSave.directions {
                 print(item.description)
                 directionList.append(item.description)
@@ -212,10 +212,20 @@ class AddRecipeFirstPageViewController: UIViewController, UITableViewDelegate, U
             if defaults.integer(forKey: "units") == 0 {
                 let valToDisplay = metricToStd(unit: ingList[row].item.getUnit(), amount: ingList[row].amount)
                 if ingList[row].item.getLabel() != "" {
-                    cell.amountLabel.text = String(format: "%1.1f %@\n", valToDisplay, ingList[row].item.getLabel())
+                    if fromEdit {
+                        cell.amountLabel.text = String(format: "%1.1f %@\n", ingList[row].amount, ingList[row].item.getLabel())
+                    }
+                    else {
+                        cell.amountLabel.text = String(format: "%1.1f %@\n", valToDisplay, ingList[row].item.getLabel())
+                    }
                 }
                 else {
-                    cell.amountLabel.text = String(format: "%1.1f %@\n", valToDisplay, unitList[ingList[row].item.getUnit()].std)
+                    if fromEdit {
+                        cell.amountLabel.text = String(format: "%1.1f %@\n", ingList[row].amount, unitList[ingList[row].item.getUnit()].std)
+                    }
+                    else {
+                        cell.amountLabel.text = String(format: "%1.1f %@\n", valToDisplay, unitList[ingList[row].item.getUnit()].std)
+                    }
                 }
             }
             else {
