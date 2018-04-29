@@ -183,8 +183,8 @@ class HomePageViewController: UIViewController, UITableViewDelegate, UITableView
         }
         if segue.identifier == "recommendedToRecipeSegue" {
             let vc = segue.destination as? RecipePageViewController
-            let cell = sender as! PopularCustomViewCell
-            let indexPath = popularCollectionView.indexPath(for: cell)
+            let cell = sender as! RecommendedCustomViewCell
+            let indexPath = recommendedCollectionView.indexPath(for: cell)
             let selected = recipeList[(indexPath?.row)!]
             vc?.recipe = selected
         }

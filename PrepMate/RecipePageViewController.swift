@@ -24,7 +24,16 @@ class RecipePageViewController: UIViewController {
                 self.RecipeOverviewView.alpha = 1
                 self.RecipeNutritionView.alpha = 0
                 self.RecipeCommentView.alpha = 0
-                //self.navBar.rightBarButtonItem?.tintColor = self.tintColor
+                let defaults = UserDefaults.standard
+                if defaults.object(forKey: "navBarTextColor") != nil {
+                    let decoded  = defaults.object(forKey: "navBarTextColor") as! Data
+                    let decodedColor = NSKeyedUnarchiver.unarchiveObject(with: decoded) as! UIColor
+                    self.navBar.rightBarButtonItem?.tintColor = decodedColor
+                }
+                else {
+                    self.navBar.rightBarButtonItem?.tintColor = UIColor.blue
+                }
+
                 self.navBar.rightBarButtonItem?.isEnabled = self.isUser
             })
         } else if(sender.selectedSegmentIndex == 1) {
@@ -33,7 +42,15 @@ class RecipePageViewController: UIViewController {
                 self.RecipeOverviewView.alpha = 0
                 self.RecipeNutritionView.alpha = 1
                 self.RecipeCommentView.alpha = 0
-               // self.navBar.rightBarButtonItem?.tintColor = self.tintColor
+                let defaults = UserDefaults.standard
+                if defaults.object(forKey: "navBarTextColor") != nil {
+                    let decoded  = defaults.object(forKey: "navBarTextColor") as! Data
+                    let decodedColor = NSKeyedUnarchiver.unarchiveObject(with: decoded) as! UIColor
+                    self.navBar.rightBarButtonItem?.tintColor = decodedColor
+                }
+                else {
+                    self.navBar.rightBarButtonItem?.tintColor = UIColor.blue
+                }
                 self.navBar.rightBarButtonItem?.isEnabled = self.isUser
                 
             })
@@ -51,7 +68,7 @@ class RecipePageViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        navBar.title = self.recipe.getName()
+        navBar.title = self.recipe.getName().capitalized
     }
     override func viewWillAppear(_ animated: Bool) {
         navigationController?.isNavigationBarHidden = false
@@ -94,6 +111,10 @@ class RecipePageViewController: UIViewController {
             let destination = segue.destination as? RecipeCommentPageViewController
         {
             destination.recipe = self.recipe
+        }
+        else if segue.identifier == "editRecipeToAddRecipe" {
+            let vc = segue.destination as? AddRecipeFirstPageViewController
+            vc?.recipeToSave = recipe.createRecord()
         }
     }
     

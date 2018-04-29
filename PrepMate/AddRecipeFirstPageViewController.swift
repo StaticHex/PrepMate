@@ -112,10 +112,29 @@ class AddRecipeFirstPageViewController: UIViewController, UITableViewDelegate, U
         categoryPicker.tag = 1
         prepTimePicker.tag = 2
         cookTimePicker.tag = 3
-        servingsSizeTextField.text = String(servingSizeOptions[0])
-        categoryPickerTextField.text = categoryPickerOptions[0]
-        prepTimeField.text = timeOptions[0][0] + " hr(s)" +  timeOptions[1][0] + timeOptions[2][0] + " min(s)"
-        cookTimeField.text = timeOptions[0][0] + " hr(s)" +  timeOptions[1][0] + timeOptions[2][0] + " min(s)"
+        if recipeToSave.name != "" {
+            recipeNameField.text = recipeToSave.name.capitalized
+            // Not working
+            ingList = recipeToSave.ingredients
+            for item in recipeToSave.directions {
+                directionList.append(item.description)
+            }
+            self.ingTableView.reloadData()
+            self.directionTableview.reloadData()
+            servingsSizeTextField.text = recipeToSave.servings
+            categoryPickerTextField.text = categoryList[recipeToSave.category]
+            var cookTime = recipeToSave.cookTime.components(separatedBy: ":")
+            var prepTime = recipeToSave.prepTime.components(separatedBy: ":")
+            prepTimeField.text = prepTime[0] + " hr(s)" +  timeOptions[1][0] + prepTime[1] + " min(s)"
+            cookTimeField.text = cookTime[0] + " hr(s)" +  timeOptions[1][0] + cookTime[1] + " min(s)"
+            // Do flags
+        }
+        else {
+            servingsSizeTextField.text = String(servingSizeOptions[0])
+            categoryPickerTextField.text = categoryPickerOptions[0]
+            prepTimeField.text = timeOptions[0][0] + " hr(s)" +  timeOptions[1][0] + timeOptions[2][0] + " min(s)"
+            cookTimeField.text = timeOptions[0][0] + " hr(s)" +  timeOptions[1][0] + timeOptions[2][0] + " min(s)"
+        }
         
     }
     

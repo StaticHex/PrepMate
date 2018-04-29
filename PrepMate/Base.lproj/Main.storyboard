@@ -3196,7 +3196,7 @@
                                                 </connections>
                                             </button>
                                         </barButtonItem>
-                                        <textField key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter Search Here" textAlignment="natural" minimumFontSize="17" id="VlJ-cp-yZa">
+                                        <textField key="titleView" opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter Search Here" textAlignment="natural" minimumFontSize="17" id="VlJ-cp-yZa">
                                             <rect key="frame" x="126" y="7" width="139" height="30"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <nil key="textColor"/>
@@ -3312,6 +3312,7 @@
                                         <connections>
                                             <outlet property="foodImage" destination="kft-lk-i1e" id="Sp3-rC-Lj1"/>
                                             <outlet property="foodTitle" destination="ok2-RG-9No" id="dbA-UV-CZq"/>
+                                            <segue destination="bmi-Ww-24u" kind="show" identifier="recommendedToRecipeSegue" id="BKp-FF-ZUX"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
@@ -3580,7 +3581,6 @@
                         <segue destination="lxe-Ys-8Vq" kind="show" identifier="homeToMeals" id="B1J-Fc-7Gs"/>
                         <segue destination="y0K-sX-piS" kind="show" identifier="homeToAddRecipe" id="zcz-VA-ErF"/>
                         <segue destination="0dP-6d-owt" kind="show" identifier="homeToCuisineSegue" id="cOe-bu-kQK"/>
-                        <segue destination="bmi-Ww-24u" kind="show" identifier="recommendedToRecipeSegue" id="kJj-cr-fsd"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6Uy-Di-Ue0" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -4305,6 +4305,7 @@
                         <barButtonItem key="rightBarButtonItem" title="Edit" id="gBy-lL-h9Q">
                             <connections>
                                 <action selector="onEditPressed:" destination="bmi-Ww-24u" id="uUc-Xx-hG7"/>
+                                <segue destination="y0K-sX-piS" kind="show" identifier="editRecipeToAddRecipe" id="a1s-3R-Jjp"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -5015,10 +5016,11 @@
         <image name="splash_screen.jpg" width="336" height="598"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="ZzU-AX-Knj"/>
-        <segue reference="Ikg-C1-34D"/>
+        <segue reference="cOe-bu-kQK"/>
+        <segue reference="BKp-FF-ZUX"/>
         <segue reference="bXW-K1-T9k"/>
         <segue reference="BjC-YD-RDR"/>
         <segue reference="rrq-j1-upH"/>
+        <segue reference="a1s-3R-Jjp"/>
     </inferredMetricsTieBreakers>
 </document>
