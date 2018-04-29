@@ -10,7 +10,7 @@ import UIKit
 protocol AddIngredientProtocol : class {
     func addReturnedIngredient(ingredient : RecipeIngredient)
 }
-class AddIngredientViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITableViewDelegate, UITableViewDataSource {
+class AddIngredientViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate {
 
     // Outlets
     @IBOutlet weak var itemTextView: UITextField!

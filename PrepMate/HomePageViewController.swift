@@ -27,7 +27,7 @@ class HomeCategoryTableViewCell: UITableViewCell {
     @IBOutlet weak var cuisineImage: UIImageView!
 }
 
-class HomePageViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UICollectionViewDataSource, UICollectionViewDelegate, UIPopoverPresentationControllerDelegate, settingsProtocol, ProfileProtocol, SearchFilterProtocol {
+class HomePageViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UICollectionViewDataSource, UICollectionViewDelegate, UITextFieldDelegate, UIPopoverPresentationControllerDelegate, settingsProtocol, ProfileProtocol, SearchFilterProtocol {
     
     // UI Outlets
     @IBOutlet weak var menu: UIView!
@@ -64,6 +64,11 @@ class HomePageViewController: UIViewController, UITableViewDelegate, UITableView
     // This is a special recipe collection for passing between screens
     // used when moving to recipe box or search results
     var passedRecipes = [Recipe]()
+    var selectedRecipe = Recipe()
+    
+    // Collection for the recipe autofill
+    var autofillRecipes = [(id : Int, name: String, category: String)]()
+    var eMsg = "" // error message for autofill function
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -74,10 +79,12 @@ class HomePageViewController: UIViewController, UITableViewDelegate, UITableView
         popularCollectionView.delegate = self
         recommendedCollectionView.dataSource = self
         recommendedCollectionView.delegate = self
+        tvSearchAutofill.delegate = self
+        tvSearchAutofill.dataSource = self
         popularCollectionView.tag = 1
         recommendedCollectionView.tag = 2
         recipeList = getRecipes(query: "id>=1 ORDER BY rating ASC LIMIT 10")
-        
+        txtSearch.addTarget(self, action: #selector(nameDidChange(_:)), for: .editingChanged)
         // Do any additional setup after loading the view.
     }
     
@@ -121,12 +128,20 @@ class HomePageViewController: UIViewController, UITableViewDelegate, UITableView
             btnTerms.setTitleColor(decodedColor, for: .normal)
             btnCredits.setTitleColor(decodedColor, for: .normal)
         }
-
+        txtSearch.text = ""
+        searchString = ""
+        searchFilter = ""
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        tvSearchAutofill.isHidden = true
+        textField.resignFirstResponder()
+        return false
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -182,6 +197,10 @@ class HomePageViewController: UIViewController, UITableViewDelegate, UITableView
             let vc = segue.destination as? HistoryFavoriteSearchResultsViewController
             vc?.row = self.thisRow
         }
+        if segue.identifier == "homeToRecipeOverview" {
+            let vc = segue.destination as? RecipePageViewController
+            vc?.recipe = selectedRecipe
+        }
         if segue.identifier == "popularToRecipeSegue" {
             let vc = segue.destination as? RecipePageViewController
             let cell = sender as! PopularCustomViewCell
@@ -223,20 +242,29 @@ class HomePageViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return categoryList.count
+        if(tableView == tvSearchAutofill) {
+            return autofillRecipes.count
+        } else {
+            return categoryList.count
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        let cell:HomeCategoryTableViewCell = tableView.dequeueReusableCell(withIdentifier: "categoryTableCell", for: indexPath as IndexPath) as! HomeCategoryTableViewCell
-        
-        
-        let row = indexPath.row
-        cell.cuisineImage.image = categoryImages[row]
-        cell.categoryName.text = categoryList[row]
-        return cell
-        
-        
+        if(tableView == tvSearchAutofill) {
+            let row = indexPath.row
+            let cell = tableView.dequeueReusableCell(withIdentifier: "RecipeAutofillCell", for: indexPath)
+            cell.textLabel?.text = autofillRecipes[row].name
+            cell.detailTextLabel?.text = autofillRecipes[row].category
+            return cell
+        } else {
+            let cell:HomeCategoryTableViewCell = tableView.dequeueReusableCell(withIdentifier: "categoryTableCell", for: indexPath as IndexPath) as! HomeCategoryTableViewCell
+            
+            
+            let row = indexPath.row
+            cell.cuisineImage.image = categoryImages[row]
+            cell.categoryName.text = categoryList[row]
+            return cell
+        }
     }
     
     func setSearchFilter(query: String) {
@@ -302,19 +330,140 @@ class HomePageViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     @IBAction func onSearchSubmit(_ sender: Any) {
+        var query = ""
         searchString = "name LIKE '%\(txtSearch.text!)%'"
+        if(searchString != "") {
+            if(searchFilter != "") {
+                query = "\(searchString) AND \(searchFilter)"
+            } else {
+                query = searchString
+            }
+        } else if(searchFilter != "") {
+            query = searchFilter
+        }
+        if(query != "") {
+            passedRecipes = getRecipes(query: query)
+            performSegue(withIdentifier: "homeToRecipeList", sender: sender)
+        }
     }
     
     
-    func tableView(_ tableView: UITableView,
-                   didSelectRowAt indexPath: IndexPath) {
-        self.thisRow = indexPath.row
-        performSegue(withIdentifier: "homeToCuisineSegue", sender: self)
-        tableView.deselectRow(at: indexPath, animated: true)
+    func tableView(_ tableView: UITableView,didSelectRowAt indexPath: IndexPath) {
+        if(tableView == tvSearchAutofill) {
+            if(!self.selectedRecipe.getRecipe(rid: autofillRecipes[indexPath.row].id)) {
+                autofillRecipes.removeAll()
+                tvSearchAutofill.isHidden = true
+                self.performSegue(withIdentifier: "homeToRecipeOverview", sender: self)
+            }
+        } else {
+            self.thisRow = indexPath.row
+            performSegue(withIdentifier: "homeToCuisineSegue", sender: self)
+            tableView.deselectRow(at: indexPath, animated: true)
+        }
 
     }
     
     func changeSidebarColor(color: UIColor) {
         self.menu.backgroundColor = color
+    }
+    
+    @objc func nameDidChange(_ textField :UITextField) {
+        self.autofillRecipes.removeAll()
+        if(txtSearch.text! != "") {
+            if(!recipeAutofill(str: txtSearch.text!)) {
+                tvSearchAutofill.reloadData()
+            } else {
+                print(self.eMsg)
+            }
+        } else {
+            self.autofillRecipes.removeAll()
+            tvSearchAutofill.reloadData()
+            tvSearchAutofill.isHidden = true
+        }
+        if(autofillRecipes.count > 0) {
+            tvSearchAutofill.isHidden = false
+            tvSearchAutofill.reloadData()
+        } else {
+            tvSearchAutofill.isHidden = true
+        }
+    }
+    
+    func recipeAutofill(str:String) -> Bool {
+        // create a variable to return whether we errored out or not
+        var vError : Bool = false
+        
+        // path to our backend script
+        let URL_VERIFY = "http://www.teragentech.net/prepmate/AutofillRecipe.php"
+        
+        // variable which will spin until verification is finished
+        var finished : Bool = false
+        
+        // create our URL object
+        let url = URL(string: URL_VERIFY)
+        
+        // create the request and set the type to POST, otherwise we get authorization error
+        var request = URLRequest(url: url!)
+        request.httpMethod = "POST"
+        
+        let params = "str=\(str)"
+        
+        request.httpBody = params.data(using: String.Encoding.utf8)
+        
+        // Create a task and send our request to our REST API
+        let task = URLSession.shared.dataTask(with: request) {
+            data, response, error in
+            // if we error out, return the error message
+            if(error != nil) {
+                self.eMsg = error!.localizedDescription
+                finished = true
+                vError = true
+                return
+            }
+            
+            // If there was no error, parse the response
+            do {
+                // convert response to a dictionary
+                let JSONResponse = try JSONSerialization.jsonObject(with: data!, options: .mutableContainers) as? NSDictionary
+                
+                // Get the error status and the error message from the database
+                if let parseJSON = JSONResponse {
+                    self.eMsg = parseJSON["msg"] as! String
+                    vError = (parseJSON["error"] as! Bool)
+                    if(!vError) {
+                        var count = 0
+                        while let record = parseJSON[String(count)] as? NSString {
+                            if let entry = try JSONSerialization.jsonObject(with: record.data(using: String.Encoding.utf8.rawValue)!, options: .mutableContainers) as? NSDictionary {
+                                var newR = (id : 0, name : "", category : "")
+                                if let strId = entry["id"] as? String {
+                                    newR.id = Int(strId)!
+                                    newR.name = entry["name"] as! String
+                                    if let strCat = entry["category"] as? String {
+                                        newR.category = categoryList[Int(strCat)!]
+                                        self.autofillRecipes.append(newR)
+                                    } else {
+                                        vError = true
+                                        self.eMsg = "An error occured while parsing category"
+                                        return
+                                    }
+                                } else {
+                                    self.eMsg = "An error occured while parsing id"
+                                    vError = true
+                                    return
+                                }
+                            }
+                            count+=1
+                        }
+                    }
+                }
+            } catch {
+                self.eMsg = error.localizedDescription
+                vError = true
+            }
+            finished = true
+        }
+        // execute our task and then return the results
+        task.resume()
+        while(!finished) {}
+        return vError
     }
 }
