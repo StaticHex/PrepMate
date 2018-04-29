@@ -116,14 +116,15 @@ class AddMealsViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     @IBAction func saveMeal(_ sender: Any) {
+        if(mealNameInput.text! == "") {
+            self.recipeAlert(str: "Meal Name")
+            return
+        }
+        
         for row in 0..<mealsChosenRecipeBox.count {
             if mealsChosenRecipeBox[row] {
                 mProtocol?.addFromSelectedMeals(recipe: mealsToChooseFrom[0].items[row])
             }
-            //                let cell : MealsOptionsCustomCell = mealsTableView.cellForRow(at: NSIndexPath(row: row, section: section) as IndexPath) as! MealsOptionsCustomCell
-            //                if cell.selectedItem.currentTitle == "■" {
-            //                    mProtocol?.addFromSelectedMeals(recipe: mealsToChooseFrom[section].items[row])
-            //                }
         }
         for row in 0..<mealsChosenFavorites.count {
             if mealsChosenFavorites[row] {
@@ -137,5 +138,14 @@ class AddMealsViewController: UIViewController, UITableViewDelegate, UITableView
     
     @IBAction func cancel(_ sender: Any) {
         _ = navigationController?.popViewController(animated: true)
+    }
+    
+    /// Helper function to alert recipe errors
+    func recipeAlert(str:String) {
+        let alert = UIAlertController(title: "Add Recipe Error", message: "\(str) field cannot be empty", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .default, handler: { _ in
+            NSLog("The \"OK\" alert occured.")
+        }))
+        self.present(alert, animated: true, completion: nil)
     }
 }
