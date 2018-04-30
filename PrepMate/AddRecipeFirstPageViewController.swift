@@ -494,6 +494,7 @@ class AddRecipeFirstPageViewController: UIViewController, UITableViewDelegate, U
             dir.description = cell.directionLabel.text!
             directionInfo.append(dir)
         }
+
         recipeToSave.directions = directionInfo
         
         // Setting up the bit vector for the recipe flags

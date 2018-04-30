@@ -464,6 +464,9 @@ class Recipe : CustomStringConvertible {
             self.carbs = newRecipe.carbs
             self.fiber = newRecipe.fiber
             self.sugar = newRecipe.sugar
+            self.directions = newRecipe.directions
+            self.vitamins = newRecipe.vitamins
+            self.ingredients = newRecipe.ingredients
         }
         return vError
     }
