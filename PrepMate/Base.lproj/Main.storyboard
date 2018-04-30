@@ -2080,6 +2080,9 @@
                         <subviews>
                             <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vKS-ol-NdM">
                                 <rect key="frame" x="0.0" y="0.0" width="300" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="aYE-Zz-QmS"/>
+                                </constraints>
                                 <items>
                                     <navigationItem title="Image URL" id="yHc-e8-Ydk">
                                         <barButtonItem key="leftBarButtonItem" style="done" id="rgJ-9n-rOv">
@@ -2105,35 +2108,30 @@
                                     </navigationItem>
                                 </items>
                             </navigationBar>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="P3l-E0-2az">
-                                <rect key="frame" x="0.0" y="44" width="300" height="156"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="u6g-CE-vEI">
+                                <rect key="frame" x="10" y="54" width="280" height="136"/>
                                 <subviews>
-                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="center" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="g5Q-pb-gWq">
-                                        <rect key="frame" x="0.0" y="0.0" width="300" height="75"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="75" id="mqr-PY-F4U"/>
-                                        </constraints>
-                                        <string key="text">Warning!: URL must end with .jpg, .gif, or .png. Relative paths such as google images or intsagram images are not supported at this time.</string>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                                    </textView>
-                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="mVh-Ps-TJg">
-                                        <rect key="frame" x="0.0" y="75" width="300" height="81"/>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                                    </textView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JvB-qk-Mga">
+                                        <rect key="frame" x="0.0" y="0.0" width="280" height="136"/>
+                                        <state key="normal" title="Button" image="placeholder.png"/>
+                                        <connections>
+                                            <action selector="onPickPhoto:" destination="qVx-al-VGk" eventType="touchUpInside" id="1fa-GS-ZSX"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                             </stackView>
                         </subviews>
                         <color key="backgroundColor" red="0.60846545470000002" green="0.8088142116" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="BPB-Dm-DpC" firstAttribute="bottom" secondItem="P3l-E0-2az" secondAttribute="bottom" id="BQI-sR-0Qg"/>
-                            <constraint firstItem="P3l-E0-2az" firstAttribute="top" secondItem="vKS-ol-NdM" secondAttribute="bottom" id="baM-gr-BoS"/>
+                            <constraint firstItem="vKS-ol-NdM" firstAttribute="leading" secondItem="BPB-Dm-DpC" secondAttribute="leading" id="0GC-Wu-RpB"/>
+                            <constraint firstItem="vKS-ol-NdM" firstAttribute="trailing" secondItem="BPB-Dm-DpC" secondAttribute="trailing" id="0JZ-jt-AS1"/>
+                            <constraint firstItem="vKS-ol-NdM" firstAttribute="top" secondItem="BPB-Dm-DpC" secondAttribute="top" id="Cdl-ee-TnK"/>
+                            <constraint firstItem="BPB-Dm-DpC" firstAttribute="bottom" secondItem="u6g-CE-vEI" secondAttribute="bottom" constant="10" id="UIk-jw-IQ2"/>
+                            <constraint firstItem="BPB-Dm-DpC" firstAttribute="trailing" secondItem="u6g-CE-vEI" secondAttribute="trailing" constant="10" id="XST-HW-xXN"/>
+                            <constraint firstItem="u6g-CE-vEI" firstAttribute="top" secondItem="vKS-ol-NdM" secondAttribute="bottom" constant="10" id="dbz-o0-ELa"/>
                             <constraint firstItem="vKS-ol-NdM" firstAttribute="top" secondItem="BPB-Dm-DpC" secondAttribute="top" id="gLz-Vj-pxz"/>
-                            <constraint firstItem="BPB-Dm-DpC" firstAttribute="trailing" secondItem="P3l-E0-2az" secondAttribute="trailing" id="r21-aG-wfs"/>
-                            <constraint firstItem="P3l-E0-2az" firstAttribute="leading" secondItem="BPB-Dm-DpC" secondAttribute="leading" id="wQW-f9-i9q"/>
                             <constraint firstItem="vKS-ol-NdM" firstAttribute="trailing" secondItem="BPB-Dm-DpC" secondAttribute="trailing" id="yQb-GL-TcO"/>
+                            <constraint firstItem="u6g-CE-vEI" firstAttribute="leading" secondItem="BPB-Dm-DpC" secondAttribute="leading" constant="10" id="zSE-GQ-eTD"/>
                             <constraint firstItem="vKS-ol-NdM" firstAttribute="leading" secondItem="BPB-Dm-DpC" secondAttribute="leading" id="zxV-r6-IH7"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="BPB-Dm-DpC"/>
@@ -2141,7 +2139,7 @@
                     <value key="contentSizeForViewInPopover" type="size" width="300" height="200"/>
                     <size key="freeformSize" width="300" height="200"/>
                     <connections>
-                        <outlet property="txtURL" destination="mVh-Ps-TJg" id="yGp-kE-i2K"/>
+                        <outlet property="btnPhoto" destination="JvB-qk-Mga" id="aw3-fZ-rbt"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="y4e-zF-JJB" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -5514,6 +5512,7 @@
         <image name="f9.png" width="150" height="150"/>
         <image name="frame_00_delay-0.04s.png" width="108" height="118"/>
         <image name="icons8-home-24.png" width="24" height="24"/>
+        <image name="placeholder.png" width="1024" height="1024"/>
         <image name="splash_screen.jpg" width="336" height="598"/>
     </resources>
     <inferredMetricsTieBreakers>

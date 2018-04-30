@@ -154,6 +154,7 @@ class UserProfileViewController: UIViewController, UIPopoverPresentationControll
         if(segue.identifier == "userPhotoPopover") {
             let vc = segue.destination as? AddURLViewController
             vc?.urlDelegate = self
+            vc?.prefix = currentUser.getUname().lowercased()
             vc?.isModalInPopover = true
             let controller = vc?.popoverPresentationController
             if controller != nil {

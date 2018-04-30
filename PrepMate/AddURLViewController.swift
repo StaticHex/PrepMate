@@ -12,21 +12,49 @@ protocol URLProtocol : class {
     func setURL(url : String)
 }
 
-class AddURLViewController: UIViewController {
-
-    weak var urlDelegate : URLProtocol?
-    
-    // Set up our alert controller herer
-    let alert = UIAlertController(title: "Pick a valid image URL",
-                                  message: "Image URL must end in either .jpg, .jpeg, .png, or .gif",
-                                  preferredStyle: .alert)
+class AddURLViewController: UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIPopoverPresentationControllerDelegate {
     
     // UI Component outlets
-    @IBOutlet weak var txtURL: UITextView!
+    @IBOutlet weak var btnPhoto: UIButton!
     
+    // delegate to pass built URL back to main view controller
+    weak var urlDelegate : URLProtocol?
+    
+    // this is sent from the calling view controller, will either pass in userName or a recipeId
+    var prefix = ""
+    
+    // holds the local file name for our image, needed to test whether image is a .jpg, .jpeg, or .png
+    var localPath = ""
+    
+    // holds the file extension for our image
+    var ext = ""
+    
+    // a variable to hold the URL for our uploaded image
+    var builtURL = ""
+    
+    //image picker to grab photos from our gallery
+    let imagePicker = UIImagePickerController()
+    
+    // Set up our alert controller herer
+    let alert = UIAlertController(title: "Photo was not uploaded",
+                                  message: "message",
+                                  preferredStyle: .alert)
+
     override func viewDidLoad() {
         super.viewDidLoad()
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler:  nil))
+        // fix image in the center of our button
+        btnPhoto.contentMode = .center
+        btnPhoto.imageView?.contentMode = .scaleAspectFit
+        
+        //set up image picker
+        imagePicker.sourceType = .photoLibrary
+        imagePicker.allowsEditing = true
+        imagePicker.delegate = self
+        imagePicker.modalPresentationStyle = .popover
+        imagePicker.popoverPresentationController?.delegate = self
+        imagePicker.popoverPresentationController?.sourceView = view
+        
         // Do any additional setup after loading the view.
     }
 
@@ -35,48 +63,134 @@ class AddURLViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    // This method is called when the user touches the Return key on the
-    // keyboard. The 'textField' passed in is a pointer to the textField
-    // widget the cursor was in at the time they touched the Return key on
-    // the keyboard.
-    //
-    // From the Apple documentation: Asks the delegate if the text field
-    // should process the pressing of the return button.
-    //
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
-        return true
+    //Image picker functions
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated: true, completion: nil)
     }
-    
-    // Called when the user touches on the main view (outside the UITextField).
-    //
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        self.view.endEditing(true)
-    }
-
-    @IBAction func onSaveClick(_ sender: Any) {
-        var isValidImage : Bool = false
-
-        // check to see if image ends in a valid image format
-        let suffix = substring(tok: txtURL.text!, begin: txtURL.text!.count-4, end: txtURL.text!.count)
-        let accepted = [".jpg", ".jpeg", ".gif", ".png"]
-        for a in accepted {
-            if(suffix == a) {
-                isValidImage = true
-                break
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        if let newImage = info[UIImagePickerControllerEditedImage] as? UIImage {
+            if let path = info[UIImagePickerControllerImageURL] as? URL {
+                btnPhoto.setImage(newImage, for: .normal)
+                localPath = path.lastPathComponent
             }
         }
-        
-        // if image was not valid, display alert, otherwise pass image back to sender
-        if !isValidImage {
-            self.present(alert, animated: true)
-        } else {
-            self.dismiss(animated: true, completion: nil)
-            urlDelegate?.setURL(url: txtURL.text!)
-        }
+        picker.dismiss(animated: true, completion: nil)
+    }
+    
+    func adaptivePresentationStyle(for controller: UIPresentationController, traitCollection: UITraitCollection) -> UIModalPresentationStyle {
+        return UIModalPresentationStyle.none
+    }
+    
+    @IBAction func onPickPhoto(_ sender: Any) {
+        self.present(imagePicker, animated: true, completion: nil)
+    }
+    
+    @IBAction func onSaveClick(_ sender: Any) {
+        builtURL = "http://www.teragentech.net/files/\(prefix)/photo.\(ext)"
+        urlDelegate?.setURL(url: builtURL)
     }
     
     @IBAction func onCancelClick(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
+    }
+    
+    // File Upload Functions
+    func uploadImage(prefix : String) -> Bool {
+        // bool to ensure upload finishes before moving on
+        var finished = false
+        var vError = false
+        
+        let myURL = URL(string: "http://www.teragentech.net/prepmate/UploadImage.php")
+        
+        var request = URLRequest(url: myURL!)
+        
+        request.httpMethod = "POST"
+        
+        let param = [
+            "prefix" : "\(prefix)",
+        ]
+        
+        let boundary = generateBoundaryString()
+        
+        request.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
+        
+        let imageData = UIImageJPEGRepresentation(btnPhoto.image(for: .normal)!, 1)
+        
+        if(imageData == nil) {
+            print("Image was empty!")
+            return true
+        }
+        
+        request.httpBody = createBodyWithParameters(parameters: param, fileName: "photo", imageDataKey: imageData!, boundary: boundary, ext: ext)
+        
+        let task = URLSession.shared.dataTask(with: request) {
+            data, response, error in
+            // if we error out, return the error message
+            if(error != nil) {
+                self.alert.message = error!.localizedDescription
+                finished = true
+                vError = true
+                return
+            }
+            
+            // If there was no error, parse the response
+            do {
+                // convert response to a dictionary
+                let JSONResponse = try JSONSerialization.jsonObject(with: data!, options: .mutableContainers) as? NSDictionary
+                
+                // Get the error status and the error message from the database
+                if let parseJSON = JSONResponse {
+                    if let msg = parseJSON["msg"] as? String {
+                        self.alert.message = msg
+                    }
+                    vError = (parseJSON["error"] as! Bool)
+                }
+            } catch {
+                self.alert.message = error.localizedDescription
+                vError = true
+            }
+            finished = true
+        }
+        // execute our task and then return the results
+        task.resume()
+        
+        while(!finished) {}
+        
+        return vError
+    }
+    
+    func createBodyWithParameters(parameters: [String: String]?, fileName : String, imageDataKey : Data, boundary : String, ext : String) -> Data {
+        let body = NSMutableData()
+        
+        if parameters != nil {
+            for (key, value) in parameters! {
+                body.appendString(string: "--\(boundary)\r\n")
+                body.appendString(string: "Content-Disposition: form-data; name=\"\(key)\"\r\n\r\n")
+                body.appendString(string: "\(value)\r\n")
+            }
+        }
+        
+        let filename = "\(fileName).\(ext)"
+        let mimetype = "image/\(ext)"
+        
+        body.appendString(string: "--\(boundary)\r\n")
+        body.appendString(string: "Content-Disposition: form-data; name=\"file\"; filename=\"\(filename)\r\n")
+        body.appendString(string: "Content-Type: \(mimetype)\r\n\r\n")
+        body.append(imageDataKey)
+        body.appendString(string: "\r\n")
+        
+        body.appendString(string: "--\(boundary)--\r\n")
+        
+        return (body as Data)
+    }
+    func generateBoundaryString() -> String {
+        return "Boundary-\(NSUUID().uuidString)"
+    }
+}
+
+extension NSMutableData {
+    func appendString(string: String) {
+        let data = string.data(using: String.Encoding.utf8, allowLossyConversion: true)
+        append(data!)
     }
 }
