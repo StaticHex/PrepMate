@@ -122,22 +122,22 @@ class AddRecipeFirstPageViewController: UIViewController, UITableViewDelegate, U
             }
             self.ingTableView.reloadData()
             self.directionTableview.reloadData()
-            servingsSizeTextField.text = recipeToSave.servings
+            servingsSizeTextField.text = "\(servingSizeOptions.index(of: Int(recipeToSave.servings)!))"
             categoryPickerTextField.text = categoryList[recipeToSave.category]
             var cookTime = recipeToSave.cookTime.components(separatedBy: ":")
             var prepTime = recipeToSave.prepTime.components(separatedBy: ":")
             prepTimeField.text = prepTime[0] + " hr(s)" +  timeOptions[1][0] + prepTime[1] + " min(s)"
             cookTimeField.text = cookTime[0] + " hr(s)" +  timeOptions[1][0] + cookTime[1] + " min(s)"
-            // Do flags
             
+            // Do flags
             var flagNum = self.recipeToSave.flags
-            for d in 0...6 {
+            for d in (0...6).reversed() {
                 if (flagNum & 1 ) == 1 {
                     dietaryVector[d] = true
                 }
                 flagNum = flagNum >> 1
             }
-            for c in 0...12 {
+            for c in (0...12).reversed() {
                 if (flagNum & 1 ) == 1 {
                     containsVector[c] = true
                 }
@@ -488,22 +488,25 @@ class AddRecipeFirstPageViewController: UIViewController, UITableViewDelegate, U
             if contains[c] {
                 flagVector += 1
             }
-            if c == 12 {
-                break
-            }
+//            if c == 12 {
+//                break
+//            }
             flagVector <<= 1
         }
         for d in 0...6 {
             if dietary[d] {
                 flagVector += 1
             }
-            if d == 6 {
-                break
-            }
+//            if d == 6 {
+//                break
+//            }
             flagVector <<= 1
         }
         recipeToSave.flags = flagVector
         recipeToSave.creatorId = currentUser.getId()
+        recipeToSave.servings = servingsSizeTextField.text!
+        print("@@##$@#%@#$%@#$%@#$%@#$%@#$%@#$%@#$%@#$%@#$%@#$%@#$%")
+        print(recipeToSave.servings)
         print(recipeToSave.name)
         secondDelegate?.setRecipe(recipe: recipeToSave)
         
