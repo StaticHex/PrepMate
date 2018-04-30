@@ -56,7 +56,7 @@ class AddRecipeFirstPageViewController: UIViewController, UITableViewDelegate, U
     
     // Information for both pickers on the screen (Serving size and Categories)
     var servingSizePicker = UIPickerView()
-    var servingSizeOptions: [Int] = [1, 2, 3, 4, 5, 6, 7, 8]
+    var servingSizeOptions: [String] = ["1", "2", "3", "4", "5", "6", "7", "8"]
     var categoryPicker = UIPickerView()
     var categoryPickerOptions = [String]()
     
@@ -122,10 +122,14 @@ class AddRecipeFirstPageViewController: UIViewController, UITableViewDelegate, U
             }
             self.ingTableView.reloadData()
             self.directionTableview.reloadData()
-            servingsSizeTextField.text = "\(servingSizeOptions.index(of: Int(recipeToSave.servings)!))"
+            servingsSizeTextField.text = "\(recipeToSave.servings)"
             categoryPickerTextField.text = categoryList[recipeToSave.category]
             var cookTime = recipeToSave.cookTime.components(separatedBy: ":")
             var prepTime = recipeToSave.prepTime.components(separatedBy: ":")
+            prepTimeHour = "\(prepTime[0])"
+            prepTimeMin = "\(prepTime[1])"
+            cookTimeHour = "\(cookTime[0])"
+            cookTimeMin = "\(cookTime[1])"
             prepTimeField.text = prepTime[0] + " hr(s)" +  timeOptions[1][0] + prepTime[1] + " min(s)"
             cookTimeField.text = cookTime[0] + " hr(s)" +  timeOptions[1][0] + cookTime[1] + " min(s)"
             
@@ -357,6 +361,9 @@ class AddRecipeFirstPageViewController: UIViewController, UITableViewDelegate, U
             let vc = segue.destination as? AddRecipeSecondPageViewController
             vc?.addRecipeDelegate = self
             vc?.recipeToSave = self.recipeToSave
+            if fromEdit {
+                vc?.fromEdit = true
+            }
 
         }
     }
@@ -442,16 +449,13 @@ class AddRecipeFirstPageViewController: UIViewController, UITableViewDelegate, U
         recipeToSave.category = categoryPickerOptions.index(of: categoryPickerTextField.text!)!
         
         // Recipe servings
-        recipeToSave.servings = "\(servingSizeOptions.index(of: Int(servingsSizeTextField.text!)!)!)"
+        recipeToSave.servings = "\(servingSizeOptions.index(of: servingsSizeTextField.text!)!)"
         
         // Recipe preptime
         recipeToSave.prepTime = (prepTimeHour + ":" + prepTimeMin + ":00")
 
         // Recipe Cooktime
         recipeToSave.cookTime = (cookTimeHour + ":" + cookTimeMin + ":00")
-        
-        print(recipeToSave.cookTime)
-        print(recipeToSave.prepTime)
 
         // Go through each ingredient to add to the recipe
         let ingredientCells = self.ingTableView.visibleCells as! Array<IngredientTableCell>
@@ -505,9 +509,6 @@ class AddRecipeFirstPageViewController: UIViewController, UITableViewDelegate, U
         recipeToSave.flags = flagVector
         recipeToSave.creatorId = currentUser.getId()
         recipeToSave.servings = servingsSizeTextField.text!
-        print("@@##$@#%@#$%@#$%@#$%@#$%@#$%@#$%@#$%@#$%@#$%@#$%@#$%")
-        print(recipeToSave.servings)
-        print(recipeToSave.name)
         secondDelegate?.setRecipe(recipe: recipeToSave)
         
         self.performSegue(withIdentifier: "addRecipeFirstPageToSecond", sender: self)

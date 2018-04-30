@@ -52,6 +52,8 @@ class AddRecipeSecondPageViewController: UIViewController, UIPopoverPresentation
     
     var addRecipeDelegate: secondPageProtocol?
     
+    var fromEdit = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         vitaminTableView.delegate = self
@@ -110,7 +112,16 @@ class AddRecipeSecondPageViewController: UIViewController, UIPopoverPresentation
         self.sugarField.text = "\(self.recipeToSave.sugar)"
         self.carbField.text = "\(self.recipeToSave.carbs)"
         self.fiberField.text = "\(self.recipeToSave.fiber)"
-        self.vitamins = self.recipeToSave.vitamins
+        print(self.recipeToSave.vitamins.count)
+        if self.recipeToSave.vitamins.count > 0 {
+            for vitamin in self.recipeToSave.vitamins {
+                self.vitamins.append(vitamin)
+            }
+            self.vitaminTableView.reloadData()
+        }
+        if self.recipeToSave.photo != "" {
+            self.urlField.text = "\(self.recipeToSave.photo)"
+        }
     }
     
     /// Save recipe changes before returning to the first add recipe page
@@ -126,6 +137,7 @@ class AddRecipeSecondPageViewController: UIViewController, UIPopoverPresentation
         self.recipeToSave.fiber = Double(fiberField.text!)!
         self.recipeToSave.photo = urlField.text!
         self.recipeToSave.vitamins = vitamins
+
     }
     // Displaying information for a vitamin in the Vitamin table view
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -170,9 +182,18 @@ class AddRecipeSecondPageViewController: UIViewController, UIPopoverPresentation
     // Save recipe.
     @IBAction func saveRecipe(_ sender: Any) {
         self.checkRecipe()
+        print(self.recipeToSave)
         let recipe = Recipe()
-        let success = recipe.addRecipe(newRecipe: recipeToSave)
-        if success {
+        let success : Bool?
+        if fromEdit {
+            success = recipe.updateRecipe(newRecipe: self.recipeToSave)
+        }
+        else {
+            success = recipe.addRecipe(newRecipe: self.recipeToSave)
+            print(self.recipeToSave.directions[0].id)
+            print(self.recipeToSave.ingredients[0].id)
+        }
+        if success! {
             self.databaseAlert(str: "Database Error")
         }
         else {

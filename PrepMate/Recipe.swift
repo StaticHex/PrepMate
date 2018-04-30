@@ -389,7 +389,6 @@ class Recipe : CustomStringConvertible {
         var request = URLRequest(url: url!)
         request.httpMethod = "POST"
         
-        print(self)
         var pString = "id=\(self.id)"
         pString += "&uid=\(newRecipe.creatorId)"
         pString += "&name=\(newRecipe.name)"
@@ -408,7 +407,7 @@ class Recipe : CustomStringConvertible {
         pString += "&carbs=\(newRecipe.carbs)"
         pString += "&fiber=\(newRecipe.fiber)"
         pString += "&sugar=\(newRecipe.sugar)"
-        
+        print(pString)
         let params = pString
         
         request.httpBody = params.data(using: String.Encoding.utf8)
@@ -433,6 +432,7 @@ class Recipe : CustomStringConvertible {
                 if let parseJSON = JSONResponse {
                     self.eMsg = parseJSON["msg"] as! String
                     vError = (parseJSON["error"] as! Bool)
+                    print("self.eMsg is : " + self.eMsg)
                 }
             } catch {
                 self.eMsg = error.localizedDescription
@@ -723,6 +723,7 @@ class Recipe : CustomStringConvertible {
         newRecord.sugar = self.sugar
         newRecord.directions = self.directions
         newRecord.ingredients = self.ingredients
+        newRecord.vitamins = self.vitamins
         return newRecord
     }
     
