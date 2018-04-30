@@ -657,6 +657,7 @@ class Recipe : CustomStringConvertible {
                 if let parseJSON = JSONResponse {
                     self.eMsg = parseJSON["msg"] as! String
                     vError = (parseJSON["error"] as! Bool)
+                    print(self.eMsg)
                 }
             } catch {
                 self.eMsg = error.localizedDescription

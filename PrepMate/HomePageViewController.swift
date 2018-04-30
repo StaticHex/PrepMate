@@ -61,6 +61,8 @@ class HomePageViewController: UIViewController, UITableViewDelegate, UITableView
     var searchFilter = ""
     var searchString = ""
     
+    var whichRecipeClick = 0
+    
     // This is a special recipe collection for passing between screens
     // used when moving to recipe box or search results
     var passedRecipes = [Recipe]()
@@ -228,6 +230,14 @@ class HomePageViewController: UIViewController, UITableViewDelegate, UITableView
         if segue.identifier == "homeToRecipeList" {
             let vc = segue.destination as! HistoryFavoriteSearchResultsViewController
             vc.recipeList = passedRecipes
+            
+            // 0 is myRecipes, 1 is removeRecipe
+            if whichRecipeClick == 0 {
+                vc.whichRecipeClicked = 0
+            }
+            else {
+                vc.whichRecipeClicked = 1
+            }
         }
         
         menu.alpha = 0.0
@@ -312,6 +322,7 @@ class HomePageViewController: UIViewController, UITableViewDelegate, UITableView
         performSegue(withIdentifier: "homeToPantry", sender: sender)
     }
     @IBAction func onMenuRecipeClick(_ sender: Any) {
+        self.whichRecipeClick = 0
         passedRecipes = getRecipes(query: "uid=\(currentUser.getId())")
         performSegue(withIdentifier: "homeToRecipeList", sender: sender)
         menu.alpha = 0
@@ -323,6 +334,8 @@ class HomePageViewController: UIViewController, UITableViewDelegate, UITableView
         performSegue(withIdentifier: "homeToMeals", sender: sender)
     }
     @IBAction func onMenuRemoveRecipeClick(_ sender: Any) {
+        self.whichRecipeClick = 1
+        passedRecipes = getRecipes(query: "uid=\(currentUser.getId())")
         performSegue(withIdentifier: "homeToRecipeList", sender: sender)
     }
     @IBAction func onMenuAddRecipeClick(_ sender: Any) {
