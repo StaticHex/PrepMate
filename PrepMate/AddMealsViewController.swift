@@ -21,6 +21,12 @@ class MealsOptionsCustomCell: UITableViewCell {
         
         var title = ""
         if selectedItem.currentTitle == "■" {
+            if section == 0 {
+                mealsChosenRecipeBox[row] = false
+            }
+            else {
+                mealsChosenFavorites[row] = false
+            }
             title = "□"
         }
         else {
@@ -117,20 +123,39 @@ class AddMealsViewController: UIViewController, UITableViewDelegate, UITableView
     
     @IBAction func saveMeal(_ sender: Any) {
         if(mealNameInput.text! == "") {
-            self.recipeAlert(str: "Meal Name")
+            self.mealAlert(str: "Meal Name")
             return
         }
-        
+        var recipeList = [Recipe]()
         for row in 0..<mealsChosenRecipeBox.count {
             if mealsChosenRecipeBox[row] {
-                mProtocol?.addFromSelectedMeals(recipe: mealsToChooseFrom[0].items[row])
+                recipeList.append(mealsToChooseFrom[0].items[row])
             }
         }
         for row in 0..<mealsChosenFavorites.count {
             if mealsChosenFavorites[row] {
-                mProtocol?.addFromSelectedMeals(recipe: mealsToChooseFrom[1].items[row])
+               recipeList.append(mealsToChooseFrom[1].items[row])
             }
         }
+        if(recipeList.count == 0){
+            self.mealAlert(str: "Selected recipes")
+            return
+        }
+        let meal = Meal()
+        // TODO: Handle failure?
+        if(meal.addMeal(uid:currentUser.getId(), name: mealNameInput.text!)){
+            print("ADD MEAL FAILED: ")
+            print(meal.eMsg)
+        }
+        print("RECIPE LIST: \(recipeList)")
+        for recipe in recipeList {
+            print("Adding Recipe: \(recipe.getId())")
+            if(meal.addMealRecipe(rid: recipe.getId())){
+                print("ADD MEAL RECIPE FAILED: ");
+                print(meal.eMsg)
+            }
+        }
+        mProtocol?.addFromSelectedMeals(meal: meal)
         
         _ = navigationController?.popViewController(animated: true)
 
@@ -140,12 +165,14 @@ class AddMealsViewController: UIViewController, UITableViewDelegate, UITableView
         _ = navigationController?.popViewController(animated: true)
     }
     
-    /// Helper function to alert recipe errors
-    func recipeAlert(str:String) {
-        let alert = UIAlertController(title: "Add Recipe Error", message: "\(str) field cannot be empty", preferredStyle: .alert)
+    /// Helper function to alert meal errors
+    func mealAlert(str:String) {
+        let alert = UIAlertController(title: "Add Meal Error", message: "\(str) cannot be empty", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .default, handler: { _ in
             NSLog("The \"OK\" alert occured.")
         }))
         self.present(alert, animated: true, completion: nil)
     }
+
+
 }

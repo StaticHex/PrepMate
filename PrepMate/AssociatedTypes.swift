@@ -131,6 +131,88 @@ public func getTimestamp() -> String {
 
 public var recipeEMsg = ""
 
+func getMeals() -> [Meal] {
+    var meals = [Meal]()
+    
+    // path to our backend script
+    let URL_VERIFY = "http://www.teragentech.net/prepmate/GetMeals.php"
+    
+    var mealEMsg: String = ""
+    
+    // variable which will spin until verification is finished
+    var finished : Bool = false
+    
+    // create our URL object
+    let url = URL(string: URL_VERIFY)
+    
+    // create the request and set the type to POST, otherwise we get authorization error
+    var request = URLRequest(url: url!)
+    request.httpMethod = "POST"
+    let params = "uid=\(currentUser.getId())"
+    
+    request.httpBody = params.data(using: String.Encoding.utf8)
+    
+    // Create a task and send our request to our REST API
+    let task = URLSession.shared.dataTask(with: request) {
+        data, response, error in
+        // if we error out, return the error message
+        if(error != nil) {
+            mealEMsg = error!.localizedDescription
+            finished = true
+            return
+        }
+        
+        // If there was no error, parse the response
+        do {
+            // convert response to a dictionary
+            let JSONResponse = try JSONSerialization.jsonObject(with: data!, options: .mutableContainers) as? NSDictionary
+            
+            // Get the error status and the error message from the database
+            if let parseJSON = JSONResponse {
+                mealEMsg = parseJSON["msg"] as! String
+                let vError = (parseJSON["error"] as! Bool)
+                if(!vError) {
+                    var count = 0
+                    while let record = parseJSON[String(count)] as? NSString {
+                        if let entry = try JSONSerialization.jsonObject(with: record.data(using: String.Encoding.utf8.rawValue)!, options: .mutableContainers) as? NSDictionary {
+                            let newMeal = Meal()
+                            newMeal.creatorId = currentUser.getId()
+                            
+                            if let rid = entry["id"] as? String {
+                                newMeal.mealId = Int(rid)!
+                            } else {
+                                print("getMeals(): Populate function errored while parsing id")
+                            }
+                            if let name = entry["name"] as? String {
+                                newMeal.name = name
+                            } else {
+                                print("getMeals(): Populate function errored while parsing name")
+                            }
+                            meals.append(newMeal)
+                            count+=1
+                        }
+                    }
+                } else {
+                    meals.removeAll()
+                    print(mealEMsg)
+                    return
+                }
+            }
+        } catch {
+            mealEMsg = error.localizedDescription
+            print(mealEMsg)
+            meals.removeAll()
+            return
+        }
+        finished = true
+    }
+    // execute our task and then return the results
+    task.resume()
+    while(!finished) {}
+
+    return meals
+}
+
 func getRecipes(query:String) -> [Recipe] {
     var recipes = [Recipe]()
     
@@ -174,6 +256,7 @@ func getRecipes(query:String) -> [Recipe] {
                     var count = 0
                     while let record = parseJSON[String(count)] as? NSString {
                         if let entry = try JSONSerialization.jsonObject(with: record.data(using: String.Encoding.utf8.rawValue)!, options: .mutableContainers) as? NSDictionary {
+                            
                             let newRecipe = Recipe()
                             if(!newRecipe.populateFromDict(query: entry)) {
                                 recipes.append(newRecipe)
@@ -198,10 +281,9 @@ func getRecipes(query:String) -> [Recipe] {
     // execute our task and then return the results
     task.resume()
     while(!finished) {}
-
+    
     return recipes
 }
-
 // A substring function because apple depreciated theirs
 func substring(tok: String, begin : Int, end : Int) -> String {
     if begin < 0 || end < 0 {

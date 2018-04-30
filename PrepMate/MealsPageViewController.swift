@@ -10,14 +10,14 @@ import UIKit
 
 protocol mealsProtocol : class {
     func removeMeal(cell: MealsCustomTableViewCell)
-    func addFromSelectedMeals(recipe: Recipe)
+    func addFromSelectedMeals(meal: Meal)
 }
 
 
 class MealsPageViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, mealsProtocol {
     
     
-    var meals = [Recipe]()
+    var meals = [Meal]()
 
     
     @IBOutlet weak var mealsTableView: UITableView!
@@ -29,20 +29,22 @@ class MealsPageViewController: UIViewController, UITableViewDelegate, UITableVie
         navigationController?.isNavigationBarHidden = false
         mealsTableView.delegate = self
         mealsTableView.dataSource = self
+        self.meals = getMeals()
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-    override func viewWillDisappear(_ animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         navigationController?.isNavigationBarHidden = false
-    }
-    
+    }    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "mealsToRecipeBoxSegue" {
+        if segue.identifier == "mealsToRecipeBoxSegue",
+            let operatorIndex = self.mealsTableView.indexPathForSelectedRow?.row,
             let vc = segue.destination as? HistoryFavoriteSearchResultsViewController
+        {
+            vc.recipeList = meals[operatorIndex].getMealRecipes()
         }
         else if segue.identifier == "addingMealsToRecipeBox" {
             let vc = segue.destination as? HistoryFavoriteSearchResultsViewController
@@ -72,16 +74,14 @@ class MealsPageViewController: UIViewController, UITableViewDelegate, UITableVie
         
         cell.mProtocol = self
         let row = indexPath.row
-        cell.mealName.text = meals[row].getName()
+        cell.mealName.text = meals[row].name
         
         return cell
     }
     
-    func addFromSelectedMeals(recipe: Recipe) {
-        meals.append(recipe)
-        self.mealsTableView.beginUpdates()
-        self.mealsTableView.insertRows(at: [IndexPath.init(row: meals.count - 1, section: 0)], with: .automatic)
-        self.mealsTableView.endUpdates()
+    func addFromSelectedMeals(meal:Meal) {
+        self.meals = getMeals()
+        self.mealsTableView.reloadData()
     }
     
     func removeMeal(cell: MealsCustomTableViewCell) {
