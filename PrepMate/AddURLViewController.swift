@@ -57,6 +57,13 @@ class AddURLViewController: UIViewController, UINavigationControllerDelegate, UI
         
         // Do any additional setup after loading the view.
     }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        ext = ""
+        builtURL = ""
+        localPath = ""
+        
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -72,6 +79,8 @@ class AddURLViewController: UIViewController, UINavigationControllerDelegate, UI
             if let path = info[UIImagePickerControllerImageURL] as? URL {
                 btnPhoto.setImage(newImage, for: .normal)
                 localPath = path.lastPathComponent
+                let name = localPath.split(separator: ".")
+                ext = String(name.last!)
             }
         }
         picker.dismiss(animated: true, completion: nil)
@@ -86,8 +95,13 @@ class AddURLViewController: UIViewController, UINavigationControllerDelegate, UI
     }
     
     @IBAction func onSaveClick(_ sender: Any) {
-        builtURL = "http://www.teragentech.net/files/\(prefix)/photo.\(ext)"
-        urlDelegate?.setURL(url: builtURL)
+        if (!uploadImage(prefix: prefix)) {
+            builtURL = "http://www.teragentech.net/prepmate/files/\(prefix)/photo.\(ext)"
+            urlDelegate?.setURL(url: builtURL)
+            self.dismiss(animated: true, completion: nil)
+        } else {
+            self.present(alert, animated: true, completion: nil)
+        }
     }
     
     @IBAction func onCancelClick(_ sender: Any) {
@@ -96,6 +110,7 @@ class AddURLViewController: UIViewController, UINavigationControllerDelegate, UI
     
     // File Upload Functions
     func uploadImage(prefix : String) -> Bool {
+        print(localPath + " " + prefix + " " + ext)
         // bool to ensure upload finishes before moving on
         var finished = false
         var vError = false
@@ -114,10 +129,18 @@ class AddURLViewController: UIViewController, UINavigationControllerDelegate, UI
         
         request.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
         
-        let imageData = UIImageJPEGRepresentation(btnPhoto.image(for: .normal)!, 1)
+        var imageData = UIImagePNGRepresentation(btnPhoto.image(for: .normal)!)
+        if(ext=="jpeg" || ext=="jpg") {
+            imageData = UIImageJPEGRepresentation(btnPhoto.image(for: .normal)!, 1)
+        } else if(ext=="png") {
+            imageData = UIImagePNGRepresentation(btnPhoto.image(for: .normal)!)
+        } else {
+            self.alert.message = "Image in wrong format, must be .jpeg, .jpg or .png"
+            return true
+        }
         
         if(imageData == nil) {
-            print("Image was empty!")
+            self.alert.message = "Corrupted or missing image data"
             return true
         }
         
