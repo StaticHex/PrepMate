@@ -61,6 +61,7 @@ class HistoryFavoriteSearchResultsViewController: UIViewController, UITableViewD
     // 0 myRecipe, 1 removeRecipe
     var whichRecipeClicked = 0
     
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -134,6 +135,13 @@ class HistoryFavoriteSearchResultsViewController: UIViewController, UITableViewD
          }*/
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        if whichRecipeClicked == 0 {
+            getUserRecipes(uid: currentUser.getId())
+        }
+        histFavTableView.reloadData()
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return recipeList.count
     }
@@ -143,13 +151,25 @@ class HistoryFavoriteSearchResultsViewController: UIViewController, UITableViewD
         
         let row = indexPath.row
         cell.rBProtocol = self
-        cell.recipeNameLabel.text! = recipeList[row].getName()
-        cell.ratingsLabel.image = RatingImages[recipeList[row].getRating()]
-        cell.row = row
-        if whichRecipeClicked == 1 {
+        if whichRecipeClicked == 0 {
+            cell.recipeNameLabel.text! = recipeList[row].getName()
+            cell.ratingsLabel.image = RatingImages[recipeList[row].getRating()]
+            cell.row = row
+        }
+        else {
+            cell.recipeNameLabel.text! = userRecipeList[row].recipeName!
+            cell.ratingsLabel.image = RatingImages[userRecipeList[row].recipeRating!]
+            cell.row = row
             cell.favoriteSelect.isEnabled = false
             cell.favoriteSelect.isHidden = true
         }
+//        cell.recipeNameLabel.text! = recipeList[row].getName()
+//        cell.ratingsLabel.image = RatingImages[recipeList[row].getRating()]
+//        cell.row = row
+//        if whichRecipeClicked == 1 {
+//            cell.favoriteSelect.isEnabled = false
+//            cell.favoriteSelect.isHidden = true
+//        }
         
         return cell
     }
@@ -158,11 +178,6 @@ class HistoryFavoriteSearchResultsViewController: UIViewController, UITableViewD
         tableView.deselectRow(at: indexPath, animated: true)
     }
     
-    
-    
-    override func viewWillAppear(_ animated: Bool) {
-        histFavTableView.reloadData()
-    }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -178,7 +193,13 @@ class HistoryFavoriteSearchResultsViewController: UIViewController, UITableViewD
             let destination = segue.destination as? RecipePageViewController,
             let operatorIndex = histFavTableView.indexPathForSelectedRow?.row
         {
-            destination.recipe = recipeList[operatorIndex]
+            if whichRecipeClicked == 0 {
+                let dest = getRecipes(query: "id=\(userRecipeList[operatorIndex].recipeId)")
+                destination.recipe = dest[0]
+            }
+            else {
+                destination.recipe = recipeList[operatorIndex]
+            }
         }
         
     }
@@ -186,22 +207,28 @@ class HistoryFavoriteSearchResultsViewController: UIViewController, UITableViewD
     func removeRecipe(cell: recipeBoxTableCell) {
         if whichRecipeClicked == 0 {
             // Remove from recipes saved for this user
+            
         }
         else if whichRecipeClicked == 1 {
             // Remove recipe from DB
             let recipeToDelete = recipeList[cell.row]
+
+            // Remove from table view
+            let indexPath = self.histFavTableView.indexPath(for: cell)
+            recipeList.remove(at: indexPath!.row)
+            self.histFavTableView.deleteRows(at: [indexPath!], with: .fade)
+            
+            
             let success = recipeToDelete.removeRecipe()
             if success {
                 self.databaseAlert(str: "Database Error")
             }
             else {
+                self.histFavTableView.reloadData()
                 return
             }
         }
-        
-        let indexPath = self.histFavTableView.indexPath(for: cell)
-        recipeList.remove(at: indexPath!.row)
-        self.histFavTableView.deleteRows(at: [indexPath!], with: .fade)
+
     }
     
     func databaseAlert(str:String) {

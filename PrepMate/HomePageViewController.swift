@@ -86,14 +86,13 @@ class HomePageViewController: UIViewController, UITableViewDelegate, UITableView
         popularCollectionView.tag = 1
         recommendedCollectionView.tag = 2
         recipeList = getRecipes(query: "id>=1 ORDER BY rating ASC LIMIT 10")
-        txtSearch.addTarget(self, action: #selector(nameDidChange(_:)), for: .editingChanged)
+//        txtSearch.addTarget(self, action: #selector(nameDidChange(_:)), for: .editingChanged)
         // Do any additional setup after loading the view.
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        print(categoryList.count)
-        print(categoryImages.count)
-        
+        categoryTableView.reloadData()
+        recommendedCollectionView.reloadData()
         navigationController?.isNavigationBarHidden = true
         let defaults = UserDefaults.standard
         if defaults.object(forKey: "titleBarColor") != nil {

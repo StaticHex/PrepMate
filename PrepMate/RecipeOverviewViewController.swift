@@ -13,10 +13,12 @@ class RecipeOverviewViewController: UIViewController {
 
     /// When Favorite button is pressed
     @IBAction func onFavoritePressed(_ sender: Any) {
-        
+        var userRecipe = UserRecipe(id: currentUser.getId(), recipeId: recipe.getId(), recipeName: recipe.getName(), recipeRating: recipe.getRating(), favorite: 1)
+        addUserRecipe(newRecipe: userRecipe)
     }
     @IBAction func onAddPressed(_ sender: Any) {
-        
+        var userRecipe = UserRecipe(id: currentUser.getId(), recipeId: recipe.getId(), recipeName: recipe.getName(), recipeRating: recipe.getRating(), favorite: 0)
+        addUserRecipe(newRecipe: userRecipe)
     }
     
     @IBAction func onCreatorButton(_ sender: Any) {
@@ -33,6 +35,9 @@ class RecipeOverviewViewController: UIViewController {
     @IBOutlet weak var preptimeLabel: UILabel!
     @IBOutlet weak var cooktimeLabel: UILabel!
     var recipe = Recipe()
+    
+    var userRecipeList = [UserRecipe]() // Used for the recipe box and favorites list
+    var eMsg = "" // holds error message returned by recipe list functions
     override func viewDidLoad() {
         super.viewDidLoad()
         self.ingredientText.layer.borderWidth = 1
@@ -102,6 +107,94 @@ class RecipeOverviewViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    // Functions for dealing with user recipes (should be keeping a list of these for recipe box and favorites)
+    func addUserRecipe(newRecipe :UserRecipe) -> Bool {
+        // create mutable object out of parameter
+        var uRecipe = newRecipe
+        
+        // create a variable to return whether we errored out or not
+        var vError : Bool = false
+        
+        // path to our backend script
+        let URL_VERIFY = "http://www.teragentech.net/prepmate/AddUserRecipe.php"
+        
+        // variable which will spin until verification is finished
+        var finished : Bool = false
+        
+        // create our URL object
+        let url = URL(string: URL_VERIFY)
+        
+        // create the request and set the type to POST, otherwise we get authorization error
+        var request = URLRequest(url: url!)
+        request.httpMethod = "POST"
+        
+        // Set up parameters
+        
+        
+        // Create HTTP Body
+        let params = "uid=\(currentUser.getId())&rid=\(newRecipe.recipeId!)&favorite=\(newRecipe.favorite!)"
+        request.httpBody = params.data(using: String.Encoding.utf8)
+        
+        // Create a task and send our request to our REST API
+        let task = URLSession.shared.dataTask(with: request) {
+            data, response, error in
+            // if we error out, return the error message
+            if(error != nil) {
+                self.eMsg = error!.localizedDescription
+                finished = true
+                vError = true
+                return
+            }
+            
+            // If there was no error, parse the response
+            do {
+                // convert response to a dictionary
+                let JSONResponse = try JSONSerialization.jsonObject(with: data!, options: .mutableContainers) as? NSDictionary
+                
+                // Get the error status and the error message from the database
+                if let parseJSON = JSONResponse {
+                    self.eMsg = parseJSON["msg"] as! String
+                    vError = (parseJSON["error"] as! Bool)
+                    if(!vError) {
+                        if let sId = parseJSON["id"] as? String {
+                            uRecipe.id = Int(sId)!
+                            if let rRating = parseJSON["recipe_rating"] as? String {
+                                uRecipe.recipeRating = Int(rRating)!
+                                if let rName = parseJSON["recipe_name"] as? String {
+                                    uRecipe.recipeName = rName
+                                } else {
+                                    uRecipe.recipeName = "ERROR"
+                                    vError = true
+                                    self.eMsg = "error occured while parsing recipe name from add operation"
+                                }
+                            } else {
+                                uRecipe.recipeRating = 0
+                                vError = true
+                                self.eMsg = "error occured while parsing recipe rating from add operation"
+                            }
+                        } else {
+                            uRecipe.id = -1
+                            vError = true
+                            self.eMsg = "error occured while parsing user recipe ID from add operation"
+                            return
+                        }
+                    }
+                }
+            } catch {
+                self.eMsg = error.localizedDescription
+                vError = true
+            }
+            finished = true
+        }
+        // execute our task and then return the results
+        task.resume()
+        while(!finished) {}
+        if(!vError) {
+            self.userRecipeList.append(uRecipe)
+        }
+        return vError
     }
     
 
