@@ -48,7 +48,7 @@ class MealsCustomTableViewCell: UITableViewCell {
 
     // Protocol called to remove cell from table view
     @IBAction func remove(_ sender: Any) {
-        mProtocol?.removeMeal(cell: self)
+        mProtocol?.removeMealCell(cell: self)
     }
     
     

@@ -284,6 +284,61 @@ func getRecipes(query:String) -> [Recipe] {
     
     return recipes
 }
+public func removeMeal(id:Int)->Bool {
+    // create a variable to return whether we errored out or not
+    var vError : Bool = false
+    var eMsg = ""
+    // path to our backend script
+    let URL_VERIFY = "http://www.teragentech.net/prepmate/RemoveMeal.php"
+    
+    // variable which will spin until verification is finished
+    var finished : Bool = false
+    
+    // create our URL object
+    let url = URL(string: URL_VERIFY)
+    
+    // create the request and set the type to POST, otherwise we get authorization error
+    var request = URLRequest(url: url!)
+    request.httpMethod = "POST"
+    let params = "id=\(id)"
+    
+    request.httpBody = params.data(using: String.Encoding.utf8)
+    
+    // Create a task and send our request to our REST API
+    let task = URLSession.shared.dataTask(with: request) {
+        data, response, error in
+        // if we error out, return the error message
+        if(error != nil) {
+            eMsg = error!.localizedDescription
+            finished = true
+            print(eMsg)
+            vError = true
+            return
+        }
+        
+        // If there was no error, parse the response
+        do {
+            // convert response to a dictionary
+            let JSONResponse = try JSONSerialization.jsonObject(with: data!, options: .mutableContainers) as? NSDictionary
+            
+            // Get the error status and the error message from the database
+            if let parseJSON = JSONResponse {
+                eMsg = parseJSON["msg"] as! String
+                vError = (parseJSON["error"] as! Bool)
+            }
+        } catch {
+            eMsg = error.localizedDescription
+            vError = true
+            print(eMsg)
+        }
+        finished = true
+    }
+    // execute our task and then return the results
+    task.resume()
+    while(!finished) {}
+    return vError
+}
+
 // A substring function because apple depreciated theirs
 func substring(tok: String, begin : Int, end : Int) -> String {
     if begin < 0 || end < 0 {

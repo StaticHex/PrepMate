@@ -9,7 +9,7 @@
 import UIKit
 
 protocol mealsProtocol : class {
-    func removeMeal(cell: MealsCustomTableViewCell)
+    func removeMealCell(cell: MealsCustomTableViewCell)
     func addFromSelectedMeals(meal: Meal)
 }
 
@@ -84,10 +84,14 @@ class MealsPageViewController: UIViewController, UITableViewDelegate, UITableVie
         self.mealsTableView.reloadData()
     }
     
-    func removeMeal(cell: MealsCustomTableViewCell) {
+    func removeMealCell(cell: MealsCustomTableViewCell) {
         let indexPath = self.mealsTableView.indexPath(for: cell)
-        meals.remove(at: indexPath!.row)
-        self.mealsTableView.deleteRows(at: [indexPath!], with: .fade)
+        if(removeMeal(id: self.meals[indexPath!.row].mealId)){
+            print("Error removing meal")
+        } else {
+            self.meals = getMeals()
+            self.mealsTableView.reloadData()
+        }
     }
     
     

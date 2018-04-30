@@ -80,6 +80,7 @@ class Meal {
         // execute our task and then return the results
         task.resume()
         while(!finished) {}
+        print("MEAL ID: \(self.mealId)")
         return vError
     }
     public func addMealRecipe(rid:Int)->Bool {
@@ -99,6 +100,7 @@ class Meal {
         var request = URLRequest(url: url!)
         request.httpMethod = "POST"
         print("RID ADDED: \(rid)")
+        print("MEALID ADDED TO: \(self.mealId)")
         let params = "mid=\(self.mealId)&rid=\(rid)"
         
         request.httpBody = params.data(using: String.Encoding.utf8)
@@ -122,11 +124,6 @@ class Meal {
                 // Get the error status and the error message from the database
                 if let parseJSON = JSONResponse {
                     self.eMsg = parseJSON["msg"] as! String
-                    if let strId = parseJSON["code"] as? NSNumber {
-                        self.mealId = strId as! Int
-                    } else {
-                        self.mealId = Int(parseJSON["code"] as! String)!
-                    }
                     vError = (parseJSON["error"] as! Bool)
                 }
             } catch {
@@ -222,4 +219,5 @@ class Meal {
         
         return recipes
     }
+    
 }
