@@ -115,6 +115,7 @@ class RecipePageViewController: UIViewController {
         else if segue.identifier == "editRecipeToAddRecipe" {
             let vc = segue.destination as? AddRecipeFirstPageViewController
             vc?.recipeToSave = recipe.createRecord()
+            vc?.recipeToUpdate = recipe
             vc?.fromEdit = true
         }
     }

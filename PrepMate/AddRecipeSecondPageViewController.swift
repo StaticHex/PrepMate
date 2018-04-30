@@ -50,6 +50,9 @@ class AddRecipeSecondPageViewController: UIViewController, UIPopoverPresentation
     // Recipe that will be saved if the user chooses to (will be passed from first add page controller)
     var recipeToSave: RecipeRecord = RecipeRecord()
     
+    // passed recipe to edit
+    var recipeToUpdate : Recipe?
+    
     var addRecipeDelegate: secondPageProtocol?
     
     var fromEdit = false
@@ -186,7 +189,8 @@ class AddRecipeSecondPageViewController: UIViewController, UIPopoverPresentation
         let recipe = Recipe()
         let success : Bool?
         if fromEdit {
-            success = recipe.updateRecipe(newRecipe: self.recipeToSave)
+            success = recipeToUpdate!.updateRecipe(newRecipe: self.recipeToSave)
+            print("\n\n"+recipeToUpdate!.getEMsg()+"\n\n")
         }
         else {
             success = recipe.addRecipe(newRecipe: self.recipeToSave)

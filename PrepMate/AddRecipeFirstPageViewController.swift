@@ -80,6 +80,9 @@ class AddRecipeFirstPageViewController: UIViewController, UITableViewDelegate, U
     
     var fromEdit = false
     
+    // pass recipe record
+    var recipeToUpdate : Recipe?
+    
     weak var secondDelegate: secondPageProtocol?
     
     // Setting up screen display information
@@ -163,6 +166,12 @@ class AddRecipeFirstPageViewController: UIViewController, UITableViewDelegate, U
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        print("\n\n\nGOT HERE!!!\n\n")
+        print(recipeToSave)
+        print("\n\n")
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -361,6 +370,7 @@ class AddRecipeFirstPageViewController: UIViewController, UITableViewDelegate, U
             let vc = segue.destination as? AddRecipeSecondPageViewController
             vc?.addRecipeDelegate = self
             vc?.recipeToSave = self.recipeToSave
+            vc?.recipeToUpdate = recipeToUpdate!
             if fromEdit {
                 vc?.fromEdit = true
             }

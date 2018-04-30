@@ -3196,7 +3196,7 @@
                                                 </connections>
                                             </button>
                                         </barButtonItem>
-                                        <textField key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter Search Here" textAlignment="natural" minimumFontSize="17" id="VlJ-cp-yZa">
+                                        <textField key="titleView" opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter Search Here" textAlignment="natural" minimumFontSize="17" id="VlJ-cp-yZa">
                                             <rect key="frame" x="126" y="7" width="139" height="30"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <nil key="textColor"/>
@@ -5500,10 +5500,10 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="cOe-bu-kQK"/>
-        <segue reference="Fpi-dY-fIC"/>
-        <segue reference="bXW-K1-T9k"/>
+        <segue reference="jzh-V1-ToK"/>
+        <segue reference="pFF-rh-8ei"/>
         <segue reference="BjC-YD-RDR"/>
         <segue reference="rrq-j1-upH"/>
-        <segue reference="zcz-VA-ErF"/>
+        <segue reference="a1s-3R-Jjp"/>
     </inferredMetricsTieBreakers>
 </document>
