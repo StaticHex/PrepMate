@@ -137,15 +137,23 @@ class AddRecipeFirstPageViewController: UIViewController, UITableViewDelegate, U
             cookTimeField.text = cookTime[0] + " hr(s)" +  timeOptions[1][0] + cookTime[1] + " min(s)"
             
             // Do flags
+//            for i in (0...(nutritionImages.count-1)).reversed(){
+//                if (flagNum & 1 ) == 1 {
+//                    self.nutritionList.append(nutritionImages[i])
+//                }
+//                flagNum = flagNum >> 1
+//            }
             var flagNum = self.recipeToSave.flags
             for d in (0...6).reversed() {
                 if (flagNum & 1 ) == 1 {
+                    print("Dietary True at \(d)")
                     dietaryVector[d] = true
                 }
                 flagNum = flagNum >> 1
             }
             for c in (0...12).reversed() {
                 if (flagNum & 1 ) == 1 {
+                    print("Contains true at \(c)")
                     containsVector[c] = true
                 }
                 flagNum = flagNum >> 1
@@ -176,6 +184,15 @@ class AddRecipeFirstPageViewController: UIViewController, UITableViewDelegate, U
     
     override func viewWillDisappear(_ animated: Bool) {
         navigationController?.isNavigationBarHidden = true
+        if self.isMovingFromParentViewController {
+            // Remove saved data from Contains and Dietary popovers
+            for c in 0...(containsVector.count-1) {
+                containsVector[c] = false
+            }
+            for d in 0...(dietaryVector.count-1) {
+                dietaryVector[d] = false
+            }
+        }
     }
     
     func adaptivePresentationStyle(for controller: UIPresentationController, traitCollection: UITraitCollection) -> UIModalPresentationStyle {
@@ -241,7 +258,19 @@ class AddRecipeFirstPageViewController: UIViewController, UITableViewDelegate, U
                 let valToDisplay = metricToStd(unit: ingList[row].item.getUnit(), amount: ingList[row].amount)
                 if ingList[row].item.getLabel() != "" {
                     if fromEdit {
-                        cell.amountLabel.text = String(format: "%1.1f %@\n", ingList[row].amount, ingList[row].item.getLabel())
+                        var found = false
+                        for i in 0...recipeToSave.ingredients.count-1 {
+                            if recipeToSave.ingredients[i].id == ingList[row].id {
+                                found = true
+                            }
+                        }
+                        if found {
+                            cell.amountLabel.text = String(format: "%1.1f %@\n", ingList[row].amount, ingList[row].item.getLabel())
+                        }
+                        else {
+                            cell.amountLabel.text = String(format: "%1.1f %@\n", valToDisplay, ingList[row].item.getLabel())
+                        }
+
                     }
                     else {
                         cell.amountLabel.text = String(format: "%1.1f %@\n", valToDisplay, ingList[row].item.getLabel())
@@ -249,7 +278,19 @@ class AddRecipeFirstPageViewController: UIViewController, UITableViewDelegate, U
                 }
                 else {
                     if fromEdit {
-                        cell.amountLabel.text = String(format: "%1.1f %@\n", ingList[row].amount, unitList[ingList[row].item.getUnit()].std)
+                        var found = false
+                        for i in 0...recipeToSave.ingredients.count-1 {
+                            if recipeToSave.ingredients[i].id == ingList[row].id {
+                                found = true
+                            }
+                        }
+                        if found {
+                            cell.amountLabel.text = String(format: "%1.1f %@\n", ingList[row].amount, unitList[ingList[row].item.getUnit()].std)
+                        }
+                        else {
+                            cell.amountLabel.text = String(format: "%1.1f %@\n", valToDisplay, unitList[ingList[row].item.getUnit()].std)
+                        }
+//                        cell.amountLabel.text = String(format: "%1.1f %@\n", ingList[row].amount, unitList[ingList[row].item.getUnit()].std)
                     }
                     else {
                         cell.amountLabel.text = String(format: "%1.1f %@\n", valToDisplay, unitList[ingList[row].item.getUnit()].std)
@@ -370,8 +411,8 @@ class AddRecipeFirstPageViewController: UIViewController, UITableViewDelegate, U
             let vc = segue.destination as? AddRecipeSecondPageViewController
             vc?.addRecipeDelegate = self
             vc?.recipeToSave = self.recipeToSave
-            vc?.recipeToUpdate = recipeToUpdate!
             if fromEdit {
+                vc?.recipeToUpdate = recipeToUpdate!
                 vc?.fromEdit = true
             }
 
@@ -512,10 +553,10 @@ class AddRecipeFirstPageViewController: UIViewController, UITableViewDelegate, U
             if dietary[d] {
                 flagVector += 1
             }
-//            if d == 6 {
-//                break
-//            }
-            flagVector <<= 1
+            if d == 6 {
+                break
+            }
+           flagVector <<= 1
         }
         recipeToSave.flags = flagVector
         recipeToSave.creatorId = currentUser.getId()
