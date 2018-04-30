@@ -138,6 +138,8 @@
 		A1AA0045206195AD00FCDEC4 /* NewListItemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1AA0044206195AD00FCDEC4 /* NewListItemViewController.swift */; };
 		A1AA004720619BBF00FCDEC4 /* CustomUnitPopoverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1AA004620619BBF00FCDEC4 /* CustomUnitPopoverViewController.swift */; };
 		A1C6385320952D120087B356 /* AddMealsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1C6385220952D120087B356 /* AddMealsViewController.swift */; };
+		A1E28A1520976E91001A14D5 /* f19.png in Resources */ = {isa = PBXBuildFile; fileRef = A1E28A1320976E8F001A14D5 /* f19.png */; };
+		A1E28A1620976E91001A14D5 /* f18.png in Resources */ = {isa = PBXBuildFile; fileRef = A1E28A1420976E8F001A14D5 /* f18.png */; };
 		A1E370272069523100213631 /* CustomUnitsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1E370262069523100213631 /* CustomUnitsViewController.swift */; };
 		A1E3702920695A8A00213631 /* ShoppingListCustomTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1E3702820695A8A00213631 /* ShoppingListCustomTableViewCell.swift */; };
 		A1E3702B20695D5E00213631 /* PantryItemCustomTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1E3702A20695D5E00213631 /* PantryItemCustomTableViewCell.swift */; };
@@ -297,6 +299,8 @@
 		A1AA0044206195AD00FCDEC4 /* NewListItemViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewListItemViewController.swift; sourceTree = "<group>"; };
 		A1AA004620619BBF00FCDEC4 /* CustomUnitPopoverViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomUnitPopoverViewController.swift; sourceTree = "<group>"; };
 		A1C6385220952D120087B356 /* AddMealsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AddMealsViewController.swift; path = PrepMate/AddMealsViewController.swift; sourceTree = "<group>"; };
+		A1E28A1320976E8F001A14D5 /* f19.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = f19.png; sourceTree = "<group>"; };
+		A1E28A1420976E8F001A14D5 /* f18.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = f18.png; sourceTree = "<group>"; };
 		A1E370262069523100213631 /* CustomUnitsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomUnitsViewController.swift; sourceTree = "<group>"; };
 		A1E3702820695A8A00213631 /* ShoppingListCustomTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoppingListCustomTableViewCell.swift; sourceTree = "<group>"; };
 		A1E3702A20695D5E00213631 /* PantryItemCustomTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PantryItemCustomTableViewCell.swift; sourceTree = "<group>"; };
@@ -354,6 +358,8 @@
 				703D489D2072D4DB00246CA3 /* f15.png */,
 				703D489E2072D4DB00246CA3 /* f16.png */,
 				703D48982072D4D900246CA3 /* f17.png */,
+				A1E28A1420976E8F001A14D5 /* f18.png */,
+				A1E28A1320976E8F001A14D5 /* f19.png */,
 			);
 			path = "flag images";
 			sourceTree = "<group>";
@@ -678,6 +684,7 @@
 				70F79707208FCBD1006250DD /* c18.png in Resources */,
 				70A670B0206039E00050FDAE /* icons8-home-24.png in Resources */,
 				703D48B42072D4DE00246CA3 /* f4.png in Resources */,
+				A1E28A1520976E91001A14D5 /* f19.png in Resources */,
 				703D48C22072D50000246CA3 /* r7.png in Resources */,
 				70F7972C208FCBD1006250DD /* c39.png in Resources */,
 				70F79730208FCBD1006250DD /* c27.png in Resources */,
@@ -708,6 +715,7 @@
 				703D48AE2072D4DE00246CA3 /* f7.png in Resources */,
 				70F79704208FCBD1006250DD /* c8.png in Resources */,
 				70352956206482FA00F88A72 /* frame_21_delay-0.04s.png in Resources */,
+				A1E28A1620976E91001A14D5 /* f18.png in Resources */,
 				70F79717208FCBD1006250DD /* c17.png in Resources */,
 				7014A98320699D2A004BC1A2 /* 2000px-Silver_-_replace_this_image_male.svg.png in Resources */,
 				703D48CE2072D50700246CA3 /* bookmark.png in Resources */,

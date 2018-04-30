@@ -40,7 +40,7 @@ class RecipeNutritionViewController: UIViewController, UICollectionViewDelegate,
         self.basicInfoText.layer.borderWidth = 1
         self.vitaminInfoText.layer.borderWidth = 1
         var flagNum = self.recipe.getFlags()
-        for i in 0...(nutritionImages.count-1){
+        for i in (0...(nutritionImages.count-1)).reversed(){
             if (flagNum & 1 ) == 1 {
                 self.nutritionList.append(nutritionImages[i])
             }

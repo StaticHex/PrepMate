@@ -194,8 +194,6 @@ class AddRecipeSecondPageViewController: UIViewController, UIPopoverPresentation
         }
         else {
             success = recipe.addRecipe(newRecipe: self.recipeToSave)
-            print(self.recipeToSave.directions[0].id)
-            print(self.recipeToSave.ingredients[0].id)
         }
         if success! {
             self.databaseAlert(str: "Database Error")
