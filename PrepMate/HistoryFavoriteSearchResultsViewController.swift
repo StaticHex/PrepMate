@@ -35,8 +35,22 @@ class recipeBoxTableCell: UITableViewCell {
     }
     
 }
+
+// User recipe struct
+// container object to avoid tuples because re-typing fields is terrible
+struct UserRecipe {
+    var id : Int?
+    var recipeId : Int?
+    var recipeName : String?
+    var recipeRating : Int?
+    var favorite : Int?
+}
+
 class HistoryFavoriteSearchResultsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, recipeBoxProtocol {
     
+    // RecipeBox and Favorite list variables
+    var userRecipeList = [UserRecipe]() // Used for the recipe box and favorites list
+    var eMsg = "" // holds error message returned by recipe list functions
     
     @IBOutlet weak var histFavTableView: UITableView!
     /// Array containing the Recipes to show.
@@ -198,4 +212,311 @@ class HistoryFavoriteSearchResultsViewController: UIViewController, UITableViewD
         self.present(alert, animated: true, completion: nil)
     }
 
+    // Functions for dealing with user recipes (should be keeping a list of these for recipe box and favorites)
+    func addUserRecipe(newRecipe :UserRecipe) -> Bool {
+        // create mutable object out of parameter
+        var uRecipe = newRecipe
+        
+        // create a variable to return whether we errored out or not
+        var vError : Bool = false
+        
+        // path to our backend script
+        let URL_VERIFY = "http://www.teragentech.net/prepmate/AddUserRecipe.php"
+        
+        // variable which will spin until verification is finished
+        var finished : Bool = false
+        
+        // create our URL object
+        let url = URL(string: URL_VERIFY)
+        
+        // create the request and set the type to POST, otherwise we get authorization error
+        var request = URLRequest(url: url!)
+        request.httpMethod = "POST"
+        
+        // Set up parameters
+
+        
+        // Create HTTP Body
+        let params = "uid=\(currentUser.getId())&rid=\(newRecipe.recipeId!)&favorite=\(newRecipe.favorite!)"
+        request.httpBody = params.data(using: String.Encoding.utf8)
+        
+        // Create a task and send our request to our REST API
+        let task = URLSession.shared.dataTask(with: request) {
+            data, response, error in
+            // if we error out, return the error message
+            if(error != nil) {
+                self.eMsg = error!.localizedDescription
+                finished = true
+                vError = true
+                return
+            }
+            
+            // If there was no error, parse the response
+            do {
+                // convert response to a dictionary
+                let JSONResponse = try JSONSerialization.jsonObject(with: data!, options: .mutableContainers) as? NSDictionary
+                
+                // Get the error status and the error message from the database
+                if let parseJSON = JSONResponse {
+                    self.eMsg = parseJSON["msg"] as! String
+                    vError = (parseJSON["error"] as! Bool)
+                    if(!vError) {
+                        if let sId = parseJSON["id"] as? String {
+                            uRecipe.id = Int(sId)!
+                            if let rRating = parseJSON["recipe_rating"] as? String {
+                                uRecipe.recipeRating = Int(rRating)!
+                                if let rName = parseJSON["recipe_name"] as? String {
+                                    uRecipe.recipeName = rName
+                                } else {
+                                    uRecipe.recipeName = "ERROR"
+                                    vError = true
+                                    self.eMsg = "error occured while parsing recipe name from add operation"
+                                }
+                            } else {
+                                uRecipe.recipeRating = 0
+                                vError = true
+                                self.eMsg = "error occured while parsing recipe rating from add operation"
+                            }
+                        } else {
+                            uRecipe.id = -1
+                            vError = true
+                            self.eMsg = "error occured while parsing user recipe ID from add operation"
+                            return
+                        }
+                    }
+                }
+            } catch {
+                self.eMsg = error.localizedDescription
+                vError = true
+            }
+            finished = true
+        }
+        // execute our task and then return the results
+        task.resume()
+        while(!finished) {}
+        if(!vError) {
+            self.userRecipeList.append(uRecipe)
+        }
+        return vError
+    }
+    
+    func updateUserRecipe(idx : Int) -> Bool {
+        // grab the index to write to the database
+        let newRecipe = userRecipeList[idx]
+        
+        // create a variable to return whether we errored out or not
+        var vError : Bool = false
+        
+        // path to our backend script
+        let URL_VERIFY = "http://www.teragentech.net/prepmate/UpdateUserRecipe.php"
+        
+        // variable which will spin until verification is finished
+        var finished : Bool = false
+        
+        // create our URL object
+        let url = URL(string: URL_VERIFY)
+        
+        // create the request and set the type to POST, otherwise we get authorization error
+        var request = URLRequest(url: url!)
+        request.httpMethod = "POST"
+        
+        // Set up parameters
+        
+        
+        // Create HTTP Body
+        let params = "id=\(newRecipe.id!)&uid=\(currentUser.getId())&rid=\(newRecipe.recipeId!)&favorite=\(newRecipe.favorite!)"
+        request.httpBody = params.data(using: String.Encoding.utf8)
+        
+        // Create a task and send our request to our REST API
+        let task = URLSession.shared.dataTask(with: request) {
+            data, response, error in
+            // if we error out, return the error message
+            if(error != nil) {
+                self.eMsg = error!.localizedDescription
+                finished = true
+                vError = true
+                return
+            }
+            
+            // If there was no error, parse the response
+            do {
+                // convert response to a dictionary
+                let JSONResponse = try JSONSerialization.jsonObject(with: data!, options: .mutableContainers) as? NSDictionary
+                
+                // Get the error status and the error message from the database
+                if let parseJSON = JSONResponse {
+                    self.eMsg = parseJSON["msg"] as! String
+                    vError = (parseJSON["error"] as! Bool)
+                }
+            } catch {
+                self.eMsg = error.localizedDescription
+                vError = true
+            }
+            finished = true
+        }
+        // execute our task and then return the results
+        task.resume()
+        while(!finished) {}
+        return vError
+    }
+    
+    func getUserRecipes(uid:Int) -> Bool {
+        // reset the list
+        self.userRecipeList.removeAll()
+        
+        // create a variable to return whether we errored out or not
+        var vError : Bool = false
+        
+        // path to our backend script
+        let URL_VERIFY = "http://www.teragentech.net/prepmate/GetUserRecipes.php"
+        
+        // variable which will spin until verification is finished
+        var finished : Bool = false
+        
+        // create our URL object
+        let url = URL(string: URL_VERIFY)
+        
+        // create the request and set the type to POST, otherwise we get authorization error
+        var request = URLRequest(url: url!)
+        request.httpMethod = "POST"
+        
+        let params = "id=\(uid)"
+        
+        request.httpBody = params.data(using: String.Encoding.utf8)
+        
+        // Create a task and send our request to our REST API
+        let task = URLSession.shared.dataTask(with: request) {
+            data, response, error in
+            // if we error out, return the error message
+            if(error != nil) {
+                self.eMsg = error!.localizedDescription
+                finished = true
+                vError = true
+                return
+            }
+            
+            // If there was no error, parse the response
+            do {
+                // convert response to a dictionary
+                let JSONResponse = try JSONSerialization.jsonObject(with: data!, options: .mutableContainers) as? NSDictionary
+                // Get the error status and the error message from the database
+                if let parseJSON = JSONResponse {
+                    vError = (parseJSON["error"] as! Bool)
+                    self.eMsg = parseJSON["msg"] as! String
+                    if(!vError) {
+                        var count = 0
+                        while let record = parseJSON["\(count)"] as? String {
+                            if let row = try JSONSerialization.jsonObject(with: record.data(using: String.Encoding.utf8)!, options: .mutableContainers) as? NSDictionary {
+                                var current = UserRecipe()
+                                if let urId = row["id"] as? String {
+                                    current.id = Int(urId)!
+                                    if let urRid = row["recipe_id"] as? String {
+                                        current.recipeId = Int(urRid)!
+                                        if let urRName = row["recipe_name"] as? String {
+                                            current.recipeName = urRName
+                                            if let urRating = row["recipe_rating"] as? String {
+                                                current.recipeRating = Int(urRating)!
+                                                if let urFav = row["favorite"] as? String {
+                                                    current.favorite = Int(urFav)!
+                                                    self.userRecipeList.append(current)
+                                                } else {
+                                                    vError = true
+                                                    self.eMsg = "Error occured while parsing user recipe favorite in get user recipes"
+                                                    return
+                                                }
+                                            } else {
+                                                vError = true
+                                                self.eMsg = "Error occured while parsing recipe rating in get user recipes"
+                                                return
+                                            }
+                                        } else {
+                                            vError = true
+                                            self.eMsg = "Error occured while parsing recipe name in get user recipes"
+                                            return
+                                        }
+                                    } else {
+                                        vError = true
+                                        self.eMsg = "Error occured while parsing recipe id in get user recipes"
+                                        return
+                                    }
+                                } else {
+                                    vError = true
+                                    self.eMsg = "Error occured while parsing user recipe id in get user recipes"
+                                    return
+                                }
+                            }
+                            count += 1
+                        }
+                    }
+                }
+            } catch {
+                self.eMsg = error.localizedDescription
+                vError = true
+            }
+            finished = true
+        }
+        // execute our task and then return the results
+        task.resume()
+        while(!finished) {}
+        return vError
+    }
+    
+    func removeUserRecipe(idx:Int) -> Bool {
+        // create a variable to return whether we errored out or not
+        var vError : Bool = false
+        
+        // path to our backend script
+        let URL_VERIFY = "http://www.teragentech.net/prepmate/RemoveUserRecipe.php"
+        
+        // variable which will spin until verification is finished
+        var finished : Bool = false
+        
+        // create our URL object
+        let url = URL(string: URL_VERIFY)
+        
+        // create the request and set the type to POST, otherwise we get authorization error
+        var request = URLRequest(url: url!)
+        request.httpMethod = "POST"
+        
+        let params = "id="+String(userRecipeList[idx].id!)
+        
+        request.httpBody = params.data(using: String.Encoding.utf8)
+        
+        // Create a task and send our request to our REST API
+        let task = URLSession.shared.dataTask(with: request) {
+            data, response, error in
+            // if we error out, return the error message
+            if(error != nil) {
+                self.eMsg = error!.localizedDescription
+                finished = true
+                vError = true
+                return
+            }
+            
+            // If there was no error, parse the response
+            do {
+                // convert response to a dictionary
+                let JSONResponse = try JSONSerialization.jsonObject(with: data!, options: .mutableContainers) as? NSDictionary
+                
+                // Get the error status and the error message from the database
+                if let parseJSON = JSONResponse {
+                    self.eMsg = parseJSON["msg"] as! String
+                    vError = (parseJSON["error"] as! Bool)
+                }
+            } catch {
+                self.eMsg = error.localizedDescription
+                vError = true
+            }
+            finished = true
+        }
+        // execute our task and then return the results
+        task.resume()
+        while(!finished) {}
+        
+        // Wipe recipe entry
+        if(!vError) {
+            userRecipeList.remove(at: idx)
+        }
+        return vError
+    }
 }
