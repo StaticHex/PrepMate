@@ -219,11 +219,13 @@
                     </view>
                     <navigationItem key="navigationItem" id="2m9-DX-jNc"/>
                     <connections>
+                        <outlet property="bookmarkButton" destination="xxI-7l-jHc" id="yC6-Rx-vxm"/>
                         <outlet property="caloriesLabel" destination="frO-W5-0O0" id="stQ-0P-D0R"/>
                         <outlet property="cooktimeLabel" destination="yF0-1i-hEW" id="ea6-0p-RRy"/>
                         <outlet property="creatorButton" destination="vV8-Uw-MKY" id="zdx-0D-T99"/>
                         <outlet property="directionsText" destination="rmy-wq-hhB" id="SM4-1d-K81"/>
                         <outlet property="fatLabel" destination="Bve-MN-blM" id="Xos-ET-8Zm"/>
+                        <outlet property="favoriteButton" destination="SfS-LM-Qc7" id="PMs-zZ-z8s"/>
                         <outlet property="ingredientText" destination="267-t0-3mD" id="6wa-Bk-nLY"/>
                         <outlet property="preptimeLabel" destination="fGS-CS-8fV" id="LXd-eg-L6p"/>
                         <outlet property="ratingsImage" destination="ZxD-6N-gzp" id="ZLt-2O-8Sr"/>
@@ -2152,11 +2154,11 @@
             <objects>
                 <viewController automaticallyAdjustsScrollViewInsets="NO" id="Lza-Wq-fMP" customClass="UserProfileViewController" customModule="PrepMate" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="BXe-eU-Un9">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="567"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="7iE-hU-ouy">
-                                <rect key="frame" x="10" y="74" width="355" height="583"/>
+                                <rect key="frame" x="10" y="30" width="355" height="527"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="9Yq-E0-k33">
                                         <rect key="frame" x="0.0" y="0.0" width="355" height="100"/>
@@ -2411,7 +2413,7 @@
                                         </constraints>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="dKS-FL-UL3">
-                                        <rect key="frame" x="0.0" y="390" width="355" height="153"/>
+                                        <rect key="frame" x="0.0" y="390" width="355" height="97"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Bio:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hkd-jG-85q">
                                                 <rect key="frame" x="0.0" y="0.0" width="355" height="20.5"/>
@@ -2420,7 +2422,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="5Bw-aV-YHI">
-                                                <rect key="frame" x="0.0" y="20.5" width="355" height="132.5"/>
+                                                <rect key="frame" x="0.0" y="20.5" width="355" height="76.5"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
@@ -2428,7 +2430,7 @@
                                         </subviews>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="j15-On-x5X">
-                                        <rect key="frame" x="0.0" y="553" width="355" height="30"/>
+                                        <rect key="frame" x="0.0" y="497" width="355" height="30"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Um2-aT-v78">
                                                 <rect key="frame" x="0.0" y="0.0" width="172.5" height="30"/>
@@ -5533,7 +5535,7 @@
         <segue reference="jzh-V1-ToK"/>
         <segue reference="pFF-rh-8ei"/>
         <segue reference="BjC-YD-RDR"/>
-        <segue reference="xxt-hr-eTW"/>
+        <segue reference="uyX-EF-v3P"/>
         <segue reference="a1s-3R-Jjp"/>
     </inferredMetricsTieBreakers>
 </document>

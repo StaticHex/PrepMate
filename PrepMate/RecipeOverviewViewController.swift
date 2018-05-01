@@ -13,12 +13,48 @@ class RecipeOverviewViewController: UIViewController {
 
     /// When Favorite button is pressed
     @IBAction func onFavoritePressed(_ sender: Any) {
-        var userRecipe = UserRecipe(id: currentUser.getId(), recipeId: recipe.getId(), recipeName: recipe.getName(), recipeRating: recipe.getRating(), favorite: 1)
+        let userRecipe = UserRecipe(id: currentUser.getId(), recipeId: recipe.getId(), recipeName: recipe.getName(), recipeRating: recipe.getRating(), favorite: 1)
+        recipeAddedAlert(str: "Added to Favorites")
         addUserRecipe(newRecipe: userRecipe)
+
+//        var title = "☆"
+//        if favoriteButton.currentTitle == "☆" {
+//            recipeAddedAlert(str: "Recipe added to Favorites")
+//            addUserRecipe(newRecipe: userRecipe)
+//            title = "★"
+//        }
+//        else if favoriteButton.currentTitle == "★" {
+//            recipeAddedAlert(str: "Recipe removed from Favorites")
+//            title = "☆"
+//        }
+        
+        
+//        UIView.performWithoutAnimation {
+//            self.favoriteButton.setTitle(title, for: .normal)
+//            self.favoriteButton.layoutIfNeeded()
+//        }
     }
     @IBAction func onAddPressed(_ sender: Any) {
-        var userRecipe = UserRecipe(id: currentUser.getId(), recipeId: recipe.getId(), recipeName: recipe.getName(), recipeRating: recipe.getRating(), favorite: 0)
+        let userRecipe = UserRecipe(id: currentUser.getId(), recipeId: recipe.getId(), recipeName: recipe.getName(), recipeRating: recipe.getRating(), favorite: 0)
         addUserRecipe(newRecipe: userRecipe)
+        recipeAddedAlert(str: "Added to Bookmarks")
+        
+    }
+    
+    func recipeAddedAlert(str:String) {
+        let alert = UIAlertController(title: "Recipe Saved", message: "\(str)", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .default, handler: { _ in
+            NSLog("The \"OK\" alert occured.")
+        }))
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    func userRecipeAlert(str:String) {
+        let alert = UIAlertController(title: "Add Recipe Error", message: "\(str)", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .default, handler: { _ in
+            NSLog("The \"OK\" alert occured.")
+        }))
+        self.present(alert, animated: true, completion: nil)
     }
     
     @IBAction func onCreatorButton(_ sender: Any) {
@@ -34,6 +70,9 @@ class RecipeOverviewViewController: UIViewController {
     @IBOutlet weak var fatLabel: UILabel!
     @IBOutlet weak var preptimeLabel: UILabel!
     @IBOutlet weak var cooktimeLabel: UILabel!
+    @IBOutlet weak var bookmarkButton: UIButton!
+    @IBOutlet weak var favoriteButton: UIButton!
+    
     var recipe = Recipe()
     let creator = User()
     

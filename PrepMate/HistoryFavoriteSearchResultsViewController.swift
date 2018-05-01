@@ -94,14 +94,41 @@ class HistoryFavoriteSearchResultsViewController: UIViewController, UITableViewD
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        getUserRecipes(uid: currentUser.getId())
+        
+        // Janky way to make unique list
+        var list = [UserRecipe]()
         if whichRecipeClicked == 0 {
-            getUserRecipes(uid: currentUser.getId())
+            list = userRecipeList.filter {$0.favorite == 0}
         }
+        else if whichRecipeClicked == 2 {
+            list = userRecipeList.filter {$0.favorite == 1}
+        }
+        if whichRecipeClicked == 0 || whichRecipeClicked == 2 {
+            var unique = [Int]()
+            var uniqueRecipes = [UserRecipe]()
+            for item in list {
+                if !unique.contains(item.recipeId!) {
+                    unique.append(item.recipeId!)
+                    uniqueRecipes.append(item)
+                }
+            }
+            userRecipeList = uniqueRecipes
+        }
+        
+        
         histFavTableView.reloadData()
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return recipeList.count
+        if whichRecipeClicked == 0 || whichRecipeClicked == 2 {
+            return userRecipeList.count
+        }
+        else if whichRecipeClicked == 1 {
+            return recipeList.count
+        }
+        // DEFAULT SHOULDNT BE HIT
+        return 1
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -110,17 +137,18 @@ class HistoryFavoriteSearchResultsViewController: UIViewController, UITableViewD
         let row = indexPath.row
         cell.rBProtocol = self
         cell.ratingsLabel.contentMode = .scaleAspectFit
-        if whichRecipeClicked == 0 {
-            cell.recipeNameLabel.text! = recipeList[row].getName()
-            cell.ratingsLabel.image = RatingImages[recipeList[row].getRating()]
-            cell.row = row
-        }
-        else {
+
+        if whichRecipeClicked == 0 || whichRecipeClicked == 2 {
             cell.recipeNameLabel.text! = userRecipeList[row].recipeName!
             cell.ratingsLabel.image = RatingImages[userRecipeList[row].recipeRating!]
             cell.row = row
             cell.favoriteSelect.isEnabled = false
             cell.favoriteSelect.isHidden = true
+        }
+        else {
+            cell.recipeNameLabel.text! = recipeList[row].getName()
+            cell.ratingsLabel.image = RatingImages[recipeList[row].getRating()]
+            cell.row = row
         }
 //        cell.recipeNameLabel.text! = recipeList[row].getName()
 //        cell.ratingsLabel.image = RatingImages[recipeList[row].getRating()]
@@ -152,8 +180,9 @@ class HistoryFavoriteSearchResultsViewController: UIViewController, UITableViewD
             let destination = segue.destination as? RecipePageViewController,
             let operatorIndex = histFavTableView.indexPathForSelectedRow?.row
         {
-            if whichRecipeClicked == 0 {
-                let dest = getRecipes(query: "id=\(userRecipeList[operatorIndex].recipeId)")
+            if whichRecipeClicked == 0  || whichRecipeClicked == 2 {
+                let dest = getRecipes(query: "id=\(userRecipeList[operatorIndex].recipeId!)")
+                print(dest)
                 destination.recipe = dest[0]
             }
             else {
@@ -171,19 +200,22 @@ class HistoryFavoriteSearchResultsViewController: UIViewController, UITableViewD
     }
     
     func removeRecipe(cell: recipeBoxTableCell) {
-        if whichRecipeClicked == 0 {
+        if whichRecipeClicked == 0 || whichRecipeClicked == 2 {
             // Remove from recipes saved for this user
+            let userRecipeToDelete = userRecipeList[cell.row]
             
+            let success = removeUserRecipe(idx: cell.row)
+            if success {
+                self.databaseAlert(str: "Database Error")
+            }
+            else {
+                self.histFavTableView.reloadData()
+                return
+            }
         }
         else if whichRecipeClicked == 1 {
             // Remove recipe from DB
             let recipeToDelete = recipeList[cell.row]
-
-            // Remove from table view
-            let indexPath = self.histFavTableView.indexPath(for: cell)
-            recipeList.remove(at: indexPath!.row)
-            self.histFavTableView.deleteRows(at: [indexPath!], with: .fade)
-            
             
             let success = recipeToDelete.removeRecipe()
             if success {
@@ -470,7 +502,6 @@ class HistoryFavoriteSearchResultsViewController: UIViewController, UITableViewD
         // create the request and set the type to POST, otherwise we get authorization error
         var request = URLRequest(url: url!)
         request.httpMethod = "POST"
-        
         let params = "id="+String(userRecipeList[idx].id!)
         
         request.httpBody = params.data(using: String.Encoding.utf8)

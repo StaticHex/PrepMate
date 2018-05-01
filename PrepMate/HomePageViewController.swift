@@ -235,8 +235,11 @@ class HomePageViewController: UIViewController, UITableViewDelegate, UITableView
             if whichRecipeClick == 0 {
                 vc.whichRecipeClicked = 0
             }
-            else {
+            else if whichRecipeClick == 1 {
                 vc.whichRecipeClicked = 1
+            }
+            else if whichRecipeClick == 2 {
+                vc.whichRecipeClicked = 2
             }
         }
         
@@ -323,11 +326,12 @@ class HomePageViewController: UIViewController, UITableViewDelegate, UITableView
     }
     @IBAction func onMenuRecipeClick(_ sender: Any) {
         self.whichRecipeClick = 0
-        passedRecipes = getRecipes(query: "uid=\(currentUser.getId())")
+//        passedRecipes = getRecipes(query: "uid=\(currentUser.getId())")
         performSegue(withIdentifier: "homeToRecipeList", sender: sender)
         menu.alpha = 0
     }
     @IBAction func onMenuFavoriteClick(_ sender: Any) {
+        self.whichRecipeClick = 2
         performSegue(withIdentifier: "homeToRecipeList", sender: sender)
     }
     @IBAction func onMenuMealsClick(_ sender: Any) {
