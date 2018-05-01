@@ -129,7 +129,8 @@ class AddURLViewController: UIViewController, UINavigationControllerDelegate, UI
         
         request.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
         
-        var imageData = UIImagePNGRepresentation(btnPhoto.image(for: .normal)!)
+        var imageData : Data?
+
         if(ext=="jpeg" || ext=="jpg") {
             imageData = UIImageJPEGRepresentation(btnPhoto.image(for: .normal)!, 1)
         } else if(ext=="png") {
