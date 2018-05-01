@@ -110,6 +110,7 @@ class AddURLViewController: UIViewController, UINavigationControllerDelegate, UI
     
     // File Upload Functions
     func uploadImage(prefix : String) -> Bool {
+        URLCache.shared.removeAllCachedResponses()
         print(localPath + " " + prefix + " " + ext)
         // bool to ensure upload finishes before moving on
         var finished = false
@@ -131,12 +132,12 @@ class AddURLViewController: UIViewController, UINavigationControllerDelegate, UI
         
         var imageData : Data?
 
-        if(ext=="jpeg" || ext=="jpg") {
+        if(ext=="jpeg" || ext=="jpg" || ext=="gif") {
             imageData = UIImageJPEGRepresentation(btnPhoto.image(for: .normal)!, 1)
         } else if(ext=="png") {
             imageData = UIImagePNGRepresentation(btnPhoto.image(for: .normal)!)
         } else {
-            self.alert.message = "Image in wrong format, must be .jpeg, .jpg or .png"
+            self.alert.message = "Image in wrong format, currently we only support .jpg, .png, and .gif"
             return true
         }
         

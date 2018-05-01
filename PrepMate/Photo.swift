@@ -29,6 +29,8 @@ class Photo {
     public func getImage() -> UIImage { return self.image }
     public func getEMsg() -> String { return self.eMsg }
     public func setPhoto( imageURL: String) {
+        
+        // set data based on passed URL
         self.path = imageURL
         self.eMsg = ""
         if(self.path == "") {
@@ -37,6 +39,9 @@ class Photo {
         }
         
         let session = URLSession(configuration: .default)
+        
+        // clear cached response
+        URLCache.shared.removeAllCachedResponses()
         var pic : UIImage = #imageLiteral(resourceName: "2000px-Silver_-_replace_this_image_male.svg.png")
         var finished : Bool = false
         if let picURL = URL(string: self.path) {
