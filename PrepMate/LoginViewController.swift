@@ -19,11 +19,10 @@ class LoginViewController: UIViewController, UIPopoverPresentationControllerDele
     
     var segueId = "" // Used for switching between segues
     var rememberUpdate = false
-    
+    var rUname = ""
     
     // Set up our alert controller herer
     let alert = UIAlertController(title: "Sorry, we couldn't log you in", message: "", preferredStyle: .alert)
-
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -78,6 +77,7 @@ class LoginViewController: UIViewController, UIPopoverPresentationControllerDele
             }
             if let unData = defaults.object(forKey: "uname") as? Data {
                 txtUserName.text = NSKeyedUnarchiver.unarchiveObject(with: unData) as? String
+                rUname = txtUserName.text!
             }
             
             if let pData = defaults.object(forKey: "pword") as? Data {
@@ -116,6 +116,9 @@ class LoginViewController: UIViewController, UIPopoverPresentationControllerDele
         
         // Run our verify function, to make sure user has valid credentials
         if(currentUser.verify(uname: txtUserName.text!, pword: txtPassword.text!)) {
+            if(txtUserName.text! != rUname) {
+                rememberUpdate = true
+            }
             if(rememberUpdate) {
                 let rData = NSKeyedArchiver.archivedData(withRootObject: swtRememberMe.isOn)
                 let defaults = UserDefaults.standard
