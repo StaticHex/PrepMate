@@ -127,11 +127,13 @@ class ShoppingListViewController: UIViewController, UIPopoverPresentationControl
     func addSItem(item: pantrySLItem) {
         
         // DO DATABASE CALL HERE
-        addShoppingListITem(newItem: item)
-        shoppingListRecords.append(item)
-        self.shoppingListTableView.beginUpdates()
-        self.shoppingListTableView.insertRows(at: [IndexPath.init(row: shoppingListRecords.count-1, section: 0)], with: .automatic)
-        self.shoppingListTableView.endUpdates()
+        addShoppingListItem(newItem: item)
+        self.shoppingListTableView.reloadData()
+        print(shoppingListRecords)
+//        shoppingListRecords.append(item)
+//        self.shoppingListTableView.beginUpdates()
+//        self.shoppingListTableView.insertRows(at: [IndexPath.init(row: shoppingListRecords.count-1, section: 0)], with: .automatic)
+//        self.shoppingListTableView.endUpdates()
     }
     
     // Remove an item from the shopping list table view
@@ -142,7 +144,7 @@ class ShoppingListViewController: UIViewController, UIPopoverPresentationControl
     }
     
     // Functions for dealing with user recipes (should be keeping a list of these for recipe box and favorites)
-    func addShoppingListITem(newItem :pantrySLItem) -> Bool {
+    func addShoppingListItem(newItem :pantrySLItem) -> Bool {
         // create mutable object out of parameter
         var sLItem = newItem
         
@@ -150,7 +152,7 @@ class ShoppingListViewController: UIViewController, UIPopoverPresentationControl
         var vError : Bool = false
         
         // path to our backend script
-        let URL_VERIFY = "http://www.teragentech.net/prepmate/AddUserRecipe.php"
+        let URL_VERIFY = "http://www.teragentech.net/prepmate/AddPantryItem.php"
         
         // variable which will spin until verification is finished
         var finished : Bool = false
@@ -163,7 +165,6 @@ class ShoppingListViewController: UIViewController, UIPopoverPresentationControl
         request.httpMethod = "POST"
         
         // Set up parameters
-        
         
         // Create HTTP Body
         let params = "uid=\(currentUser.getId())&iid=\(newItem.ingredientId!)&amount=\(newItem.amount!)&auto=\(newItem.managed!)"
@@ -190,12 +191,13 @@ class ShoppingListViewController: UIViewController, UIPopoverPresentationControl
                     self.eMsg = parseJSON["msg"] as! String
                     vError = (parseJSON["error"] as! Bool)
                     if(!vError) {
-                        if let sId = parseJSON["id"] as? String {
-                            sLItem.id = Int(sId)!
-                            if let ingredientId = parseJSON["iid"] as? String {
-                                sLItem.ingredientId = Int(ingredientId)!
-                                if let amount = parseJSON["amount"] as? Double {
-                                    sLItem.amount = amount
+                        print(parseJSON.descriptionInStringsFileFormat)
+                        if let sId = parseJSON["code"] as? Int? {
+                            sLItem.id = sId!
+                            if let ingredientId = parseJSON["iid"] as? Int? {
+                                sLItem.ingredientId = ingredientId!
+                                if let amount = parseJSON["amount"] as? Double? {
+                                    sLItem.amount = amount!
                                 } else {
                                     sLItem.ingredientName = "ERROR"
                                     vError = true
