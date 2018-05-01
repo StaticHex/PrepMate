@@ -45,6 +45,8 @@ class MealsPageViewController: UIViewController, UITableViewDelegate, UITableVie
             let vc = segue.destination as? HistoryFavoriteSearchResultsViewController
         {
             vc.recipeList = meals[operatorIndex].getMealRecipes()
+            vc.fromMeal = true
+            vc.meal = meals[operatorIndex]
         }
         else if segue.identifier == "addingMealsToRecipeBox" {
             let vc = segue.destination as? HistoryFavoriteSearchResultsViewController
@@ -74,7 +76,7 @@ class MealsPageViewController: UIViewController, UITableViewDelegate, UITableVie
         
         cell.mProtocol = self
         let row = indexPath.row
-        cell.mealName.text = meals[row].name
+        cell.mealName.text = meals[row].name.capitalized
         
         return cell
     }

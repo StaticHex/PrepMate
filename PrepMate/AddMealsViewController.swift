@@ -13,7 +13,6 @@ class MealsOptionsCustomCell: UITableViewCell {
     
     @IBOutlet weak var recipeName: UILabel!
     @IBOutlet weak var selectedItem: UIButton!
-    
     var section = 0
     var row = 0
     
@@ -65,16 +64,21 @@ class AddMealsViewController: UIViewController, UITableViewDelegate, UITableView
     weak var mProtocol : mealsProtocol?
     
     var mealsToChooseFrom = [MealOptions]()
+    var meal = Meal()
     
     var recipeList = getRecipes(query: "id>=1 ORDER BY rating ASC LIMIT 10")
     
-
+    var existingMeal = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.isNavigationBarHidden = false
         mealsTableView.delegate = self
         mealsTableView.dataSource = self
+        if(existingMeal){
+            self.mealNameInput.text = self.meal.name
+        }
+        
         // Do any additional setup after loading the view.
     }
     
@@ -141,15 +145,18 @@ class AddMealsViewController: UIViewController, UITableViewDelegate, UITableView
             self.mealAlert(str: "Selected recipes")
             return
         }
-        let meal = Meal()
-        // TODO: Handle failure?
-        if(meal.addMeal(uid:currentUser.getId(), name: mealNameInput.text!)){
-            print("ADD MEAL FAILED: ")
-            print(meal.eMsg)
+        var meal = Meal()
+        if(existingMeal){
+            meal = self.meal
+        } else {
+            if(meal.addMeal(uid:currentUser.getId(), name: mealNameInput.text!)){
+                print("ADD MEAL FAILED: ")
+                print(meal.eMsg)
+            }
         }
-        print("RECIPE LIST: \(recipeList)")
+        
         for recipe in recipeList {
-            print("Adding Recipe: \(recipe.getId())")
+            print("Adding Recipe: \(recipe.getName()) with id: \(recipe.getId())")
             if(meal.addMealRecipe(rid: recipe.getId())){
                 print("ADD MEAL RECIPE FAILED: ");
                 print(meal.eMsg)

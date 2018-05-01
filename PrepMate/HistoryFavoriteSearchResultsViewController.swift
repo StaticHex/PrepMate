@@ -46,16 +46,32 @@ struct UserRecipe {
     var favorite : Int?
 }
 
-class HistoryFavoriteSearchResultsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, recipeBoxProtocol {
+class HistoryFavoriteSearchResultsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, recipeBoxProtocol, mealsProtocol {
+    func removeMealCell(cell: MealsCustomTableViewCell) {
+        ///Shouldn't be called ever
+        return
+    }
+    
+    func addFromSelectedMeals(meal: Meal) {
+        self.meal = meal
+        self.fromMeal = true
+        self.recipeList = self.meal.getMealRecipes()
+        self.histFavTableView.reloadData()
+    }
+    
     
     // RecipeBox and Favorite list variables
     var userRecipeList = [UserRecipe]() // Used for the recipe box and favorites list
     var eMsg = "" // holds error message returned by recipe list functions
     
+    @IBOutlet weak var AddButton: UIButton!
+    
     @IBOutlet weak var histFavTableView: UITableView!
     /// Array containing the Recipes to show.
     var recipeList = [Recipe]()
     
+    var meal = Meal()
+    var fromMeal = false
     var row : Int?
     
     // 0 myRecipe, 1 removeRecipe
@@ -69,70 +85,12 @@ class HistoryFavoriteSearchResultsViewController: UIViewController, UITableViewD
         navigationController?.isNavigationBarHidden = false
         histFavTableView.delegate = self
         histFavTableView.dataSource = self
-        /*
-         v
-         var testRecipe = RecipeRecord()
-         testRecipe.name = "Test"
-         testRecipe.photo = "https://media1.popsugar-assets.com/files/thumbor/D0OYajmdcatHUC1-b4Axbf-uNxo/fit-in/2048xorig/filters:format_auto-!!-:strip_icc-!!-/2017/02/08/859/n/1922195/a7a42800589b73af54eda9.99423697_edit_img_image_43136859_1486581354/i/KFC-Fried-Chicken-Pizza.jpg"
-         testRecipe.category = 10
-         testRecipe.creatorId = currentUser.getId()
-         testRecipe.servings = "6~8"
-         testRecipe.prepTime = "00:10:00"
-         testRecipe.cookTime = "00:10:00"
-         testRecipe.calories = 120
-         testRecipe.unsatFat = 20
-         testRecipe.satFat = 30
-         testRecipe.cholesterol = 30
-         testRecipe.sodium = 40
-         testRecipe.potassium = 50
-         testRecipe.carbs = 60
-         testRecipe.fiber = 70
-         testRecipe.sugar = 80
-         
-         var ingredient = RecipeIngredient()
-         if(ingredient.item.getIngredient(iid: 8)) {
-         print(ingredient)
-         }
-         ingredient.amount = 6
-         
-         testRecipe.ingredients.append((ingredient))
-         
-         var vitamin = Vitamin()
-         vitamin.idx = 1
-         vitamin.percent = 0.5
-         
-         testRecipe.vitamins.append(vitamin)
-         
-         var direction = Direction()
-         direction.description = "Test 1"
-         
-         testRecipe.directions.append(direction)
-         
-         var direction2 = Direction()
-         direction2.description = "Test 2"
-         
-         testRecipe.directions.append(direction2)
-         
-         let recipe = Recipe()
-         if(recipe.addRecipe(newRecipe: testRecipe)) {
-         print(recipe)
-         }
-         
-         var comment = Comment()
-         comment.title = "TEST COMMENT"
-         comment.rating = 1
-         comment.description = "This is a test comment. Please work"
-         
-         if(recipe.addRecipeComment(newComment: comment)) {
-         print(recipe)
-         }
-         
-         var rList = [21,22,48]
-         for r in rList {
-         var recipe = Recipe()
-         recipe.getRecipe(rid: r)
-         recipeList.append(recipe)
-         }*/
+        if(fromMeal){
+            AddButton.isHidden = false
+        }else {
+            AddButton.isHidden = true
+        }
+       
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -151,6 +109,7 @@ class HistoryFavoriteSearchResultsViewController: UIViewController, UITableViewD
         
         let row = indexPath.row
         cell.rBProtocol = self
+        cell.ratingsLabel.contentMode = .scaleAspectFit
         if whichRecipeClicked == 0 {
             cell.recipeNameLabel.text! = recipeList[row].getName()
             cell.ratingsLabel.image = RatingImages[recipeList[row].getRating()]
@@ -201,6 +160,13 @@ class HistoryFavoriteSearchResultsViewController: UIViewController, UITableViewD
                 destination.recipe = recipeList[operatorIndex]
             }
         }
+        else if segue.identifier == "addMealRecipeSegue",
+           let destination = segue.destination as? AddMealsViewController
+            {
+                destination.mProtocol = self
+                destination.meal = self.meal
+                destination.existingMeal = true
+            }
         
     }
     
