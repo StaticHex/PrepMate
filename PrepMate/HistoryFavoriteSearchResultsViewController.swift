@@ -46,6 +46,11 @@ struct UserRecipe {
     var favorite : Int?
 }
 
+struct mealRecipe {
+    var recipe:Recipe?
+    var mealRecipeId: Int?
+}
+
 class HistoryFavoriteSearchResultsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, recipeBoxProtocol, mealsProtocol {
     func removeMealCell(cell: MealsCustomTableViewCell) {
         ///Shouldn't be called ever
@@ -55,7 +60,9 @@ class HistoryFavoriteSearchResultsViewController: UIViewController, UITableViewD
     func addFromSelectedMeals(meal: Meal) {
         self.meal = meal
         self.fromMeal = true
-        self.recipeList = self.meal.getMealRecipes()
+        let tmp = self.meal.getMealRecipes()
+        self.recipeList = tmp.recipe
+        self.mealRecipeList = tmp.mIds
         self.histFavTableView.reloadData()
     }
     
@@ -69,7 +76,7 @@ class HistoryFavoriteSearchResultsViewController: UIViewController, UITableViewD
     @IBOutlet weak var histFavTableView: UITableView!
     /// Array containing the Recipes to show.
     var recipeList = [Recipe]()
-    
+    var mealRecipeList = [Int]()
     var meal = Meal()
     var fromMeal = false
     var row : Int?
@@ -89,10 +96,6 @@ class HistoryFavoriteSearchResultsViewController: UIViewController, UITableViewD
             AddButton.isHidden = false
         }else {
             AddButton.isHidden = true
-        }
-        print("Recipe list: ")
-        for recipe in self.recipeList{
-            print(recipe.getName())
         }
        
     }
@@ -210,7 +213,7 @@ class HistoryFavoriteSearchResultsViewController: UIViewController, UITableViewD
             
             let success = removeUserRecipe(idx: cell.row)
             if success {
-                self.databaseAlert(str: "Database Error")
+                self.databaseAlert(str: "Remove User Recipe")
             }
             else {
                 self.histFavTableView.reloadData()
@@ -223,7 +226,7 @@ class HistoryFavoriteSearchResultsViewController: UIViewController, UITableViewD
             
             let success = recipeToDelete.removeRecipe()
             if success {
-                self.databaseAlert(str: "Database Error")
+                self.databaseAlert(str: "Remove Recipe")
             }
             else {
                 self.histFavTableView.reloadData()
@@ -231,7 +234,14 @@ class HistoryFavoriteSearchResultsViewController: UIViewController, UITableViewD
             }
         }else{
             if(fromMeal){
-                let recipeToDelete = recipeList[cell.row]
+                let success = removeMealRecipe(idx: cell.row)
+                if success {
+                    self.databaseAlert(str: "Remove Meal Recipe")
+                    print("\(self.meal.eMsg)")
+                } else {
+                    self.histFavTableView.reloadData()
+                    return
+                }
                 
             }
         }
@@ -239,7 +249,7 @@ class HistoryFavoriteSearchResultsViewController: UIViewController, UITableViewD
     }
     
     func databaseAlert(str:String) {
-        let alert = UIAlertController(title: "Add Recipe Error", message: "\(str)", preferredStyle: .alert)
+        let alert = UIAlertController(title: "\(str)", message: "Database Error", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .default, handler: { _ in
             NSLog("The \"OK\" alert occured.")
         }))
@@ -549,6 +559,64 @@ class HistoryFavoriteSearchResultsViewController: UIViewController, UITableViewD
         // Wipe recipe entry
         if(!vError) {
             userRecipeList.remove(at: idx)
+        }
+        return vError
+    }
+    func removeMealRecipe(idx: Int) -> Bool{
+        // create a variable to return whether we errored out or not
+        var vError : Bool = false
+        
+        // path to our backend script
+        let URL_VERIFY = "http://www.teragentech.net/prepmate/RemoveMealRecipe.php"
+        
+        // variable which will spin until verification is finished
+        var finished : Bool = false
+        
+        // create our URL object
+        let url = URL(string: URL_VERIFY)
+        
+        // create the request and set the type to POST, otherwise we get authorization error
+        var request = URLRequest(url: url!)
+        request.httpMethod = "POST"
+        
+        let params = "id=\(mealRecipeList[idx])"
+        
+        request.httpBody = params.data(using: String.Encoding.utf8)
+        
+        // Create a task and send our request to our REST API
+        let task = URLSession.shared.dataTask(with: request) {
+            data, response, error in
+            // if we error out, return the error message
+            if(error != nil) {
+                self.eMsg = error!.localizedDescription
+                finished = true
+                vError = true
+                return
+            }
+            
+            // If there was no error, parse the response
+            do {
+                // convert response to a dictionary
+                let JSONResponse = try JSONSerialization.jsonObject(with: data!, options: .mutableContainers) as? NSDictionary
+                
+                // Get the error status and the error message from the database
+                if let parseJSON = JSONResponse {
+                    self.eMsg = parseJSON["msg"] as! String
+                    vError = (parseJSON["error"] as! Bool)
+                }
+            } catch {
+                self.eMsg = error.localizedDescription
+                vError = true
+            }
+            finished = true
+        }
+        // execute our task and then return the results
+        task.resume()
+        while(!finished) {}
+        // Wipe entries
+        if(!vError) {
+            recipeList.remove(at: idx)
+            mealRecipeList.remove(at: idx)
         }
         return vError
     }

@@ -44,8 +44,9 @@ class MealsPageViewController: UIViewController, UITableViewDelegate, UITableVie
             let operatorIndex = self.mealsTableView.indexPathForSelectedRow?.row,
             let vc = segue.destination as? HistoryFavoriteSearchResultsViewController
         {
-            vc.recipeList = meals[operatorIndex].getMealRecipes()
-    
+            let tmp = meals[operatorIndex].getMealRecipes()
+            vc.recipeList = tmp.recipe
+            vc.mealRecipeList = tmp.mIds
             vc.fromMeal = true
             vc.meal = meals[operatorIndex]
         }

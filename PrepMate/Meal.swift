@@ -137,9 +137,9 @@ class Meal {
         while(!finished) {}
         return vError
     }
-    func getMealRecipes() -> [Recipe] {
+    func getMealRecipes() -> (recipe:[Recipe], mIds: [Int]) {
         var recipes = [Recipe]()
-        
+        var mealRecipeIds = [Int]()
         // path to our backend script
         let URL_VERIFY = "http://www.teragentech.net/prepmate/GetMealRecipes.php"
         
@@ -172,7 +172,6 @@ class Meal {
             do {
                 // convert response to a dictionary
                 let JSONResponse = try JSONSerialization.jsonObject(with: data!, options: .mutableContainers) as? NSDictionary
-                print(JSONResponse)
                 
                 // Get the error status and the error message from the database
                 if let parseJSON = JSONResponse {
@@ -182,12 +181,12 @@ class Meal {
                         var count = 0
                         while let record = parseJSON[String(count)] as? NSString {
                             if let entry = try JSONSerialization.jsonObject(with: record.data(using: String.Encoding.utf8.rawValue)!, options: .mutableContainers) as? NSDictionary {
-                                print(count)
-                                var newRecipe = Recipe()
+                                let newRecipe = Recipe()
                                 if let rId = entry["recipe_id"] as? NSString {
                                     if let recipeInfo = try JSONSerialization.jsonObject(with: rId.data(using: String.Encoding.utf8.rawValue)!, options: .mutableContainers) as? NSDictionary {
                                         if(!newRecipe.populateFromDict(query: recipeInfo)) {
                                             recipes.append(newRecipe)
+                                            mealRecipeIds.append(Int(entry["id"] as! String)!)
                                         } else {
                                             print(newRecipe.getEMsg())
                                         }
@@ -217,7 +216,8 @@ class Meal {
         task.resume()
         while(!finished) {}
         
-        return recipes
+        return (recipe:recipes, mIds: mealRecipeIds)
     }
+    
     
 }
