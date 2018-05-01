@@ -45,6 +45,7 @@ class MealsPageViewController: UIViewController, UITableViewDelegate, UITableVie
             let vc = segue.destination as? HistoryFavoriteSearchResultsViewController
         {
             vc.recipeList = meals[operatorIndex].getMealRecipes()
+    
             vc.fromMeal = true
             vc.meal = meals[operatorIndex]
         }

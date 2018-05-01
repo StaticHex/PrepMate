@@ -75,7 +75,7 @@ class HistoryFavoriteSearchResultsViewController: UIViewController, UITableViewD
     var row : Int?
     
     // 0 myRecipe, 1 removeRecipe
-    var whichRecipeClicked = 0
+    var whichRecipeClicked = -1
     
 
     override func viewDidLoad() {
@@ -90,12 +90,17 @@ class HistoryFavoriteSearchResultsViewController: UIViewController, UITableViewD
         }else {
             AddButton.isHidden = true
         }
+        print("Recipe list: ")
+        for recipe in self.recipeList{
+            print(recipe.getName())
+        }
        
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        getUserRecipes(uid: currentUser.getId())
-        
+        if(!fromMeal){
+            getUserRecipes(uid: currentUser.getId())
+        }
         // Janky way to make unique list
         var list = [UserRecipe]()
         if whichRecipeClicked == 0 {
@@ -124,11 +129,10 @@ class HistoryFavoriteSearchResultsViewController: UIViewController, UITableViewD
         if whichRecipeClicked == 0 || whichRecipeClicked == 2 {
             return userRecipeList.count
         }
-        else if whichRecipeClicked == 1 {
+        else {
             return recipeList.count
         }
-        // DEFAULT SHOULDNT BE HIT
-        return 1
+        
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -224,6 +228,11 @@ class HistoryFavoriteSearchResultsViewController: UIViewController, UITableViewD
             else {
                 self.histFavTableView.reloadData()
                 return
+            }
+        }else{
+            if(fromMeal){
+                let recipeToDelete = recipeList[cell.row]
+                
             }
         }
 
