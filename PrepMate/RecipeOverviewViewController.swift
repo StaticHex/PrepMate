@@ -158,8 +158,8 @@ class RecipeOverviewViewController: UIViewController {
                     self.eMsg = parseJSON["msg"] as! String
                     vError = (parseJSON["error"] as! Bool)
                     if(!vError) {
-                        if let sId = parseJSON["id"] as? String {
-                            uRecipe.id = Int(sId)!
+                        if let sId = parseJSON["id"] as? Int {
+                            uRecipe.id = sId
                             if let rRating = parseJSON["recipe_rating"] as? String {
                                 uRecipe.recipeRating = Int(rRating)!
                                 if let rName = parseJSON["recipe_name"] as? String {
