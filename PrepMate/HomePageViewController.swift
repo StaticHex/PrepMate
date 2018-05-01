@@ -198,6 +198,8 @@ class HomePageViewController: UIViewController, UITableViewDelegate, UITableView
         if segue.identifier == "homeToCuisineSegue" {
             let vc = segue.destination as? HistoryFavoriteSearchResultsViewController
             vc?.row = self.thisRow
+            vc?.recipeList = getRecipes(query: "category=\(self.thisRow)")
+            
         }
         if segue.identifier == "homeToRecipeOverview" {
             let vc = segue.destination as? RecipePageViewController
