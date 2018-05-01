@@ -45,6 +45,7 @@ class UserProfileViewController: UIViewController, UIPopoverPresentationControll
     override func viewDidLoad() {
         super.viewDidLoad()
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler:  nil))
+        txtUserName.addTarget(self, action: #selector(nameDidChange(_:)), for: .editingChanged)
         self.tvBlacklist.delegate = self
         self.tvBlacklist.dataSource = self
     }
@@ -64,7 +65,7 @@ class UserProfileViewController: UIViewController, UIPopoverPresentationControll
         switch(op) {
         case 0: // add
             btnAvatar.setImage(#imageLiteral(resourceName: "2000px-Silver_-_replace_this_image_male.svg.png"), for: .normal)
-            btnAvatar.isEnabled = true
+            btnAvatar.isEnabled = false
             txtUserName.isEnabled = true
             txtUserName.text = ""
             txtUserName.backgroundColor = UIColor.white
@@ -155,7 +156,11 @@ class UserProfileViewController: UIViewController, UIPopoverPresentationControll
         if(segue.identifier == "userPhotoPopover") {
             let vc = segue.destination as? AddURLViewController
             vc?.urlDelegate = self
-            vc?.prefix = user.getUname().lowercased()
+            if(op == 1) {
+                vc?.prefix = user.getUname().lowercased()
+            } else {
+                vc?.prefix = txtUserName.text!
+            }
             vc?.isModalInPopover = true
             let controller = vc?.popoverPresentationController
             if controller != nil {
@@ -218,10 +223,29 @@ class UserProfileViewController: UIViewController, UIPopoverPresentationControll
         return cell
     }
     
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return false
+    }
+    
+    @objc func nameDidChange(_ textField :UITextField) {
+        if op == 0 {
+            if txtUserName.text! != "" {
+                if(userExists()) {
+                    txtUserName.backgroundColor = #colorLiteral(red: 0.9568627477, green: 0.6588235497, blue: 0.5450980663, alpha: 1)
+                    btnAvatar.isEnabled = false
+                } else {
+                    txtUserName.backgroundColor = #colorLiteral(red: 0.721568644, green: 0.8862745166, blue: 0.5921568871, alpha: 1)
+                    btnAvatar.isEnabled = true
+                }
+            }
+        }
+    }
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         
-        var row = indexPath.row
+        let row = indexPath.row
         print(row)
     }
     
@@ -347,6 +371,7 @@ class UserProfileViewController: UIViewController, UIPopoverPresentationControll
     
     // Needed for URLProtocol, passes information back here from our popover
     func setURL(url: String) {
+        txtUserName.isEnabled = false
         avatarPhoto.setPhoto(imageURL: url)
         btnAvatar.setImage(avatarPhoto.getImage(), for: .normal)
         if(avatarPhoto.getEMsg() != "" || avatarPhoto.getPath() == "") {
@@ -378,5 +403,74 @@ class UserProfileViewController: UIViewController, UIPopoverPresentationControll
             self.present(alert, animated: true)
         }
         tvBlacklist.reloadData()
+    }
+    
+    func userExists() -> Bool {
+        // create a variable to return whether we errored out or not
+        var vError : Bool = false
+        var found : Bool = false
+        // path to our backend script
+        let URL_VERIFY = "http://www.teragentech.net/prepmate/UserExist.php"
+        
+        // variable which will spin until verification is finished
+        var finished : Bool = false
+        
+        // create our URL object
+        let url = URL(string: URL_VERIFY)
+        
+        // create the request and set the type to POST, otherwise we get authorization error
+        var request = URLRequest(url: url!)
+        request.httpMethod = "POST"
+        
+        let params = "uname=\(txtUserName.text!)"
+        
+        request.httpBody = params.data(using: String.Encoding.utf8)
+        
+        // Create a task and send our request to our REST API
+        let task = URLSession.shared.dataTask(with: request) {
+            data, response, error in
+            // if we error out, return the error message
+            if(error != nil) {
+                self.alert.message = error!.localizedDescription
+                self.present(self.alert, animated: true, completion: nil)
+                finished = true
+                vError = true
+                return
+            }
+            
+            // If there was no error, parse the response
+            do {
+                // convert response to a dictionary
+                let JSONResponse = try JSONSerialization.jsonObject(with: data!, options: .mutableContainers) as? NSDictionary
+                
+                // Get the error status and the error message from the database
+                if let parseJSON = JSONResponse {
+                    if let msg = parseJSON["msg"] as? String {
+                        self.alert.message = msg
+                    }
+                    vError = parseJSON["error"] as! Bool
+                    if(!vError) {
+                        found = parseJSON["found"] as! Bool
+                    } else {
+                        self.present(self.alert, animated: true, completion: nil)
+                        vError = true
+                        return
+                    }
+                }
+            } catch {
+                self.alert.message = error.localizedDescription
+                vError = true
+            }
+            finished = true
+        }
+        // execute our task and then return the results
+        task.resume()
+        while(!finished) {}
+        
+        // if there was no error, go ahead and load the user's preference list
+        if(!vError) {
+            return found
+        }
+        return vError
     }
 }
