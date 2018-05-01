@@ -15,7 +15,7 @@ class CommentDetailsPageViewController: UIViewController {
     @IBOutlet weak var authorLabel: UIButton!
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var commentBody: UITextView!
-    
+    let creator = User()
     override func viewDidLoad() {
         super.viewDidLoad()
         self.loadPage()
@@ -31,7 +31,7 @@ class CommentDetailsPageViewController: UIViewController {
     }
     private func loadPage() {
         self.ratingsLabel.image = RatingImages[self.comment.rating]
-        let creator = User()
+
         if(!creator.getUser(uid: comment.userId)) {
             authorLabel.setTitle(creator.getUname(), for: .normal)
         } else {
@@ -40,6 +40,14 @@ class CommentDetailsPageViewController: UIViewController {
         dateLabel.text! = self.comment.date
         commentBody.text! = self.comment.description
         self.title = self.comment.title
+    }
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "commentToUser",
+            let vc = segue.destination as? UserProfileViewController{
+            vc.op = 2
+            vc.user = creator
+            vc.avatarPhoto.setPhoto(imageURL: creator.getPhotoURL())
+        }
     }
 
 }

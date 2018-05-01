@@ -193,6 +193,7 @@ class HomePageViewController: UIViewController, UITableViewDelegate, UITableView
             vc?.profileDelegate = self
             vc?.op = 1
             vc?.avatarPhoto.setPhoto(imageURL: currentUser.getPhotoURL())
+            vc?.user = currentUser
         }
         if segue.identifier == "homeToCuisineSegue" {
             let vc = segue.destination as? HistoryFavoriteSearchResultsViewController

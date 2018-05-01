@@ -35,6 +35,7 @@ class RecipeOverviewViewController: UIViewController {
     @IBOutlet weak var preptimeLabel: UILabel!
     @IBOutlet weak var cooktimeLabel: UILabel!
     var recipe = Recipe()
+    let creator = User()
     
     var userRecipeList = [UserRecipe]() // Used for the recipe box and favorites list
     var eMsg = "" // holds error message returned by recipe list functions
@@ -45,7 +46,6 @@ class RecipeOverviewViewController: UIViewController {
         self.recipeImage.contentMode = .scaleAspectFit
         self.ratingsImage.contentMode = .scaleAspectFit
         self.loadRecipe()
-        let creator = User()
         creator.getUser(uid: self.recipe.getCreatorId())
         self.creatorButton.setTitle(creator.getUname(), for: .normal)
         // Do any additional setup after loading the view.
@@ -197,6 +197,14 @@ class RecipeOverviewViewController: UIViewController {
         return vError
     }
     
-
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "recipeToUser",
+            let vc = segue.destination as? UserProfileViewController{
+            vc.op = 2
+            vc.user = creator
+            vc.avatarPhoto.setPhoto(imageURL: creator.getPhotoURL())
+        }
+        
+    }
 
 }

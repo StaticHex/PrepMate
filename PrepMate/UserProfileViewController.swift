@@ -23,6 +23,7 @@ class UserProfileViewController: UIViewController, UIPopoverPresentationControll
     
     // add = 0, edit = 1, view = 2, unset = -1
     var op : Int = -1
+    var user = User()
     var isPhotoSet : Bool = false
     var avatarPhoto : Photo = Photo()
     // UI Component outlets
@@ -88,23 +89,23 @@ class UserProfileViewController: UIViewController, UIPopoverPresentationControll
             stkPwordStack.isHidden = false
             break
         case 1: // edit
-            btnAvatar.setImage(currentUser.getPhoto(), for: .normal)
+            btnAvatar.setImage(user.getPhoto(), for: .normal)
             btnAvatar.isEnabled = true
-            txtUserName.text = currentUser.getUname()
+            txtUserName.text = user.getUname()
             txtUserName.isEnabled = false
             txtUserName.backgroundColor = UIColor.white
-            txtFName.text = currentUser.getFname()
+            txtFName.text = user.getFname()
             txtFName.isEnabled = true
             txtFName.backgroundColor = UIColor.white
-            txtLName.text = currentUser.getLname()
+            txtLName.text = user.getLname()
             txtLName.isEnabled = true
             txtLName.backgroundColor = UIColor.white
-            txtPword.text = currentUser.getPword()
-            txtVPword.text = currentUser.getPword()
-            txtEmail.text = currentUser.getEmail()
+            txtPword.text = user.getPword()
+            txtVPword.text = user.getPword()
+            txtEmail.text = user.getEmail()
             txtEmail.isEnabled = true
             txtEmail.backgroundColor = UIColor.white
-            txtBio.text = currentUser.getBio()
+            txtBio.text = user.getBio()
             txtBio.isEditable = true
             txtBio.isSelectable = true
             txtBio.backgroundColor = UIColor.white
@@ -116,21 +117,21 @@ class UserProfileViewController: UIViewController, UIPopoverPresentationControll
             stkPwordStack.isHidden = false
             break
         case 2: // view
-            btnAvatar.setImage(currentUser.getPhoto(), for: .normal)
+            btnAvatar.setImage(user.getPhoto(), for: .normal)
             btnAvatar.isEnabled = false
-            txtUserName.text = currentUser.getUname()
+            txtUserName.text = user.getUname()
             txtUserName.isEnabled = false
             txtUserName.backgroundColor = clearColor
-            txtFName.text = currentUser.getFname()
+            txtFName.text = user.getFname()
             txtFName.isEnabled = false
             txtFName.backgroundColor = clearColor
-            txtLName.text = currentUser.getLname()
+            txtLName.text = user.getLname()
             txtLName.isEnabled = false
             txtLName.backgroundColor = clearColor
-            txtEmail.text = currentUser.getEmail()
+            txtEmail.text = user.getEmail()
             txtEmail.isEnabled = false
             txtEmail.backgroundColor = clearColor
-            txtBio.text = currentUser.getBio()
+            txtBio.text = user.getBio()
             txtBio.isEditable = false
             txtBio.backgroundColor = clearColor
             txtBio.isSelectable = false
@@ -154,7 +155,7 @@ class UserProfileViewController: UIViewController, UIPopoverPresentationControll
         if(segue.identifier == "userPhotoPopover") {
             let vc = segue.destination as? AddURLViewController
             vc?.urlDelegate = self
-            vc?.prefix = currentUser.getUname().lowercased()
+            vc?.prefix = user.getUname().lowercased()
             vc?.isModalInPopover = true
             let controller = vc?.popoverPresentationController
             if controller != nil {
@@ -186,8 +187,8 @@ class UserProfileViewController: UIViewController, UIPopoverPresentationControll
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print(currentUser)
-        return currentUser.getPrefCount()
+        print(user)
+        return user.getPrefCount()
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -195,7 +196,7 @@ class UserProfileViewController: UIViewController, UIPopoverPresentationControll
         let cell = tvBlacklist.dequeueReusableCell(withIdentifier: "BlacklistCell", for: indexPath as IndexPath) as! BlacklistCell
         
         let row = indexPath.row
-        let pref = currentUser.getPref(idx: row)
+        let pref = user.getPref(idx: row)
         let bl_key = pref.key
         let bl_value = pref.value
         cell.detail?.text = bl_key
@@ -291,11 +292,11 @@ class UserProfileViewController: UIViewController, UIPopoverPresentationControll
                 newRecord.lname = txtLName.text!
                 newRecord.email = txtEmail.text!
                 newRecord.bio = txtBio.text!
-                if(!currentUser.addUser(newUser: newRecord)) {
-                    profileDelegate?.updateUser(newUser: currentUser)
+                if(!user.addUser(newUser: newRecord)) {
+                    profileDelegate?.updateUser(newUser: user)
                 } else {
                     alert.title = "User Not Added"
-                    alert.message = currentUser.getEMsg()
+                    alert.message = user.getEMsg()
                     self.present(alert, animated: true)
                 }
 
@@ -310,11 +311,11 @@ class UserProfileViewController: UIViewController, UIPopoverPresentationControll
                 newRecord.lname = txtLName.text!
                 newRecord.email = txtEmail.text!
                 newRecord.bio = txtBio.text!
-                if(!currentUser.updateUser(newUser: newRecord)) {
-                    profileDelegate?.updateUser(newUser: currentUser)
+                if(!user.updateUser(newUser: newRecord)) {
+                    profileDelegate?.updateUser(newUser: user)
                 } else {
                     alert.title = "User Not Updated"
-                    alert.message = currentUser.getEMsg()
+                    alert.message = user.getEMsg()
                     self.present(alert, animated: true)
                 }
             }
@@ -360,20 +361,20 @@ class UserProfileViewController: UIViewController, UIPopoverPresentationControll
         var pref = UserPreference()
         pref.key = item.bl_key
         pref.value = item.bl_value
-        let error = currentUser.addPreference(pref: pref)
+        let error = user.addPreference(pref: pref)
         if(error) {
             alert.title = "Preference could not be added"
-            alert.message = currentUser.getEMsg()
+            alert.message = user.getEMsg()
             self.present(alert, animated: true)
         }
         tvBlacklist.reloadData()
     }
     
     func removeBListCell(idx: Int) {
-        let error = currentUser.removePreference(idx: idx)
+        let error = user.removePreference(idx: idx)
         if(error) {
             alert.title = "Preference could not be removed"
-            alert.message = currentUser.getEMsg()
+            alert.message = user.getEMsg()
             self.present(alert, animated: true)
         }
         tvBlacklist.reloadData()

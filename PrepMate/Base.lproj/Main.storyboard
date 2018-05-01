@@ -185,6 +185,7 @@
                                 <state key="normal" title="Button"/>
                                 <connections>
                                     <action selector="onCreatorButton:" destination="XWZ-63-vso" eventType="touchUpInside" id="V64-4L-BMc"/>
+                                    <segue destination="Lza-Wq-fMP" kind="show" identifier="recipeToUser" id="uyX-EF-v3P"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -2155,7 +2156,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="7iE-hU-ouy">
-                                <rect key="frame" x="10" y="30" width="355" height="627"/>
+                                <rect key="frame" x="10" y="74" width="355" height="583"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="9Yq-E0-k33">
                                         <rect key="frame" x="0.0" y="0.0" width="355" height="100"/>
@@ -2410,7 +2411,7 @@
                                         </constraints>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="dKS-FL-UL3">
-                                        <rect key="frame" x="0.0" y="390" width="355" height="197"/>
+                                        <rect key="frame" x="0.0" y="390" width="355" height="153"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Bio:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hkd-jG-85q">
                                                 <rect key="frame" x="0.0" y="0.0" width="355" height="20.5"/>
@@ -2419,16 +2420,15 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="5Bw-aV-YHI">
-                                                <rect key="frame" x="0.0" y="20.5" width="355" height="176.5"/>
+                                                <rect key="frame" x="0.0" y="20.5" width="355" height="132.5"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                             </textView>
                                         </subviews>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="j15-On-x5X">
-                                        <rect key="frame" x="0.0" y="597" width="355" height="30"/>
+                                        <rect key="frame" x="0.0" y="553" width="355" height="30"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Um2-aT-v78">
                                                 <rect key="frame" x="0.0" y="0.0" width="172.5" height="30"/>
@@ -5452,6 +5452,7 @@
                                 <state key="normal" title="Button"/>
                                 <connections>
                                     <action selector="onAuthorPressed:" destination="t24-by-706" eventType="touchUpInside" id="69M-bF-now"/>
+                                    <segue destination="Lza-Wq-fMP" kind="show" identifier="commentToUser" id="dAb-39-8Hj"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -5532,7 +5533,7 @@
         <segue reference="jzh-V1-ToK"/>
         <segue reference="pFF-rh-8ei"/>
         <segue reference="BjC-YD-RDR"/>
-        <segue reference="rrq-j1-upH"/>
+        <segue reference="xxt-hr-eTW"/>
         <segue reference="a1s-3R-Jjp"/>
     </inferredMetricsTieBreakers>
 </document>
