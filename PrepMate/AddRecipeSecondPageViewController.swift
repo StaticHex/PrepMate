@@ -28,7 +28,7 @@ class VitaminCustomCell: UITableViewCell {
     
 }
 
-class AddRecipeSecondPageViewController: UIViewController, UIPopoverPresentationControllerDelegate, UITableViewDelegate, UITableViewDataSource, addVitaminProtocol, removeVitaminProtocol {
+class AddRecipeSecondPageViewController: UIViewController, UIPopoverPresentationControllerDelegate, UITableViewDelegate, UITableViewDataSource, addVitaminProtocol, removeVitaminProtocol, URLProtocol {
 
     // Outlets
     @IBOutlet weak var potassiumField: UITextField!
@@ -40,9 +40,10 @@ class AddRecipeSecondPageViewController: UIViewController, UIPopoverPresentation
     @IBOutlet weak var sodiumField: UITextField!
     @IBOutlet weak var sugarField: UITextField!
     @IBOutlet weak var unsatField: UITextField!
-    @IBOutlet weak var urlField: UITextField!
-    
+    @IBOutlet weak var btnPhoto: UIButton!
     @IBOutlet weak var vitaminTableView: UITableView!
+    
+    var rPhoto = Photo()
     
     // List for maintaining display of vitamins
     var vitamins: [Vitamin] = [Vitamin]()
@@ -123,7 +124,8 @@ class AddRecipeSecondPageViewController: UIViewController, UIPopoverPresentation
             self.vitaminTableView.reloadData()
         }
         if self.recipeToSave.photo != "" {
-            self.urlField.text = "\(self.recipeToSave.photo)"
+            rPhoto.setPhoto(imageURL: self.recipeToSave.photo)
+            btnPhoto.setImage(rPhoto.getImage(), for: .normal)
         }
     }
     
@@ -138,7 +140,7 @@ class AddRecipeSecondPageViewController: UIViewController, UIPopoverPresentation
         self.recipeToSave.sugar = Double(sugarField.text!)!
         self.recipeToSave.carbs = Double(carbField.text!)!
         self.recipeToSave.fiber = Double(fiberField.text!)!
-        self.recipeToSave.photo = urlField.text!
+        self.recipeToSave.photo = rPhoto.getPath()
         self.recipeToSave.vitamins = vitamins
 
     }
@@ -164,6 +166,21 @@ class AddRecipeSecondPageViewController: UIViewController, UIPopoverPresentation
                 controller?.delegate = self
                 controller?.passthroughViews = nil
                 vc?.addVitaminDelegate = self
+            }
+        }
+        if segue.identifier == "AddPhotoPopover" {
+            let vc = segue.destination as? AddURLViewController
+            vc?.isModalInPopover = true
+            if(rPhoto.getPath() != "") {
+                vc?.prefix = getRecipePrefix(mode: "edit")
+            } else {
+                vc?.prefix = getRecipePrefix(mode: "add")
+            }
+            let controller = vc?.popoverPresentationController
+            if controller != nil {
+                controller?.delegate = self
+                controller?.passthroughViews = nil
+                vc?.urlDelegate = self
             }
         }
     }
@@ -285,6 +302,12 @@ class AddRecipeSecondPageViewController: UIViewController, UIPopoverPresentation
         }))
         self.present(alert, animated: true, completion: nil)
     }
+    
+    func setURL(url: String) {
+        rPhoto.setPhoto(imageURL: url)
+        btnPhoto.setImage(rPhoto.getImage(), for: .normal)
+    }
+    
     // User is sent back to the home page
     @IBAction func cancelRecipe(_ sender: Any) {
         
@@ -308,5 +331,83 @@ class AddRecipeSecondPageViewController: UIViewController, UIPopoverPresentation
                 break
             }
         }
+    }
+    
+    func getRecipePrefix(mode:String) -> String {
+        let lMode = mode.lowercased()
+        var prefix = ""
+        
+        if (lMode == "add") {
+            var lastRID = ""
+            
+            // create a variable to return whether we errored out or not
+            var vError : Bool = false
+            
+            // path to our backend script
+            let URL_VERIFY = "http://www.teragentech.net/prepmate/GetMaxRecipe"
+            
+            // variable which will spin until verification is finished
+            var finished : Bool = false
+            
+            // create our URL object
+            let url = URL(string: URL_VERIFY)
+            
+            // create the request and set the type to POST, otherwise we get authorization error
+            var request = URLRequest(url: url!)
+            request.httpMethod = "POST"
+            
+            let params = "" // not sure if we need to pass this or not so just passing empty
+            
+            request.httpBody = params.data(using: String.Encoding.utf8)
+            
+            // Create a task and send our request to our REST API
+            let task = URLSession.shared.dataTask(with: request) {
+                data, response, error in
+                // if we error out, return the error message
+                if(error != nil) {
+                    //self.eMsg = error!.localizedDescription
+                    finished = true
+                    vError = true
+                    return
+                }
+                
+                // If there was no error, parse the response
+                do {
+                    // convert response to a dictionary
+                    let JSONResponse = try JSONSerialization.jsonObject(with: data!, options: .mutableContainers) as? NSDictionary
+                    
+                    // Get the error status and the error message from the database
+                    if let parseJSON = JSONResponse {
+                        //self.eMsg = parseJSON["msg"] as! String
+                        vError = (parseJSON["error"] as! Bool)
+                        if(!vError) {
+                            if let rid = parseJSON["id"] as? String {
+                                lastRID = String(Int(rid)!+1)
+                            } else {
+                                lastRID = ""
+                                vError = true
+                            }
+                        }
+                    }
+                } catch {
+                    //self.eMsg = error.localizedDescription
+                    vError = true
+                }
+                finished = true
+            }
+            // execute our task and then return the results
+            task.resume()
+            while(!finished) {}
+            
+            // Wipe recipe entry
+            if(!vError) {
+                prefix = currentUser.getUname().lowercased()+lastRID
+            }
+        } else {
+            let uname = currentUser.getUname()
+            let id = "\(recipeToUpdate?.getId())"
+            prefix = uname+id
+        }
+        return prefix
     }
 }
