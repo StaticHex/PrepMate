@@ -30,6 +30,10 @@ class ShoppingListViewController: UIViewController, UIPopoverPresentationControl
     @IBOutlet weak var shoppingListTableView: UITableView!
     
     var eMsg = "" // holds error message returned by recipe list functions
+    
+    var thisRow = 0 // holds current row, used by the update alert
+    
+    
 
     var shoppingListRecords = [pantrySLItem]()
     override func viewDidLoad() {

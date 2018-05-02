@@ -3737,27 +3737,25 @@
                                                     <rect key="frame" x="10" y="5" width="355" height="33.5"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="752" text="Item" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kqb-uR-Njq">
-                                                            <rect key="frame" x="0.0" y="0.0" width="37" height="33.5"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="136" height="33.5"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <color key="textColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" alpha="0.25" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="752" text="Amount" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="b8P-nR-IyY">
-                                                            <rect key="frame" x="94" y="0.0" width="65.5" height="33.5"/>
+                                                            <rect key="frame" x="193" y="0.0" width="75" height="33.5"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" constant="75" id="aai-RF-aG9"/>
+                                                            </constraints>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" horizontalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="896-Rt-SOE">
-                                                            <rect key="frame" x="216.5" y="0.0" width="33" height="33.5"/>
-                                                            <fontDescription key="fontDescription" type="system" pointSize="32"/>
-                                                            <state key="normal" title="□"/>
-                                                            <connections>
-                                                                <action selector="selectItem:" destination="2lW-DO-7T6" eventType="touchUpInside" id="VAe-xT-34O"/>
-                                                            </connections>
-                                                        </button>
                                                         <button opaque="NO" alpha="0.34999999999999998" contentMode="scaleToFill" contentHorizontalAlignment="trailing" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="z7t-A6-vGe">
-                                                            <rect key="frame" x="306.5" y="0.0" width="48.5" height="33.5"/>
+                                                            <rect key="frame" x="325" y="0.0" width="30" height="33.5"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" constant="30" id="63a-3c-ddi"/>
+                                                            </constraints>
                                                             <fontDescription key="fontDescription" type="system" pointSize="19"/>
                                                             <state key="normal" title="X">
                                                                 <color key="titleColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -3779,7 +3777,6 @@
                                         <connections>
                                             <outlet property="itemAmount" destination="b8P-nR-IyY" id="VhU-DW-A1j"/>
                                             <outlet property="itemName" destination="Kqb-uR-Njq" id="hSJ-WD-oCx"/>
-                                            <outlet property="selectedItem" destination="896-Rt-SOE" id="18I-X1-Vhd"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -3852,19 +3849,25 @@
                                                     <rect key="frame" x="10" y="5" width="355" height="33.5"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Item" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="T7p-qf-A6c">
-                                                            <rect key="frame" x="0.0" y="0.0" width="42" height="33.5"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="85" height="33.5"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <color key="textColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" alpha="0.25" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Amount" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gq6-Ra-DDv">
-                                                            <rect key="frame" x="87" y="0.0" width="73.5" height="33.5"/>
+                                                            <rect key="frame" x="130" y="0.0" width="75" height="33.5"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" constant="75" id="uKj-E1-P88"/>
+                                                            </constraints>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="N1c-av-U0n">
-                                                            <rect key="frame" x="205.5" y="0.0" width="37" height="33.5"/>
+                                                            <rect key="frame" x="250" y="0.0" width="30" height="33.5"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" constant="30" id="j2j-jl-llb"/>
+                                                            </constraints>
                                                             <fontDescription key="fontDescription" type="system" pointSize="32"/>
                                                             <state key="normal" title="□"/>
                                                             <connections>
@@ -3872,7 +3875,10 @@
                                                             </connections>
                                                         </button>
                                                         <button opaque="NO" alpha="0.34999999999999998" contentMode="scaleToFill" horizontalCompressionResistancePriority="749" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aSw-RO-o4Q">
-                                                            <rect key="frame" x="287.5" y="0.0" width="67.5" height="33.5"/>
+                                                            <rect key="frame" x="325" y="0.0" width="30" height="33.5"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" constant="30" id="MvT-aZ-bNr"/>
+                                                            </constraints>
                                                             <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                             <state key="normal" title="X">
                                                                 <color key="titleColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -5468,7 +5474,7 @@
         <segue reference="7ib-qJ-3Ol"/>
         <segue reference="1hz-tg-fc6"/>
         <segue reference="jzh-V1-ToK"/>
-        <segue reference="bXW-K1-T9k"/>
+        <segue reference="Ged-TP-QC8"/>
         <segue reference="BjC-YD-RDR"/>
         <segue reference="rrq-j1-upH"/>
         <segue reference="neS-6h-4jE"/>
