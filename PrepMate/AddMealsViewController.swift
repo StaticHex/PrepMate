@@ -29,7 +29,7 @@ class MealsOptionsCustomCell: UITableViewCell {
             title = "□"
         }
         else {
-            if section == 0 {
+            if section == 1 {
                 mealsChosenRecipeBox[row] = true
             }
             else {
