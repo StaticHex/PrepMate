@@ -100,7 +100,12 @@ class ShoppingListViewController: UIViewController, UIPopoverPresentationControl
         let idx = shoppingListRecords[row].ingredientUnit!
         if defaults.integer(forKey: "units") == 0 {
             let valToDisplay = metricToStd(unit: shoppingListRecords[row].ingredientUnit!, amount: shoppingListRecords[row].amount!)
-            cell.itemAmount.text = String(valToDisplay) + " " + unitList[idx].std
+            if shoppingListRecords[row].ingredientLabel != "" {
+                cell.itemAmount.text = String(valToDisplay) + " " + shoppingListRecords[row].ingredientLabel!
+            }
+            else {
+                cell.itemAmount.text = String(valToDisplay) + " " + unitList[idx].std
+            }
         }
         else {
             cell.itemAmount.text = String(shoppingListRecords[row].amount!) + " " + unitList[idx].metric
@@ -221,7 +226,6 @@ class ShoppingListViewController: UIViewController, UIPopoverPresentationControl
         task.resume()
         while(!finished) {}
         if(!vError) {
-//            print(sLItem)
             self.shoppingListRecords.append(sLItem)
         }
         return vError
