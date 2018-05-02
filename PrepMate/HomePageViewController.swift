@@ -389,6 +389,8 @@ class HomePageViewController: UIViewController, UITableViewDelegate, UITableView
         if(query != "") {
             passedRecipes = getRecipes(query: query)
             whichRecipeClick = 3
+            autofillRecipes.removeAll()
+            tvSearchAutofill.isHidden = true
             performSegue(withIdentifier: "homeToRecipeList", sender: sender)
         }
     }
