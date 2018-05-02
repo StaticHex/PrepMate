@@ -172,15 +172,6 @@ class SettingsViewController: UIViewController, UIPopoverPresentationControllerD
             
             UINavigationBar.appearance().titleTextAttributes = [NSAttributedStringKey.foregroundColor : color]
             
-            UILabel.appearance().textColor = color
-            
-            
-            unitsLabel.textColor = color
-            pantryLabel.textColor = color
-            shoppingLabel.textColor = color
-            userLabel.textColor = color
-            titleLabel.textColor = color
-            fontLabel.textColor = color
             self.navigationController?.navigationBar.tintColor = color
             self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.foregroundColor : color]
             
