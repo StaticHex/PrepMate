@@ -102,8 +102,28 @@ class MealsPageViewController: UIViewController, UITableViewDelegate, UITableVie
     @IBAction func addMealToShoppingList(_ sender: Any) {
         
         // Go through rows, which are selected, then add to shopping list (first checking if we need to make new row in shopping list or just adding an amount)
+        let selected = (0..<mealsTableView.numberOfRows(inSection: 0)).filter({(mealsTableView.cellForRow(at: IndexPath.init(row: $0, section: 0)) as! MealsCustomTableViewCell).selectedItem.currentTitle == "■"})
+        shoppingListAlert(arg:selected)
+        
+        
     }
     @IBAction func addMeal(_ sender: Any) {
         self.performSegue(withIdentifier: "addMealSegue", sender: sender)
+    }
+    
+    func shoppingListAlert(arg:[Int]) {
+        let alert = UIAlertController(title: "Meal to Shopping List", message: "Are you sure you want to add selected meals to the shopping list?", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: NSLocalizedString("Yes", comment: "Default action"), style: .default, handler: { _ in
+            for item in arg {
+                if(self.meals[item].mealToSL()){
+                    print(self.meals[item].eMsg)
+                }
+                (self.mealsTableView.cellForRow(at: IndexPath.init(row: item, section: 0)) as! MealsCustomTableViewCell).selectedItem.setTitle("□", for: .normal)
+            }
+        }))
+        alert.addAction(UIAlertAction(title: NSLocalizedString("No", comment: "Default action"), style: .default, handler: { _ in
+            print("No Pressed")
+        }))
+        self.present(alert, animated: true, completion: nil)
     }
 }
