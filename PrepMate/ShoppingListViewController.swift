@@ -32,8 +32,10 @@ class ShoppingListViewController: UIViewController, UIPopoverPresentationControl
     var eMsg = "" // holds error message returned by recipe list functions
     
     var thisRow = 0 // holds current row, used by the update alert
+    var thisChk = 0 // holds whether4 the current cell is cheked or not
     
-    
+    // alert for updating table cell item
+    let alert = UIAlertController(title: "Update Shopping List Item", message: "enter new amount", preferredStyle: .alert)
 
     var shoppingListRecords = [pantrySLItem]()
     override func viewDidLoad() {
@@ -43,7 +45,31 @@ class ShoppingListViewController: UIViewController, UIPopoverPresentationControl
         shoppingListTableView.delegate = self
         shoppingListTableView.dataSource = self
         
-    navigationController?.isNavigationBarHidden = false
+        navigationController?.isNavigationBarHidden = false
+        
+        alert.addTextField(configurationHandler: { (textField: UITextField) in
+            textField.keyboardType = .default
+            textField.autocorrectionType = .default
+        })
+        let save = UIAlertAction(title: "Save", style: .default, handler:  { (UIAlertAction) in
+            let textField = self.alert.textFields![0]
+            var currentUnits = 0
+            let defaults = UserDefaults.standard
+            var dVal = Double(textField.text!)!
+            if let decoded = defaults.object(forKey: "units") as? Data {
+                let row = NSKeyedUnarchiver.unarchiveObject(with: decoded) as! Int
+                currentUnits = row
+                if currentUnits == 0 {
+                    dVal = stdToMetric(unit: self.shoppingListRecords[self.thisRow].ingredientUnit!, amount: dVal)
+                }
+            }
+            if !self.updateShoppingListItem(idx: self.thisRow, amount: dVal, checked: self.thisChk) {
+                self.shoppingListTableView.reloadData()
+            }
+        })
+        let cancel = UIAlertAction(title: "Cancel", style: .default, handler:  nil)
+        alert.addAction(save)
+        alert.addAction(cancel)
     }
     
     override func didReceiveMemoryWarning() {
@@ -106,7 +132,8 @@ class ShoppingListViewController: UIViewController, UIPopoverPresentationControl
         let defaults = UserDefaults.standard
         let idx = shoppingListRecords[row].ingredientUnit!
         if defaults.integer(forKey: "units") == 0 {
-            let valToDisplay = metricToStd(unit: shoppingListRecords[row].ingredientUnit!, amount: shoppingListRecords[row].amount!)
+            var valToDisplay = metricToStd(unit: shoppingListRecords[row].ingredientUnit!, amount: shoppingListRecords[row].amount!)
+            valToDisplay = round(valToDisplay * 100.0) / 100.0
             if shoppingListRecords[row].ingredientLabel != "" {
                 cell.itemAmount.text = String(valToDisplay) + " " + shoppingListRecords[row].ingredientLabel!
             }
@@ -124,6 +151,13 @@ class ShoppingListViewController: UIViewController, UIPopoverPresentationControl
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let row = indexPath.row
+        
+        let cell:ShoppingListCustomTableViewCell = tableView.dequeueReusableCell(withIdentifier: "shoppingListTableCell", for: indexPath as IndexPath) as! ShoppingListCustomTableViewCell
+        
+        thisRow = row
+        thisChk = cell.chk
+        self.present(alert, animated: true, completion: nil)
         tableView.deselectRow(at: indexPath, animated: true)
     }
     

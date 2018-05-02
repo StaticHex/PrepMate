@@ -3737,16 +3737,16 @@
                                                     <rect key="frame" x="10" y="5" width="355" height="33.5"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="752" text="Item" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kqb-uR-Njq">
-                                                            <rect key="frame" x="0.0" y="0.0" width="136" height="33.5"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="100" height="33.5"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" constant="100" id="PXQ-tB-b7l"/>
+                                                            </constraints>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <color key="textColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" alpha="0.25" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="752" text="Amount" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="b8P-nR-IyY">
-                                                            <rect key="frame" x="193" y="0.0" width="75" height="33.5"/>
-                                                            <constraints>
-                                                                <constraint firstAttribute="width" constant="75" id="aai-RF-aG9"/>
-                                                            </constraints>
+                                                            <rect key="frame" x="157" y="0.0" width="111" height="33.5"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
@@ -3849,16 +3849,16 @@
                                                     <rect key="frame" x="10" y="5" width="355" height="33.5"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Item" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="T7p-qf-A6c">
-                                                            <rect key="frame" x="0.0" y="0.0" width="85" height="33.5"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="100" height="33.5"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" constant="100" id="eJo-le-16B"/>
+                                                            </constraints>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <color key="textColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" alpha="0.25" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Amount" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gq6-Ra-DDv">
-                                                            <rect key="frame" x="130" y="0.0" width="75" height="33.5"/>
-                                                            <constraints>
-                                                                <constraint firstAttribute="width" constant="75" id="uKj-E1-P88"/>
-                                                            </constraints>
+                                                            <rect key="frame" x="145" y="0.0" width="60" height="33.5"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
@@ -5474,7 +5474,7 @@
         <segue reference="7ib-qJ-3Ol"/>
         <segue reference="1hz-tg-fc6"/>
         <segue reference="jzh-V1-ToK"/>
-        <segue reference="Ged-TP-QC8"/>
+        <segue reference="bXW-K1-T9k"/>
         <segue reference="BjC-YD-RDR"/>
         <segue reference="rrq-j1-upH"/>
         <segue reference="neS-6h-4jE"/>
