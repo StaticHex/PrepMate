@@ -3262,7 +3262,7 @@
                                                 </connections>
                                             </button>
                                         </barButtonItem>
-                                        <textField key="titleView" opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter Search Here" textAlignment="natural" minimumFontSize="17" id="VlJ-cp-yZa">
+                                        <textField key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter Search Here" textAlignment="natural" minimumFontSize="17" id="VlJ-cp-yZa">
                                             <rect key="frame" x="126" y="7" width="139" height="30"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <nil key="textColor"/>
@@ -4948,21 +4948,32 @@
                                     <segue destination="Jq2-Zg-B3V" kind="show" identifier="addMealRecipeSegue" id="7ib-qJ-3Ol"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0uQ-EC-hji">
+                                <rect key="frame" x="10" y="622" width="45" height="35"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="19"/>
+                                <state key="normal" title="Cook"/>
+                                <connections>
+                                    <action selector="onCook:" destination="0dP-6d-owt" eventType="touchUpInside" id="du8-mt-EdB"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="H1D-WO-CgX" firstAttribute="leading" secondItem="HEl-G4-S2r" secondAttribute="leading" id="37w-pO-64a"/>
                             <constraint firstItem="H1D-WO-CgX" firstAttribute="top" secondItem="HEl-G4-S2r" secondAttribute="top" id="JLh-Oe-y8k"/>
                             <constraint firstItem="XX2-fG-gyQ" firstAttribute="top" secondItem="H1D-WO-CgX" secondAttribute="bottom" constant="5" id="NwX-nR-zTT"/>
+                            <constraint firstItem="HEl-G4-S2r" firstAttribute="bottom" secondItem="0uQ-EC-hji" secondAttribute="bottom" constant="10" id="PRY-tE-o0G"/>
                             <constraint firstItem="HEl-G4-S2r" firstAttribute="bottom" secondItem="XX2-fG-gyQ" secondAttribute="bottom" constant="10" id="SHr-eg-Vq3"/>
                             <constraint firstItem="H1D-WO-CgX" firstAttribute="trailing" secondItem="HEl-G4-S2r" secondAttribute="trailing" id="p8v-H7-Qn6"/>
                             <constraint firstItem="HEl-G4-S2r" firstAttribute="trailing" secondItem="XX2-fG-gyQ" secondAttribute="trailing" constant="10" id="sc5-Rn-5Fc"/>
+                            <constraint firstItem="0uQ-EC-hji" firstAttribute="leading" secondItem="HEl-G4-S2r" secondAttribute="leading" constant="10" id="yxs-NU-STl"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="HEl-G4-S2r"/>
                     </view>
                     <navigationItem key="navigationItem" title="Recipe Box" id="Cwt-3u-hrL"/>
                     <connections>
                         <outlet property="AddButton" destination="XX2-fG-gyQ" id="ItK-Fy-5Bn"/>
+                        <outlet property="cookButton" destination="0uQ-EC-hji" id="NLm-m1-jzJ"/>
                         <outlet property="histFavTableView" destination="H1D-WO-CgX" id="jT3-bx-yCF"/>
                     </connections>
                 </viewController>
@@ -5602,7 +5613,7 @@
         <image name="splash_screen.jpg" width="336" height="598"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="WvK-Xy-F8Q"/>
+        <segue reference="7ib-qJ-3Ol"/>
         <segue reference="1hz-tg-fc6"/>
         <segue reference="jzh-V1-ToK"/>
         <segue reference="bXW-K1-T9k"/>
