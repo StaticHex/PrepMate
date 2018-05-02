@@ -8,26 +8,31 @@
 
 import UIKit
 
-/// Class for nutrition collection view cell
+// Nutrition Overview Cell
+// @description
+// - A custom UICollectionViewCell that shows associated nutrition images for a recipe
 class nutritionOverviewCell: UICollectionViewCell {
     // Image contained within each cell
     @IBOutlet weak var nutritionImage: UIImageView!
 }
-
+// A UIViewController that represents the nutrition container view of the Recipe page
 class RecipeNutritionViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource{
-
+    // Current Recipe
     var recipe = Recipe()
+    // List of associated nutrition images
     var nutritionList = [UIImage]()
-    
-    // Outlets
+    // The collection view that displays the associated nutrition images
     @IBOutlet weak var nutritionCollectionView: UICollectionView!
+    // The textview that displays the basic information about the recipe
     @IBOutlet weak var basicInfoText: UITextView!
+    // The textview that displays the vitamin information about the recipe
     @IBOutlet weak var vitaminInfoText: UITextView!
     
+    // A required function for UICollectionView
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return self.nutritionList.count
     }
-    
+    // A required function for UICollectionView that determines how cells are displayed
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "nutritionOverviewCell", for: indexPath as IndexPath) as! nutritionOverviewCell
         let row = indexPath.row
@@ -36,9 +41,10 @@ class RecipeNutritionViewController: UIViewController, UICollectionViewDelegate,
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        // Add a border around the textviews
         self.basicInfoText.layer.borderWidth = 1
         self.vitaminInfoText.layer.borderWidth = 1
+        // Parse the associated nutrition items from the recipe
         var flagNum = self.recipe.getFlags()
         for i in (0...(nutritionImages.count-1)).reversed(){
             if (flagNum & 1 ) == 1 {
@@ -48,6 +54,7 @@ class RecipeNutritionViewController: UIViewController, UICollectionViewDelegate,
         }
         nutritionCollectionView.delegate = self
         nutritionCollectionView.dataSource = self
+        // Load the basic and vitamin recipe information into the textviews
         self.basicInfoText.text! = self.loadBasicInfo()
         self.vitaminInfoText.text! = self.loadVitaminInfo()
 
@@ -58,6 +65,11 @@ class RecipeNutritionViewController: UIViewController, UICollectionViewDelegate,
         // Dispose of any resources that can be recreated.
     }
     
+    // Load Basic Info Function
+    // @description
+    // - Formats the basic recipe info to be displayed in the textview
+    // @return
+    // - The formatted string to populated the textview
     func loadBasicInfo() -> String {
         let maxWidth = 30
         var headerString = "Amount"
@@ -74,7 +86,11 @@ class RecipeNutritionViewController: UIViewController, UICollectionViewDelegate,
         return result
     }
     
-    
+    // Load  Info Function
+    // @description
+    // - Formats the recipe vitamin info to be displayed in the textview
+    // @return
+    // - The formatted string to populated the textview
     func loadVitaminInfo() -> String {
         let maxWidth = 30
         var headerString = "Amount"
@@ -90,7 +106,5 @@ class RecipeNutritionViewController: UIViewController, UICollectionViewDelegate,
         }
         return result
     }
-    
-
 
 }
