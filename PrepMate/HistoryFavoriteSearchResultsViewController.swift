@@ -19,6 +19,7 @@ class recipeBoxTableCell: UITableViewCell {
     /// Label that displays the rating for the recipe
     @IBOutlet weak var ratingsLabel: UIImageView!
     @IBOutlet weak var favoriteSelect: UIButton!
+    @IBOutlet weak var btnRemove: UIButton!
     weak var rBProtocol : recipeBoxProtocol?
     
     var row = 0
@@ -101,6 +102,7 @@ class HistoryFavoriteSearchResultsViewController: UIViewController, UITableViewD
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        print("AT BEGINNING: \(whichRecipeClicked)")
         if(!fromMeal){
             getUserRecipes(uid: currentUser.getId())
         }
@@ -123,8 +125,7 @@ class HistoryFavoriteSearchResultsViewController: UIViewController, UITableViewD
             }
             userRecipeList = uniqueRecipes
         }
-        
-        
+        print("AT END: \(whichRecipeClicked)")
         histFavTableView.reloadData()
     }
     
@@ -153,6 +154,12 @@ class HistoryFavoriteSearchResultsViewController: UIViewController, UITableViewD
             cell.favoriteSelect.isHidden = true
         }
         else {
+            if(whichRecipeClicked == 3) {
+                cell.favoriteSelect.isEnabled = false
+                cell.favoriteSelect.isHidden = true
+                cell.btnRemove.isEnabled = false
+                cell.btnRemove.isHidden = true
+            }
             cell.recipeNameLabel.text! = recipeList[row].getName()
             cell.ratingsLabel.image = RatingImages[recipeList[row].getRating()]
             cell.row = row

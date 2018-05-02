@@ -2220,11 +2220,11 @@
             <objects>
                 <viewController automaticallyAdjustsScrollViewInsets="NO" id="Lza-Wq-fMP" customClass="UserProfileViewController" customModule="PrepMate" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="BXe-eU-Un9">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="567"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="7iE-hU-ouy">
-                                <rect key="frame" x="10" y="30" width="355" height="527"/>
+                                <rect key="frame" x="10" y="30" width="355" height="627"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="9Yq-E0-k33">
                                         <rect key="frame" x="0.0" y="0.0" width="355" height="100"/>
@@ -2479,7 +2479,7 @@
                                         </constraints>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="dKS-FL-UL3">
-                                        <rect key="frame" x="0.0" y="390" width="355" height="97"/>
+                                        <rect key="frame" x="0.0" y="390" width="355" height="197"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Bio:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hkd-jG-85q">
                                                 <rect key="frame" x="0.0" y="0.0" width="355" height="20.5"/>
@@ -2488,7 +2488,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="5Bw-aV-YHI">
-                                                <rect key="frame" x="0.0" y="20.5" width="355" height="76.5"/>
+                                                <rect key="frame" x="0.0" y="20.5" width="355" height="176.5"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
@@ -2496,7 +2496,7 @@
                                         </subviews>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="j15-On-x5X">
-                                        <rect key="frame" x="0.0" y="497" width="355" height="30"/>
+                                        <rect key="frame" x="0.0" y="597" width="355" height="30"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Um2-aT-v78">
                                                 <rect key="frame" x="0.0" y="0.0" width="172.5" height="30"/>
@@ -4931,6 +4931,7 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
+                                            <outlet property="btnRemove" destination="Gk2-bG-97C" id="69g-6O-2Sz"/>
                                             <outlet property="favoriteSelect" destination="PKJ-ap-Scp" id="zql-x4-QgA"/>
                                             <outlet property="ratingsLabel" destination="LQI-eD-tFC" id="N7i-TQ-7br"/>
                                             <outlet property="recipeNameLabel" destination="sPe-5j-pk8" id="h4Q-Da-CbY"/>
@@ -5605,8 +5606,8 @@
         <segue reference="jzh-V1-ToK"/>
         <segue reference="bXW-K1-T9k"/>
         <segue reference="BjC-YD-RDR"/>
-        <segue reference="uyX-EF-v3P"/>
+        <segue reference="rrq-j1-upH"/>
         <segue reference="neS-6h-4jE"/>
-        <segue reference="a1s-3R-Jjp"/>
+        <segue reference="zcz-VA-ErF"/>
     </inferredMetricsTieBreakers>
 </document>
