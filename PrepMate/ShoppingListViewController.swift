@@ -10,6 +10,7 @@ import UIKit
 
 protocol shoppingListProtocol: class {
     func addSItem(item: pantrySLItem)
+    func updateShoppingListItem(idx : Int, amount : Double, checked : Int)->Bool
     func removeShoppingItem(cell: ShoppingListCustomTableViewCell)
 
 }
@@ -48,7 +49,9 @@ class ShoppingListViewController: UIViewController, UIPopoverPresentationControl
     
     override func viewWillAppear(_ animated: Bool) {
         // CALL DB TO POPULATE
-        getShoppingListItems(uid: currentUser.getId())
+        if(getShoppingListItems(uid: currentUser.getId())) {
+            print(self.eMsg)
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -94,7 +97,8 @@ class ShoppingListViewController: UIViewController, UIPopoverPresentationControl
         cell.sProtocol = self
         
         let row = indexPath.row
-
+        cell.row = row
+        cell.amt = shoppingListRecords[row].amount
         let defaults = UserDefaults.standard
         let idx = shoppingListRecords[row].ingredientUnit!
         if defaults.integer(forKey: "units") == 0 {
@@ -226,6 +230,70 @@ class ShoppingListViewController: UIViewController, UIPopoverPresentationControl
         while(!finished) {}
         if(!vError) {
             self.shoppingListRecords.append(sLItem)
+        }
+        return vError
+    }
+    
+    func updateShoppingListItem(idx : Int, amount : Double, checked : Int) -> Bool {
+        // get current item
+        let current = self.shoppingListRecords[idx]
+        
+        // create a variable to return whether we errored out or not
+        var vError : Bool = false
+        
+        // path to our backend script
+        let URL_VERIFY = "http://www.teragentech.net/prepmate/UpdateShoppingListItem.php"
+        
+        // variable which will spin until verification is finished
+        var finished : Bool = false
+        
+        // create our URL object
+        let url = URL(string: URL_VERIFY)
+        
+        // create the request and set the type to POST, otherwise we get authorization error
+        var request = URLRequest(url: url!)
+        request.httpMethod = "POST"
+        
+        // Set up parameters
+        let params = "id=\(current.id!)&uid=\(currentUser.getId())&iid=\(current.ingredientId!)&amount=\(amount)&checked=\(checked)"
+        request.httpBody = params.data(using: String.Encoding.utf8)
+        
+        // Create a task and send our request to our REST API
+        let task = URLSession.shared.dataTask(with: request) {
+            data, response, error in
+            // if we error out, return the error message
+            if(error != nil) {
+                self.eMsg = error!.localizedDescription
+                finished = true
+                vError = true
+                return
+            }
+            
+            // If there was no error, parse the response
+            do {
+                // convert response to a dictionary
+                let JSONResponse = try JSONSerialization.jsonObject(with: data!, options: .mutableContainers) as? NSDictionary
+                
+                // Get the error status and the error message from the database
+                if let parseJSON = JSONResponse {
+                    self.eMsg = parseJSON["msg"] as! String
+                    vError = (parseJSON["error"] as! Bool)
+                }
+            } catch {
+                self.eMsg = error.localizedDescription
+                vError = true
+            }
+            finished = true
+        }
+        // execute our task and then return the results
+        task.resume()
+        while(!finished) {}
+        
+        // if there was no error, go ahead and update our user object
+        if(!vError) {
+            self.shoppingListRecords[idx].amount = amount
+        } else {
+            print(self.eMsg)
         }
         return vError
     }
