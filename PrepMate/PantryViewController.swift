@@ -130,7 +130,8 @@ class PantryViewController: UIViewController, UIPopoverPresentationControllerDel
         let idx = pantryListItems[row].ingredientUnit!
         // Standard
         if defaults.integer(forKey: "units") == 0 {
-           let valToDisplay = metricToStd(unit: pantryListItems[row].ingredientUnit!, amount: pantryListItems[row].amount!)
+            var valToDisplay = metricToStd(unit: pantryListItems[row].ingredientUnit!, amount: pantryListItems[row].amount!)
+            valToDisplay = round(valToDisplay * 100.0) / 100.0
             if pantryListItems[row].ingredientLabel != "" {
                 cell.itemAmount.text = String(valToDisplay) + " " + pantryListItems[row].ingredientLabel!
             }

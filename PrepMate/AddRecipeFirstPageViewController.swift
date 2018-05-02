@@ -265,15 +265,15 @@ class AddRecipeFirstPageViewController: UIViewController, UITableViewDelegate, U
                             }
                         }
                         if found {
-                            cell.amountLabel.text = String(format: "%1.1f %@\n", ingList[row].amount, ingList[row].item.getLabel())
+                            cell.amountLabel.text = String(format: "%1.2f %@\n", ingList[row].amount, ingList[row].item.getLabel())
                         }
                         else {
-                            cell.amountLabel.text = String(format: "%1.1f %@\n", valToDisplay, ingList[row].item.getLabel())
+                            cell.amountLabel.text = String(format: "%1.2f %@\n", valToDisplay, ingList[row].item.getLabel())
                         }
 
                     }
                     else {
-                        cell.amountLabel.text = String(format: "%1.1f %@\n", valToDisplay, ingList[row].item.getLabel())
+                        cell.amountLabel.text = String(format: "%1.2f %@\n", valToDisplay, ingList[row].item.getLabel())
                     }
                 }
                 else {
@@ -285,24 +285,24 @@ class AddRecipeFirstPageViewController: UIViewController, UITableViewDelegate, U
                             }
                         }
                         if found {
-                            cell.amountLabel.text = String(format: "%1.1f %@\n", ingList[row].amount, unitList[ingList[row].item.getUnit()].std)
+                            cell.amountLabel.text = String(format: "%1.2f %@\n", ingList[row].amount, unitList[ingList[row].item.getUnit()].std)
                         }
                         else {
-                            cell.amountLabel.text = String(format: "%1.1f %@\n", valToDisplay, unitList[ingList[row].item.getUnit()].std)
+                            cell.amountLabel.text = String(format: "%1.2f %@\n", valToDisplay, unitList[ingList[row].item.getUnit()].std)
                         }
 //                        cell.amountLabel.text = String(format: "%1.1f %@\n", ingList[row].amount, unitList[ingList[row].item.getUnit()].std)
                     }
                     else {
-                        cell.amountLabel.text = String(format: "%1.1f %@\n", valToDisplay, unitList[ingList[row].item.getUnit()].std)
+                        cell.amountLabel.text = String(format: "%1.2f %@\n", valToDisplay, unitList[ingList[row].item.getUnit()].std)
                     }
                 }
             }
             else {
                 if ingList[row].item.getLabel() != "" {
-                    cell.amountLabel.text = String(format: "%1.1f %@\n", ingList[row].amount, ingList[row].item.getLabel())
+                    cell.amountLabel.text = String(format: "%1.2f %@\n", ingList[row].amount, ingList[row].item.getLabel())
                 }
                 else {
-                    cell.amountLabel.text = String(format: "%1.1f %@\n", ingList[row].amount, unitList[ingList[row].item.getUnit()].metric)
+                    cell.amountLabel.text = String(format: "%1.2f %@\n", ingList[row].amount, unitList[ingList[row].item.getUnit()].metric)
                 }
             }
 
