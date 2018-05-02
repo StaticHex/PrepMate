@@ -20,6 +20,8 @@ class PantryViewController: UIViewController, UIPopoverPresentationControllerDel
     
     var pantryListItems = [pantrySLItem]()
 
+    var managed : Int?
+    
     var eMsg = "" // holds error message returned by recipe list functions
 
     var thisRow : Int?
@@ -64,6 +66,17 @@ class PantryViewController: UIViewController, UIPopoverPresentationControllerDel
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        let defaults = UserDefaults.standard
+        if let decoded = defaults.object(forKey: "amPantry") as? Data {
+            let status = NSKeyedUnarchiver.unarchiveObject(with: decoded) as! Bool
+            print(status)
+            if status {
+                self.managed = 1
+            }
+            else {
+                self.managed = 0
+            }
+        }
         getPantryListItems(uid: currentUser.getId())
     }
     
@@ -138,12 +151,7 @@ class PantryViewController: UIViewController, UIPopoverPresentationControllerDel
     }
     
     func addReturnedIngredient(ingredient: RecipeIngredient) {
-        let defaults = UserDefaults.standard
-        var managed = 0
-        if defaults.integer(forKey: "amSList") == 1 {
-            managed = 1
-        }
-        let itemToAdd = pantrySLItem(id: currentUser.getId(), ingredientId: ingredient.item.getId(), amount: ingredient.amount, ingredientName: ingredient.item.getName(), ingredientUnit: ingredient.item.getUnit(), ingredientLabel: ingredient.item.getLabel(), managed: managed)
+        let itemToAdd = pantrySLItem(id: currentUser.getId(), ingredientId: ingredient.item.getId(), amount: ingredient.amount, ingredientName: ingredient.item.getName(), ingredientUnit: ingredient.item.getUnit(), ingredientLabel: ingredient.item.getLabel(), managed: self.managed)
         addPItem(item: itemToAdd)
     }
     // Add a pantry item for the table view display
@@ -211,13 +219,10 @@ class PantryViewController: UIViewController, UIPopoverPresentationControllerDel
                     if(!vError) {
                         print(parseJSON.descriptionInStringsFileFormat)
                         if let sId = parseJSON["code"] as? Int? {
-                            print("PARSED ID")
                             sLItem.id = sId!
                             if let ingredientId = parseJSON["iid"] as? Int? {
-                                print("PARSED INGREDIENT")
                                 sLItem.ingredientId = ingredientId!
                                 if let amount = parseJSON["amount"] as? Double? {
-                                    print("PARSED AMOUNT")
                                     sLItem.amount = amount!
                                 } else {
                                     sLItem.ingredientName = "ERROR"
@@ -243,16 +248,22 @@ class PantryViewController: UIViewController, UIPopoverPresentationControllerDel
         task.resume()
         while(!finished) {}
         if(!vError) {
-            var found = false
-            if self.pantryListItems.count-1 >= 0 {
-                for item in 0...self.pantryListItems.count-1 {
-                    if self.pantryListItems[item].ingredientId == sLItem.ingredientId {
-                        found = true
-                        self.pantryListItems[item].amount! += newItem.amount!
+            if self.managed! == 1 {
+                var found = false
+                if self.pantryListItems.count-1 >= 0 {
+                    for item in 0...self.pantryListItems.count-1 {
+                        if self.pantryListItems[item].ingredientId == sLItem.ingredientId {
+                            found = true
+                            self.pantryListItems[item].amount! += newItem.amount!
+                            break
+                        }
                     }
                 }
+                if !found {
+                    self.pantryListItems.append(sLItem)
+                }
             }
-            if !found {
+            else {
                 self.pantryListItems.append(sLItem)
             }
         }
@@ -319,6 +330,7 @@ class PantryViewController: UIViewController, UIPopoverPresentationControllerDel
                                                     current.ingredientLabel = label
                                                     if let amount = row["amount"] as? String {
                                                         current.amount = Double(amount)!
+                                                        print(current)
                                                         self.pantryListItems.append(current)
                                                     }
                                                     else {
