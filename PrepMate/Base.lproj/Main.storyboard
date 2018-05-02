@@ -4692,7 +4692,6 @@
                     <navigationItem key="navigationItem" title="Test" id="Hb1-ZH-Z7h">
                         <barButtonItem key="rightBarButtonItem" title="Edit" id="gBy-lL-h9Q">
                             <connections>
-                                <action selector="onEditPressed:" destination="bmi-Ww-24u" id="uUc-Xx-hG7"/>
                                 <segue destination="y0K-sX-piS" kind="show" identifier="editRecipeToAddRecipe" id="a1s-3R-Jjp"/>
                             </connections>
                         </barButtonItem>
@@ -5473,6 +5472,6 @@
         <segue reference="BjC-YD-RDR"/>
         <segue reference="rrq-j1-upH"/>
         <segue reference="neS-6h-4jE"/>
-        <segue reference="zcz-VA-ErF"/>
+        <segue reference="a1s-3R-Jjp"/>
     </inferredMetricsTieBreakers>
 </document>
