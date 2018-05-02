@@ -49,7 +49,6 @@ class ShoppingListViewController: UIViewController, UIPopoverPresentationControl
     override func viewWillAppear(_ animated: Bool) {
         // CALL DB TO POPULATE
         getShoppingListItems(uid: currentUser.getId())
-        print(shoppingListRecords)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -130,7 +129,7 @@ class ShoppingListViewController: UIViewController, UIPopoverPresentationControl
         addSItem(item: itemToAdd)
     }
     
-    // Add an item to the shopping list table view. Non-db yet
+    // Add an item to the shopping list table view.
     func addSItem(item: pantrySLItem) {
         if(!addShoppingListItem(newItem: item)) {
             self.shoppingListTableView.reloadData()
