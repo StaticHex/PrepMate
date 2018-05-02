@@ -74,6 +74,7 @@ class HistoryFavoriteSearchResultsViewController: UIViewController, UITableViewD
     
     @IBOutlet weak var AddButton: UIButton!
     
+    @IBOutlet weak var cookButton: UIButton!
     @IBOutlet weak var histFavTableView: UITableView!
     /// Array containing the Recipes to show.
     var recipeList = [Recipe]()
@@ -95,8 +96,10 @@ class HistoryFavoriteSearchResultsViewController: UIViewController, UITableViewD
         histFavTableView.dataSource = self
         if(fromMeal){
             AddButton.isHidden = false
+            cookButton.isHidden = false
         }else {
             AddButton.isHidden = true
+            cookButton.isHidden = true
         }
        
     }
@@ -211,6 +214,20 @@ class HistoryFavoriteSearchResultsViewController: UIViewController, UITableViewD
                 destination.existingMeal = true
             }
         
+    }
+    
+ 
+    @IBAction func onCook(_ sender: Any) {
+        let alert = UIAlertController(title: "Cook Meal", message: "Are you sure you want to cook this meal?", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: NSLocalizedString("Yes", comment: "Default action"), style: .default, handler: { _ in
+            if(self.meal.cookMeal()){
+                self.databaseAlert(str: "Cook Meal error")
+            }
+        }))
+        alert.addAction(UIAlertAction(title: NSLocalizedString("No", comment: "Default action"), style: .default, handler: { _ in
+            print("No Pressed")
+        }))
+        self.present(alert, animated: true, completion: nil)
     }
     
     func removeRecipe(cell: recipeBoxTableCell) {
