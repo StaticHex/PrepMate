@@ -40,11 +40,14 @@ class MealsPageViewController: UIViewController, UITableViewDelegate, UITableVie
     override func viewWillAppear(_ animated: Bool) {
         navigationController?.isNavigationBarHidden = false
         let defaults = UserDefaults.standard
-        if !defaults.bool(forKey: "amSList") {
-            self.checkoutCart.isHidden = true
-            self.checkoutCart.isEnabled = false
+        
+        if let decoded = defaults.object(forKey: "amSList") as? Data {
+            let status = NSKeyedUnarchiver.unarchiveObject(with: decoded) as! Bool
+            if !status {
+                self.checkoutCart.isHidden = true
+                self.checkoutCart.isEnabled = false
+            }
         }
-
     }    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "mealsToRecipeBoxSegue",
@@ -87,11 +90,14 @@ class MealsPageViewController: UIViewController, UITableViewDelegate, UITableVie
         let row = indexPath.row
         cell.mealName.text = meals[row].name.capitalized
         let defaults = UserDefaults.standard
-        if !defaults.bool(forKey: "amSList") {
-            cell.selectedItem.isHidden = true
-            cell.selectedItem.isEnabled = false
+
+        if let decoded = defaults.object(forKey: "amSList") as? Data {
+            let status = NSKeyedUnarchiver.unarchiveObject(with: decoded) as! Bool
+            if !status {
+                cell.selectedItem.isHidden = true
+                cell.selectedItem.isEnabled = false
+            }
         }
-        
         return cell
     }
     

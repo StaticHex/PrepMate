@@ -258,3 +258,13 @@ class ColorPickerViewController: UIViewController {
         return Int(Float(delim)*pow(16, Float(p)) + Float(hexHelper(tok: remain, p: p - 1)))
     }
 }
+
+extension UIColor {
+    func rgb() -> Int? {
+        var fRed : CGFloat = 0
+        var fGreen : CGFloat = 0
+        var fBlue : CGFloat = 0
+        var fAlpha : CGFloat = 0
+        return nil
+    }
+}

@@ -98,6 +98,17 @@ class SettingsViewController: UIViewController, UIPopoverPresentationControllerD
             let row = NSKeyedUnarchiver.unarchiveObject(with: decoded) as! Int
             pckUnits.selectRow(row, inComponent: 0, animated: false)
         }
+        if defaults.object(forKey: "titleBarColor") != nil {
+            let decoded  = defaults.object(forKey: "titleBarColor") as! Data
+            let decodedColor = NSKeyedUnarchiver.unarchiveObject(with: decoded) as! UIColor
+            btnTitleColor.backgroundColor = decodedColor
+        }
+        
+        if defaults.object(forKey: "navBarTextColor") != nil {
+            let decoded  = defaults.object(forKey: "navBarTextColor") as! Data
+            let decodedColor = NSKeyedUnarchiver.unarchiveObject(with: decoded) as! UIColor
+           btnFontColor.backgroundColor = decodedColor
+        }
     }
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
@@ -179,6 +190,7 @@ class SettingsViewController: UIViewController, UIPopoverPresentationControllerD
             // Change title background color
             btnTitleColor.backgroundColor = color
             let color = btnTitleColor.backgroundColor!
+            
             let encodedData = NSKeyedArchiver.archivedData(withRootObject: color)
             
             defaults.set(encodedData, forKey: "titleBarColor")
