@@ -22,6 +22,9 @@ class PantryViewController: UIViewController, UIPopoverPresentationControllerDel
 
     var eMsg = "" // holds error message returned by recipe list functions
 
+    var thisRow : Int?
+    let alert = UIAlertController(title: "Update Ingredient", message: "enter new amount", preferredStyle: .alert)
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -29,6 +32,22 @@ class PantryViewController: UIViewController, UIPopoverPresentationControllerDel
         pantryListTableView.dataSource = self
         
         navigationController?.isNavigationBarHidden = false
+        
+        alert.addTextField(configurationHandler: { (textField: UITextField) in
+            textField.keyboardType = .default
+            textField.autocorrectionType = .default
+        })
+        let save = UIAlertAction(title: "Save", style: .default, handler:  { (UIAlertAction) in
+            let textField = self.alert.textFields![0]
+            let item = self.pantryListItems[self.thisRow!]
+            if(!self.updatePantryListItem(id: item.id!, uid: currentUser.getId(), iid: item.ingredientId!, amount: Double(textField.text!)!)) {
+                self.pantryListItems[self.thisRow!].amount = Double(textField.text!)!
+                self.pantryListTableView.reloadData()
+            }
+        })
+        let cancel = UIAlertAction(title: "Cancel", style: .default, handler:  nil)
+        alert.addAction(save)
+        alert.addAction(cancel)
     }
     
     override func didReceiveMemoryWarning() {
@@ -43,6 +62,13 @@ class PantryViewController: UIViewController, UIPopoverPresentationControllerDel
     override func viewWillDisappear(_ animated: Bool) {
         navigationController?.isNavigationBarHidden = true
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        self.thisRow = indexPath.row
+        self.present(alert, animated: true)
+    }
+    
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "newListItemSegue2" {
@@ -317,6 +343,61 @@ class PantryViewController: UIViewController, UIPopoverPresentationControllerDel
         // execute our task and then return the results
         task.resume()
         while(!finished) {}
+        return vError
+    }
+    func updatePantryListItem(id: Int, uid: Int, iid: Int, amount: Double) -> Bool {
+        // create a variable to return whether we errored out or not
+        var vError : Bool = false
+        
+        // path to our backend script
+        let URL_VERIFY = "http://www.teragentech.net/prepmate/UpdatePantryItem.php"
+        
+        // variable which will spin until verification is finished
+        var finished : Bool = false
+        
+        // create our URL object
+        let url = URL(string: URL_VERIFY)
+        
+        // create the request and set the type to POST, otherwise we get authorization error
+        var request = URLRequest(url: url!)
+        request.httpMethod = "POST"
+        
+        let params = "id=\(id)&uid=\(uid)&iid=\(iid)&amount=\(amount)"
+        
+        request.httpBody = params.data(using: String.Encoding.utf8)
+        
+        // Create a task and send our request to our REST API
+        let task = URLSession.shared.dataTask(with: request) {
+            data, response, error in
+            // if we error out, return the error message
+            if(error != nil) {
+                self.eMsg = error!.localizedDescription
+                finished = true
+                vError = true
+                return
+            }
+            
+            // If there was no error, parse the response
+            do {
+                // convert response to a dictionary
+                let JSONResponse = try JSONSerialization.jsonObject(with: data!, options: .mutableContainers) as? NSDictionary
+                
+                // Get the error status and the error message from the database
+                if let parseJSON = JSONResponse {
+                    self.eMsg = parseJSON["msg"] as! String
+                    vError = (parseJSON["error"] as! Bool)
+                }
+            } catch {
+                self.eMsg = error.localizedDescription
+                vError = true
+            }
+            finished = true
+        }
+        // execute our task and then return the results
+        task.resume()
+        while(!finished) {}
+        
+        print(self.eMsg)
         return vError
     }
 }
