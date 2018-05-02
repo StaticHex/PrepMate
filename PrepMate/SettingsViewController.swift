@@ -50,7 +50,9 @@ class SettingsViewController: UIViewController, UIPopoverPresentationControllerD
             let vc = segue.destination as? ColorPickerViewController
             if(segue.identifier == "bgColorPopover") {
                 vc?.whichBox = 0
+                vc?.passedColor = btnTitleColor.backgroundColor
             } else {
+                vc?.passedColor = btnFontColor.backgroundColor
                 vc?.whichBox = 1
             }
             vc?.colorDelegate = self

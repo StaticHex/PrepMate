@@ -27,6 +27,9 @@ class ColorPickerViewController: UIViewController {
     @IBOutlet weak var txtHex: UITextField!
     @IBOutlet weak var btnColor: UIButton! // our color box
     
+    // variable to hold color passed from settings menu
+    var passedColor : UIColor?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -43,6 +46,10 @@ class ColorPickerViewController: UIViewController {
         txtGreen.text = "0"
         txtBlue.text = "0"
         txtHex.text = "#000000"
+        if let col = passedColor as? UIColor {
+            btnColor.backgroundColor = col
+            decode(rgb: col.rgb()!)
+        }
     }
         
     // Clear contents of text field when user clicks inside
@@ -257,6 +264,21 @@ class ColorPickerViewController: UIViewController {
 
         return Int(Float(delim)*pow(16, Float(p)) + Float(hexHelper(tok: remain, p: p - 1)))
     }
+    
+    private func decode(rgb:Int) {
+        let mask = 255
+        let bval = rgb & mask
+        let gval = (rgb >> 8) & mask
+        let rval = (rgb >> 16) & mask
+        
+        txtRed.text = "\(rval)"
+        txtGreen.text = "\(gval)"
+        txtBlue.text = "\(bval)"
+        sldRed.value = Float(rval)
+        sldGreen.value = Float(gval)
+        sldBlue.value = Float(bval)
+        txtHex.text = "#"+rgbToHex(red: rval, green: gval, blue: bval)
+    }
 }
 
 extension UIColor {
@@ -265,6 +287,15 @@ extension UIColor {
         var fGreen : CGFloat = 0
         var fBlue : CGFloat = 0
         var fAlpha : CGFloat = 0
+        if self.getRed(&fRed, green: &fGreen, blue: &fBlue, alpha: &fAlpha) {
+            let iRed = Int(fRed * 255.0)
+            let iGreen = Int(fGreen * 255.0)
+            let iBlue = Int(fBlue * 255.0)
+            let iAlpha = Int(fAlpha * 255.0)
+            
+            let rgb = (iAlpha << 24) + (iRed << 16) + (iGreen << 8) + iBlue
+            return rgb
+        }
         return nil
     }
 }
