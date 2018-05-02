@@ -3262,7 +3262,7 @@
                                                 </connections>
                                             </button>
                                         </barButtonItem>
-                                        <textField key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter Search Here" textAlignment="natural" minimumFontSize="17" id="VlJ-cp-yZa">
+                                        <textField key="titleView" opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter Search Here" textAlignment="natural" minimumFontSize="17" id="VlJ-cp-yZa">
                                             <rect key="frame" x="126" y="7" width="139" height="30"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <nil key="textColor"/>
@@ -5074,6 +5074,7 @@
                         <viewLayoutGuide key="safeArea" id="HQ3-vP-KXw"/>
                     </view>
                     <connections>
+                        <outlet property="checkoutCart" destination="kNs-sK-yb6" id="4CZ-hs-1Tn"/>
                         <outlet property="mealsTableView" destination="XYm-j1-hhV" id="wgf-eP-lOo"/>
                         <segue destination="0dP-6d-owt" kind="show" identifier="addingMealsToRecipeBox" id="ZzU-AX-Knj"/>
                         <segue destination="Jq2-Zg-B3V" kind="show" identifier="addMealSegue" id="WvK-Xy-F8Q"/>
@@ -5601,8 +5602,8 @@
         <image name="splash_screen.jpg" width="336" height="598"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="7ib-qJ-3Ol"/>
-        <segue reference="cOe-bu-kQK"/>
+        <segue reference="WvK-Xy-F8Q"/>
+        <segue reference="1hz-tg-fc6"/>
         <segue reference="jzh-V1-ToK"/>
         <segue reference="bXW-K1-T9k"/>
         <segue reference="BjC-YD-RDR"/>

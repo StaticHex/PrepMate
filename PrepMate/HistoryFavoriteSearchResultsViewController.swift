@@ -102,10 +102,10 @@ class HistoryFavoriteSearchResultsViewController: UIViewController, UITableViewD
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        print("AT BEGINNING: \(whichRecipeClicked)")
         if(!fromMeal){
             getUserRecipes(uid: currentUser.getId())
         }
+        
         // Janky way to make unique list
         var list = [UserRecipe]()
         if whichRecipeClicked == 0 {

@@ -21,6 +21,7 @@ class MealsPageViewController: UIViewController, UITableViewDelegate, UITableVie
 
     
     @IBOutlet weak var mealsTableView: UITableView!
+    @IBOutlet weak var checkoutCart: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,6 +39,12 @@ class MealsPageViewController: UIViewController, UITableViewDelegate, UITableVie
     }
     override func viewWillAppear(_ animated: Bool) {
         navigationController?.isNavigationBarHidden = false
+        let defaults = UserDefaults.standard
+        if !defaults.bool(forKey: "amSList") {
+            self.checkoutCart.isHidden = true
+            self.checkoutCart.isEnabled = false
+        }
+
     }    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "mealsToRecipeBoxSegue",
@@ -79,6 +86,11 @@ class MealsPageViewController: UIViewController, UITableViewDelegate, UITableVie
         cell.mProtocol = self
         let row = indexPath.row
         cell.mealName.text = meals[row].name.capitalized
+        let defaults = UserDefaults.standard
+        if !defaults.bool(forKey: "amSList") {
+            cell.selectedItem.isHidden = true
+            cell.selectedItem.isEnabled = false
+        }
         
         return cell
     }
