@@ -20,6 +20,8 @@ class PantryViewController: UIViewController, UIPopoverPresentationControllerDel
     
     var pantryListItems = [pantrySLItem]()
 
+    var managed : Int?
+    
     var eMsg = "" // holds error message returned by recipe list functions
 
     var thisRow : Int?
@@ -40,8 +42,16 @@ class PantryViewController: UIViewController, UIPopoverPresentationControllerDel
         let save = UIAlertAction(title: "Save", style: .default, handler:  { (UIAlertAction) in
             let textField = self.alert.textFields![0]
             let item = self.pantryListItems[self.thisRow!]
-            if(!self.updatePantryListItem(id: item.id!, uid: currentUser.getId(), iid: item.ingredientId!, amount: Double(textField.text!)!)) {
-                self.pantryListItems[self.thisRow!].amount = Double(textField.text!)!
+            var amount : Double?
+            let defaults = UserDefaults.standard
+            if defaults.integer(forKey: "units") == 0 {
+                amount = stdToMetric(unit: item.ingredientUnit!, amount: Double(textField.text!)!)
+            }
+            else {
+                amount = Double(textField.text!)!
+            }
+            if(!self.updatePantryListItem(id: item.id!, uid: currentUser.getId(), iid: item.ingredientId!, amount: amount!)) {
+                self.pantryListItems[self.thisRow!].amount = amount
                 self.pantryListTableView.reloadData()
             }
         })
@@ -56,6 +66,17 @@ class PantryViewController: UIViewController, UIPopoverPresentationControllerDel
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        let defaults = UserDefaults.standard
+        if let decoded = defaults.object(forKey: "amPantry") as? Data {
+            let status = NSKeyedUnarchiver.unarchiveObject(with: decoded) as! Bool
+            print(status)
+            if status {
+                self.managed = 1
+            }
+            else {
+                self.managed = 0
+            }
+        }
         getPantryListItems(uid: currentUser.getId())
     }
     
@@ -109,7 +130,8 @@ class PantryViewController: UIViewController, UIPopoverPresentationControllerDel
         let idx = pantryListItems[row].ingredientUnit!
         // Standard
         if defaults.integer(forKey: "units") == 0 {
-           let valToDisplay = metricToStd(unit: pantryListItems[row].ingredientUnit!, amount: pantryListItems[row].amount!)
+            var valToDisplay = metricToStd(unit: pantryListItems[row].ingredientUnit!, amount: pantryListItems[row].amount!)
+            valToDisplay = round(valToDisplay * 100.0) / 100.0
             if pantryListItems[row].ingredientLabel != "" {
                 cell.itemAmount.text = String(valToDisplay) + " " + pantryListItems[row].ingredientLabel!
             }
@@ -130,12 +152,7 @@ class PantryViewController: UIViewController, UIPopoverPresentationControllerDel
     }
     
     func addReturnedIngredient(ingredient: RecipeIngredient) {
-        let defaults = UserDefaults.standard
-        var managed = 0
-        if defaults.integer(forKey: "amSList") == 1 {
-            managed = 1
-        }
-        let itemToAdd = pantrySLItem(id: currentUser.getId(), ingredientId: ingredient.item.getId(), amount: ingredient.amount, ingredientName: ingredient.item.getName(), ingredientUnit: ingredient.item.getUnit(), ingredientLabel: ingredient.item.getLabel(), managed: managed)
+        let itemToAdd = pantrySLItem(id: currentUser.getId(), ingredientId: ingredient.item.getId(), amount: ingredient.amount, ingredientName: ingredient.item.getName(), ingredientUnit: ingredient.item.getUnit(), ingredientLabel: ingredient.item.getLabel(), managed: self.managed)
         addPItem(item: itemToAdd)
     }
     // Add a pantry item for the table view display
@@ -148,8 +165,10 @@ class PantryViewController: UIViewController, UIPopoverPresentationControllerDel
     // Remove a table view cell from the pantry table view
     func removePItem(cell: PantryItemCustomTableViewCell) {
         let indexPath = self.pantryListTableView.indexPath(for: cell)
-        pantryListItems.remove(at: indexPath!.row)
-        self.pantryListTableView.deleteRows(at: [indexPath!], with: .fade)
+        if !removePantryItem(id: self.pantryListItems[indexPath!.row].id!) {
+            pantryListItems.remove(at: indexPath!.row)
+            self.pantryListTableView.deleteRows(at: [indexPath!], with: .fade)
+        }
     }
     
     func addPantryListItem(newItem :pantrySLItem) -> Bool {
@@ -201,13 +220,10 @@ class PantryViewController: UIViewController, UIPopoverPresentationControllerDel
                     if(!vError) {
                         print(parseJSON.descriptionInStringsFileFormat)
                         if let sId = parseJSON["code"] as? Int? {
-                            print("PARSED ID")
                             sLItem.id = sId!
                             if let ingredientId = parseJSON["iid"] as? Int? {
-                                print("PARSED INGREDIENT")
                                 sLItem.ingredientId = ingredientId!
                                 if let amount = parseJSON["amount"] as? Double? {
-                                    print("PARSED AMOUNT")
                                     sLItem.amount = amount!
                                 } else {
                                     sLItem.ingredientName = "ERROR"
@@ -233,7 +249,24 @@ class PantryViewController: UIViewController, UIPopoverPresentationControllerDel
         task.resume()
         while(!finished) {}
         if(!vError) {
-            self.pantryListItems.append(sLItem)
+            if self.managed! == 1 {
+                var found = false
+                if self.pantryListItems.count-1 >= 0 {
+                    for item in 0...self.pantryListItems.count-1 {
+                        if self.pantryListItems[item].ingredientId == sLItem.ingredientId {
+                            found = true
+                            self.pantryListItems[item].amount! += newItem.amount!
+                            break
+                        }
+                    }
+                }
+                if !found {
+                    self.pantryListItems.append(sLItem)
+                }
+            }
+            else {
+                self.pantryListItems.append(sLItem)
+            }
         }
         return vError
     }
@@ -298,6 +331,7 @@ class PantryViewController: UIViewController, UIPopoverPresentationControllerDel
                                                     current.ingredientLabel = label
                                                     if let amount = row["amount"] as? String {
                                                         current.amount = Double(amount)!
+                                                        print(current)
                                                         self.pantryListItems.append(current)
                                                     }
                                                     else {
@@ -363,6 +397,62 @@ class PantryViewController: UIViewController, UIPopoverPresentationControllerDel
         request.httpMethod = "POST"
         
         let params = "id=\(id)&uid=\(uid)&iid=\(iid)&amount=\(amount)"
+        
+        request.httpBody = params.data(using: String.Encoding.utf8)
+        
+        // Create a task and send our request to our REST API
+        let task = URLSession.shared.dataTask(with: request) {
+            data, response, error in
+            // if we error out, return the error message
+            if(error != nil) {
+                self.eMsg = error!.localizedDescription
+                finished = true
+                vError = true
+                return
+            }
+            
+            // If there was no error, parse the response
+            do {
+                // convert response to a dictionary
+                let JSONResponse = try JSONSerialization.jsonObject(with: data!, options: .mutableContainers) as? NSDictionary
+                
+                // Get the error status and the error message from the database
+                if let parseJSON = JSONResponse {
+                    self.eMsg = parseJSON["msg"] as! String
+                    vError = (parseJSON["error"] as! Bool)
+                }
+            } catch {
+                self.eMsg = error.localizedDescription
+                vError = true
+            }
+            finished = true
+        }
+        // execute our task and then return the results
+        task.resume()
+        while(!finished) {}
+        
+        print(self.eMsg)
+        return vError
+    }
+    
+    func removePantryItem(id: Int) -> Bool {
+        // create a variable to return whether we errored out or not
+        var vError : Bool = false
+        
+        // path to our backend script
+        let URL_VERIFY = "http://www.teragentech.net/prepmate/RemovePantryItem.php"
+        
+        // variable which will spin until verification is finished
+        var finished : Bool = false
+        
+        // create our URL object
+        let url = URL(string: URL_VERIFY)
+        
+        // create the request and set the type to POST, otherwise we get authorization error
+        var request = URLRequest(url: url!)
+        request.httpMethod = "POST"
+        
+        let params = "id=\(id)"
         
         request.httpBody = params.data(using: String.Encoding.utf8)
         
