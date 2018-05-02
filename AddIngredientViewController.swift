@@ -112,8 +112,6 @@ class AddIngredientViewController: UIViewController, UIPickerViewDelegate, UIPic
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
-        
         let row = indexPath.row
         itemTextView.text = ingredients[row].getName()
         itemTextView.isEnabled = false
@@ -329,6 +327,7 @@ class AddIngredientViewController: UIViewController, UIPickerViewDelegate, UIPic
         } else {
             newIngredient.amount = amount
         }
+        print(newIngredient)
         addIngredientDelegate?.addReturnedIngredient(ingredient: newIngredient)
         dismiss(animated: true, completion: nil)
     }

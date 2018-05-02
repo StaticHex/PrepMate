@@ -59,6 +59,7 @@ class ShoppingListViewController: UIViewController, UIPopoverPresentationControl
         if segue.identifier == "newListItemSegue" {
             let vc = segue.destination as? AddIngredientViewController
             vc?.isModalInPopover = true
+            vc?.addIngredientDelegate = self
             let controller = vc?.popoverPresentationController
             if controller != nil {
                 controller?.delegate = self
@@ -119,7 +120,7 @@ class ShoppingListViewController: UIViewController, UIPopoverPresentationControl
         if defaults.integer(forKey: "amSList") == 1 {
             managed = 1
         }
-        let itemToAdd = pantrySLItem(id: currentUser.getId(), ingredientId: ingredient.id, amount: ingredient.amount, ingredientName: ingredient.item.getName(), ingredientUnit: ingredient.item.getUnit(), ingredientLabel: ingredient.item.getLabel(), managed: managed)
+        let itemToAdd = pantrySLItem(id: currentUser.getId(), ingredientId: ingredient.item.getId(), amount: ingredient.amount, ingredientName: ingredient.item.getName(), ingredientUnit: ingredient.item.getUnit(), ingredientLabel: ingredient.item.getLabel(), managed: managed)
         addSItem(item: itemToAdd)
     }
     
@@ -127,9 +128,9 @@ class ShoppingListViewController: UIViewController, UIPopoverPresentationControl
     func addSItem(item: pantrySLItem) {
         
         // DO DATABASE CALL HERE
-        addShoppingListItem(newItem: item)
-        self.shoppingListTableView.reloadData()
-        print(shoppingListRecords)
+        if(!addShoppingListItem(newItem: item)) {
+            self.shoppingListTableView.reloadData()
+        }
 //        shoppingListRecords.append(item)
 //        self.shoppingListTableView.beginUpdates()
 //        self.shoppingListTableView.insertRows(at: [IndexPath.init(row: shoppingListRecords.count-1, section: 0)], with: .automatic)
@@ -152,7 +153,7 @@ class ShoppingListViewController: UIViewController, UIPopoverPresentationControl
         var vError : Bool = false
         
         // path to our backend script
-        let URL_VERIFY = "http://www.teragentech.net/prepmate/AddPantryItem.php"
+        let URL_VERIFY = "http://www.teragentech.net/prepmate/AddShoppingListItem.php"
         
         // variable which will spin until verification is finished
         var finished : Bool = false
@@ -193,10 +194,13 @@ class ShoppingListViewController: UIViewController, UIPopoverPresentationControl
                     if(!vError) {
                         print(parseJSON.descriptionInStringsFileFormat)
                         if let sId = parseJSON["code"] as? Int? {
+                            print("PARSED ID")
                             sLItem.id = sId!
                             if let ingredientId = parseJSON["iid"] as? Int? {
+                                print("PARSED INGREDIENT")
                                 sLItem.ingredientId = ingredientId!
                                 if let amount = parseJSON["amount"] as? Double? {
+                                    print("PARSED AMOUNT")
                                     sLItem.amount = amount!
                                 } else {
                                     sLItem.ingredientName = "ERROR"

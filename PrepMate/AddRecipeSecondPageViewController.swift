@@ -405,7 +405,7 @@ class AddRecipeSecondPageViewController: UIViewController, UIPopoverPresentation
             }
         } else {
             let uname = currentUser.getUname()
-            let id = "\(recipeToUpdate?.getId())"
+            let id = "\(recipeToUpdate!.getId())"
             prefix = uname+id
         }
         return prefix
