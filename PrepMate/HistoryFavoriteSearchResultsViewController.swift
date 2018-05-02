@@ -251,7 +251,7 @@ class HistoryFavoriteSearchResultsViewController: UIViewController, UITableViewD
     func databaseAlert(str:String) {
         let alert = UIAlertController(title: "\(str)", message: "Database Error", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .default, handler: { _ in
-            NSLog("The \"OK\" alert occured.")
+            NSLog("The \"OK\" alert occurred.")
         }))
         self.present(alert, animated: true, completion: nil)
     }
