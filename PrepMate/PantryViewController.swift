@@ -40,8 +40,16 @@ class PantryViewController: UIViewController, UIPopoverPresentationControllerDel
         let save = UIAlertAction(title: "Save", style: .default, handler:  { (UIAlertAction) in
             let textField = self.alert.textFields![0]
             let item = self.pantryListItems[self.thisRow!]
-            if(!self.updatePantryListItem(id: item.id!, uid: currentUser.getId(), iid: item.ingredientId!, amount: Double(textField.text!)!)) {
-                self.pantryListItems[self.thisRow!].amount = Double(textField.text!)!
+            var amount : Double?
+            let defaults = UserDefaults.standard
+            if defaults.integer(forKey: "units") == 0 {
+                amount = stdToMetric(unit: item.ingredientUnit!, amount: Double(textField.text!)!)
+            }
+            else {
+                amount = Double(textField.text!)!
+            }
+            if(!self.updatePantryListItem(id: item.id!, uid: currentUser.getId(), iid: item.ingredientId!, amount: amount!)) {
+                self.pantryListItems[self.thisRow!].amount = amount
                 self.pantryListTableView.reloadData()
             }
         })
@@ -148,8 +156,10 @@ class PantryViewController: UIViewController, UIPopoverPresentationControllerDel
     // Remove a table view cell from the pantry table view
     func removePItem(cell: PantryItemCustomTableViewCell) {
         let indexPath = self.pantryListTableView.indexPath(for: cell)
-        pantryListItems.remove(at: indexPath!.row)
-        self.pantryListTableView.deleteRows(at: [indexPath!], with: .fade)
+        if !removePantryItem(id: self.pantryListItems[indexPath!.row].id!) {
+            pantryListItems.remove(at: indexPath!.row)
+            self.pantryListTableView.deleteRows(at: [indexPath!], with: .fade)
+        }
     }
     
     func addPantryListItem(newItem :pantrySLItem) -> Bool {
@@ -233,7 +243,18 @@ class PantryViewController: UIViewController, UIPopoverPresentationControllerDel
         task.resume()
         while(!finished) {}
         if(!vError) {
-            self.pantryListItems.append(sLItem)
+            var found = false
+            if self.pantryListItems.count-1 >= 0 {
+                for item in 0...self.pantryListItems.count-1 {
+                    if self.pantryListItems[item].ingredientId == sLItem.ingredientId {
+                        found = true
+                        self.pantryListItems[item].amount! += newItem.amount!
+                    }
+                }
+            }
+            if !found {
+                self.pantryListItems.append(sLItem)
+            }
         }
         return vError
     }
@@ -363,6 +384,62 @@ class PantryViewController: UIViewController, UIPopoverPresentationControllerDel
         request.httpMethod = "POST"
         
         let params = "id=\(id)&uid=\(uid)&iid=\(iid)&amount=\(amount)"
+        
+        request.httpBody = params.data(using: String.Encoding.utf8)
+        
+        // Create a task and send our request to our REST API
+        let task = URLSession.shared.dataTask(with: request) {
+            data, response, error in
+            // if we error out, return the error message
+            if(error != nil) {
+                self.eMsg = error!.localizedDescription
+                finished = true
+                vError = true
+                return
+            }
+            
+            // If there was no error, parse the response
+            do {
+                // convert response to a dictionary
+                let JSONResponse = try JSONSerialization.jsonObject(with: data!, options: .mutableContainers) as? NSDictionary
+                
+                // Get the error status and the error message from the database
+                if let parseJSON = JSONResponse {
+                    self.eMsg = parseJSON["msg"] as! String
+                    vError = (parseJSON["error"] as! Bool)
+                }
+            } catch {
+                self.eMsg = error.localizedDescription
+                vError = true
+            }
+            finished = true
+        }
+        // execute our task and then return the results
+        task.resume()
+        while(!finished) {}
+        
+        print(self.eMsg)
+        return vError
+    }
+    
+    func removePantryItem(id: Int) -> Bool {
+        // create a variable to return whether we errored out or not
+        var vError : Bool = false
+        
+        // path to our backend script
+        let URL_VERIFY = "http://www.teragentech.net/prepmate/RemovePantryItem.php"
+        
+        // variable which will spin until verification is finished
+        var finished : Bool = false
+        
+        // create our URL object
+        let url = URL(string: URL_VERIFY)
+        
+        // create the request and set the type to POST, otherwise we get authorization error
+        var request = URLRequest(url: url!)
+        request.httpMethod = "POST"
+        
+        let params = "id=\(id)"
         
         request.httpBody = params.data(using: String.Encoding.utf8)
         
