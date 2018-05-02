@@ -177,9 +177,6 @@ class AddRecipeFirstPageViewController: UIViewController, UITableViewDelegate, U
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        print("\n\n\nGOT HERE!!!\n\n")
-        print(recipeToSave)
-        print("\n\n")
     }
     
     override func viewWillDisappear(_ animated: Bool) {
