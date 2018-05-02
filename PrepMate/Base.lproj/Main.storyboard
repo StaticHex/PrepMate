@@ -3915,6 +3915,9 @@
                                                 <rect key="frame" x="15" y="10" width="85" height="30"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                 <state key="normal" title="Checkout"/>
+                                                <connections>
+                                                    <action selector="onCheckout:" destination="ItD-MO-WN6" eventType="touchUpInside" id="JXo-4I-Ba0"/>
+                                                </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3wT-2J-ekw">
                                                 <rect key="frame" x="337" y="6" width="30" height="30"/>
@@ -3969,6 +3972,7 @@
                     </view>
                     <navigationItem key="navigationItem" title="Shopping List" id="SOv-nw-fty"/>
                     <connections>
+                        <outlet property="btnCheckout" destination="X2d-fv-wxt" id="yAC-Ju-pJB"/>
                         <outlet property="shoppingListTableView" destination="mgp-hV-eSo" id="AoU-go-kPs"/>
                     </connections>
                 </viewController>

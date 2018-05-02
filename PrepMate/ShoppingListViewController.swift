@@ -28,6 +28,7 @@ struct pantrySLItem {
 class ShoppingListViewController: UIViewController, UIPopoverPresentationControllerDelegate, UITableViewDelegate, UITableViewDataSource, shoppingListProtocol, AddIngredientProtocol {
 
     @IBOutlet weak var shoppingListTableView: UITableView!
+    @IBOutlet weak var btnCheckout: UIButton!
     
     var eMsg = "" // holds error message returned by recipe list functions
     
@@ -52,17 +53,22 @@ class ShoppingListViewController: UIViewController, UIPopoverPresentationControl
             textField.autocorrectionType = .default
         })
         let save = UIAlertAction(title: "Save", style: .default, handler:  { (UIAlertAction) in
+            // grab our alert's text field component
             let textField = self.alert.textFields![0]
+            
+            // need to check if we're in standard or metric units
             var currentUnits = 0
             let defaults = UserDefaults.standard
             var dVal = Double(textField.text!)!
             if let decoded = defaults.object(forKey: "units") as? Data {
                 let row = NSKeyedUnarchiver.unarchiveObject(with: decoded) as! Int
                 currentUnits = row
+                // if we're in standard, convert to metric
                 if currentUnits == 0 {
                     dVal = stdToMetric(unit: self.shoppingListRecords[self.thisRow].ingredientUnit!, amount: dVal)
                 }
             }
+            // call the update function
             if !self.updateShoppingListItem(idx: self.thisRow, amount: dVal, checked: self.thisChk) {
                 self.shoppingListTableView.reloadData()
             }
@@ -78,7 +84,18 @@ class ShoppingListViewController: UIViewController, UIPopoverPresentationControl
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        // CALL DB TO POPULATE
+        let defaults = UserDefaults.standard
+        if let decoded = defaults.object(forKey: "amSList") as? Data {
+            let status = NSKeyedUnarchiver.unarchiveObject(with: decoded) as! Bool
+            if !status {
+                self.btnCheckout.isHidden = true
+                self.btnCheckout.isEnabled = false
+            } else {
+                self.btnCheckout.isHidden = false
+                self.btnCheckout.isEnabled = true
+            }
+        }
+        
         if(getShoppingListItems(uid: currentUser.getId())) {
             print(self.eMsg)
         }
@@ -506,4 +523,70 @@ class ShoppingListViewController: UIViewController, UIPopoverPresentationControl
         return vError
     }
     
+
+    @IBAction func onCheckout(_ sender: Any) {
+        // create a variable to return whether we errored out or not
+        var vError : Bool = false
+        
+        // path to our backend script
+        let URL_VERIFY = "http://www.teragentech.net/prepmate/Checkout.php"
+        
+        // variable which will spin until verification is finished
+        var finished : Bool = false
+        
+        // create our URL object
+        let url = URL(string: URL_VERIFY)
+        
+        // create the request and set the type to POST, otherwise we get authorization error
+        var request = URLRequest(url: url!)
+        request.httpMethod = "POST"
+        
+        // Set up parameters
+        let params = "uid=\(currentUser.getId())"
+        request.httpBody = params.data(using: String.Encoding.utf8)
+        
+        // Create a task and send our request to our REST API
+        let task = URLSession.shared.dataTask(with: request) {
+            data, response, error in
+            // if we error out, return the error message
+            if(error != nil) {
+                self.eMsg = error!.localizedDescription
+                finished = true
+                vError = true
+                return
+            }
+            
+            // If there was no error, parse the response
+            do {
+                // convert response to a dictionary
+                let JSONResponse = try JSONSerialization.jsonObject(with: data!, options: .mutableContainers) as? NSDictionary
+                
+                // Get the error status and the error message from the database
+                if let parseJSON = JSONResponse {
+                    self.eMsg = parseJSON["msg"] as! String
+                    vError = (parseJSON["error"] as! Bool)
+                }
+            } catch {
+                self.eMsg = error.localizedDescription
+                vError = true
+            }
+            finished = true
+        }
+        // execute our task and then return the results
+        task.resume()
+        while(!finished) {}
+        
+        // if there was no error, go ahead and update our user object
+        if(!vError) {
+            let cells = self.shoppingListTableView.visibleCells as! Array<ShoppingListCustomTableViewCell>
+            
+            for cell in cells {
+                cell.selectedItem.setTitle("□", for: .normal)
+            }
+            shoppingListRecords.removeAll()
+            if(!getShoppingListItems(uid: currentUser.getId())) {
+                shoppingListTableView.reloadData()
+            }
+        }
+    }
 }
