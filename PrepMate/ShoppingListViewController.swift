@@ -48,7 +48,8 @@ class ShoppingListViewController: UIViewController, UIPopoverPresentationControl
     
     override func viewWillAppear(_ animated: Bool) {
         // CALL DB TO POPULATE
-        //        shoppingListRecords =
+        getShoppingListItems(uid: currentUser.getId())
+        print(shoppingListRecords)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -126,15 +127,9 @@ class ShoppingListViewController: UIViewController, UIPopoverPresentationControl
     
     // Add an item to the shopping list table view. Non-db yet
     func addSItem(item: pantrySLItem) {
-        
-        // DO DATABASE CALL HERE
         if(!addShoppingListItem(newItem: item)) {
             self.shoppingListTableView.reloadData()
         }
-//        shoppingListRecords.append(item)
-//        self.shoppingListTableView.beginUpdates()
-//        self.shoppingListTableView.insertRows(at: [IndexPath.init(row: shoppingListRecords.count-1, section: 0)], with: .automatic)
-//        self.shoppingListTableView.endUpdates()
     }
     
     // Remove an item from the shopping list table view
@@ -226,10 +221,118 @@ class ShoppingListViewController: UIViewController, UIPopoverPresentationControl
         task.resume()
         while(!finished) {}
         if(!vError) {
+//            print(sLItem)
             self.shoppingListRecords.append(sLItem)
         }
         return vError
     }
     
+    func getShoppingListItems(uid:Int) -> Bool {
+        // reset the list
+        self.shoppingListRecords.removeAll()
+        
+        // create a variable to return whether we errored out or not
+        var vError : Bool = false
+        
+        // path to our backend script
+        let URL_VERIFY = "http://www.teragentech.net/prepmate/GetShoppingListItems.php"
+        
+        // variable which will spin until verification is finished
+        var finished : Bool = false
+        
+        // create our URL object
+        let url = URL(string: URL_VERIFY)
+        
+        // create the request and set the type to POST, otherwise we get authorization error
+        var request = URLRequest(url: url!)
+        request.httpMethod = "POST"
+        
+        let params = "uid=\(uid)"
+        
+        request.httpBody = params.data(using: String.Encoding.utf8)
+        
+        // Create a task and send our request to our REST API
+        let task = URLSession.shared.dataTask(with: request) {
+            data, response, error in
+            // if we error out, return the error message
+            if(error != nil) {
+                self.eMsg = error!.localizedDescription
+                finished = true
+                vError = true
+                return
+            }
+            
+            // If there was no error, parse the response
+            do {
+                // convert response to a dictionary
+                let JSONResponse = try JSONSerialization.jsonObject(with: data!, options: .mutableContainers) as? NSDictionary
+                // Get the error status and the error message from the database
+                if let parseJSON = JSONResponse {
+                    vError = (parseJSON["error"] as! Bool)
+                    self.eMsg = parseJSON["msg"] as! String
+                    if(!vError) {
+                        var count = 0
+                        while let record = parseJSON["\(count)"] as? String {
+                            if let row = try JSONSerialization.jsonObject(with: record.data(using: String.Encoding.utf8)!, options: .mutableContainers) as? NSDictionary {
+                                var current = pantrySLItem()
+                                if let urId = row["id"] as? String {
+                                    current.id = Int(urId)!
+                                    if let urRid = row["ingredient_id"] as? String {
+                                        current.ingredientId = Int(urRid)!
+                                        if let name = row["ingredient_name"] as? String {
+                                            current.ingredientName = name
+                                            if let unit = row["ingredient_unit"] as? String {
+                                                current.ingredientUnit = Int(unit)!
+                                                if let label = row["ingredient_label"] as? String {
+                                                    current.ingredientLabel = label
+                                                    if let amount = row["amount"] as? String {
+                                                        current.amount = Double(amount)!
+                                                        self.shoppingListRecords.append(current)
+                                                    }
+                                                    else {
+                                                        vError = true
+                                                        self.eMsg = "Error occured while parsing out ingredient amount in shoppping list items"
+                                                    }
+                                                } else {
+                                                    vError = true
+                                                    self.eMsg = "Error occured while parsing user shopping list in get shopping list items"
+                                                    return
+                                                }
+                                            } else {
+                                                vError = true
+                                                self.eMsg = "Error occured while parsing shopping list in get shopping list items"
+                                                return
+                                            }
+                                        } else {
+                                            vError = true
+                                            self.eMsg = "Error occured while parsing ingredient name in get sohpping list items"
+                                            return
+                                        }
+                                    } else {
+                                        vError = true
+                                        self.eMsg = "Error occured while parsing ingreidnet id in get shopping list items"
+                                        return
+                                    }
+                                } else {
+                                    vError = true
+                                    self.eMsg = "Error occured while parsing user ingreident id in get shopping list items"
+                                    return
+                                }
+                            }
+                            count += 1
+                        }
+                    }
+                }
+            } catch {
+                self.eMsg = error.localizedDescription
+                vError = true
+            }
+            finished = true
+        }
+        // execute our task and then return the results
+        task.resume()
+        while(!finished) {}
+        return vError
+    }
     
 }
