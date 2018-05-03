@@ -7,28 +7,32 @@
 //
 
 import UIKit
+// ViewController that displays the details of a comment
 class CommentDetailsPageViewController: UIViewController {
+    // Holds the current comment
     var comment = Comment()
     
-    // Outlets
+    // Label that displays rating
     @IBOutlet weak var ratingsLabel: UIImageView!
+    // Label that displays author
     @IBOutlet weak var authorLabel: UIButton!
+    // Label that displays the date the comment was created
     @IBOutlet weak var dateLabel: UILabel!
+    // Textview containing the body of the comment
     @IBOutlet weak var commentBody: UITextView!
+    // Holds the creator of the comment
     let creator = User()
     override func viewDidLoad() {
         super.viewDidLoad()
         self.loadPage()
         // Do any additional setup after loading the view.
     }
-    @IBAction func onAuthorPressed(_ sender: Any) {
-        // TODO: 
-    }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    // Populate the page with info from the Comment object
     private func loadPage() {
         self.ratingsLabel.image = RatingImages[self.comment.rating]
 
@@ -41,6 +45,7 @@ class CommentDetailsPageViewController: UIViewController {
         commentBody.text! = self.comment.description
         self.title = self.comment.title
     }
+    // If the author label is pressed, go to author's profile
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "commentToUser",
             let vc = segue.destination as? UserProfileViewController{

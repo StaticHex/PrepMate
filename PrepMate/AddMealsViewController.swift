@@ -8,7 +8,7 @@
 
 import UIKit
 
-
+//Custom TableViewCell class that displays meal options
 class MealsOptionsCustomCell: UITableViewCell {
     
     @IBOutlet weak var recipeName: UILabel!
