@@ -115,8 +115,21 @@ class AddIngredientViewController: UIViewController, UIPickerViewDelegate, UIPic
         let row = indexPath.row
         itemTextView.text = ingredients[row].getName()
         itemTextView.isEnabled = false
-        print(ingredients[row].getUnit())
-        pckUnits.selectRow(ingredients[row].getUnit(), inComponent: 0, animated: false)
+
+        // find out whether we're in standard or metric
+        var currentUnits = 0
+        let defaults = UserDefaults.standard
+        if let decoded = defaults.object(forKey: "units") as? Data {
+            let r = NSKeyedUnarchiver.unarchiveObject(with: decoded) as! Int
+            currentUnits = r
+        }
+        // adjust units if in metric
+        if currentUnits == 0 {
+            pckUnits.selectRow(ingredients[row].getUnit(), inComponent: 0, animated: false)
+        } else {
+            let adjusted = convertIndex(idx: ingredients[row].getUnit())
+            pckUnits.selectRow(adjusted, inComponent: 0, animated: false)
+        }
         thisRow = ingredients[row].getUnit()
         pckUnits.isUserInteractionEnabled = false
         txtLabel.text = ingredients[row].getLabel()

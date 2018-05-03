@@ -149,7 +149,14 @@ class ShoppingListViewController: UIViewController, UIPopoverPresentationControl
         cell.amt = shoppingListRecords[row].amount
         let defaults = UserDefaults.standard
         let idx = current.ingredientUnit!
-        if defaults.integer(forKey: "units") == 0 {
+        
+        var currentUnits = 0
+        if let decoded = defaults.object(forKey: "units") as? Data {
+            let r = NSKeyedUnarchiver.unarchiveObject(with: decoded) as! Int
+            currentUnits = r
+        }
+        
+        if currentUnits == 0 {
             var valToDisplay = metricToStd(unit: current.ingredientUnit!, amount: current.amount!)
             valToDisplay = round(valToDisplay * 100.0) / 100.0
             if current.ingredientLabel != "" {
