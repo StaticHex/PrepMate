@@ -15,7 +15,7 @@ Shopping List | Final | Final | None |  50% Joseph, 50% Pablo
 Pantry Record | Final | Final | None |  40% Joseph, 60% Pablo
 User Profile Settings | Beta | Beta | None | 40% Pablo, 60% Joseph 
 Categories | Final | Final | None |  100% Pablo
-Menu | Beta | Beta | None | 1005 Joseph
+Menu | Beta | Beta | None | 100% Joseph
 Add Recipes | Beta | Beta/Final | Beta release had bugs which would result in recipes being incorrectly added. These errors were cleaned up in the final release. | 50% Pablo, 50% Yen
 Recipe Page | Beta/Final | Beta/Final | The beta required overview and nutrition to be displayed, and the final required comments and icons to be displayed. There was no deviation. | 100% Yen 
 Bookmark/Favorite | Final | Final | None |  100% Pablo
