@@ -396,6 +396,7 @@ class UserProfileViewController: UIViewController, UIPopoverPresentationControll
             self.present(alert, animated: true)
         }
         tvBlacklist.reloadData()
+        firstRun = false
     }
     
     func removeBListCell(idx: Int) {

@@ -209,6 +209,7 @@ class HomePageViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let row = indexPath.row
         collectionView.deselectItem(at: indexPath, animated: true)
     }
     
@@ -248,7 +249,7 @@ class HomePageViewController: UIViewController, UITableViewDelegate, UITableView
             let vc = segue.destination as? RecipePageViewController
             let cell = sender as! RecommendedCustomViewCell
             let indexPath = recommendedCollectionView.indexPath(for: cell)
-            let selected = recipeList[(indexPath?.row)!]
+            let selected = recommendedList[(indexPath?.row)!]
             vc?.recipe = selected
         }
         if segue.identifier == "AdvancedSearchPopover" {
