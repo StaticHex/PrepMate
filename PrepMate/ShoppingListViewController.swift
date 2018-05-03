@@ -34,7 +34,7 @@ class ShoppingListViewController: UIViewController, UIPopoverPresentationControl
     
     var thisRow = 0 // holds current row, used by the update alert
     var thisChk = 0 // holds whether4 the current cell is cheked or not
-    
+    var managed = 0
     // alert for updating table cell item
     let alert = UIAlertController(title: "Update Shopping List Item", message: "enter new amount", preferredStyle: .alert)
 
@@ -144,26 +144,33 @@ class ShoppingListViewController: UIViewController, UIPopoverPresentationControl
         cell.sProtocol = self
         
         let row = indexPath.row
+        let current = shoppingListRecords[row]
         cell.row = row
         cell.amt = shoppingListRecords[row].amount
         let defaults = UserDefaults.standard
-        let idx = shoppingListRecords[row].ingredientUnit!
+        let idx = current.ingredientUnit!
         if defaults.integer(forKey: "units") == 0 {
-            var valToDisplay = metricToStd(unit: shoppingListRecords[row].ingredientUnit!, amount: shoppingListRecords[row].amount!)
+            var valToDisplay = metricToStd(unit: current.ingredientUnit!, amount: current.amount!)
             valToDisplay = round(valToDisplay * 100.0) / 100.0
-            if shoppingListRecords[row].ingredientLabel != "" {
-                cell.itemAmount.text = String(valToDisplay) + " " + shoppingListRecords[row].ingredientLabel!
+            if current.ingredientLabel != "" {
+                cell.itemAmount.text = String(valToDisplay) + " " + current.ingredientLabel!
             }
             else {
                 cell.itemAmount.text = String(valToDisplay) + " " + unitList[idx].std
             }
         }
         else {
-            cell.itemAmount.text = String(shoppingListRecords[row].amount!) + " " + unitList[idx].metric
+            cell.itemAmount.text = String(current.amount!) + " " + unitList[idx].metric
         }
         
-        cell.itemName.text = shoppingListRecords[row].ingredientName!
+        cell.itemName.text = current.ingredientName!
         
+        // set title of cell button based on database value
+        if current.managed == 0 {
+            cell.selectedItem.setTitle("□", for: .normal)
+        } else {
+            cell.selectedItem.setTitle("■", for: .normal)
+        }
         return cell
     }
     
@@ -180,7 +187,6 @@ class ShoppingListViewController: UIViewController, UIPopoverPresentationControl
     
     func addReturnedIngredient(ingredient: RecipeIngredient) {
         let defaults = UserDefaults.standard
-        var managed = 0
         if defaults.integer(forKey: "amSList") == 1 {
             managed = 1
         }
@@ -229,7 +235,7 @@ class ShoppingListViewController: UIViewController, UIPopoverPresentationControl
         // Set up parameters
         
         // Create HTTP Body
-        let params = "uid=\(currentUser.getId())&iid=\(newItem.ingredientId!)&amount=\(newItem.amount!)&auto=\(newItem.managed!)"
+        let params = "uid=\(currentUser.getId())&iid=\(newItem.ingredientId!)&amount=\(newItem.amount!)&auto=\(self.managed)"
         request.httpBody = params.data(using: String.Encoding.utf8)
         
         // Create a task and send our request to our REST API
@@ -475,7 +481,13 @@ class ShoppingListViewController: UIViewController, UIPopoverPresentationControl
                                                     current.ingredientLabel = label
                                                     if let amount = row["amount"] as? String {
                                                         current.amount = Double(amount)!
-                                                        self.shoppingListRecords.append(current)
+                                                        if let chk = row["checked"] as? NSNumber {
+                                                            current.managed = chk.intValue
+                                                            self.shoppingListRecords.append(current)
+                                                        } else {
+                                                            vError = true
+                                                            self.eMsg = "Error occured while parsing out checked in shoppping list items"
+                                                        }
                                                     }
                                                     else {
                                                         vError = true
@@ -520,6 +532,9 @@ class ShoppingListViewController: UIViewController, UIPopoverPresentationControl
         // execute our task and then return the results
         task.resume()
         while(!finished) {}
+        if(vError){
+            print(eMsg)
+        }
         return vError
     }
     
