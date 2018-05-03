@@ -41,6 +41,7 @@ class MealsPageViewController: UIViewController, UITableViewDelegate, UITableVie
         navigationController?.isNavigationBarHidden = false
         let defaults = UserDefaults.standard
         
+        // Do not show checkout cart if the user does not have shopping list auto manage on
         if let decoded = defaults.object(forKey: "amSList") as? Data {
             let status = NSKeyedUnarchiver.unarchiveObject(with: decoded) as! Bool
             if !status {
@@ -90,7 +91,8 @@ class MealsPageViewController: UIViewController, UITableViewDelegate, UITableVie
         let row = indexPath.row
         cell.mealName.text = meals[row].name.capitalized
         let defaults = UserDefaults.standard
-
+        
+        // Do not show if the user can select a meal for checkout if the auto manage shopping list is not on.
         if let decoded = defaults.object(forKey: "amSList") as? Data {
             let status = NSKeyedUnarchiver.unarchiveObject(with: decoded) as! Bool
             if !status {
@@ -106,6 +108,7 @@ class MealsPageViewController: UIViewController, UITableViewDelegate, UITableVie
         self.mealsTableView.reloadData()
     }
     
+    // Remove a cell from the table view
     func removeMealCell(cell: MealsCustomTableViewCell) {
         let indexPath = self.mealsTableView.indexPath(for: cell)
         if(removeMeal(id: self.meals[indexPath!.row].mealId)){
@@ -117,6 +120,7 @@ class MealsPageViewController: UIViewController, UITableViewDelegate, UITableVie
     }
     
     
+    // Add a meal to the user's shopping list
     @IBAction func addMealToShoppingList(_ sender: Any) {
         
         // Go through rows, which are selected, then add to shopping list (first checking if we need to make new row in shopping list or just adding an amount)
@@ -129,6 +133,7 @@ class MealsPageViewController: UIViewController, UITableViewDelegate, UITableVie
         self.performSegue(withIdentifier: "addMealSegue", sender: sender)
     }
     
+    // Alert to confirm that a user wants to add their selected meals to the shopping list
     func shoppingListAlert(arg:[Int]) {
         let alert = UIAlertController(title: "Meal to Shopping List", message: "Are you sure you want to add selected meals to the shopping list?", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: NSLocalizedString("Yes", comment: "Default action"), style: .default, handler: { _ in

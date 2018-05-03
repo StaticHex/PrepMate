@@ -137,12 +137,6 @@ class AddRecipeFirstPageViewController: UIViewController, UITableViewDelegate, U
             cookTimeField.text = cookTime[0] + " hr(s)" +  timeOptions[1][0] + cookTime[1] + " min(s)"
             
             // Do flags
-//            for i in (0...(nutritionImages.count-1)).reversed(){
-//                if (flagNum & 1 ) == 1 {
-//                    self.nutritionList.append(nutritionImages[i])
-//                }
-//                flagNum = flagNum >> 1
-//            }
             var flagNum = self.recipeToSave.flags
             for d in (0...6).reversed() {
                 if (flagNum & 1 ) == 1 {
@@ -196,12 +190,14 @@ class AddRecipeFirstPageViewController: UIViewController, UITableViewDelegate, U
         return UIModalPresentationStyle.none
     }
     
+    // Remove an ingredient from the display
     func removeIngredient(cell: IngredientTableCell) {
         let indexPath = self.ingTableView.indexPath(for: cell)
         ingList.remove(at: indexPath!.row)
         self.ingTableView.deleteRows(at: [indexPath!], with: .fade)
     }
     
+    // Remove a direction from the display
     func removeDirection(cell: DirectionTableCell) {
         let indexPath = self.directionTableview.indexPath(for: cell)
         directionList.remove(at: indexPath!.row)
@@ -249,8 +245,7 @@ class AddRecipeFirstPageViewController: UIViewController, UITableViewDelegate, U
             let defaults = UserDefaults.standard
             
             let idx = ingList[row].item.getUnit()
-            // Standard
-            
+            // Need to display the proper units for metric/standard units.
             if defaults.integer(forKey: "units") == 0 {
                 let valToDisplay = metricToStd(unit: ingList[row].item.getUnit(), amount: ingList[row].amount)
                 if ingList[row].item.getLabel() != "" {
@@ -287,7 +282,7 @@ class AddRecipeFirstPageViewController: UIViewController, UITableViewDelegate, U
                         else {
                             cell.amountLabel.text = String(format: "%1.2f %@\n", valToDisplay, unitList[ingList[row].item.getUnit()].std)
                         }
-//                        cell.amountLabel.text = String(format: "%1.1f %@\n", ingList[row].amount, unitList[ingList[row].item.getUnit()].std)
+
                     }
                     else {
                         cell.amountLabel.text = String(format: "%1.2f %@\n", valToDisplay, unitList[ingList[row].item.getUnit()].std)

@@ -70,6 +70,7 @@ class AddIngredientViewController: UIViewController, UIPickerViewDelegate, UIPic
         return false
     }
     
+    // Update display when typing in a name of an ingrdient
     @objc func nameDidChange(_ textField :UITextField) {
         ingredients.removeAll()
         if(textField.text! != "") {
@@ -169,6 +170,7 @@ class AddIngredientViewController: UIViewController, UIPickerViewDelegate, UIPic
         self.view.endEditing(true)
     }
     
+    // Alert for if the field is empty
     func recipeAlert(str:String) {
         let alert = UIAlertController(title: "Add Recipe Error", message: "\(str) field cannot be empty", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .default, handler: { _ in
@@ -177,6 +179,7 @@ class AddIngredientViewController: UIViewController, UIPickerViewDelegate, UIPic
         self.present(alert, animated: true, completion: nil)
     }
     
+    // Autofill
     func ingredientAutofill(str:String) -> Bool {
         // create a variable to return whether we errored out or not
         var vError : Bool = false

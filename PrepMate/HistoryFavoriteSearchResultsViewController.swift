@@ -58,6 +58,7 @@ class HistoryFavoriteSearchResultsViewController: UIViewController, UITableViewD
         return
     }
     
+    // Populating display with recipes of a meal that a user selected
     func addFromSelectedMeals(meal: Meal) {
         self.meal = meal
         self.fromMeal = true
@@ -109,7 +110,7 @@ class HistoryFavoriteSearchResultsViewController: UIViewController, UITableViewD
             getUserRecipes(uid: currentUser.getId())
         }
         
-        // Janky way to make unique list
+        // Only display unique recipes rather than allow duplicates to be shown
         var list = [UserRecipe]()
         if whichRecipeClicked == 0 {
             list = userRecipeList.filter {$0.favorite == 0}
@@ -167,13 +168,6 @@ class HistoryFavoriteSearchResultsViewController: UIViewController, UITableViewD
             cell.ratingsLabel.image = RatingImages[recipeList[row].getRating()]
             cell.row = row
         }
-//        cell.recipeNameLabel.text! = recipeList[row].getName()
-//        cell.ratingsLabel.image = RatingImages[recipeList[row].getRating()]
-//        cell.row = row
-//        if whichRecipeClicked == 1 {
-//            cell.favoriteSelect.isEnabled = false
-//            cell.favoriteSelect.isHidden = true
-//        }
         
         return cell
     }
@@ -185,12 +179,12 @@ class HistoryFavoriteSearchResultsViewController: UIViewController, UITableViewD
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         navigationController?.isNavigationBarHidden = true
     }
+    
     /// Notifies viewController that a segue is about to performed
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if  segue.identifier == "recipeBoxToRecipePage",
@@ -216,7 +210,7 @@ class HistoryFavoriteSearchResultsViewController: UIViewController, UITableViewD
         
     }
     
- 
+    // Alert that checks if a user wants to cook a meal
     @IBAction func onCook(_ sender: Any) {
         let alert = UIAlertController(title: "Cook Meal", message: "Are you sure you want to cook this meal?", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: NSLocalizedString("Yes", comment: "Default action"), style: .default, handler: { _ in
@@ -230,7 +224,9 @@ class HistoryFavoriteSearchResultsViewController: UIViewController, UITableViewD
         self.present(alert, animated: true, completion: nil)
     }
     
+    // Remove a user saved recipe from the display and the database
     func removeRecipe(cell: recipeBoxTableCell) {
+        // Favorited or bookmarked recipe to delete
         if whichRecipeClicked == 0 || whichRecipeClicked == 2 {
             // Remove from recipes saved for this user
             let userRecipeToDelete = userRecipeList[cell.row]
@@ -245,7 +241,7 @@ class HistoryFavoriteSearchResultsViewController: UIViewController, UITableViewD
             }
         }
         else if whichRecipeClicked == 1 {
-            // Remove recipe from DB
+            // Remove a recipe from the database that the user has created
             let recipeToDelete = recipeList[cell.row]
             
             let success = recipeToDelete.removeRecipe()
@@ -258,6 +254,7 @@ class HistoryFavoriteSearchResultsViewController: UIViewController, UITableViewD
             }
         }else{
             if(fromMeal){
+                // Remove a recipe from a meal
                 let success = removeMealRecipe(idx: cell.row)
                 if success {
                     self.databaseAlert(str: "Remove Meal Recipe")
@@ -272,6 +269,7 @@ class HistoryFavoriteSearchResultsViewController: UIViewController, UITableViewD
 
     }
     
+    // Database alert to display to the user if a database function did not execute correctly
     func databaseAlert(str:String) {
         let alert = UIAlertController(title: "\(str)", message: "Database Error", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .default, handler: { _ in
@@ -368,6 +366,7 @@ class HistoryFavoriteSearchResultsViewController: UIViewController, UITableViewD
         return vError
     }
     
+    // Update a user recipe
     func updateUserRecipe(idx : Int) -> Bool {
         // grab the index to write to the database
         let newRecipe = userRecipeList[idx]
@@ -428,6 +427,7 @@ class HistoryFavoriteSearchResultsViewController: UIViewController, UITableViewD
         return vError
     }
     
+    // Get recipes that the user has saved (favorited or bookmarked)
     func getUserRecipes(uid:Int) -> Bool {
         // reset the list
         self.userRecipeList.removeAll()
@@ -529,6 +529,7 @@ class HistoryFavoriteSearchResultsViewController: UIViewController, UITableViewD
         return vError
     }
     
+    // Remove a saved recipe from a user's list (Favorited or bookmarked)
     func removeUserRecipe(idx:Int) -> Bool {
         // create a variable to return whether we errored out or not
         var vError : Bool = false
@@ -586,6 +587,8 @@ class HistoryFavoriteSearchResultsViewController: UIViewController, UITableViewD
         }
         return vError
     }
+    
+    // Remove a recipe from a meal
     func removeMealRecipe(idx: Int) -> Bool{
         // create a variable to return whether we errored out or not
         var vError : Bool = false
