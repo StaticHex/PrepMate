@@ -66,25 +66,25 @@ public let categoryList = ["African",
                            "Uzbek",
                            "Vietnamese"]
 
-public let ingredientList = [(flag: 1, name: "Tree Nuts"),
-                             (flag: 2, name: "Eggs"),
-                             (flag: 4, name: "Milk"),
-                             (flag: 8, name: "Gluten"),
-                             (flag: 16, name: "Meat"),
-                             (flag: 32, name: "Pork"),
-                             (flag: 64, name: "Butter"),
-                             (flag: 128, name: "Peanuts"),
-                             (flag: 256, name: "Shellfish"),
-                             (flag: 512, name: "Tomatoes"),
-                             (flag: 1024, name: "Soy"),
-                             (flag: 2048, name: "Fish"),
-                             (flag: 4096, name: "Yeast")]
+public let ingredientList = [(flag: 1, name: "Tree Nuts", field: "has_tree_nuts"),
+                             (flag: 2, name: "Eggs", field: "has_eggs"),
+                             (flag: 4, name: "Milk", field: "has_milk"),
+                             (flag: 8, name: "Gluten", field: "has_gluten"),
+                             (flag: 16, name: "Meat", field: "has_meat"),
+                             (flag: 32, name: "Pork", field: "has_pork"),
+                             (flag: 64, name: "Butter", field: "has_butter"),
+                             (flag: 128, name: "Peanuts", field: "has_peanuts"),
+                             (flag: 256, name: "Shellfish", field: "has_shellfish"),
+                             (flag: 512, name: "Tomatoes", field: "has_tomatoes"),
+                             (flag: 1024, name: "Soy", field: "has_soy"),
+                             (flag: 2048, name: "Fish", field: "has_fish"),
+                             (flag: 4096, name: "Yeast", field: "has_yeast")]
 
-public let foodTypeList = [(flag: 8192, name: "Spicy"),
-                           (flag: 16384, name: "Healthy"),
-                           (flag: 32768, name: "High Fat"),
-                           (flag: 65536, name: "Vegetarian"),
-                           (flag: 131072, name: "Vegan")]
+public let foodTypeList = [(flag: 8192, name: "Spicy", field: "is_spicy"),
+                           (flag: 16384, name: "Healthy", field: "is_healthy"),
+                           (flag: 32768, name: "High Fat", field: "is_high_fat"),
+                           (flag: 65536, name: "Vegetarian", field: "is_vegetarian"),
+                           (flag: 131072, name: "Vegan", field: "is_vegan")]
 
 // divide metric amount by factor to get standard amount
 public let unitList = [(std: "custom", metric: "custom", factor: 1.0),
@@ -360,4 +360,10 @@ func substring(tok: String, begin : Int, end : Int) -> String {
     return retStr
 }
 
+// Holds information for the currently logged in user, was used on so many screens we
+// moved it here
 var currentUser = User()
+
+// used to keep fetching recipes dialog to popping up every time user return from home
+var firstRun = false
+

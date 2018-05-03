@@ -58,6 +58,7 @@ class HomePageViewController: UIViewController, UITableViewDelegate, UITableView
     @IBOutlet weak var cuisineLabel: UILabel!
     var thisRow = 0
     var recipeList = [Recipe]()
+    var recommendedList = [Recipe]()
     var searchFilter = ""
     var searchString = ""
     
@@ -138,24 +139,26 @@ class HomePageViewController: UIViewController, UITableViewDelegate, UITableView
             btnTerms.setTitleColor(decodedColor, for: .normal)
             btnCredits.setTitleColor(decodedColor, for: .normal)
         }
-        self.loadIcon.startAnimating()
-        DispatchQueue.main.async {
-            self.present(self.loadingAlert, animated: true, completion: {
 
-                self.recipeList = getRecipes(query: "id>=1 ORDER BY rating ASC LIMIT 10")
-                self.loadingAlert.dismiss(animated: true, completion: {
-                    self.loadIcon.stopAnimating()
+        if !firstRun {
+            self.loadIcon.startAnimating()
+            DispatchQueue.main.async {
+                self.present(self.loadingAlert, animated: true, completion: {
+                    self.recipeList = getRecipes(query: "id>=1 AND \(currentUser.preferenceString()) ORDER BY rating DESC LIMIT 10")
+                    self.recommendedList = getRecipes(query: "uid!=\(currentUser.getId()) AND \(currentUser.preferenceString())")
+                    self.loadingAlert.dismiss(animated: true, completion: {
+                        self.loadIcon.stopAnimating()
+                    })
+                    self.popularCollectionView.reloadData()
+                    self.recommendedCollectionView.reloadData()
                 })
-                self.popularCollectionView.reloadData()
-                self.recommendedCollectionView.reloadData()
-            })
+            }
+            firstRun = true
         }
-
         
         txtSearch.text = ""
         searchString = ""
         searchFilter = ""
-        
     }
 
     override func didReceiveMemoryWarning() {
@@ -170,7 +173,11 @@ class HomePageViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return self.recipeList.count
+        if collectionView == self.popularCollectionView {
+            return self.recipeList.count
+        } else {
+            return self.recommendedList.count
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -192,8 +199,8 @@ class HomePageViewController: UIViewController, UITableViewDelegate, UITableView
             
             let row = indexPath.row
             
-            cell.foodTitle.text = self.recipeList[row].getName().capitalized
-            cell.foodImage.image = self.recipeList[row].getPhoto()
+            cell.foodTitle.text = self.recommendedList[row].getName().capitalized
+            cell.foodImage.image = self.recommendedList[row].getPhoto()
             cell.foodImage.contentMode = .scaleAspectFill
             
             return cell
@@ -206,7 +213,7 @@ class HomePageViewController: UIViewController, UITableViewDelegate, UITableView
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if(segue.identifier == "logoutToLogin") {
-            // TODO: Destroy user object and set up login
+            currentUser.clear()
         }
         if segue.identifier == "homeToSettings" {
             let vc = segue.destination as? SettingsViewController

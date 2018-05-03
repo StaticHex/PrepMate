@@ -593,11 +593,6 @@ class ShoppingListViewController: UIViewController, UIPopoverPresentationControl
         
         // if there was no error, go ahead and update our user object
         if(!vError) {
-            let cells = self.shoppingListTableView.visibleCells as! Array<ShoppingListCustomTableViewCell>
-            
-            for cell in cells {
-                cell.selectedItem.setTitle("□", for: .normal)
-            }
             shoppingListRecords.removeAll()
             if(!getShoppingListItems(uid: currentUser.getId())) {
                 shoppingListTableView.reloadData()

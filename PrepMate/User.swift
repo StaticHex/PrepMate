@@ -721,6 +721,52 @@ class User : CustomStringConvertible {
         return vError
     }
     
+    // Preference String Method
+    // @description
+    // - Fetches all entries in the User_Blacklist table and exports them as a single
+    //   MySql query string
+    // @return
+    // - returns a mysql query string
+    public func preferenceString() -> String {
+        var cList = "category not in ("
+        var fList = ""
+        for p in preferences {
+            switch(p.key) {
+            case "Category":
+                cList += "\(p.value), "
+                // TODO
+                break
+            case "Ingredient":
+                fList += "\(ingredientList[p.value].field)='false' AND "
+                // TODO
+                break
+            case "Type":
+                fList += "\(foodTypeList[p.value].field)='false' AND "
+                // TODO
+                break
+            default:
+                break
+            }
+        }
+        
+        // Trim extra characters off the end of the strings
+        if cList != "category in (" {
+            cList = substring(tok: cList, begin: 0, end: cList.count-2)+")"
+        } else {
+            cList = ""
+        }
+        if fList != "" {
+            fList = substring(tok: fList, begin: 0, end: fList.count-5)
+        }
+        if cList == "" {
+            return fList
+        }
+        if fList == "" {
+            return cList
+        }
+        return "\(cList) AND \(fList)"
+    }
+    
     // getters and setters
     public func getId() -> Int { return self.id }
     public func getUname() -> String { return self.uname }
