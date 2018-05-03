@@ -336,6 +336,9 @@ class UserProfileViewController: UIViewController, UIPopoverPresentationControll
                 newRecord.email = txtEmail.text!
                 newRecord.bio = txtBio.text!
                 if(!user.updateUser(newUser: newRecord)) {
+                    let defaults = UserDefaults.standard
+                    let pData = NSKeyedArchiver.archivedData(withRootObject: txtPword.text!)
+                    defaults.set(pData, forKey: "pword")
                     profileDelegate?.updateUser(newUser: user)
                 } else {
                     alert.title = "User Not Updated"
