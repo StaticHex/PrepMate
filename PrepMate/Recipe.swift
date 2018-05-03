@@ -1355,7 +1355,7 @@ class Recipe : CustomStringConvertible {
         }
         return vError
     }
-    
+    // Function that updates a specific direction for a recipe
     public func updateRecipeDirection(idx: Int, newDescription : String) -> Bool {
         // set up variables for db operations
         self.directions[idx].description = newDescription
@@ -1416,7 +1416,7 @@ class Recipe : CustomStringConvertible {
         while(!finished) {}
         return vError
     }
-    
+    // Function that removes a specific direction from the recipe
     public func removeRecipeDirection(idx: Int) -> Bool {
         // create a variable to return whether we errored out or not
         var vError : Bool = false
@@ -1475,7 +1475,7 @@ class Recipe : CustomStringConvertible {
         }
         return vError
     }
-    
+    // Function that loads the directions for the recipe
     private func loadRecipeDirections() -> Bool {
         // create a variable to return whether we errored out or not
         var vError : Bool = false
@@ -1620,7 +1620,7 @@ class Recipe : CustomStringConvertible {
         }
         return vError
     }
-    
+    // Function that updates a vitamin for the recipe
     public func updateRecipeVitamin(idx : Int, newPercent : Double) -> Bool {
         // set up variables for db operations
         self.vitamins[idx].percent = newPercent
@@ -1682,7 +1682,7 @@ class Recipe : CustomStringConvertible {
         while(!finished) {}
         return vError
     }
-    
+    // Function that removes a specific vitamin from a recipe
     public func removeRecipeVitamin(idx : Int) -> Bool {
         // create a variable to return whether we errored out or not
         var vError : Bool = false
@@ -1741,7 +1741,7 @@ class Recipe : CustomStringConvertible {
         }
         return vError
     }
-    
+    // Function that retrieves the vitamins associated with the recipe
     private func loadRecipeVitamins() -> Bool {
         // create a variable to return whether we errored out or not
         var vError : Bool = false
@@ -1905,7 +1905,7 @@ class Recipe : CustomStringConvertible {
         }
         return vError
     }
-    
+    // Function that updates a comment for the recipe
     public func updateRecipeComment(idx: Int, newTitle : String, newRating : Int, newDescription : String) -> Bool {
         
         // set the timestamp
@@ -1978,7 +1978,7 @@ class Recipe : CustomStringConvertible {
         }
         return vError
     }
-    
+    // Function that removes a comment from a recipe
     public func removeRecipeComment(idx : Int) -> Bool {
         // create a variable to return whether we errored out or not
         var vError : Bool = false
@@ -2037,7 +2037,7 @@ class Recipe : CustomStringConvertible {
         }
         return vError
     }
-    
+    // Get a filtered list of the recipe's comments. Used for filtering out comments
     public func getFilteredRecipeComments(query : String) -> Bool {
         // FIELDS
         // id(key), recipe_id, user_id, date_posted, rating, title, description
@@ -2135,12 +2135,12 @@ class Recipe : CustomStringConvertible {
         while(!finished) {}
         return vError
     }
-    
+    // Refreshes the current recipe's comments
     public func resetRecipeComments() {
         self.comments.removeAll()
         self.loadRecipeComments()
     }
-    
+    // Function that load the comments for the recipe
     private func loadRecipeComments() -> Bool {
         // create a variable to return whether we errored out or not
         var vError : Bool = false

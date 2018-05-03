@@ -10,15 +10,17 @@ import UIKit
 
 //Custom TableViewCell class that displays meal options
 class MealsOptionsCustomCell: UITableViewCell {
-    
+    // label for the recipe name
     @IBOutlet weak var recipeName: UILabel!
+    // Button to select cell
     @IBOutlet weak var selectedItem: UIButton!
     var section = 0
     var row = 0
-    
+    // Action when cell is selected
     @IBAction func selectItem(_ sender: Any) {
         
         var title = ""
+        // Change the appearance of the button to reflect selection
         if selectedItem.currentTitle == "■" {
             if section == 0 {
                 mealsChosenRecipeBox[row] = false
@@ -47,12 +49,12 @@ class MealsOptionsCustomCell: UITableViewCell {
     }
     
 }
-
+// Struct that contains
 struct MealOptions {
     let name : String
     var items : [Recipe]
 }
-
+// Arrays that keeps track of selected recipes to add to meal
 var mealsChosenRecipeBox = [Bool]()
 var mealsChosenFavorites = [Bool]()
 
@@ -62,7 +64,7 @@ class AddMealsViewController: UIViewController, UITableViewDelegate, UITableView
     @IBOutlet weak var mealNameInput: UITextField!
 
     weak var mProtocol : mealsProtocol?
-    
+
     var mealsToChooseFrom = [MealOptions]()
     var meal = Meal()
     
@@ -91,6 +93,7 @@ class AddMealsViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        // Grab the current user's favorites and bookmarks
         self.getUserRecipes(uid: currentUser.getId())
         let tupleStrFavorites = ((0..<self.userRecipeList.count).filter({self.userRecipeList[$0].favorite == 1}).map{"\(self.userRecipeList[$0].recipeId!)"}).joined(separator: ", ")
         let tupleStrBookmarks = ((0..<self.userRecipeList.count).filter({self.userRecipeList[$0].favorite == 0}).map{"\(self.userRecipeList[$0].recipeId!)"}).joined(separator: ", ")
@@ -136,12 +139,14 @@ class AddMealsViewController: UIViewController, UITableViewDelegate, UITableView
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
     }
-    
+    // Function that saves created meal
     @IBAction func saveMeal(_ sender: Any) {
+        // Check if meal name is filled
         if(mealNameInput.text! == "") {
             self.mealAlert(str: "Meal Name")
             return
         }
+        // Parse selected recipe cells
         var recipeList = [Recipe]()
         for row in 0..<mealsChosenRecipeBox.count {
             if mealsChosenRecipeBox[row] {
@@ -153,33 +158,34 @@ class AddMealsViewController: UIViewController, UITableViewDelegate, UITableView
                recipeList.append(mealsToChooseFrom[1].items[row])
             }
         }
+        // Ensure that meal has at least one recipe
         if(recipeList.count == 0){
             self.mealAlert(str: "Selected recipes")
             return
         }
         var meal = Meal()
+        // Check if we are updating a meal or creating a new one
         if(existingMeal){
             meal = self.meal
         } else {
+            // Create a new meal
             if(meal.addMeal(uid:currentUser.getId(), name: mealNameInput.text!)){
-                print("ADD MEAL FAILED: ")
                 print(meal.eMsg)
             }
         }
-        
+        // Add each selected recipe to the meal
         for recipe in recipeList {
-            print("Adding Recipe: \(recipe.getName()) with id: \(recipe.getId())")
             if(meal.addMealRecipe(rid: recipe.getId())){
-                print("ADD MEAL RECIPE FAILED: ");
                 print(meal.eMsg)
             }
         }
+        // Add new meal to the meals page
         mProtocol?.addFromSelectedMeals(meal: meal)
         
         _ = navigationController?.popViewController(animated: true)
 
     }
-    
+    // Function that cancels creation of meal
     @IBAction func cancel(_ sender: Any) {
         _ = navigationController?.popViewController(animated: true)
     }
@@ -193,7 +199,6 @@ class AddMealsViewController: UIViewController, UITableViewDelegate, UITableView
         self.present(alert, animated: true, completion: nil)
     }
 
-    
     func getUserRecipes(uid:Int) -> Bool {
         // reset the list
         self.userRecipeList.removeAll()
