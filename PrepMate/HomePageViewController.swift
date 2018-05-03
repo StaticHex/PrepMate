@@ -144,8 +144,9 @@ class HomePageViewController: UIViewController, UITableViewDelegate, UITableView
             self.loadIcon.startAnimating()
             DispatchQueue.main.async {
                 self.present(self.loadingAlert, animated: true, completion: {
-                    self.recipeList = getRecipes(query: "id>=1 AND \(currentUser.preferenceString()) ORDER BY rating DESC LIMIT 10")
-                    self.recommendedList = getRecipes(query: "uid!=\(currentUser.getId()) AND \(currentUser.preferenceString())")
+                    print(currentUser.preferenceString())
+                    self.recipeList = getRecipes(query: "id>=1\(currentUser.preferenceString()) ORDER BY rating DESC LIMIT 10")
+                    self.recommendedList = getRecipes(query: "uid!=\(currentUser.getId())\(currentUser.preferenceString())")
                     self.loadingAlert.dismiss(animated: true, completion: {
                         self.loadIcon.stopAnimating()
                     })

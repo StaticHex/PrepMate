@@ -750,7 +750,7 @@ class User : CustomStringConvertible {
         }
         
         // Trim extra characters off the end of the strings
-        if cList != "category in (" {
+        if cList != "category not in (" {
             cList = substring(tok: cList, begin: 0, end: cList.count-2)+")"
         } else {
             cList = ""
@@ -758,13 +758,16 @@ class User : CustomStringConvertible {
         if fList != "" {
             fList = substring(tok: fList, begin: 0, end: fList.count-5)
         }
+        if cList == "" && fList == "" {
+            return ""
+        }
         if cList == "" {
-            return fList
+            return " AND "+fList
         }
         if fList == "" {
-            return cList
+            return " AND "+cList
         }
-        return "\(cList) AND \(fList)"
+        return " AND \(cList) AND \(fList)"
     }
     
     // getters and setters
