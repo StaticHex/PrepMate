@@ -19,6 +19,7 @@ class ShoppingListCustomTableViewCell: UITableViewCell {
     
     var row : Int?
     var amt : Double?
+    var chk = 0
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -38,23 +39,25 @@ class ShoppingListCustomTableViewCell: UITableViewCell {
     
     // Select the button on a certain cell
     @IBAction func selectItem(_ sender: Any) {
-        var checked = 0
         if selectedItem.currentTitle == "■" {
             selectedItem.setTitle("□", for: .normal)
+            chk = 0
         }
         else {
             selectedItem.setTitle("■", for: .normal)
-            checked = 1
+            chk = 1
         }
         if let idx = row {
             if let amount = amt {
                 if self.sProtocol != nil {
-                    if sProtocol!.updateShoppingListItem(idx: idx, amount: amount, checked: checked) {
+                    if sProtocol!.updateShoppingListItem(idx: idx, amount: amount, checked: chk) {
                         if selectedItem.currentTitle == "■" {
                             selectedItem.setTitle("□", for: .normal)
+                            chk = 0
                         }
                         else {
                             selectedItem.setTitle("■", for: .normal)
+                            chk = 1
                         }
                     }
                 }
